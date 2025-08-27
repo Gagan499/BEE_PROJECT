@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Gagan499/BEE_PROJECT/issues"
   },
-  "homepage": "https://github.com/Gagan499/BEE_PROJECT#readme"
+  "homepage": "https://github.com/Gagan499/BEE_PROJECT#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0"
+  }
 }
