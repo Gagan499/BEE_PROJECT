@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "type": "text",
+      "id": "8f066b06-370b-4999-96d5-1f96c904ea4e",
+      "x": 136.60003662109375,
+      "y": 116.20001220703125,
+      "width": 260,
+      "height": 166,
+      "text": "## Index.js\n- Landing section\n- Get quote/booking(takes to login page)\n- \n- "
+    },
+    {
+      "type": "text",
+      "id": "1d0f6207-04c7-4820-84f2-117d91d62e83",
+      "x": 508.60003662109375,
+      "y": 111.20001220703125,
+      "width": 317,
+      "height": 167,
+      "text": "## Login/register.ejs\n- Login\n- Register\n- Generates a jwt token (TTL - 5 days)"
+    },
+    {
+      "type": "text",
+      "id": "cad3a88a-b49d-4a91-b5d9-213bf10c5e7c",
+      "x": 137,
+      "y": 337.24509728333,
+      "width": 257.5098054333401,
+      "height": 165.94116739995957,
+      "text": "## Error.ejs\nwilll show major errors with status code and an error message"
+    }
+  ],
+  "edges": []
+}
