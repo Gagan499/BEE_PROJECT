@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Roboto Mono", monospace;
+        }       
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .marquee {
+            animation-delay: 0s;
+            white-space: nowrap;
+            display: inline-block;
+            animation: marquee 60s linear infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-green-600 flex flex-col items-center justify-center min-h-screen overflow-hidden">
+    <!-- 404 Text -->
+    <div class="w-full overflow-hidden border-y-2 border-white">
+        <div class="marquee text-white text-[130px] font-extrabold">
+            404 404 404 404 404 404 404 404 404 404
+        </div>
+    </div>
+
+    <!-- Page Missing Text -->
+    <div class="w-full overflow-hidden border-y-2 border-white mt-2">
+        <div class="marquee text-white text-[130px] font-extrabold">
+            MISSING PAGE MISSING PAGE MISSING PAGE MISSING PAGE
+        </div>
+    </div>
+
+    <!-- Message -->
+    <p class="text-white text-lg mt-8">Oops! That page seems to be missing.</p>
+
+    <!-- Button -->
+    <button action="/"
+        class="mt-6 bg-green-700 text-white px-6 py-3 rounded-full border border-white hover:bg-green-800 transition">
+        &larr; BACK TO HOME
+    </button>
+</body>
+
+</html>
