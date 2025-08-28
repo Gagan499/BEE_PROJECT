@@ -1,5 +1,5 @@
-# .env
+.env
 # models/*.js
-# config
-# node_modules
+config
+node_modules
 package-lock.json
