@@ -9,7 +9,7 @@ Full stack project
 2. Run `npm install` after cloning the project.
 3. Create .env file. Refer to [Templates](#templates) section for .env template.
 4. Run this command in terminal to add all dependices:-
-    &nbps;&nbps;<bold>npm install bcryptjs body-parser chalk@4 cors dotenv ejs express fs helmet jsonwebtoken mongoose morgan path url</bold>
+    **<bold>npm install bcryptjs body-parser chalk@4 cors dotenv ejs express fs helmet jsonwebtoken mongoose morgan path url</bold>**
 
 
 <br><br>
