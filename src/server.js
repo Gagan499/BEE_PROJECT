@@ -1,6 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import ejs from 'ejs';
+import chalk from "chalk";
+
+import connectDB from '../config/db.js';
 import pageRoutes from './page routes/pages.js'; 
 import globalMiddlewares from './Middlewares/golbalMiddlewares.js';
 
@@ -18,10 +21,13 @@ app.use(express.static('public'));
 // Global Middlewares
 globalMiddlewares(app);
 
+// Connect to MongoDB
+connectDB();
+
 // Pages routes middleware
 app.use('/api', pageRoutes);
 
 app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
+    console.log(chalk.blue(`Server is running on port ${PORT}`));
 })
 
