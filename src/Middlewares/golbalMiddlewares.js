@@ -2,6 +2,7 @@ import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
 import bodyParser from "body-parser";
+import cookieParser  from "cookie-parser"
 import express from "express";
 
 const globalMiddlewares = (app) => {
@@ -16,6 +17,7 @@ const globalMiddlewares = (app) => {
   app.use(bodyParser.json());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
 };
 
 export default globalMiddlewares;
