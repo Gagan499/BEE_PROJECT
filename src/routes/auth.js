@@ -1,8 +1,8 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import dotenv, { config } from "dotenv";
-import { generateToken } from "./jwtutils";
-import user from "../../models/user";
+import { generateToken } from "./jwtutils.js";
+import user from "../../models/user.js";
 
 dotenv.config();
 
@@ -37,7 +37,7 @@ authRouter.post("/register", async (req, res) => {
     const saltRounds = 10;
     const hashpassword = await bcrypt.hash(password, saltRounds);
 
-    const newUser = new User({
+    const newUser = new user({
       name: name,
       email: email,
       password: hashpassword,
@@ -81,15 +81,15 @@ authRouter.post("/login", async (req, res) => {
     }
 
     // find user
-    const user = user.findOne({ email });
-    if (!user) {
+    const User = await user.findOne({ email });
+    if (!User) {
       return res
         .status(401)
         .json({ success: false, message: "Invalid Email and Password !" });
     }
 
     // compare passowrd
-    const isMatch = bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, User.password);
     if (!isMatch) {
       return res
         .status(401)
@@ -102,12 +102,12 @@ authRouter.post("/login", async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: false, // Cannot be accessed by JS
-        maxAge: JWT_TTL_SEC * 1000, // 1 day
+        maxAge: 6*6 * 1000, // 1 day
         sameSite: "lax", // Prevent CSRF
         secure: false, // Set true if using HTTPS
       })
       .status(200)
-      .json({ message: "Login successful" });
+      .json({success:true,message: "Login successful",token:token});
   } catch (err) {
     console.error("error", err);
     return res
@@ -115,3 +115,6 @@ authRouter.post("/login", async (req, res) => {
       .json({ success: false, message: "Internal Server error" });
   }
 });
+
+
+export default authRouter;

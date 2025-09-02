@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import connectDB from '../config/db.js';
 import pageRoutes from './page routes/pages.js'; 
 import globalMiddlewares from './Middlewares/golbalMiddlewares.js';
+import authRouter from './routes/auth.js';
 
 dotenv.config();
 
@@ -32,8 +33,9 @@ globalMiddlewares(app);
 // Connect to MongoDB
 connectDB();
 
-// Pages routes middleware
+// Pages and auth routes middleware
 app.use('/api', pageRoutes);
+app.use('/auth',authRouter);
 
 app.get('/',(req,res)=>{
     res.render('index.ejs');
