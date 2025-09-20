@@ -98,7 +98,7 @@
       "y": 616.7580036357464,
       "width": 187.47371033633794,
       "height": 65.01023655670122,
-      "text": "---\ntext-align: center\n---\n\n\nEdit Booking.ejs"
+      "text": "---\ntext-align: center\n---\nEdit Booking div"
     },
     {
       "type": "text",
@@ -116,7 +116,7 @@
       "y": 465.78920465339496,
       "width": 130.85049208215298,
       "height": 83.88464264142954,
-      "text": "---\ntext-align: center\n---\nView My bookings.ejs"
+      "text": "---\ntext-align: center\n---\nMy bookings"
     },
     {
       "type": "text",
