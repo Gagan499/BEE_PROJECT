@@ -1,0 +1,59 @@
+<header class="relative w-full h-40 md:h-56 lg:h-72 flex items-center justify-between bg-cover bg-center" style="background-image: url('../../public/assets/images/headerbg.jpg');">
+	<nav id="main-navbar" class="absolute top-0 left-0 w-full z-30 transition-colors duration-300">
+		<div class="flex items-center justify-between px-4 py-2 md:px-6 md:py-2 relative">
+			<div class="flex items-center gap-2">
+				<img src="../../public/assets/images/logo.png" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 object-contain">
+			</div>
+			<button id="navbar-toggle" class="group flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-white bg-opacity-10 hover:bg-opacity-20 transition relative z-40">
+				<span class="bar block w-7 h-1 bg-white mb-1.5 rounded transition-all duration-300" id="bar1"></span>
+				<span class="bar block w-7 h-1 bg-white mb-1.5 rounded transition-all duration-300" id="bar2"></span>
+				<span class="bar block w-7 h-1 bg-white rounded transition-all duration-300" id="bar3"></span>
+			</button>
+			<div id="navbar-menu" class="hidden absolute top-full right-0 mt-2 w-40 bg-[#2d2f3e] rounded-lg shadow-lg py-2 flex flex-col items-center animate-fade-in z-30">
+				<a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Dashboard</a>
+				<a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Bookings</a>
+				<a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Profile</a>
+				<a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Logout</a>
+			</div>
+		</div>
+	</nav>
+</header>
+<script>
+	// Navbar hamburger/cross toggle
+	const navbarToggle = document.getElementById('navbar-toggle');
+	const navbarMenu = document.getElementById('navbar-menu');
+	let navbarOpen = false;
+	navbarToggle.addEventListener('click', () => {
+		navbarOpen = !navbarOpen;
+		if (navbarOpen) {
+			navbarMenu.classList.remove('hidden');
+			navbarToggle.classList.add('open');
+			// Animate hamburger to symmetric cross (shorter arms)
+			document.getElementById('bar1').style.transform = 'rotate(45deg) translateY(6px) scaleX(0.7)';
+			document.getElementById('bar2').style.opacity = '0';
+			document.getElementById('bar3').style.transform = 'rotate(-45deg) translateY(-6px) scaleX(0.7)';
+		} else {
+			navbarMenu.classList.add('hidden');
+			navbarToggle.classList.remove('open');
+			// Animate cross to hamburger
+			document.getElementById('bar1').style.transform = '';
+			document.getElementById('bar2').style.opacity = '';
+			document.getElementById('bar3').style.transform = '';
+		}
+	});
+	// Scroll-aware navbar background
+	const navbar = document.getElementById('main-navbar');
+	const header = navbar.parentElement;
+	function updateNavbarBg() {
+		const headerRect = header.getBoundingClientRect();
+		if (headerRect.bottom <= 0) {
+			navbar.style.background = '#2d2f3e';
+			navbar.style.boxShadow = '0 2px 8px 0 rgba(0,0,0,0.08)';
+		} else {
+			navbar.style.background = 'transparent';
+			navbar.style.boxShadow = 'none';
+		}
+	}
+	window.addEventListener('scroll', updateNavbarBg);
+	window.addEventListener('DOMContentLoaded', updateNavbarBg);
+</script>
