@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forgot Password</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-[#1E202B] to-[#2D2F3E] flex items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 py-12">
+    <h2 class="text-3xl font-bold text-white text-center mb-6">Forgot Password</h2>
+    <p class="text-gray-300 text-center text-sm mb-8">
+      Enter your email address below and we’ll send you instructions to reset your password.
+    </p>
+
+    <form action="/forgot-password" method="POST" class="flex flex-col space-y-6">
+      <div class="relative w-full">
+        <input id="email" name="email" type="email" required
+          class="peer w-full py-3 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+          placeholder="Email Address">
+        <label for="email"
+          class="absolute left-0 -top-4 text-gray-400 text-sm transition-all 
+          peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 
+          peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm">
+          Email Address
+        </label>
+      </div>
+
+      <button type="submit"
+        class="w-full mt-8 py-3 text-lg font-semibold text-white bg-[#25A85B] rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+        Send Reset Link
+      </button>
+    </form>
+
+    <div class="text-center mt-6">
+      <a href="login.html" class="text-purple-400 hover:text-purple-200 transition">Back to Sign In</a>
+    </div>
+  </div>
+
+</body>
+</html>
