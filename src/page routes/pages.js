@@ -1,15 +1,23 @@
-import express from 'express';
+import express from "express";
 
 const pageRoutes = express.Router();
 
-pageRoutes.get('/about',(req,res)=>{
-    res.render('about.ejs');
+pageRoutes.get("/login", (req, res) => {
+  res.render("login.ejs");
 });
 
-pageRoutes.get('/contact',(req,res)=>{
-    res.render('contact.ejs');
-})
-pageRoutes.get('/login',(req,res)=>{
-    res.render('login.ejs');
+pageRoutes.get("/user", (req, res) => {
+  //insert data retrieval and preparation logic here
+  res.render("user.ejs");
+});
+
+pageRoutes.get("/admin", (req, res) => {
+  //insert data retrieval and preparation logic here
+  res.render("admin.ejs");
+});
+
+pageRoutes.get("/book", (req, res) => {
+  //insert data retrieval and preparation logic here
+  res.render("booking.ejs");
 });
 export default pageRoutes;

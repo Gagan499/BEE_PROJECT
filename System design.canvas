@@ -162,7 +162,7 @@
       "y": -32.507004163793766,
       "width": 317,
       "height": 316.91260119562276,
-      "text": "## Bookings\n- UserID **(ref)**\n- Name **(ref)**\n- Email **(ref)**\n- Package name\n- Hotel Name **(ref)**\n- Arrival Date\n- Departure Date\n- Adults\n- Children\n"
+      "text": "## Bookings\n- UserID **(ref)**\n- Name **(ref)**\n- Email **(ref)**\n- Package name\n- Hotel Name **(ref)**\n- Arrival Date\n- Departure Date\n- Adults\n- Children"
     },
     {
       "type": "text",
