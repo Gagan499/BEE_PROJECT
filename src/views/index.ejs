@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/assets/images/favicon_icon.png" type="image/x-icon">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -40,89 +41,90 @@
     </section>
 
     <!-- Contact Us -->
-    <section class="px-6 py-16 bg-gray-900 text-gray-100 font-[Inter]">
-      <div
-        class="max-w-6xl mx-auto grid gap-12 grid-cols-1 md:grid-cols-2 items-center bg-gray-100 text-gray-900 rounded-2xl shadow-xl p-10 md:p-16"
-      >
-        <!-- Left Side -->
-        <div class="flex flex-col justify-center">
-          <h2 class="text-3xl md:text-4xl font-bold text-indigo-600 mb-6">
-            Contact Us
-          </h2>
-          <p class="text-gray-700 text-base leading-relaxed">
-            Have questions, suggestions, or feedback? <br />
-            We’d love to hear from you. Fill out the form and our team will get
-            back to you as soon as possible.
-          </p>
-          <img
-            src="https://picsum.photos/id/1011/500/300"
-            alt="Contact"
-            class="rounded-lg mt-10 shadow-lg"
-          />
-        </div>
+<section class="px-6 py-16 bg-gray-900 text-gray-100 font-[Inter]">
+  <div
+    class="max-w-6xl mx-auto grid gap-12 grid-cols-1 md:grid-cols-2 items-center bg-gray-700 text-gray-100 rounded-2xl shadow-xl p-10 md:p-16"
+  >
+    <!-- Left Side -->
+    <div class="flex flex-col justify-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-indigo-400 mb-6">
+        Contact Us
+      </h2>
+      <p class="text-gray-300 text-base leading-relaxed">
+        Have questions, suggestions, or feedback? <br />
+        We’d love to hear from you. Fill out the form and our team will get
+        back to you as soon as possible.
+      </p>
+      <img
+        src="https://picsum.photos/id/1011/500/300"
+        alt="Contact"
+        class="rounded-lg mt-10 shadow-lg"
+      />
+    </div>
 
-        <!-- Right Side (Form) -->
-        <form class="space-y-6" id="ContactForm">
-          <!-- Name -->
-          <div>
-            <label
-              for="Name"
-              class="block uppercase text-sm font-semibold text-gray-600"
-            >
-              Full Name
-            </label>
-            <input
-              id="Name"
-              type="text"
-              placeholder="Enter your name"
-              class="w-full bg-gray-200 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <!-- Email -->
-          <div>
-            <label
-              for="Email"
-              class="block uppercase text-sm font-semibold text-gray-600"
-            >
-              Email
-            </label>
-            <input
-              id="Email"
-              type="email"
-              placeholder="Enter your email"
-              class="w-full bg-gray-200 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <!-- Message -->
-          <div>
-            <label
-              for="Message"
-              class="block uppercase text-sm font-semibold text-gray-600"
-            >
-              Message
-            </label>
-            <textarea
-              id="Message"
-              placeholder="Write your message..."
-              class="w-full h-32 bg-gray-200 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            ></textarea>
-          </div>
-
-          <!-- Submit Button -->
-          <div>
-            <button
-              type="submit"
-              id="ContactUsBtn"
-              class="uppercase text-sm font-bold tracking-wide bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg w-full shadow-md transition duration-300 ease-in-out"
-            >
-              Submit Message
-            </button>
-          </div>
-        </form>
+    <!-- Right Side (Form) -->
+    <form class="space-y-6" id="ContactForm">
+      <!-- Name -->
+      <div>
+        <label
+          for="Name"
+          class="block uppercase text-sm font-semibold text-gray-200"
+        >
+          Full Name
+        </label>
+        <input
+          id="Name"
+          type="text"
+          placeholder="Enter your name"
+          class="w-full bg-gray-800 text-gray-100 placeholder-gray-400 mt-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
       </div>
-    </section>
+
+      <!-- Email -->
+      <div>
+        <label
+          for="Email"
+          class="block uppercase text-sm font-semibold text-gray-200"
+        >
+          Email
+        </label>
+        <input
+          id="Email"
+          type="email"
+          placeholder="Enter your email"
+          class="w-full bg-gray-800 text-gray-100 placeholder-gray-400 mt-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
+
+      <!-- Message -->
+      <div>
+        <label
+          for="Message"
+          class="block uppercase text-sm font-semibold text-gray-200"
+        >
+          Message
+        </label>
+        <textarea
+          id="Message"
+          placeholder="Write your message..."
+          class="w-full h-32 bg-gray-800 text-gray-100 placeholder-gray-400 mt-2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        ></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          id="ContactUsBtn"
+          class="uppercase text-sm font-bold tracking-wide bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg w-full shadow-md transition duration-300 ease-in-out"
+        >
+          Submit Message
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
 
     <%- include("partials/footer") %>
   </body>
