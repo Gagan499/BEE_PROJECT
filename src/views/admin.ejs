@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Bookings</title>
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header class="hero-section">
+        <nav>
+            <div class="logo">
+                <img src="/assets/images/logo.png" alt="Company Logo">
+            </div>
+            <div class="menu-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+        <h1>Customer Bookings</h1>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="bookings-grid">
+            <div class="grid-header">Name</div>
+            <div class="grid-header">Location</div>
+            <div class="grid-header">Arrival Date</div>
+            <div class="grid-header">Actions</div>
+            <div class="grid-header">Decision</div>
+
+            <% bookings.forEach((booking, index) => { %>
+                <div class="grid-cell name-cell" data-row-index="<%= index %>"><%= booking.name %></div>
+                <div class="grid-cell location-cell" data-row-index="<%= index %>"><%= booking.location %></div>
+                <div class="grid-cell date-cell" data-row-index="<%= index %>"><%= booking.date %></div>
+                <div class="grid-cell actions-cell">
+                    <a href="#" class="edit-link" data-index="<%= index %>">Edit</a>
+                </div>
+                <div class="grid-cell approve-cell">
+                    <div class="decision-slider initial-state state-<%= booking.status %>">
+                        <div class="decision-slider-thumb"></div>
+                        <div class="decision-label approve" data-decision="approve">Approve</div>
+                        <div class="decision-label pending" data-decision="pending">Pending</div>
+                        <div class="decision-label reject" data-decision="reject">Reject</div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Hotels</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Book Hotel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Know More</h4>
+                <ul>
+                    <li><a href="#">Membership</a></li>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">News</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Other Details</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>The Trance</h4>
+                <p>Over the last 25 years, The Trance organisation has been known for dependably delivering the true Indian hospitality experience with more than 50 hotels and resorts worldwide.</p>
+            </div>
+        </div>
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-reddit-alien"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="footer-copyright">
+            The Trance © 2025
+        </div>
+    </footer>
+
+   <form class="booking-form-modal" id="bookingForm">
+    <div class="modal-content">
+        <!-- Add a close button for better UX -->
+        <button type="button" class="modal-close" onclick="clearForm()">&times;</button>
+        <!-- Customer Information Section -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="customerName">Name :</label>
+                <input type="text" id="customerName" name="customerName" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone No. :</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group full-width">
+                <label for="emailId">Email id :</label>
+                <input type="email" id="emailId" name="emailId" required>
+            </div>
+        </div>
+
+        <!-- Booking Type Selection -->
+        <div class="form-row">
+            <div class="booking-type">
+                <label class="radio-group">
+                    <input type="radio" id="package" name="bookingType" value="package" checked>
+                    Package
+                </label>
+                <label class="radio-group">
+                    <input type="radio" id="stayOnly" name="bookingType" value="stayOnly">
+                    Stay only
+                </label>
+            </div>
+        </div>
+
+        <!-- Sliding Container for Package/Hotel Selection -->
+        <div class="sliding-container">
+            <div class="sliding-content" id="slidingContent">
+                <!-- Package Panel -->
+                <div class="slide-panel active" id="packagePanel">
+                    <div class="form-group">
+                        <label for="packageName">Package Name :</label>
+                        <select id="packageName" name="packageName" required>
+                            <option value="">Select a package</option>
+                            <option value="Bali Exploration" selected>Bali Exploration</option>
+                            <option value="Paradise Gateway">Paradise Gateway</option>
+                            <option value="nothing">nothing</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Hotel Panel -->
+                <div class="slide-panel" id="hotelPanel">
+                    <div class="form-group">
+                        <label for="hotelName">Hotel :</label>
+                        <select id="hotelName" name="hotelName">
+                            <option value="">Select a hotel</option>
+                            <option value="Jet 2 Holiday">Jet 2 Holiday</option>
+                            <option value="Grand Palace Resort">Grand Palace Resort</option>
+                            <option value="Azure Bay Hotel">Azure Bay Hotel</option>
+                            <option value="Sunset Paradise Inn">Sunset Paradise Inn</option>
+                            <option value="Royal Crown Hotel">Royal Crown Hotel</option>
+                            <option value="Ocean Breeze Resort">Ocean Breeze Resort</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guest Count Section -->
+        <div class="form-row people-section">
+            <div class="form-group">
+                <label>People :</label>
+                <div class="people-inputs">
+                    <div class="people-input-group">
+                        <label for="adults">Adults :</label>
+                        <input type="number" id="adults" name="adults" value="2" min="1" required>
+                    </div>
+                    <div class="people-input-group">
+                        <label for="children">Children :</label>
+                        <input type="number" id="children" name="children" value="0" min="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Selection -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="arrivalDate">Arrival Date :</label>
+                <input type="date" id="arrivalDate" name="arrivalDate" required>
+            </div>
+            <div class="form-group">
+                <label for="departureDate">Departure Date :</label>
+                <input type="date" id="departureDate" name="departureDate" required>
+            </div>
+        </div>
+
+        <!-- Form Action Buttons -->
+        <div class="form-buttons">
+            <button type="submit" class="submit-btn">Submit</button>
+            <button type="button" class="clear-btn" onclick="clearForm()">Clear All</button>
+        </div>
+    </div>
+</form>
+    <script id="bookingsJson" type="application/json">
+        <%- JSON.stringify(bookings) %>
+    </script>
+
+    <script>
+    const bookingsData = JSON.parse(document.getElementById('bookingsJson').textContent);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Enhanced parallax effect with sophisticated animations
+        const heroSection = document.querySelector('.hero-section');
+        const heroTitle = document.querySelector('.hero-section h1');
+        const heroNav = document.querySelector('.hero-section nav');
+        let ticking = false;
+
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const heroRect = heroSection.getBoundingClientRect();
+            const heroHeight = heroSection.offsetHeight;
+            const windowHeight = window.innerHeight;
+            
+            // Calculate scroll progress (0 to 1)
+            const scrollProgress = Math.min(scrolled / (heroHeight + windowHeight * 0.5), 1);
+            
+            // Only apply parallax when hero section is visible or just past it
+            if (heroRect.top < windowHeight && heroRect.bottom > -heroHeight) {
+                // Background parallax with dramatic movement
+                const backgroundRate = scrolled * 0.6;
+                const maxMovement = heroHeight * 0.8;
+                const clampedRate = Math.max(-maxMovement, Math.min(maxMovement, backgroundRate));
+                
+                // Add scaling effect for depth
+                const scale = 1 + (scrollProgress * 0.1); // Subtle zoom
+                
+                // Add subtle rotation for dynamic feel
+                const rotation = scrollProgress * 1; // Very subtle rotation
+                
+                // Apply layered transforms
+                heroSection.style.transition = 'none';
+                heroSection.style.transform = `translateY(${clampedRate}px) scale(${scale}) rotate(${rotation}deg)`;
+                
+                // Animate title with different speed for layered effect
+                if (heroTitle) {
+                    const titleRate = scrolled * -0.2; // Opposite direction
+                    const titleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
+                    const titleScale = Math.max(0.8, 1 - scrollProgress * 0.2);
+                    
+                    heroTitle.style.transform = `translateY(${titleRate}px) scale(${titleScale})`;
+                    heroTitle.style.opacity = titleOpacity;
+                }
+                
+                // Animate navigation with subtle effects
+                if (heroNav) {
+                    const navRate = scrolled * -0.1;
+                    const navOpacity = Math.max(0.3, 1 - scrollProgress * 0.8);
+                    
+                    heroNav.style.transform = `translateY(${navRate}px)`;
+                    heroNav.style.opacity = navOpacity;
+                }
+                
+            } else if (heroRect.bottom <= -heroHeight) {
+                // When hero is completely scrolled past, keep final position
+                const finalRate = heroHeight * 0.8;
+                const finalScale = 1.1;
+                const finalRotation = 1;
+                
+                heroSection.style.transform = `translateY(${finalRate}px) scale(${finalScale}) rotate(${finalRotation}deg)`;
+                
+                if (heroTitle) {
+                    heroTitle.style.opacity = 0;
+                    heroTitle.style.transform = 'translateY(-100px) scale(0.8)';
+                }
+                
+                if (heroNav) {
+                    heroNav.style.opacity = 0.3;
+                    heroNav.style.transform = 'translateY(-50px)';
+                }
+            }
+            
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestTick);
+
+        // --- Decision slider logic (unchanged) ---
+        const sliders = document.querySelectorAll('.decision-slider');
+        sliders.forEach(slider => {
+            slider.querySelectorAll('.decision-label').forEach(label => {
+                label.addEventListener('click', () => {
+                    const decision = label.dataset.decision;
+                    const isInitialState = slider.classList.contains('initial-state');
+                    slider.classList.remove('state-approve', 'state-pending', 'state-reject');
+                    if (isInitialState && (decision === 'approve' || decision === 'reject')) {
+                        slider.classList.remove('initial-state');
+                        slider.classList.add('final-state');
+                    }
+                    slider.classList.add(`state-${decision}`);
+                });
+            });
+        });
+
+        // --- Booking form modal logic ---
+        const bookingForm = document.getElementById('bookingForm');
+        const editLinks = document.querySelectorAll('.edit-link');
+
+        // Hide form initially
+        bookingForm.style.display = 'none';
+
+        // Show/hide panels based on booking type
+        function updatePanels(type) {
+            const slidingContent = document.getElementById('slidingContent');
+            const packagePanel = document.getElementById('packagePanel');
+            const hotelPanel = document.getElementById('hotelPanel');
+
+            if (type === 'package') {
+                slidingContent.style.transform = 'translateX(0%)';
+                packagePanel.classList.add('active');
+                hotelPanel.classList.remove('active');
+            } else {
+                slidingContent.style.transform = 'translateX(-50%)';
+                packagePanel.classList.remove('active');
+                hotelPanel.classList.add('active');
+            }
+        }
+        document.getElementById('package').addEventListener('change', () => updatePanels('package'));
+        document.getElementById('stayOnly').addEventListener('change', () => updatePanels('stayOnly'));
+
+        // Open and populate the booking form
+        function openBookingForm(index) {
+            const booking = bookingsData[index];
+
+            bookingForm.dataset.editIndex = index;
+
+            document.getElementById('customerName').value = booking.name || '';
+            document.getElementById('phoneNumber').value = booking.phone || '';
+            document.getElementById('emailId').value = booking.email || '';
+            document.getElementById('adults').value = booking.adults || 1;
+            document.getElementById('children').value = booking.children || 0;
+            document.getElementById('arrivalDate').value = booking.date || '';
+            document.getElementById('departureDate').value = booking.departureDate || '';
+
+            // Booking type
+            if (booking.bookingType === 'stayOnly') {
+                document.getElementById('stayOnly').checked = true;
+                updatePanels('stayOnly');
+            } else {
+                document.getElementById('package').checked = true;
+                updatePanels('package');
+            }
+
+            document.getElementById('packageName').value = booking.packageName || '';
+            document.getElementById('hotelName').value = booking.hotel || '';
+
+            bookingForm.style.display = 'block';
+        }
+
+        // Attach click event to Edit links
+        editLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openBookingForm(e.target.dataset.index);
+            });
+        });
+
+        // Handle form submission for editing
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const index = bookingForm.dataset.editIndex;
+            const updatedBooking = {
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('phoneNumber').value,
+                email: document.getElementById('emailId').value,
+                bookingType: bookingForm.querySelector('input[name="bookingType"]:checked').value,
+                packageName: document.getElementById('packageName').value,
+                hotel: document.getElementById('hotelName').value,
+                adults: document.getElementById('adults').value,
+                children: document.getElementById('children').value,
+                date: document.getElementById('arrivalDate').value,
+                departureDate: document.getElementById('departureDate').value,
+            };
+
+            fetch(`/edit-booking/${index}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedBooking),
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    bookingsData[index] = { ...bookingsData[index], ...updatedBooking };
+                    document.querySelector(`.name-cell[data-row-index="${index}"]`).textContent = updatedBooking.name;
+                    document.querySelector(`.date-cell[data-row-index="${index}"]`).textContent = updatedBooking.date;
+                    bookingForm.style.display = 'none';
+                } else { alert('Failed to update booking.'); }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        // Clear/close form
+        window.clearForm = function() {
+            bookingForm.reset();
+            bookingForm.style.display = 'none';
+        };
+    });
+</script>
+</body>
+</html>
