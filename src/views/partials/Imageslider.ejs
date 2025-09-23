@@ -1,0 +1,109 @@
+<section 
+  id="main-slider-section" 
+  class="relative w-full h-[600px] bg-cover bg-center transition-all duration-700 ease-in-out flex items-end justify-center py-10 overflow-hidden"
+  style="background-image: url('<%= images[0].src %>');" <% /* Initial background image */ %>
+>
+  <div class="absolute inset-0 bg-black bg-opacity-30"></div> <% /* Dark overlay for better contrast */ %>
+
+  <div 
+    id="thumbnail-carousel" 
+    class="relative z-10 flex space-x-4 px-4 overflow-x-auto custom-scrollbar"
+  >
+    <% images.forEach((image, index) => { %>
+      <div 
+        class="thumbnail-card flex-shrink-0 w-40 h-64 rounded-2xl overflow-hidden cursor-pointer shadow-lg 
+               transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl
+               <%= index === 0 ? 'active border-4 border-white' : '' %>" <% /* Highlight first image as active */ %>
+        data-image-src="<%= image.src %>"
+        data-index="<%= index %>"
+      >
+        <img 
+          src="<%= image.src %>" 
+          alt="<%= image.alt %>" 
+          class="w-full h-full object-cover"
+        >
+      </div>
+    <% }); %>
+  </div>
+</section>
+
+<style>
+  /* Custom scrollbar for Webkit browsers (Chrome, Safari) */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 8px; /* Height of horizontal scrollbar */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Make track transparent */
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4); /* Light grey thumb */
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Hide scrollbar for Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: rgba(255, 255, 255, 0.4) transparent; /* thumb track */
+  }
+
+  /* Specific styles for active thumbnail, if not fully covered by Tailwind */
+  .thumbnail-card.active {
+    border-color: #fff; /* White border for active */
+    transform: translateY(-20px) scale(1.1); /* Lift and slightly enlarge */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mainSliderSection = document.getElementById('main-slider-section');
+    const thumbnailCards = document.querySelectorAll('.thumbnail-card');
+    const thumbnailCarousel = document.getElementById('thumbnail-carousel');
+    
+    // Function to set the main background and highlight active thumbnail
+    function setActiveImage(selectedCard) {
+      // Remove active class from all thumbnails
+      thumbnailCards.forEach(card => {
+        card.classList.remove('active', 'border-4', 'border-white');
+        card.style.transform = ''; /* Reset transform */
+        card.style.boxShadow = ''; /* Reset shadow */
+      });
+
+      // Add active class to the clicked thumbnail
+      selectedCard.classList.add('active', 'border-4', 'border-white');
+      selectedCard.style.transform = 'translateY(-20px) scale(1.1)'; // Lift and enlarge
+      selectedCard.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.4)'; // Add shadow
+
+      // Set the main section's background image
+      const newBgSrc = selectedCard.getAttribute('data-image-src');
+      mainSliderSection.style.backgroundImage = `url('${newBgSrc}')`;
+
+      // Optional: Scroll the active thumbnail into view if it's off-screen
+      // This is a basic scroll-into-view. More complex centering could be added.
+      selectedCard.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'nearest', 
+        inline: 'center' 
+      });
+    }
+
+    // Add click event listeners to all thumbnail cards
+    thumbnailCards.forEach(card => {
+      card.addEventListener('click', function() {
+        setActiveImage(this);
+      });
+    });
+
+    // Initialize the first image as active on load
+    if (thumbnailCards.length > 0) {
+      setActiveImage(thumbnailCards[0]);
+    }
+  });
+</script>

@@ -11,7 +11,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>The Palm Way</title>
   </head>
-  <body>
+  <body class="bg-gray-900">
+    <%- include("partials/header") %>
+    <!-- <%- include('partials/Imageslider', {
+      images: [
+        { src: 'https://images.unsplash.com/photo-1542281286-9e0a16fb73d4?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Bali Temple', id: 'bali-temple' },
+        { src: 'https://images.unsplash.com/photo-1544738590-b1d86016c116?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Swiss Alps', id: 'swiss-alps' },
+        { src: 'https://images.unsplash.com/photo-1571003123894-e02396342962?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Maldives Overwater Bungalows', id: 'maldives-bungalows' },
+        { src: 'https://images.unsplash.com/photo-1571556942466-411352f7881c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Jaipur Pink City', id: 'jaipur-city' },
+        { src: 'https://images.unsplash.com/photo-1620063276189-c4c9261ed3e4?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Tropical Beach', id: 'tropical-beach' }
+      ]
+    }) %> -->
     <!-- ABOUT SECTION -->
     <section
       class="about flex flex-col md:flex-row items-center justify-center px-6 md:px-12 py-16 gap-10 bg-gray-900"
