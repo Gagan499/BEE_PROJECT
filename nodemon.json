@@ -1,0 +1,6 @@
+{
+  "watch": ["src", "config", "models"],
+  "ext": "js,ejs,json",
+  "ignore": ["node_modules", "public/assets"],
+  "delay": "1000"
+}
