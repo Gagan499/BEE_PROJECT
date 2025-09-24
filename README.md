@@ -8,8 +8,20 @@ Full stack project
 1. Run `git clone https://github.com/Gagan499/BEE_PROJECT.git` to clone the project. 
 2. Run `npm install` after cloning the project.
 3. Create .env file. Refer to [Templates](#templates) section for .env template.
-4. Run this command in terminal to add all dependices:-
-    **<bold>npm install bcryptjs body-parser chalk@4 cors dotenv ejs express fs helmet jsonwebtoken mongoose morgan path url</bold>**
+4. All dependencies are now managed through package.json - no need to install them manually.
+
+## Development Scripts
+
+- **Production**: `npm start` - Runs the server with Node.js
+- **Development**: `npm run dev` - Runs the server with nodemon (auto-restart on file changes)
+
+### Development with Nodemon
+
+For development, use `npm run dev` instead of `npm start`. This will:
+- Automatically restart the server when you make changes to files
+- Watch files in `src/`, `config/`, and `models/` directories
+- Monitor `.js`, `.ejs`, and `.json` files
+- Ignore `node_modules` and `public/assets` directories
 
 
 <br><br>
