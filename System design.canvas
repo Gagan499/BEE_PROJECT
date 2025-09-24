@@ -3,38 +3,11 @@
     {
       "type": "text",
       "id": "8f066b06-370b-4999-96d5-1f96c904ea4e",
-      "x": 623.8710379187274,
-      "y": -28.676944822082817,
+      "x": 986.378047810314,
+      "y": -356.475836745326,
       "width": 260,
       "height": 216.33174955927564,
       "text": "## UsersDB\n- Name\n- Email\n- Password\n- UserID\n- Role"
-    },
-    {
-      "type": "text",
-      "id": "82648a57-6922-4d2f-b2ec-77c7d7465840",
-      "x": -207.85000716762448,
-      "y": 301.4718079647541,
-      "width": 148.15203099315391,
-      "height": 85.57144688193074,
-      "text": "---\ntext-align: center\n---\nUser Dashboard"
-    },
-    {
-      "type": "text",
-      "id": "8aeab017-76a5-400c-b519-ee8470a03478",
-      "x": -194.92140481547133,
-      "y": -48.57555904705127,
-      "width": 111.97608599742455,
-      "height": 65.01023655670122,
-      "text": "---\ntext-align: center\n---\n\n\nIndex.ejs"
-    },
-    {
-      "type": "text",
-      "id": "aca6b15d-c3f0-444c-90d5-0fa312a2ddd5",
-      "x": 306.9693147030566,
-      "y": -45.62939168539596,
-      "width": 181.5463756337346,
-      "height": 147.3961058628579,
-      "text": "#### Common\n Header .ejs (Contains navbar)\nFooter.ejs"
     },
     {
       "type": "text",
@@ -47,80 +20,6 @@
     },
     {
       "type": "text",
-      "id": "7f23b62e-627d-42db-970f-2802f61f706a",
-      "x": 69.9744566565008,
-      "y": 458.06320511449957,
-      "width": 190.11470947636647,
-      "height": 92.50345592892154,
-      "color": "3",
-      "text": "#### Optional\nUpdate Self Details"
-    },
-    {
-      "type": "text",
-      "id": "e61f67e9-e0fd-46c6-b3a3-43bdb1078feb",
-      "x": 293.31521127494415,
-      "y": 451.3551255324422,
-      "width": 250.4836591750019,
-      "height": 115.59561110851206,
-      "text": "- Read all Bookings\n- Update all Bookings\n- Delete all Bookings"
-    },
-    {
-      "type": "text",
-      "id": "b9ea78f5-cdaf-4f62-89a3-e3ad7cc78a85",
-      "x": 346.98864881590396,
-      "y": 275.17103626621923,
-      "width": 137.14196077706234,
-      "height": 96.46758003124847,
-      "text": "---\ntext-align: center\n---\n\n\nAdmin Dashoard"
-    },
-    {
-      "type": "text",
-      "id": "1954bfdb-2812-47b3-92d6-f455d7c8b7da",
-      "x": -336.8538579011503,
-      "y": 616.7580036357464,
-      "width": 187.47371033633794,
-      "height": 65.01023655670122,
-      "text": "---\ntext-align: center\n---\nEdit Booking div"
-    },
-    {
-      "type": "text",
-      "id": "ce7475fd-3afd-4ae6-ad12-8ae79446a8b7",
-      "x": -98.17974622994763,
-      "y": 477.89193581109686,
-      "width": 126.13189056097076,
-      "height": 65.01023655670122,
-      "text": "Booking.ejs"
-    },
-    {
-      "type": "text",
-      "id": "915bdd35-5b0f-4131-9693-af8a4ca2ab6f",
-      "x": -303.9930936218498,
-      "y": 465.78920465339496,
-      "width": 130.85049208215298,
-      "height": 83.88464264142954,
-      "text": "---\ntext-align: center\n---\nMy bookings"
-    },
-    {
-      "type": "text",
-      "id": "da7c8216-9b40-4c1f-9130-3f2196be23f0",
-      "x": -192.5410284574665,
-      "y": 138.50058404072732,
-      "width": 111.97608599742455,
-      "height": 65.01023655670122,
-      "text": "---\ntext-align: center\n---\n\n\nLogin.ejs"
-    },
-    {
-      "type": "text",
-      "id": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
-      "x": -642.3752452505983,
-      "y": 219.10776044005644,
-      "width": 111.97608599742455,
-      "height": 65.01023655670122,
-      "color": "1",
-      "text": "Error.ejs"
-    },
-    {
-      "type": "text",
       "id": "2ca6a265-a0c0-430a-b8c4-e6d6d567dee9",
       "x": -1131.6807050932,
       "y": 399.3830725720099,
@@ -130,30 +29,12 @@
     },
     {
       "type": "text",
-      "id": "6b247e49-81ec-42be-a668-2f413fb5f12a",
-      "x": -106.68214491388767,
-      "y": 610.9839390645524,
-      "width": 145.0062966456992,
-      "height": 68.15597090415599,
-      "text": "---\ntext-align: center\n---\n\n\nThank you"
-    },
-    {
-      "type": "text",
       "id": "5f863677-6c5b-45a4-9207-093464f56c25",
       "x": -1129.9786780016675,
       "y": 485.2308256932181,
       "width": 111.97608599742455,
       "height": 65.01023655670122,
       "text": "Login.ejs"
-    },
-    {
-      "type": "group",
-      "id": "c6cf8629-f584-4910-9ea5-ec3a56ed9456",
-      "x": -662.3752452505983,
-      "y": -68.57555904705127,
-      "width": 1226.1741157005442,
-      "height": 770.3437992394988,
-      "label": "Front End"
     },
     {
       "type": "text",
@@ -167,19 +48,146 @@
     {
       "type": "text",
       "id": "cad3a88a-b49d-4a91-b5d9-213bf10c5e7c",
-      "x": 623.3983267770578,
-      "y": 243.05463035963623,
+      "x": 989.7617942206826,
+      "y": 428.16459285746765,
       "width": 257.5098054333401,
       "height": 165.94116739995957,
       "text": "## Package\n- Package Name\n- Hotel name"
+    },
+    {
+      "type": "text",
+      "id": "4b119f57-c420-4343-891b-06f37c77ba03",
+      "x": -370.151678134481,
+      "y": 46.78296086385234,
+      "width": 148.15203099315391,
+      "height": 85.57144688193074,
+      "text": "---\ntext-align: center\n---\nUser.ejs"
+    },
+    {
+      "type": "text",
+      "id": "9523207b-09d9-4245-9f50-395d40805dc8",
+      "x": -357.22307578232744,
+      "y": -301.31344868885685,
+      "width": 111.97608599742455,
+      "height": 65.01023655670122,
+      "text": "---\ntext-align: center\n---\n\n\nIndex.ejs"
+    },
+    {
+      "type": "text",
+      "id": "380b7bf2-6779-4911-a42a-250eb3b0aebf",
+      "x": -21.163740286973052,
+      "y": -364.6998349364708,
+      "width": 242.33020372497793,
+      "height": 138.95390751685187,
+      "text": "#### Common\n Header .ejs (Contains navbar)\nFooter.ejs"
+    },
+    {
+      "type": "text",
+      "id": "0388211e-1dfc-4eb0-8689-5bdcfd1463b9",
+      "x": 201.24800883554929,
+      "y": 309.82181105911735,
+      "width": 250.4836591750019,
+      "height": 115.59561110851206,
+      "text": "- Read all Bookings\n- Update all Bookings\n- Delete all Bookings"
+    },
+    {
+      "type": "text",
+      "id": "ceb7ab1c-50a3-4115-b0e2-33e553dc54ae",
+      "x": 184.68697784904782,
+      "y": 24.121586293614854,
+      "width": 137.14196077706234,
+      "height": 66.07566598562678,
+      "text": "---\ntext-align: center\n---\nAdmin.ejs"
+    },
+    {
+      "type": "text",
+      "id": "9d649b47-77fd-496d-af70-8c1bea91687a",
+      "x": -528.4198907544492,
+      "y": 518.145753262537,
+      "width": 187.47371033633794,
+      "height": 65.01023655670122,
+      "text": "---\ntext-align: center\n---\nEdit Booking div"
+    },
+    {
+      "type": "text",
+      "id": "0fbef1c6-8c80-48f0-8664-8a97acad6384",
+      "x": -248.58485851279625,
+      "y": 261.05883380270683,
+      "width": 126.13189056097076,
+      "height": 65.01023655670122,
+      "text": "Booking.ejs"
+    },
+    {
+      "type": "text",
+      "id": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
+      "x": -502.31288515195365,
+      "y": 253.49638607281878,
+      "width": 130.85049208215298,
+      "height": 83.88464264142954,
+      "text": "---\ntext-align: center\n---\nMy bookings"
+    },
+    {
+      "type": "text",
+      "id": "2777381a-9efc-4aac-86e4-8fa9fb2b67bc",
+      "x": -354.842699424323,
+      "y": -114.23730560107828,
+      "width": 111.97608599742455,
+      "height": 65.01023655670122,
+      "text": "---\ntext-align: center\n---\n\n\nLogin.ejs"
+    },
+    {
+      "type": "text",
+      "id": "9575c687-d447-4658-bc2e-e1144edc5b7d",
+      "x": -804.6769162174556,
+      "y": -33.630129201749156,
+      "width": 111.97608599742455,
+      "height": 65.01023655670122,
+      "color": "1",
+      "text": "Error.ejs"
+    },
+    {
+      "type": "text",
+      "id": "0c91c32f-ef1b-47e8-b8a2-cc312b17e81f",
+      "x": -252.9228244886483,
+      "y": 365.07151196001536,
+      "width": 145.0062966456992,
+      "height": 68.15597090415599,
+      "text": "---\ntext-align: center\n---\n\n\nThank you"
+    },
+    {
+      "type": "text",
+      "id": "a8b4f403-eb8c-4bf8-b746-80c61bf5de02",
+      "x": 459.0970416467893,
+      "y": 681.5528865493841,
+      "width": 189.08553389354893,
+      "height": 96.88439669201207,
+      "text": "## Bookings DB"
+    },
+    {
+      "type": "text",
+      "id": "7fdb3d73-d4d6-42a6-9e7d-58d87f86e1b7",
+      "x": 546.1557572840715,
+      "y": -79.32052249811636,
+      "width": 189.08553389354893,
+      "height": 96.88439669201207,
+      "text": "## Users DB"
+    },
+    {
+      "type": "group",
+      "id": "854bb9a4-a3b4-496a-ac26-94b901e9da8a",
+      "x": -824.6769162174554,
+      "y": -384.6998349364708,
+      "width": 1579.9182073950751,
+      "height": 1183.1371181778668,
+      "label": "Full Flow"
     }
   ],
   "edges": [
     {
-      "id": "4731fbbd-5fbb-49c2-9e79-3f1e67eb2b54",
-      "fromNode": "8aeab017-76a5-400c-b519-ee8470a03478",
+      "id": "386dffc7-30ad-4176-9acf-60ed142a506a",
+      "fromNode": "9523207b-09d9-4245-9f50-395d40805dc8",
       "fromSide": "bottom",
-      "toNode": "da7c8216-9b40-4c1f-9130-3f2196be23f0",
+      "toNode": "2777381a-9efc-4aac-86e4-8fa9fb2b67bc",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -187,21 +195,22 @@
       "shape": "curved"
     },
     {
-      "id": "d877fcb8-e7bc-451b-971a-9550d3fb4c0c",
-      "fromNode": "da7c8216-9b40-4c1f-9130-3f2196be23f0",
+      "id": "ad8b0e18-1297-4881-82be-1757428c0c6a",
+      "fromNode": "2777381a-9efc-4aac-86e4-8fa9fb2b67bc",
       "fromSide": "bottom",
-      "toNode": "82648a57-6922-4d2f-b2ec-77c7d7465840",
+      "toNode": "4b119f57-c420-4343-891b-06f37c77ba03",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
+      "label": "User Login",
       "style": "solid",
       "shape": "straight"
     },
     {
-      "id": "67849b48-4007-482e-8bef-00725e313a51",
-      "fromNode": "82648a57-6922-4d2f-b2ec-77c7d7465840",
+      "id": "570ac634-3621-42e1-81eb-cfcdb25889e9",
+      "fromNode": "4b119f57-c420-4343-891b-06f37c77ba03",
       "fromSide": "left",
-      "toNode": "8aeab017-76a5-400c-b519-ee8470a03478",
+      "toNode": "9523207b-09d9-4245-9f50-395d40805dc8",
       "toSide": "left",
       "toEnd": "arrow",
       "color": "4",
@@ -209,10 +218,10 @@
       "shape": "curved"
     },
     {
-      "id": "bf098aca-4576-483c-b404-f3d3f6b6f835",
-      "fromNode": "da7c8216-9b40-4c1f-9130-3f2196be23f0",
+      "id": "79d94a6c-5ce0-4d68-b4f4-a32d4e9754af",
+      "fromNode": "2777381a-9efc-4aac-86e4-8fa9fb2b67bc",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -220,10 +229,10 @@
       "shape": "curved"
     },
     {
-      "id": "ca6936ef-934a-4f3f-aca1-2d12a8980c75",
-      "fromNode": "82648a57-6922-4d2f-b2ec-77c7d7465840",
+      "id": "e62e2293-a997-4b28-b99e-73a7288d4428",
+      "fromNode": "4b119f57-c420-4343-891b-06f37c77ba03",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -231,10 +240,10 @@
       "shape": "curved"
     },
     {
-      "id": "aaf9c8ab-1328-4799-ad12-4e0682ffd996",
-      "fromNode": "915bdd35-5b0f-4131-9693-af8a4ca2ab6f",
+      "id": "56bb1542-9baf-4655-91e9-7ba816ddf843",
+      "fromNode": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -242,10 +251,10 @@
       "shape": "curved"
     },
     {
-      "id": "5fb3059c-20a5-4e07-a563-50e29642073c",
-      "fromNode": "8aeab017-76a5-400c-b519-ee8470a03478",
+      "id": "7e315d81-cac1-40cb-9598-d4feabfa784e",
+      "fromNode": "9523207b-09d9-4245-9f50-395d40805dc8",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -253,10 +262,10 @@
       "shape": "curved"
     },
     {
-      "id": "707471a7-7000-4453-9117-bb64fddf61ba",
-      "fromNode": "ce7475fd-3afd-4ae6-ad12-8ae79446a8b7",
+      "id": "94ce5498-5a7a-4454-af18-acaea7a98958",
+      "fromNode": "0fbef1c6-8c80-48f0-8664-8a97acad6384",
       "fromSide": "bottom",
-      "toNode": "6b247e49-81ec-42be-a668-2f413fb5f12a",
+      "toNode": "0c91c32f-ef1b-47e8-b8a2-cc312b17e81f",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -264,10 +273,10 @@
       "shape": "straight"
     },
     {
-      "id": "10a0955a-4215-4517-b024-884f2356708b",
-      "fromNode": "1954bfdb-2812-47b3-92d6-f455d7c8b7da",
+      "id": "45909357-9e6b-4359-9356-b50ec8aeeed9",
+      "fromNode": "9d649b47-77fd-496d-af70-8c1bea91687a",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -275,10 +284,10 @@
       "shape": "curved"
     },
     {
-      "id": "e97089c5-a2f1-4a0c-8d46-19b0635fcf70",
-      "fromNode": "6b247e49-81ec-42be-a668-2f413fb5f12a",
+      "id": "f978f0d0-44fc-419f-ab6a-517f3eb5b464",
+      "fromNode": "0c91c32f-ef1b-47e8-b8a2-cc312b17e81f",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -286,10 +295,10 @@
       "shape": "curved"
     },
     {
-      "id": "12a8ef0c-6bbc-4197-9e56-3fa3e4ee4ded",
-      "fromNode": "ce7475fd-3afd-4ae6-ad12-8ae79446a8b7",
+      "id": "4d257fd0-191d-4804-9c87-72f6d193daa7",
+      "fromNode": "0fbef1c6-8c80-48f0-8664-8a97acad6384",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -297,10 +306,10 @@
       "shape": "curved"
     },
     {
-      "id": "c43ba3b0-cf89-4047-b40f-be365e673fe0",
-      "fromNode": "da7c8216-9b40-4c1f-9130-3f2196be23f0",
+      "id": "ba3bbdc1-c99a-49d2-bfab-84ab82b497a6",
+      "fromNode": "2777381a-9efc-4aac-86e4-8fa9fb2b67bc",
       "fromSide": "right",
-      "toNode": "b9ea78f5-cdaf-4f62-89a3-e3ad7cc78a85",
+      "toNode": "ceb7ab1c-50a3-4115-b0e2-33e553dc54ae",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -309,10 +318,10 @@
       "shape": "curved"
     },
     {
-      "id": "549af503-645c-4c2e-a4e6-7c1aef6e2610",
-      "fromNode": "b9ea78f5-cdaf-4f62-89a3-e3ad7cc78a85",
+      "id": "c3ab6a7a-c437-4db6-a37b-b1fb896c599d",
+      "fromNode": "ceb7ab1c-50a3-4115-b0e2-33e553dc54ae",
       "fromSide": "bottom",
-      "toNode": "e61f67e9-e0fd-46c6-b3a3-43bdb1078feb",
+      "toNode": "0388211e-1dfc-4eb0-8689-5bdcfd1463b9",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -320,10 +329,10 @@
       "shape": "curved"
     },
     {
-      "id": "0cf85e53-1bf9-4f7a-a9b3-1de4a93b314a",
-      "fromNode": "7f23b62e-627d-42db-970f-2802f61f706a",
+      "id": "bd423408-4d5f-4ace-8c24-89827bf643b2",
+      "fromNode": "ceb7ab1c-50a3-4115-b0e2-33e553dc54ae",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -331,10 +340,10 @@
       "shape": "curved"
     },
     {
-      "id": "387e45b4-5f37-4029-97c9-c69a1ea4a559",
-      "fromNode": "b9ea78f5-cdaf-4f62-89a3-e3ad7cc78a85",
+      "id": "c11c033c-4372-4bd1-8c3b-0d37783c63f2",
+      "fromNode": "0388211e-1dfc-4eb0-8689-5bdcfd1463b9",
       "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
+      "toNode": "9575c687-d447-4658-bc2e-e1144edc5b7d",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "1",
@@ -342,21 +351,10 @@
       "shape": "curved"
     },
     {
-      "id": "e473c221-8a6c-4c8f-81ae-37c9bfcda769",
-      "fromNode": "e61f67e9-e0fd-46c6-b3a3-43bdb1078feb",
-      "fromSide": "left",
-      "toNode": "3f3fbe9d-2427-4438-aa2d-c5990e9df415",
-      "toSide": "right",
-      "toEnd": "arrow",
-      "color": "1",
-      "style": "solid",
-      "shape": "curved"
-    },
-    {
-      "id": "112bcd35-40c9-446a-bfc8-1b538a5791a8",
-      "fromNode": "82648a57-6922-4d2f-b2ec-77c7d7465840",
-      "fromSide": "right",
-      "toNode": "7f23b62e-627d-42db-970f-2802f61f706a",
+      "id": "e0087581-5964-4664-9666-e91f17433a80",
+      "fromNode": "4b119f57-c420-4343-891b-06f37c77ba03",
+      "fromSide": "bottom",
+      "toNode": "0fbef1c6-8c80-48f0-8664-8a97acad6384",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -364,21 +362,10 @@
       "shape": "curved"
     },
     {
-      "id": "476d95fd-ba28-4c2e-b7c4-4388f8d3aa7a",
-      "fromNode": "82648a57-6922-4d2f-b2ec-77c7d7465840",
+      "id": "f69dbacf-3556-4bcb-9e33-f1bac241b327",
+      "fromNode": "4b119f57-c420-4343-891b-06f37c77ba03",
       "fromSide": "bottom",
-      "toNode": "ce7475fd-3afd-4ae6-ad12-8ae79446a8b7",
-      "toSide": "top",
-      "toEnd": "arrow",
-      "color": "5",
-      "style": "solid",
-      "shape": "curved"
-    },
-    {
-      "id": "8e42a2a5-acf2-45aa-88d0-07ccb39b2c5a",
-      "fromNode": "82648a57-6922-4d2f-b2ec-77c7d7465840",
-      "fromSide": "bottom",
-      "toNode": "915bdd35-5b0f-4131-9693-af8a4ca2ab6f",
+      "toNode": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -387,10 +374,10 @@
       "shape": "curved"
     },
     {
-      "id": "3b768353-d70b-49b5-b16c-bc3aa95f70d9",
-      "fromNode": "915bdd35-5b0f-4131-9693-af8a4ca2ab6f",
+      "id": "1aca2424-f2a2-438e-af05-b91401423d7d",
+      "fromNode": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
       "fromSide": "bottom",
-      "toNode": "1954bfdb-2812-47b3-92d6-f455d7c8b7da",
+      "toNode": "9d649b47-77fd-496d-af70-8c1bea91687a",
       "toSide": "top",
       "toEnd": "arrow",
       "color": "5",
@@ -398,13 +385,97 @@
       "shape": "curved"
     },
     {
-      "id": "42686e0c-da3f-4c55-967f-0364fb407fc4",
-      "fromNode": "6b247e49-81ec-42be-a668-2f413fb5f12a",
+      "id": "b678cabe-5640-4753-bfe1-182d1b402c37",
+      "fromNode": "0c91c32f-ef1b-47e8-b8a2-cc312b17e81f",
       "fromSide": "left",
-      "toNode": "915bdd35-5b0f-4131-9693-af8a4ca2ab6f",
+      "toNode": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
       "toSide": "right",
       "toEnd": "arrow",
       "color": "5",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "d0182ca5-c92c-4e00-9ce1-88b040889c36",
+      "fromNode": "0388211e-1dfc-4eb0-8689-5bdcfd1463b9",
+      "fromSide": "bottom",
+      "toNode": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
+      "toSide": "bottom",
+      "toEnd": "arrow",
+      "color": "4",
+      "label": "Booking status update through socket.io",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "373e75f1-3688-4162-adcd-223b266d3f71",
+      "fromNode": "0fbef1c6-8c80-48f0-8664-8a97acad6384",
+      "fromSide": "top",
+      "toNode": "a8b4f403-eb8c-4bf8-b746-80c61bf5de02",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "color": "3",
+      "label": "POST Request",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "faf9d362-3336-499a-bc53-360b06459878",
+      "fromNode": "9d649b47-77fd-496d-af70-8c1bea91687a",
+      "fromSide": "bottom",
+      "toNode": "a8b4f403-eb8c-4bf8-b746-80c61bf5de02",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "color": "3",
+      "label": "PUT Request",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "3c56f493-b2e7-4463-bb0d-58dddcc21cba",
+      "fromNode": "0388211e-1dfc-4eb0-8689-5bdcfd1463b9",
+      "fromSide": "right",
+      "toNode": "a8b4f403-eb8c-4bf8-b746-80c61bf5de02",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "color": "3",
+      "label": "PUT Request",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "8b27c54f-ffeb-4d7e-853a-2b96e1022de7",
+      "fromNode": "a8b4f403-eb8c-4bf8-b746-80c61bf5de02",
+      "fromSide": "right",
+      "toNode": "7fdb3d73-d4d6-42a6-9e7d-58d87f86e1b7",
+      "toSide": "right",
+      "toEnd": "arrow",
+      "color": "6",
+      "label": "Refernece keys Request",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "80baea63-bfbe-4c28-b7d0-a9772be8c12a",
+      "fromNode": "2777381a-9efc-4aac-86e4-8fa9fb2b67bc",
+      "fromSide": "right",
+      "toNode": "7fdb3d73-d4d6-42a6-9e7d-58d87f86e1b7",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "color": "3",
+      "label": "GET Request",
+      "style": "solid",
+      "shape": "curved"
+    },
+    {
+      "id": "d7be40ab-c15e-45f3-a738-60eab7cdb59f",
+      "fromNode": "95e347c5-c8f9-4e76-a076-3d52ce5374ef",
+      "fromSide": "bottom",
+      "toNode": "a8b4f403-eb8c-4bf8-b746-80c61bf5de02",
+      "toSide": "left",
+      "toEnd": "arrow",
+      "color": "3",
+      "label": "GET Request",
       "style": "solid",
       "shape": "curved"
     }
