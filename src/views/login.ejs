@@ -102,7 +102,13 @@
       });
       if(data.ok){
         console.log("Login success");
-        window.location.href="/";
+        if (email === "admin@gmail.com") {
+          window.location.href="/api/admin";
+          return;
+        }
+        else{
+         window.location.href = "/api/user"; 
+        }
       }
     })
 

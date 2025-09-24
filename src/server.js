@@ -39,14 +39,15 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
-app.get("/new", (req, res) => {
-  res.render("newIndex.ejs");
-});
-
 app.listen(PORT, () => {
   console.log(chalk.blue(`Server is running on port ${PORT}`));
 });
-
-app.get("/error", (req, res) => {
+// Handle undefined routes and errors
+app.use((req, res, next) => {
   res.status(404).render("error.ejs");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render("error.ejs");
 });
