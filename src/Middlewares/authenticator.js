@@ -1,11 +1,21 @@
-import { verfyToken } from "../routes/jwtutils";
+import dotenv from "dotenv";
+import { verifyToken } from "../routes/jwtutils.js";
 
 dotenv.config();
 
 function authenticator(req, res, next) {
-  const token = req.cookies.token;
-  if (!token)
+  // Prefer cookie token; fallback to Authorization: Bearer <token>
+  let token = req.cookies?.token;
+  if (!token) {
+    const authHeader = req.headers["authorization"] || req.headers["Authorization"];
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      token = authHeader.substring("Bearer ".length);
+    }
+  }
+
+  if (!token) {
     return res.status(401).json({ error: "Access denied, no token provided" });
+  }
 
   try {
     const decoded = verifyToken(token);
@@ -13,16 +23,15 @@ function authenticator(req, res, next) {
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
-      const expiredAt = err.expiredAt.getTime();
+      const expiredAt = err.expiredAt?.getTime?.() ?? Date.now();
       const secondsAgo = Math.floor((Date.now() - expiredAt) / 1000);
       return res.status(401).json({
         error: `Token expired ${secondsAgo} seconds ago`,
         expired_at: new Date(expiredAt).toISOString(),
       });
     }
-
     return res.status(401).json({ error: "Invalid token" });
   }
-};
+}
 
 export default authenticator;

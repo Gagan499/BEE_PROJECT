@@ -61,69 +61,62 @@
         </div>
 
         <div class="booking-content">
+            <% const upcomingBookings = (bookings || []).filter(b => (b.status === 'pending')); %>
+            <% const pastBookings = (bookings || []).filter(b => (b.status === 'approved' || b.status === 'rejected')); %>
             <div class="tab-content active" id="upcoming">
                 <div class="booking-cards">
-                    <div class="booking-card">
-                        <div class="hotel-name">American Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Dubai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
+                    <% if (upcomingBookings.length === 0) { %>
+                        <div class="booking-card" data-placeholder="true">
+                            <div class="hotel-name">No upcoming bookings</div>
+                            <div class="booking-details">
+                                <div class="detail-line">Create a new booking to see it here.</div>
+                            </div>
                         </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
+                    <% } %>
 
-                    <div class="booking-card">
-                        <div class="hotel-name">American Hotel</div>
+                    <% upcomingBookings.forEach(function(b){ %>
+                    <div class="booking-card" data-booking-id="<%= b._id %>">
+                        <div class="hotel-name"><%= b.title %> <span style="font-size:0.9rem;color:#888;">#<%= b.idx %></span></div>
                         <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Dubai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
+                            <div class="detail-line"><strong>Name:</strong> <%= b.name %></div>
+                            <div class="detail-line"><strong>Arrival:</strong> <%= b.arrival %></div>
+                            <div class="detail-line"><strong>Return:</strong> <%= b.departure %></div>
+                            <div class="detail-line status-line"><strong>Status:</strong> <%= b.status === 'approved' ? 'approved' : (b.status === 'rejected' ? 'declined' : 'pending') %></div>
                         </div>
-                        <button class="view-booking-btn">View this booking</button>
+                        <button class="view-booking-btn" data-id="<%= b._id %>">View this booking</button>
                     </div>
-
-                    <div class="booking-card">
-                        <div class="hotel-name">American Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Dubai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
-                        </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
+                    <% }); %>
                 </div>
             </div>
 
             <div class="tab-content" id="past">
                 <div class="booking-cards">
-                    <div class="booking-card">
-                        <div class="hotel-name">Grand Palace Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Mumbai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-03-15 at 10:00</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-03-17 at 12:00</div>
+                    <% if (pastBookings.length === 0) { %>
+                        <div class="booking-card" data-placeholder="true">
+                            <div class="hotel-name">No past bookings yet</div>
+                            <div class="booking-details">
+                                <div class="detail-line">Approved or rejected bookings will appear here.</div>
+                            </div>
                         </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
+                    <% } %>
 
-                    <div class="booking-card">
-                        <div class="hotel-name">Luxury Resort</div>
+                    <% pastBookings.forEach(function(b){ %>
+                    <div class="booking-card" data-booking-id="<%= b._id %>">
+                        <div class="hotel-name"><%= b.title %> <span style="font-size:0.9rem;color:#888;">#<%= b.idx %></span></div>
                         <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Delhi</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-02-20 at 14:30</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-02-23 at 11:00</div>
+                            <div class="detail-line"><strong>Name:</strong> <%= b.name %></div>
+                            <div class="detail-line"><strong>Arrival:</strong> <%= b.arrival %></div>
+                            <div class="detail-line"><strong>Return:</strong> <%= b.departure %></div>
+                            <div class="detail-line status-line"><strong>Status:</strong> <%= b.status === 'approved' ? 'approved' : 'declined' %></div>
                         </div>
-                        <button class="view-booking-btn">View this booking</button>
+                        <button class="view-booking-btn" data-id="<%= b._id %>">View this booking</button>
                     </div>
+                    <% }); %>
                 </div>
             </div>
         </div>
+
+        
     </main>
 
     <!-- Booking Form Modal -->
@@ -145,6 +138,13 @@
                     <div class="form-group full-width">
                         <label for="emailId">Email id :</label>
                         <input type="email" id="emailId" name="emailId" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="location">Location :</label>
+                        <input type="text" id="location" name="location" placeholder="e.g., Dubai, Abu Dhabi">
                     </div>
                 </div>
 
@@ -219,8 +219,8 @@
                 </div>
 
                 <div class="form-buttons">
-                    <button type="submit" class="submit-btn">Submit</button>
-                    <button type="button" class="clear-btn" onclick="clearForm()">Clear All</button>
+                    <button type="submit" id="submitBtn" class="submit-btn">Submit</button>
+                    <button type="button" id="clearBtn" class="clear-btn" onclick="clearForm()">Clear All</button>
                 </div>
             </form>
         </div>
@@ -272,6 +272,36 @@
     </footer>
 
     <script>
+            // Socket notification UI
+            function showToast(message) {
+                let toast = document.getElementById('toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'toast';
+                    toast.style.position = 'fixed';
+                    toast.style.bottom = '20px';
+                    toast.style.right = '20px';
+                    toast.style.background = '#111827';
+                    toast.style.color = '#fff';
+                    toast.style.padding = '12px 16px';
+                    toast.style.borderRadius = '8px';
+                    toast.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
+                    toast.style.zIndex = '9999';
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = message;
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(10px)';
+                }, 15000);
+            }
+        </script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Enhanced parallax effect with sophisticated animations
             const heroSection = document.querySelector('.hero-section');
@@ -420,22 +450,92 @@
             const newBookingBtn = document.querySelector('.new-booking-btn');
             const viewButtons = document.querySelectorAll('.view-booking-btn');
             const bookingForm = document.getElementById('bookingForm');
+            // Bootstrap bookings data from server for view-only population
+            const bookingsDataTag = document.createElement('script');
+            bookingsDataTag.id = 'userBookings';
+            bookingsDataTag.type = 'application/json';
+            bookingsDataTag.textContent = `<%- JSON.stringify(bookings || []) %>`;
+            document.body.appendChild(bookingsDataTag);
+            window.userBookings = JSON.parse(document.getElementById('userBookings').textContent || '[]');
+            const userBookings = window.userBookings;
+
+            // Establish Socket.IO connection and listen for booking status updates AFTER userBookings is set
+            const socket = io();
+            socket.on('connect', () => {
+                console.log('Connected to WebSocket server', socket.id);
+            });
+            socket.on('booking-status', (payload) => {
+                const hasBooking = (window.userBookings || []).some(b => String(b._id) === String(payload.bookingId));
+                console.debug('booking-status evt', payload, 'hasBooking?', hasBooking);
+                if (!hasBooking) return;
+
+                // Update local cache
+                try {
+                    const idx = (window.userBookings || []).findIndex(b => String(b._id) === String(payload.bookingId));
+                    if (idx >= 0) window.userBookings[idx].status = payload.status;
+                } catch(_) {}
+
+                const statusWord = payload.status === 'approved' ? 'approved' : 'rejected';
+                showToast(`Your booking "${payload.title}" was ${statusWord}.`);
+
+                // Move/update card in UI
+                const upcomingContainer = document.querySelector('#upcoming .booking-cards');
+                const pastContainer = document.querySelector('#past .booking-cards');
+                const card = document.querySelector(`.booking-card[data-booking-id="${payload.bookingId}"]`);
+                if (card) {
+                    // Update status text
+                    const statusLine = card.querySelector('.status-line');
+                    if (statusLine) {
+                        statusLine.innerHTML = `<strong>Status:</strong> ${statusWord}`;
+                    }
+                    // If approved/rejected and card is in Upcoming, move to Past
+                    if ((payload.status === 'approved' || payload.status === 'rejected') && card.closest('#upcoming')) {
+                        // Remove any placeholder in past
+                        const pastPlaceholder = pastContainer.querySelector('.booking-card[data-placeholder="true"]');
+                        if (pastPlaceholder) pastPlaceholder.remove();
+                        pastContainer.prepend(card);
+                        // If upcoming became empty, show placeholder
+                        const upcomingCards = upcomingContainer.querySelectorAll('.booking-card:not([data-placeholder])');
+                        if (upcomingCards.length === 0) {
+                            const empty = document.createElement('div');
+                            empty.className = 'booking-card';
+                            empty.setAttribute('data-placeholder','true');
+                            empty.innerHTML = `<div class="hotel-name">No upcoming bookings</div><div class="booking-details"><div class="detail-line">Create a new booking to see it here.</div></div>`;
+                            upcomingContainer.appendChild(empty);
+                        }
+                    }
+                }
+            });
 
             // Open modal for new booking
             newBookingBtn.addEventListener('click', () => {
                 openModal();
+                setFormEnabled(true);
                 clearForm();
             });
 
-            // Open modal for viewing/editing booking
+            // Open modal for viewing existing booking (read-only)
             viewButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
                     button.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         button.style.transform = 'scale(1)';
+                        const id = button.getAttribute('data-id');
+                        let b = null;
+                        if (id) {
+                            b = userBookings.find(x => x._id === id);
+                        }
+                        if (!b) {
+                            const idxAttr = button.getAttribute('data-index');
+                            if (idxAttr !== null) {
+                                const idx = Number(idxAttr);
+                                b = userBookings[idx];
+                            }
+                        }
+                        if (b) populateForm(b);
+                        setFormEnabled(false);
                         openModal();
-                        // You can populate form with existing data here
                     }, 150);
                 });
             });
@@ -448,11 +548,67 @@
             });
 
             // Form submission
-            bookingForm.addEventListener('submit', (e) => {
+            bookingForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                alert('Booking submitted successfully!');
-                closeModal();
+                const form = e.currentTarget;
+                const data = {
+                    customerName: document.getElementById('customerName').value.trim(),
+                    phoneNumber: document.getElementById('phoneNumber').value.trim(),
+                    emailId: document.getElementById('emailId').value.trim(),
+                    location: document.getElementById('location').value.trim(),
+                    bookingType: document.getElementById('package').checked ? 'package' : 'stayOnly',
+                    packageName: document.getElementById('package').checked ? document.getElementById('packageName').value : '',
+                    hotelName: document.getElementById('stayOnly').checked ? document.getElementById('hotelName').value : '',
+                    arrivalDate: document.getElementById('arrivalDate').value,
+                    departureDate: document.getElementById('departureDate').value,
+                    adults: document.getElementById('adults').value,
+                    children: document.getElementById('children').value,
+                };
+
+                try {
+                    const res = await fetch('/api/bookings', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const json = await res.json();
+                    if (res.ok && json.success) {
+                        alert('Booking submitted successfully!');
+                        // Track this booking locally so socket notifications will match this page
+                        try {
+                            const newEntry = {
+                                _id: json.bookingId,
+                                idx: (window.userBookings?.length || 0) + 1,
+                                title: (document.getElementById('package').checked ? (document.getElementById('packageName').value || 'Booking') : (document.getElementById('hotelName').value || 'Booking')),
+                                name: document.getElementById('customerName').value.trim(),
+                                location: document.getElementById('location').value.trim() || '-',
+                                arrival: document.getElementById('arrivalDate').value,
+                                departure: document.getElementById('departureDate').value,
+                                status: 'pending',
+                                phoneNumber: document.getElementById('phoneNumber').value.trim(),
+                                email: document.getElementById('emailId').value.trim(),
+                                bookingType: document.getElementById('package').checked ? 'package' : 'stayOnly',
+                                packageName: document.getElementById('package').checked ? document.getElementById('packageName').value : '',
+                                hotelName: document.getElementById('stayOnly').checked ? document.getElementById('hotelName').value : '',
+                                adults: Number(document.getElementById('adults').value) || 1,
+                                children: Number(document.getElementById('children').value) || 0,
+                                arrivalISO: document.getElementById('arrivalDate').value,
+                                departureISO: document.getElementById('departureDate').value,
+                            };
+                            window.userBookings = window.userBookings || [];
+                            window.userBookings.unshift(newEntry);
+                        } catch (_) { /* ignore */ }
+                        closeModal();
+                        form.reset();
+                    } else {
+                        alert(json.message || 'Failed to submit booking');
+                    }
+                } catch (err) {
+                    console.error('Booking submit failed', err);
+                    alert('Network error while submitting booking');
+                }
             });
+            
 
             // Booking card hover animations
             const bookingCards = document.querySelectorAll('.booking-card');
@@ -496,6 +652,41 @@
             // Reset sliding animation to package
             slideToPanel(true);
             document.getElementById('packageName').value = 'Bali Exploration';
+        }
+
+        // Toggle form editable vs read-only
+        function setFormEnabled(enabled) {
+            const controls = document.querySelectorAll('#bookingForm input, #bookingForm select, #bookingForm textarea');
+            controls.forEach(el => {
+                el.disabled = !enabled;
+            });
+            document.getElementById('submitBtn').style.display = enabled ? 'inline-block' : 'none';
+            document.getElementById('clearBtn').style.display = enabled ? 'inline-block' : 'none';
+        }
+
+        // Populate form with an existing booking (view-only)
+        function populateForm(b) {
+            document.getElementById('customerName').value = b.name || '';
+            document.getElementById('phoneNumber').value = b.phoneNumber || '';
+            document.getElementById('emailId').value = b.email || '';
+            document.getElementById('location').value = b.location || '';
+
+            // Set booking type and slide panels
+            if ((b.bookingType || 'package') === 'stayOnly') {
+                document.getElementById('stayOnly').checked = true;
+                slideToPanel(false);
+            } else {
+                document.getElementById('package').checked = true;
+                slideToPanel(true);
+            }
+            document.getElementById('packageName').value = b.packageName || '';
+            document.getElementById('hotelName').value = b.hotelName || '';
+
+            // Dates and counts
+            document.getElementById('arrivalDate').value = b.arrivalISO || '';
+            document.getElementById('departureDate').value = b.departureISO || '';
+            document.getElementById('adults').value = String(b.adults || 1);
+            document.getElementById('children').value = String(b.children || 0);
         }
 
         // Sidebar menu functionality
