@@ -1,4 +1,5 @@
 import express from "express";
+import Booking from "../../models/booking.js";
 
 const pageRoutes = express.Router();
 
@@ -6,59 +7,54 @@ pageRoutes.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 
-pageRoutes.get("/user", (req, res) => {
-  //insert data retrieval and preparation logic here
-  res.render("user.ejs");
+pageRoutes.get("/user", async (req, res) => {
+  try {
+    const docs = await Booking.find({}).sort({ createdAt: -1 }).lean();
+    const fmt = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "-");
+    const bookings = docs.map((b, i) => ({
+      _id: b._id.toString(),
+      idx: i + 1,
+      title: b.hotelName || b.packageName || "Booking",
+      name: b.name,
+      location: b.location || "-",
+      arrival: fmt(b.arrivalDate),
+      departure: fmt(b.departureDate),
+      status: b.status || "pending",
+      // full details for view-only modal
+      phoneNumber: b.phoneNumber || "",
+      email: b.email || "",
+      bookingType: b.bookingType || "package",
+      packageName: b.packageName || "",
+      hotelName: b.hotelName || "",
+      adults: b.adults || 1,
+      children: b.children || 0,
+      arrivalISO: fmt(b.arrivalDate),
+      departureISO: fmt(b.departureDate),
+    }));
+    res.render("user.ejs", { bookings });
+  } catch (err) {
+    console.error("Failed to load user bookings:", err);
+    res.render("user.ejs", { bookings: [] });
+  }
 });
 
-pageRoutes.get("/admin", (req, res) => {
-  // Sample booking data for demonstration
-  const bookings = [
-    {
-      name: "John Doe",
-      location: "Dubai",
-      date: "2025-10-15",
-      status: "pending",
-      phone: "+971-50-123-4567",
-      email: "john.doe@email.com",
-      adults: 2,
-      children: 1,
-      departureDate: "2025-10-20",
-      bookingType: "package",
-      packageName: "Dubai Luxury Package",
-      hotel: "Burj Al Arab"
-    },
-    {
-      name: "Jane Smith",
-      location: "Abu Dhabi",
-      date: "2025-11-05",
-      status: "approved",
-      phone: "+971-50-987-6543",
-      email: "jane.smith@email.com",
-      adults: 1,
-      children: 0,
-      departureDate: "2025-11-10",
-      bookingType: "stayOnly",
-      packageName: "City Break",
-      hotel: "Emirates Palace"
-    },
-    {
-      name: "Mike Johnson",
-      location: "Sharjah",
-      date: "2025-12-01",
-      status: "rejected",
-      phone: "+971-50-555-1234",
-      email: "mike.johnson@email.com",
-      adults: 4,
-      children: 2,
-      departureDate: "2025-12-07",
-      bookingType: "package",
-      packageName: "Family Adventure",
-      hotel: "Coral Beach Resort"
-    }
-  ];
-  
-  res.render("admin.ejs", { bookings });
+pageRoutes.get("/admin", async (req, res) => {
+  try {
+    const docs = await Booking.find({}).sort({ createdAt: -1 }).lean();
+    const toCss = (s) => (s === 'approved' ? 'approve' : s === 'rejected' ? 'reject' : 'pending');
+    const bookings = docs.map(b => ({
+      _id: b._id.toString(),
+      name: b.name,
+      location: b.location || "-",
+      date: b.arrivalDate ? new Date(b.arrivalDate).toISOString().slice(0,10) : "-",
+      status: b.status || "pending",
+      cssStatus: toCss(b.status || 'pending'),
+    }));
+    res.render("admin.ejs", { bookings });
+  } catch (err) {
+    console.error("Failed to load bookings:", err);
+    res.render("admin.ejs", { bookings: [] });
+  }
 });
 
 pageRoutes.get("/book", (req, res) => {

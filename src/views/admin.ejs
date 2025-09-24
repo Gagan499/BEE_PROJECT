@@ -62,7 +62,7 @@
                     <a href="#" class="edit-link" data-index="<%= index %>">Edit</a>
                 </div>
                 <div class="grid-cell approve-cell">
-                    <div class="decision-slider initial-state state-<%= booking.status %>">
+                    <div class="decision-slider <%= booking.status === 'pending' ? 'initial-state' : 'final-state' %> state-<%= booking.cssStatus %>" data-booking-id="<%= booking._id %>" data-status="<%= booking.status %>">
                         <div class="decision-slider-thumb"></div>
                         <div class="decision-label approve" data-decision="approve">Approve</div>
                         <div class="decision-label pending" data-decision="pending">Pending</div>
@@ -224,6 +224,7 @@
             </div>
         </div>
     </form>
+    <script src="/socket.io/socket.io.js"></script>
     <script id="bookingsJson" type="application/json">
         <%- JSON.stringify(bookings) %>
     </script>
@@ -232,6 +233,17 @@
         const bookingsData = JSON.parse(document.getElementById('bookingsJson').textContent);
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Real-time updates: adjust decision slider when status changes elsewhere
+            const socket = io();
+            socket.on('connect', () => console.log('Admin socket connected', socket.id));
+            socket.on('booking-status', (payload) => {
+                const slider = document.querySelector(`.decision-slider[data-booking-id="${payload.bookingId}"]`);
+                if (!slider) return;
+                slider.classList.remove('state-approve', 'state-pending', 'state-reject');
+                const cls = payload.status === 'approved' ? 'approve' : 'reject';
+                slider.classList.add('final-state', `state-${cls}`);
+                slider.querySelectorAll('.decision-label').forEach(l => l.style.pointerEvents = 'none');
+            });
             // Enhanced parallax effect with sophisticated animations
             const heroSection = document.querySelector('.hero-section');
             const heroTitle = document.querySelector('.hero-section h1');
@@ -317,16 +329,37 @@
             // --- Decision slider logic (unchanged) ---
             const sliders = document.querySelectorAll('.decision-slider');
             sliders.forEach(slider => {
+                const bookingId = slider.getAttribute('data-booking-id');
+                const locked = slider.classList.contains('final-state');
+                if (locked) {
+                    // Prevent clicking once finalized
+                    slider.querySelectorAll('.decision-label').forEach(l => l.style.pointerEvents = 'none');
+                    return;
+                }
+
                 slider.querySelectorAll('.decision-label').forEach(label => {
-                    label.addEventListener('click', () => {
-                        const decision = label.dataset.decision;
-                        const isInitialState = slider.classList.contains('initial-state');
-                        slider.classList.remove('state-approve', 'state-pending', 'state-reject');
-                        if (isInitialState && (decision === 'approve' || decision === 'reject')) {
-                            slider.classList.remove('initial-state');
+                    label.addEventListener('click', async () => {
+                        const decision = label.dataset.decision; // approve | pending | reject
+                        if (decision === 'pending') return; // ignore pending clicks from admin UI
+
+                        try {
+                            const res = await fetch(`/api/bookings/${bookingId}/status`, {
+                                method: 'PATCH',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ status: decision === 'approve' ? 'approved' : 'rejected' })
+                            });
+                            const json = await res.json();
+                            if (!res.ok || !json.success) throw new Error(json.message || 'Failed');
+
+                            // Update UI and lock slider
+                            const css = json.status === 'approved' ? 'approve' : (json.status === 'rejected' ? 'reject' : 'pending');
+                            slider.classList.remove('state-approve', 'state-pending', 'state-reject');
                             slider.classList.add('final-state');
+                            slider.classList.add(`state-${css}`);
+                            slider.querySelectorAll('.decision-label').forEach(l => l.style.pointerEvents = 'none');
+                        } catch (e) {
+                            alert('Failed to update booking status');
                         }
-                        slider.classList.add(`state-${decision}`);
                     });
                 });
             });

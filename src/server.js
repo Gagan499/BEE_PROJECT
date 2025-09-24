@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import chalk from "chalk";
 import path from "path";
 import greet from "bhaveshtest";
+import http from "http";
+import { Server as SocketIOServer } from "socket.io";
+import { setIO } from "./socket.js";
 
 import { fileURLToPath } from "url";
 
@@ -10,11 +13,19 @@ import connectDB from "../config/db.js";
 import pageRoutes from "./page routes/pages.js";
 import globalMiddlewares from "./Middlewares/golbalMiddlewares.js";
 import authRouter from "./routes/auth.js";
+import bookingsRouter from "./routes/bookings.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const server = http.createServer(app);
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: "*",
+  },
+});
+setIO(io);
+const PORT = process.env.PORT || 6969;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +46,7 @@ connectDB();
 // Pages and auth routes middleware
 app.use("/api", pageRoutes);
 app.use("/auth", authRouter);
+app.use("/api/bookings", bookingsRouter);
 
 app.get("/", (req, res) => {
   res.render("index.ejs");
@@ -103,9 +115,17 @@ app.get("/packages", (req, res) => {
   res.render("packages", { packages: samplePackages });
 });
 
+// Socket.IO basic connection log
+io.on("connection", (socket) => {
+  console.log(chalk.green("WebSocket client connected:"), socket.id);
+  socket.on("disconnect", () => {
+    console.log(chalk.yellow("WebSocket client disconnected:"), socket.id);
+  });
+});
+
 console.log(greet());
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(chalk.blue(`Server is running on port ${PORT} 🚀`));
 });
 
