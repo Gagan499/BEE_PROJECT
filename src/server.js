@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import ejs from "ejs";
 import chalk from "chalk";
 import path from "path";
 
@@ -38,6 +37,10 @@ app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
   res.render("index.ejs");
+});
+
+app.get("/new", (req, res) => {
+  res.render("newIndex.ejs");
 });
 
 app.listen(PORT, () => {

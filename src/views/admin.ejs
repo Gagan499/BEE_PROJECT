@@ -3,410 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Bookings</title>
-    <link rel="stylesheet" href="/assets/css/admin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Admin - My Bookings</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <header class="hero-section">
-        <nav>
-            <div class="logo">
-                <img src="/assets/images/logo.png" alt="Company Logo">
-            </div>
-            <div class="menu-icon">
-                <i class="fa-solid fa-bars"></i>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <header id="parallax-header" class="relative w-full h-56 md:h-72 lg:h-80 flex items-center overflow-hidden transition-all duration-300">
+    <div class="absolute inset-0 w-full h-full bg-cover bg-center will-change-transform" id="parallax-bg" style="background-image: url('../../public/assets/images/headerbg.jpg'); z-index:1;"></div>
+    <div class="relative z-20 flex w-full items-center justify-between px-6 pt-6" id="header-content">
+            <img src="assets/images/logo.png" alt="Logo" class="h-12 md:h-16 lg:h-20 w-auto">
+            <button id="navbar-toggle" class="group flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-white bg-opacity-10 hover:bg-opacity-20 transition relative">
+                <span class="bar block w-8 h-1 bg-white mb-2 rounded transition-all duration-300" id="bar1"></span>
+                <span class="bar block w-8 h-1 bg-white mb-2 rounded transition-all duration-300" id="bar2"></span>
+                <span class="bar block w-8 h-1 bg-white rounded transition-all duration-300" id="bar3"></span>
+            </button>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center z-10" id="header-title">
+            <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-bold drop-shadow-lg text-center" style="font-family: 'Alatsi', Arial, sans-serif;">My Bookings</h1>
+        </div>
+        <nav id="main-navbar" class="absolute top-0 left-0 w-full z-30 transition-colors duration-300">
+            <div id="navbar-menu" class="hidden absolute top-20 right-6 mt-2 w-40 bg-[#2d2f3e] rounded-lg shadow-lg py-2 flex flex-col items-center animate-fade-in z-30">
+                <a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Dashboard</a>
+                <a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Bookings</a>
+                <a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Profile</a>
+                <a href="#" class="text-white px-3 py-1 hover:bg-gray-700 w-full text-center text-sm">Logout</a>
             </div>
         </nav>
-        <h1>Customer Bookings</h1>
     </header>
 
-    <main class="content-wrapper">
-        <div class="bookings-grid">
-            <div class="grid-header">Name</div>
-            <div class="grid-header">Location</div>
-            <div class="grid-header">Arrival Date</div>
-            <div class="grid-header">Actions</div>
-            <div class="grid-header">Decision</div>
-
-            <% bookings.forEach((booking, index) => { %>
-                <div class="grid-cell name-cell" data-row-index="<%= index %>"><%= booking.name %></div>
-                <div class="grid-cell location-cell" data-row-index="<%= index %>"><%= booking.location %></div>
-                <div class="grid-cell date-cell" data-row-index="<%= index %>"><%= booking.date %></div>
-                <div class="grid-cell actions-cell">
-                    <a href="#" class="edit-link" data-index="<%= index %>">Edit</a>
-                </div>
-                <div class="grid-cell approve-cell">
-                    <div class="decision-slider initial-state state-<%= booking.status %>">
-                        <div class="decision-slider-thumb"></div>
-                        <div class="decision-label approve" data-decision="approve">Approve</div>
-                        <div class="decision-label pending" data-decision="pending">Pending</div>
-                        <div class="decision-label reject" data-decision="reject">Reject</div>
+    <!-- Header placeholder for fixed header offset -->
+    <div id="header-placeholder" style="height: 0;"></div>
+    <main class="flex-1 w-full max-w-5xl mx-auto px-2 py-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 mt-2">
+            <div class="flex items-center gap-2">
+                <button class="px-4 py-1.5 rounded-full bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition text-sm">New Booking</button>
+                <!-- Filter Dropdown -->
+                <div class="relative">
+                    <button id="filter-btn" class="px-4 py-1.5 rounded-full bg-gray-200 text-gray-800 font-semibold shadow hover:bg-gray-300 transition flex items-center gap-1 text-sm">Filter <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
+                    <div id="filter-menu" class="hidden absolute left-0 mt-1 w-40 bg-white rounded-lg shadow-lg py-1 z-20">
+                        <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" onclick="filterBy('upcoming')">Upcoming</button>
+                        <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" onclick="filterBy('past')">Past</button>
+                        <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" onclick="filterBy('all')">All</button>
                     </div>
                 </div>
-            <% }); %>
+                <!-- Sort Dropdown -->
+                <div class="relative">
+                    <button id="sort-btn" class="px-4 py-1.5 rounded-full bg-gray-200 text-gray-800 font-semibold shadow hover:bg-gray-300 transition flex items-center gap-1 text-sm">Sort <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                    <div id="sort-menu" class="hidden absolute left-0 mt-1 w-40 bg-white rounded-lg shadow-lg py-1 z-20">
+                        <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" onclick="sortBy('arrival')">Arrival Date</button>
+                        <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" onclick="sortBy('return')">Return Date</button>
+                        <button class="block w-full text-left px-3 py-1 hover:bg-gray-100 text-sm" onclick="sortBy('name')">Name</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-1">
+                <span class="px-3 py-1 rounded-full bg-green-600 text-white font-semibold text-sm">Dubai</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="px-4 py-1.5 rounded-full bg-green-600 text-white font-semibold text-sm">Upcoming Trips</span>
+                <span class="px-4 py-1.5 rounded-full bg-green-600 text-white font-semibold text-sm">1234@gmail.com</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-2 mb-3">
+            <button id="show-upcoming" class="flex-1 py-2 rounded-lg text-base font-bold bg-blue-600 text-white hover:bg-blue-700 transition">Upcoming bookings</button>
+            <button id="show-past" class="flex-1 py-2 rounded-lg text-base font-bold bg-gray-300 text-gray-800 hover:bg-gray-400 transition">Past bookings</button>
+        </div>
+
+        <div id="upcoming-section" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Example Booking Card 1 -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col gap-4 border-t-4 border-green-600">
+                <h2 class="text-2xl font-bold">American Hotel</h2>
+                <div class="text-gray-700">
+                    <div><span class="font-semibold">Name:</span> Gagandeep Singh</div>
+                    <div><span class="font-semibold">From:</span> Dubai</div>
+                    <div><span class="font-semibold">Arrival:</span> 2025-05-05 at 11:01</div>
+                    <div><span class="font-semibold">Return:</span> 2025-05-06 at 11:01</div>
+                </div>
+                <button class="mt-auto px-4 py-2 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition">View this booking</button>
+            </div>
+            <!-- Example Booking Card 2 -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col gap-4 border-t-4 border-green-600">
+                <h2 class="text-2xl font-bold">Palm Resort</h2>
+                <div class="text-gray-700">
+                    <div><span class="font-semibold">Name:</span> Priya Sharma</div>
+                    <div><span class="font-semibold">From:</span> Mumbai</div>
+                    <div><span class="font-semibold">Arrival:</span> 2025-06-10 at 15:00</div>
+                    <div><span class="font-semibold">Return:</span> 2025-06-15 at 12:00</div>
+                </div>
+                <button class="mt-auto px-4 py-2 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition">View this booking</button>
+            </div>
+            <!-- Example Booking Card 3 -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col gap-4 border-t-4 border-green-600">
+                <h2 class="text-2xl font-bold">City Inn</h2>
+                <div class="text-gray-700">
+                    <div><span class="font-semibold">Name:</span> Rahul Verma</div>
+                    <div><span class="font-semibold">From:</span> Delhi</div>
+                    <div><span class="font-semibold">Arrival:</span> 2025-07-01 at 09:30</div>
+                    <div><span class="font-semibold">Return:</span> 2025-07-03 at 18:00</div>
+                </div>
+                <button class="mt-auto px-4 py-2 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition">View this booking</button>
+            </div>
+        </div>
+        <div id="past-section" class="grid grid-cols-1 md:grid-cols-2 gap-8 hidden">
+            <!-- Example Past Booking Card 1 -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col gap-4 border-t-4 border-gray-500">
+                <h2 class="text-2xl font-bold">Past Hotel</h2>
+                <div class="text-gray-700">
+                    <div><span class="font-semibold">Name:</span> John Doe</div>
+                    <div><span class="font-semibold">From:</span> Dubai</div>
+                    <div><span class="font-semibold">Arrival:</span> 2024-12-01 at 10:00</div>
+                    <div><span class="font-semibold">Return:</span> 2024-12-05 at 10:00</div>
+                </div>
+                <button class="mt-auto px-4 py-2 rounded-full bg-gray-500 text-white font-semibold hover:bg-gray-600 transition">View this booking</button>
+            </div>
+            <!-- Example Past Booking Card 2 -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col gap-4 border-t-4 border-gray-500">
+                <h2 class="text-2xl font-bold">Sunrise Suites</h2>
+                <div class="text-gray-700">
+                    <div><span class="font-semibold">Name:</span> Aisha Khan</div>
+                    <div><span class="font-semibold">From:</span> Abu Dhabi</div>
+                    <div><span class="font-semibold">Arrival:</span> 2024-11-20 at 14:00</div>
+                    <div><span class="font-semibold">Return:</span> 2024-11-22 at 11:00</div>
+                </div>
+                <button class="mt-auto px-4 py-2 rounded-full bg-gray-500 text-white font-semibold hover:bg-gray-600 transition">View this booking</button>
+            </div>
+            <!-- Example Past Booking Card 3 -->
+            <div class="bg-white rounded-3xl shadow-lg p-6 flex flex-col gap-4 border-t-4 border-gray-500">
+                <h2 class="text-2xl font-bold">Royal Stay</h2>
+                <div class="text-gray-700">
+                    <div><span class="font-semibold">Name:</span> Meera Patel</div>
+                    <div><span class="font-semibold">From:</span> Jaipur</div>
+                    <div><span class="font-semibold">Arrival:</span> 2024-10-10 at 12:00</div>
+                    <div><span class="font-semibold">Return:</span> 2024-10-12 at 10:00</div>
+                </div>
+                <button class="mt-auto px-4 py-2 rounded-full bg-gray-500 text-white font-semibold hover:bg-gray-600 transition">View this booking</button>
+            </div>
         </div>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Pages</h4>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Hotels</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Book Hotel</a></li>
+    <footer class="bg-[#2D2F3E] w-full py-10 px-4 mt-12">
+        <style>
+            .footer-link { color: #fff; text-decoration: none; transition: color 0.2s; }
+            .footer-link:hover { color: #16a34a; }
+            .footer-icon { color: #fff; transition: color 0.2s; }
+            .footer-icon:hover { color: #16a34a; }
+        </style>
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-stretch justify-center md:justify-between gap-0 md:gap-0">
+            <div class="flex flex-col items-center md:items-start justify-center flex-1 min-w-[220px] py-4">
+                <img src="../../public/assets/images/logo.png" alt="Logo" class="h-12 w-auto mb-2">
+                <span class="text-white text-2xl font-bold mb-4">ThePalmWay</span>
+                <ul class="text-lg list-none p-0 m-0 space-y-2">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Careers</a></li>
+                    <li><a href="#" class="footer-link">Join Us</a></li>
+                    <li><a href="#" class="footer-link">Partners</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Know More</h4>
-                <ul>
-                    <li><a href="#">Membership</a></li>
-                    <li><a href="#">Our Team</a></li>
-                    <li><a href="#">News</a></li>
-                </ul>
+            <div class="hidden md:flex flex-col items-center justify-center px-8">
+                <div class="border-l border-gray-400 h-36"></div>
             </div>
-            <div class="footer-column">
-                <h4>Other Details</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>The Trance</h4>
-                <p>Over the last 25 years, The Trance organisation has been known for dependably delivering the true Indian hospitality experience with more than 50 hotels and resorts worldwide.</p>
+            <div class="flex flex-col items-center md:items-start justify-center flex-1 min-w-[220px] py-4">
+                <span class="text-white text-lg mb-6 text-center md:text-left">Abc Avenue,<br>123 Street,<br>New York, USA</span>
+                <div class="w-full border-t border-gray-400 my-4 md:hidden"></div>
+                <div class="flex flex-row gap-10 justify-center md:justify-start w-full mt-2">
+                    <a href="#" class="footer-icon text-2xl" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="footer-icon text-2xl" aria-label="X"><i class="fa fa-times"></i></a>
+                    <a href="#" class="footer-icon text-2xl" aria-label="Email"><i class="fa fa-envelope"></i></a>
+                </div>
             </div>
         </div>
-        <div class="footer-socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-reddit-alien"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <div class="footer-copyright">
-            The Trance © 2025
+        <div class="mt-8 text-center text-gray-300 text-base">
+            Copyrights reserved SastaZomato © 2025
         </div>
     </footer>
 
-   <form class="booking-form-modal" id="bookingForm">
-    <div class="modal-content">
-        <!-- Add a close button for better UX -->
-        <button type="button" class="modal-close" onclick="clearForm()">&times;</button>
-        <!-- Customer Information Section -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="customerName">Name :</label>
-                <input type="text" id="customerName" name="customerName" required>
-            </div>
-            <div class="form-group">
-                <label for="phoneNumber">Phone No. :</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required>
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group full-width">
-                <label for="emailId">Email id :</label>
-                <input type="email" id="emailId" name="emailId" required>
-            </div>
-        </div>
-
-        <!-- Booking Type Selection -->
-        <div class="form-row">
-            <div class="booking-type">
-                <label class="radio-group">
-                    <input type="radio" id="package" name="bookingType" value="package" checked>
-                    Package
-                </label>
-                <label class="radio-group">
-                    <input type="radio" id="stayOnly" name="bookingType" value="stayOnly">
-                    Stay only
-                </label>
-            </div>
-        </div>
-
-        <!-- Sliding Container for Package/Hotel Selection -->
-        <div class="sliding-container">
-            <div class="sliding-content" id="slidingContent">
-                <!-- Package Panel -->
-                <div class="slide-panel active" id="packagePanel">
-                    <div class="form-group">
-                        <label for="packageName">Package Name :</label>
-                        <select id="packageName" name="packageName" required>
-                            <option value="">Select a package</option>
-                            <option value="Bali Exploration" selected>Bali Exploration</option>
-                            <option value="Paradise Gateway">Paradise Gateway</option>
-                            <option value="nothing">nothing</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Hotel Panel -->
-                <div class="slide-panel" id="hotelPanel">
-                    <div class="form-group">
-                        <label for="hotelName">Hotel :</label>
-                        <select id="hotelName" name="hotelName">
-                            <option value="">Select a hotel</option>
-                            <option value="Jet 2 Holiday">Jet 2 Holiday</option>
-                            <option value="Grand Palace Resort">Grand Palace Resort</option>
-                            <option value="Azure Bay Hotel">Azure Bay Hotel</option>
-                            <option value="Sunset Paradise Inn">Sunset Paradise Inn</option>
-                            <option value="Royal Crown Hotel">Royal Crown Hotel</option>
-                            <option value="Ocean Breeze Resort">Ocean Breeze Resort</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Guest Count Section -->
-        <div class="form-row people-section">
-            <div class="form-group">
-                <label>People :</label>
-                <div class="people-inputs">
-                    <div class="people-input-group">
-                        <label for="adults">Adults :</label>
-                        <input type="number" id="adults" name="adults" value="2" min="1" required>
-                    </div>
-                    <div class="people-input-group">
-                        <label for="children">Children :</label>
-                        <input type="number" id="children" name="children" value="0" min="0">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Date Selection -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="arrivalDate">Arrival Date :</label>
-                <input type="date" id="arrivalDate" name="arrivalDate" required>
-            </div>
-            <div class="form-group">
-                <label for="departureDate">Departure Date :</label>
-                <input type="date" id="departureDate" name="departureDate" required>
-            </div>
-        </div>
-
-        <!-- Form Action Buttons -->
-        <div class="form-buttons">
-            <button type="submit" class="submit-btn">Submit</button>
-            <button type="button" class="clear-btn" onclick="clearForm()">Clear All</button>
-        </div>
-    </div>
-</form>
-    <script id="bookingsJson" type="application/json">
-        <%- JSON.stringify(bookings) %>
-    </script>
-
     <script>
-    const bookingsData = JSON.parse(document.getElementById('bookingsJson').textContent);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Enhanced parallax effect with sophisticated animations
-        const heroSection = document.querySelector('.hero-section');
-        const heroTitle = document.querySelector('.hero-section h1');
-        const heroNav = document.querySelector('.hero-section nav');
-        let ticking = false;
-
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const heroRect = heroSection.getBoundingClientRect();
-            const heroHeight = heroSection.offsetHeight;
-            const windowHeight = window.innerHeight;
-            
-            // Calculate scroll progress (0 to 1)
-            const scrollProgress = Math.min(scrolled / (heroHeight + windowHeight * 0.5), 1);
-            
-            // Only apply parallax when hero section is visible or just past it
-            if (heroRect.top < windowHeight && heroRect.bottom > -heroHeight) {
-                // Background parallax with dramatic movement
-                const backgroundRate = scrolled * 0.6;
-                const maxMovement = heroHeight * 0.8;
-                const clampedRate = Math.max(-maxMovement, Math.min(maxMovement, backgroundRate));
-                
-                // Add scaling effect for depth
-                const scale = 1 + (scrollProgress * 0.1); // Subtle zoom
-                
-                // Add subtle rotation for dynamic feel
-                const rotation = scrollProgress * 1; // Very subtle rotation
-                
-                // Apply layered transforms
-                heroSection.style.transition = 'none';
-                heroSection.style.transform = `translateY(${clampedRate}px) scale(${scale}) rotate(${rotation}deg)`;
-                
-                // Animate title with different speed for layered effect
-                if (heroTitle) {
-                    const titleRate = scrolled * -0.2; // Opposite direction
-                    const titleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
-                    const titleScale = Math.max(0.8, 1 - scrollProgress * 0.2);
-                    
-                    heroTitle.style.transform = `translateY(${titleRate}px) scale(${titleScale})`;
-                    heroTitle.style.opacity = titleOpacity;
+        // Fixed header on scroll past header height
+        const parallaxHeader = document.getElementById('parallax-header');
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        let headerFixed = false;
+        function handleHeaderFixed() {
+            const scrollY = window.scrollY;
+            const headerHeight = parallaxHeader.offsetHeight;
+            if (scrollY > headerHeight) {
+                if (!headerFixed) {
+                    parallaxHeader.style.position = 'fixed';
+                    parallaxHeader.style.top = '0';
+                    parallaxHeader.style.left = '0';
+                    parallaxHeader.style.right = '0';
+                    parallaxHeader.style.zIndex = '50';
+                    parallaxHeader.style.background = '#2D2F3E';
+                    parallaxHeader.style.boxShadow = '0 2px 8px 0 rgba(0,0,0,0.08)';
+                    headerPlaceholder.style.height = headerHeight + 'px';
+                    // Hide parallax background and title
+                    document.getElementById('parallax-bg').style.opacity = '0';
+                    document.getElementById('header-title').style.opacity = '0';
                 }
-                
-                // Animate navigation with subtle effects
-                if (heroNav) {
-                    const navRate = scrolled * -0.1;
-                    const navOpacity = Math.max(0.3, 1 - scrollProgress * 0.8);
-                    
-                    heroNav.style.transform = `translateY(${navRate}px)`;
-                    heroNav.style.opacity = navOpacity;
-                }
-                
-            } else if (heroRect.bottom <= -heroHeight) {
-                // When hero is completely scrolled past, keep final position
-                const finalRate = heroHeight * 0.8;
-                const finalScale = 1.1;
-                const finalRotation = 1;
-                
-                heroSection.style.transform = `translateY(${finalRate}px) scale(${finalScale}) rotate(${finalRotation}deg)`;
-                
-                if (heroTitle) {
-                    heroTitle.style.opacity = 0;
-                    heroTitle.style.transform = 'translateY(-100px) scale(0.8)';
-                }
-                
-                if (heroNav) {
-                    heroNav.style.opacity = 0.3;
-                    heroNav.style.transform = 'translateY(-50px)';
-                }
-            }
-            
-            ticking = false;
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestTick);
-
-        // --- Decision slider logic (unchanged) ---
-        const sliders = document.querySelectorAll('.decision-slider');
-        sliders.forEach(slider => {
-            slider.querySelectorAll('.decision-label').forEach(label => {
-                label.addEventListener('click', () => {
-                    const decision = label.dataset.decision;
-                    const isInitialState = slider.classList.contains('initial-state');
-                    slider.classList.remove('state-approve', 'state-pending', 'state-reject');
-                    if (isInitialState && (decision === 'approve' || decision === 'reject')) {
-                        slider.classList.remove('initial-state');
-                        slider.classList.add('final-state');
-                    }
-                    slider.classList.add(`state-${decision}`);
-                });
-            });
-        });
-
-        // --- Booking form modal logic ---
-        const bookingForm = document.getElementById('bookingForm');
-        const editLinks = document.querySelectorAll('.edit-link');
-
-        // Hide form initially
-        bookingForm.style.display = 'none';
-
-        // Show/hide panels based on booking type
-        function updatePanels(type) {
-            const slidingContent = document.getElementById('slidingContent');
-            const packagePanel = document.getElementById('packagePanel');
-            const hotelPanel = document.getElementById('hotelPanel');
-
-            if (type === 'package') {
-                slidingContent.style.transform = 'translateX(0%)';
-                packagePanel.classList.add('active');
-                hotelPanel.classList.remove('active');
+                headerFixed = true;
             } else {
-                slidingContent.style.transform = 'translateX(-50%)';
-                packagePanel.classList.remove('active');
-                hotelPanel.classList.add('active');
+                if (headerFixed) {
+                    parallaxHeader.style.position = 'relative';
+                    parallaxHeader.style.background = 'transparent';
+                    parallaxHeader.style.boxShadow = 'none';
+                    headerPlaceholder.style.height = '0';
+                    document.getElementById('parallax-bg').style.opacity = '1';
+                    document.getElementById('header-title').style.opacity = '1';
+                }
+                headerFixed = false;
             }
         }
-        document.getElementById('package').addEventListener('change', () => updatePanels('package'));
-        document.getElementById('stayOnly').addEventListener('change', () => updatePanels('stayOnly'));
-
-        // Open and populate the booking form
-        function openBookingForm(index) {
-            const booking = bookingsData[index];
-
-            bookingForm.dataset.editIndex = index;
-
-            document.getElementById('customerName').value = booking.name || '';
-            document.getElementById('phoneNumber').value = booking.phone || '';
-            document.getElementById('emailId').value = booking.email || '';
-            document.getElementById('adults').value = booking.adults || 1;
-            document.getElementById('children').value = booking.children || 0;
-            document.getElementById('arrivalDate').value = booking.date || '';
-            document.getElementById('departureDate').value = booking.departureDate || '';
-
-            // Booking type
-            if (booking.bookingType === 'stayOnly') {
-                document.getElementById('stayOnly').checked = true;
-                updatePanels('stayOnly');
+        window.addEventListener('scroll', handleHeaderFixed);
+        window.addEventListener('resize', handleHeaderFixed);
+        window.addEventListener('DOMContentLoaded', handleHeaderFixed);
+        // Parallax effect for header background
+        const parallaxBg = document.getElementById('parallax-bg');
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            // Move background slower than scroll for parallax
+            parallaxBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+        });
+        // Scroll-aware navbar background
+        const navbar = document.getElementById('main-navbar');
+        const header = navbar.parentElement;
+        function updateNavbarBg() {
+            const headerRect = header.getBoundingClientRect();
+            if (headerRect.bottom <= 0) {
+                navbar.style.background = '#2d2f3e';
+                navbar.style.boxShadow = '0 2px 8px 0 rgba(0,0,0,0.08)';
             } else {
-                document.getElementById('package').checked = true;
-                updatePanels('package');
+                navbar.style.background = 'transparent';
+                navbar.style.boxShadow = 'none';
             }
-
-            document.getElementById('packageName').value = booking.packageName || '';
-            document.getElementById('hotelName').value = booking.hotel || '';
-
-            bookingForm.style.display = 'block';
         }
+        window.addEventListener('scroll', updateNavbarBg);
+        window.addEventListener('DOMContentLoaded', updateNavbarBg);
 
-        // Attach click event to Edit links
-        editLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                openBookingForm(e.target.dataset.index);
-            });
+
+        // Toggle booking sections
+        const showUpcomingBtn = document.getElementById('show-upcoming');
+        const showPastBtn = document.getElementById('show-past');
+        const upcomingSection = document.getElementById('upcoming-section');
+        const pastSection = document.getElementById('past-section');
+
+        showUpcomingBtn.addEventListener('click', () => {
+            upcomingSection.classList.remove('hidden');
+            pastSection.classList.add('hidden');
+            showUpcomingBtn.classList.add('bg-blue-600', 'text-white');
+            showUpcomingBtn.classList.remove('bg-gray-300', 'text-gray-800');
+            showPastBtn.classList.remove('bg-blue-600', 'text-white');
+            showPastBtn.classList.add('bg-gray-300', 'text-gray-800');
+        });
+        showPastBtn.addEventListener('click', () => {
+            pastSection.classList.remove('hidden');
+            upcomingSection.classList.add('hidden');
+            showPastBtn.classList.add('bg-blue-600', 'text-white');
+            showPastBtn.classList.remove('bg-gray-300', 'text-gray-800');
+            showUpcomingBtn.classList.remove('bg-blue-600', 'text-white');
+            showUpcomingBtn.classList.add('bg-gray-300', 'text-gray-800');
         });
 
-        // Handle form submission for editing
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const index = bookingForm.dataset.editIndex;
-            const updatedBooking = {
-                name: document.getElementById('customerName').value,
-                phone: document.getElementById('phoneNumber').value,
-                email: document.getElementById('emailId').value,
-                bookingType: bookingForm.querySelector('input[name="bookingType"]:checked').value,
-                packageName: document.getElementById('packageName').value,
-                hotel: document.getElementById('hotelName').value,
-                adults: document.getElementById('adults').value,
-                children: document.getElementById('children').value,
-                date: document.getElementById('arrivalDate').value,
-                departureDate: document.getElementById('departureDate').value,
-            };
-
-            fetch(`/edit-booking/${index}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedBooking),
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    bookingsData[index] = { ...bookingsData[index], ...updatedBooking };
-                    document.querySelector(`.name-cell[data-row-index="${index}"]`).textContent = updatedBooking.name;
-                    document.querySelector(`.date-cell[data-row-index="${index}"]`).textContent = updatedBooking.date;
-                    bookingForm.style.display = 'none';
-                } else { alert('Failed to update booking.'); }
-            })
-            .catch(error => console.error('Error:', error));
+        // Navbar hamburger/cross toggle
+        const navbarToggle = document.getElementById('navbar-toggle');
+        const navbarMenu = document.getElementById('navbar-menu');
+        let navbarOpen = false;
+        navbarToggle.addEventListener('click', () => {
+            navbarOpen = !navbarOpen;
+            if (navbarOpen) {
+                navbarMenu.classList.remove('hidden');
+                navbarToggle.classList.add('open');
+                // Animate hamburger to symmetric cross (shorter arms)
+                document.getElementById('bar1').style.transform = 'rotate(45deg) translateY(7px) scaleX(0.7)';
+                document.getElementById('bar2').style.opacity = '0';
+                document.getElementById('bar3').style.transform = 'rotate(-45deg) translateY(-7px) scaleX(0.7)';
+            } else {
+                navbarMenu.classList.add('hidden');
+                navbarToggle.classList.remove('open');
+                // Animate cross to hamburger
+                document.getElementById('bar1').style.transform = '';
+                document.getElementById('bar2').style.opacity = '';
+                document.getElementById('bar3').style.transform = '';
+            }
         });
 
-        // Clear/close form
-        window.clearForm = function() {
-            bookingForm.reset();
-            bookingForm.style.display = 'none';
-        };
-    });
-</script>
+        // Filter dropdown
+        const filterBtn = document.getElementById('filter-btn');
+        const filterMenu = document.getElementById('filter-menu');
+        filterBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            filterMenu.classList.toggle('hidden');
+            sortMenu.classList.add('hidden');
+        });
+        // Sort dropdown
+        const sortBtn = document.getElementById('sort-btn');
+        const sortMenu = document.getElementById('sort-menu');
+        sortBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sortMenu.classList.toggle('hidden');
+            filterMenu.classList.add('hidden');
+        });
+        // Hide dropdowns on click outside
+        document.addEventListener('click', () => {
+            filterMenu.classList.add('hidden');
+            sortMenu.classList.add('hidden');
+        });
+
+        // Dummy filter/sort functions
+        function filterBy(type) {
+            // Implement actual filtering logic here
+            // No popup, just placeholder for future logic
+        }
+        function sortBy(type) {
+            // Implement actual sorting logic here
+            // No popup, just placeholder for future logic
+        }
+    </script>
 </body>
 </html>
