@@ -14,14 +14,32 @@
     <header class="hero-section">
         <nav>
             <div class="logo">
-                <img src="/assets/images/logo.png" alt="Company Logo">
+                <a href="/" style="display: inline-block; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <img src="/assets/images/logo.png" alt="Company Logo" style="cursor: pointer;">
+                </a>
             </div>
-            <div class="menu-icon">
+            <div class="menu-icon" id="menuBtn" style="cursor: pointer;">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </nav>
         <h1>My Bookings</h1>
     </header>
+
+    <!-- Overlay -->
+    <div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; z-index: 40;"></div>
+
+    <!-- Slide Menu -->
+    <div id="sideMenu" style="position: fixed; top: 0; right: 0; width: 16rem; height: 100%; background-color: #1f2937; color: white; transform: translateX(100%); transition: transform 0.3s ease-in-out; z-index: 50; box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);">
+        <!-- Close Button -->
+        <button id="closeBtn" style="position: absolute; top: 1rem; left: 1rem; font-size: 1.5rem; background: none; border: none; color: white; cursor: pointer;">&times;</button>
+        
+        <ul style="margin-top: 5rem; text-align: center; list-style: none; padding: 0;">
+            <li style="margin: 0.25rem 0;"><a href="/" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">Home</a></li>
+            <li style="margin: 0.25rem 0;"><a href="/about" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">About</a></li>
+            <li style="margin: 0.25rem 0;"><a href="/contact" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">Contact</a></li>
+            <li style="margin: 0.25rem 0;"><a href="/api/login" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">Login</a></li>
+        </ul>
+    </div>
 
     <main class="content-wrapper">
         <div class="booking-controls">
@@ -479,6 +497,26 @@
             slideToPanel(true);
             document.getElementById('packageName').value = 'Bali Exploration';
         }
+
+        // Sidebar menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const closeBtn = document.getElementById('closeBtn');
+        const overlay = document.getElementById('overlay');
+
+        function openMenu() {
+            sideMenu.style.transform = 'translateX(0)';
+            overlay.style.display = 'block';
+        }
+
+        function closeMenu() {
+            sideMenu.style.transform = 'translateX(100%)';
+            overlay.style.display = 'none';
+        }
+
+        menuBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
     </script>
 
 </body>
