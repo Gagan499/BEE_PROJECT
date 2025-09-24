@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -36,5 +37,8 @@
     "morgan": "^1.10.1",
     "path": "^0.12.7",
     "url": "^0.11.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
