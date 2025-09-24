@@ -1,41 +1,122 @@
-<footer class="bg-gray-800 w-full py-8 text-white">
-  <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-    
-    <!-- Navigation Links -->
-    <ul class="flex flex-col md:flex-row md:space-x-8 space-y-3 md:space-y-0 text-center md:text-left">
-      <li><a href="#" class="hover:text-yellow-400 transition duration-300 ease-in-out transform hover:scale-110">Home</a></li>
-      <li><a href="#" class="hover:text-yellow-400 transition duration-300 ease-in-out transform hover:scale-110">Login</a></li>
-      <li><a href="#" class="hover:text-yellow-400 transition duration-300 ease-in-out transform hover:scale-110">Contact Us</a></li>
-      <li><a href="#" class="hover:text-yellow-400 transition duration-300 ease-in-out transform hover:scale-110">Book Hotel</a></li>
-    </ul>
+<style>
+    .site-footer {
+        background-color: #2d2f3e;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 60px 5%;
+        font-family: 'Poppins', sans-serif;
+    }
 
-    <!-- Logo -->
-    <div class="my-6 md:my-0">
-      <img src="/assets/images/logo.png" alt="Logo" class="h-12 w-auto mx-auto md:mx-0 transform transition duration-500 hover:scale-110 hover:rotate-6" />
+    .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 40px;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 50px;
+    }
+
+    .footer-column {
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .footer-column h4 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-column ul li a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        margin-bottom: 10px;
+        display: block;
+        transition: color 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+        color: #25a85c;
+    }
+
+    .footer-column p {
+        line-height: 1.6;
+    }
+
+    .footer-bottom {
+        text-align: center;
+    }
+
+    .footer-socials {
+        margin-bottom: 20px;
+    }
+
+    .footer-socials a {
+        color: white;
+        margin: 0 12px;
+        font-size: 24px;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .footer-socials a:hover {
+        color: #25a85c;
+    }
+
+    .footer-copyright {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+</style>
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-column">
+            <h4>The Palmway</h4>
+            <p>For over 25 years, The Palmway has been known for dependably delivering true hospitality with more than
+                50 hotels and resorts worldwide.</p>
+        </div>
+        <div class="footer-column">
+            <h4>Pages</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Hotels</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Book Hotel</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Know More</h4>
+            <ul>
+                <li><a href="#">Membership</a></li>
+                <li><a href="#">Our Team</a></li>
+                <li><a href="#">News</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>Other Details</h4>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </div>
     </div>
-
-    <!-- Social Icons -->
-    <div class="flex space-x-5">
-      <a href="https://www.instagram.com/" class="transform transition duration-300 hover:scale-125 hover:text-pink-500">
-        <i class="fa fa-instagram fa-2x"></i>
-      </a>
-      <a href="https://www.facebook.com/" class="transform transition duration-300 hover:scale-125 hover:text-blue-500">
-        <i class="fa fa-facebook fa-2x"></i>
-      </a>
-      <a href="https://www.youtube.com/" class="transform transition duration-300 hover:scale-125 hover:text-red-500">
-        <i class="fa fa-youtube-play fa-2x"></i>
-      </a>
-      <a href="https://www.twitter.com/" class="transform transition duration-300 hover:scale-125 hover:text-sky-400">
-        <i class="fa fa-twitter fa-2x"></i>
-      </a>
-      <a href="https://www.linkedin.com/" class="transform transition duration-300 hover:scale-125 hover:text-blue-400">
-        <i class="fa fa-linkedin fa-2x"></i>
-      </a>
+    <div class="footer-bottom">
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="footer-copyright">
+            The Palmway © 2025
+        </div>
     </div>
-  </div>
-
-  <!-- Bottom Text -->
-  <div class="mt-6 text-center text-gray-400 text-sm hover:text-white transition duration-300">
-    © 2025 <span class="text-yellow-400">ThePalmWay</span>. All Rights Reserved.
-  </div>
 </footer>
