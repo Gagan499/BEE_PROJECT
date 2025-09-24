@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Packages</title>
+	<link rel="stylesheet" href="/assets/css/packages.css">
+</head>
+<body>
+	 <header class="hero-section">
+        <nav>
+            <div class="logo">
+                <img src="/assets/images/logo.png" alt="Company Logo">
+            </div>
+            <div class="menu-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+        <h1>More Packages</h1>
+    </header>
+		<div class="packages-rows-container">
+		<% for(let i = 0; i < packages.length; i += 2) { %>
+			<div class="packages-row">
+				<% for(let j = i; j < i + 2 && j < packages.length; j++) { %>
+					<div class="package-card" onclick="toggleCardClick(this)">
+						<img src="<%= packages[j].img %>" alt="<%= packages[j].title %>" class="package-img">
+						<div class="package-content">
+							<h3 class="package-title"><%= packages[j].title %></h3>
+							<div class="package-days">
+								<span><strong><%= packages[j].days %> Days</strong> / <%= packages[j].nights %> Nights</span>
+							</div>
+							<p class="package-desc">
+								<%= packages[j].desc %>
+							</p>
+						</div>
+					</div>
+				<% } %>
+			</div>
+		<% } %>
+	</div>
+	<%- include("partials/footer.ejs") %>
+    <script>
+		function toggleCardClick(card) {
+			card.classList.toggle('clicked');
+		}
+	</script>
+</body>
+</html>
