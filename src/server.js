@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import chalk from "chalk";
 import path from "path";
+import greet from "bhaveshtest";
 
 import { fileURLToPath } from "url";
 
@@ -39,8 +40,10 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+console.log(greet());
+
 app.listen(PORT, () => {
-  console.log(chalk.blue(`Server is running on port ${PORT}`));
+  console.log(chalk.blue(`Server is running on port ${PORT} 🚀`));
 });
 // Handle undefined routes and errors
 // app.use((req, res, next) => {
