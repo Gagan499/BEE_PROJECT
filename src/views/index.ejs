@@ -14,8 +14,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for the footer icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
     <style>
+        #carousel-location-label {
+            font-family: 'Allura', cursive !important;
+            font-size: 4rem !important;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +30,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #1f212d;
+           background-color: #1f212d;
             /* Set a base background color */
             min-height: 100vh;
             overflow-x: hidden;
@@ -187,7 +193,7 @@
             <!-- Hero Section with Canvas Carousel -->
             <div class="hero-container flex flex-col justify-center items-center relative" style="margin-top:0 !important;">
                 <canvas id="cardCanvas"></canvas>
-                <div id="carousel-location-label" class="absolute left-1/2 bottom-8 -translate-x-1/2 text-white text-2xl font-semibold bg-black/60 px-6 py-2 rounded-full shadow-lg pointer-events-none select-none tracking-wide" style="z-index:2;">
+                <div id="carousel-location-label" class="absolute left-1/2 bottom-8 -translate-x-1/2 text-white text-2xl font-semibold px-6 py-2 rounded-full shadow-lg pointer-events-none select-none tracking-wide" style="z-index:2;">
                     <!-- Location name will be injected here -->
                 </div>
             </div>
