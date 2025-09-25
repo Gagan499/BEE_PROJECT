@@ -30,7 +30,7 @@
             animation-delay: 0s;
             white-space: nowrap;
             display: inline-block;
-            animation: marquee 60s linear infinite;
+            animation: marquee 150s linear infinite;
         }
     </style>
 </head>
@@ -39,19 +39,28 @@
     <!-- 404 Text -->
     <div class="w-full overflow-hidden border-y-2 border-white">
         <div class="marquee text-white text-[130px] font-extrabold">
-            404 404 404 404 404 404 404 404 404 404
+            <%= (String(errorCode || '404') + ' ').repeat(100) %>
         </div>
     </div>
 
     <!-- Page Missing Text -->
     <div class="w-full overflow-hidden border-y-2 border-white mt-2">
         <div class="marquee text-white text-[130px] font-extrabold">
-            MISSING PAGE MISSING PAGE MISSING PAGE MISSING PAGE
+            <%= ("Oops! an Error Occurred! ").repeat(50) %>
         </div>
     </div>
 
-    <!-- Message -->
-    <p class="text-white text-lg mt-8">Oops! That page seems to be missing.</p>
+    <!-- Error Details (if provided) -->
+    <div class="mt-8 flex flex-col items-center">
+        <% if (typeof errorCode !== 'undefined' && errorCode) { %>
+            <div class="text-3xl font-bold text-white mb-2">Error <%= errorCode %></div>
+        <% } %>
+        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+            <div class="text-white text-lg mb-2 max-w-2xl text-center"><%= errorMessage %></div>
+        <% } else { %>
+            <p class="text-white text-lg">Oops! That page seems to be missing.</p>
+        <% } %>
+    </div>
 
     <!-- Button -->
     <a href="/"

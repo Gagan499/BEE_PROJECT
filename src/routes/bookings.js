@@ -1,12 +1,12 @@
 import express from "express";
 import Booking from "../../models/booking.js";
-import { getIO } from "../socket.js";
+import { getIO } from "../../config/socket.js";
 
 const bookingsRouter = express.Router();
 
 // Create a booking (no auth required, not tied to email/user)
 bookingsRouter.post("/", async (req, res) => {
-  try {
+  try {s
     const {
       customerName,
       phoneNumber,
@@ -22,16 +22,36 @@ bookingsRouter.post("/", async (req, res) => {
     } = req.body;
 
     // Basic required checks
-    if (!customerName || !phoneNumber || !emailId || !bookingType || !arrivalDate || !departureDate || !adults) {
-      return res.status(400).json({ success: false, message: "Missing required fields" });
+    if (
+      !customerName ||
+      !phoneNumber ||
+      !emailId ||
+      !bookingType ||
+      !arrivalDate ||
+      !departureDate ||
+      !adults
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
     }
 
     // Enforce conditional requirements
     if (bookingType === "package" && !packageName) {
-      return res.status(400).json({ success: false, message: "packageName is required when bookingType is 'package'" });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "packageName is required when bookingType is 'package'",
+        });
     }
     if (bookingType === "stayOnly" && !hotelName) {
-      return res.status(400).json({ success: false, message: "hotelName is required when bookingType is 'stayOnly'" });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "hotelName is required when bookingType is 'stayOnly'",
+        });
     }
 
     const doc = new Booking({
@@ -49,10 +69,14 @@ bookingsRouter.post("/", async (req, res) => {
     });
 
     await doc.save();
-    return res.status(201).json({ success: true, message: "Booking created", bookingId: doc._id });
+    return res
+      .status(201)
+      .json({ success: true, message: "Booking created", bookingId: doc._id });
   } catch (err) {
     console.error("Error creating booking:", err);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 });
 
@@ -62,7 +86,9 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
     const { id } = req.params;
     const { status } = req.body; // expected: approved | rejected
     if (!status || !["approved", "rejected"].includes(status)) {
-      return res.status(400).json({ success: false, message: "Invalid status" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid status" });
     }
 
     const result = await Booking.findByIdAndUpdate(
@@ -71,7 +97,10 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
       { new: true }
     ).lean();
 
-    if (!result) return res.status(404).json({ success: false, message: "Booking not found" });
+    if (!result)
+      return res
+        .status(404)
+        .json({ success: false, message: "Booking not found" });
     try {
       const io = getIO();
       io.emit("booking-status", {
@@ -88,7 +117,9 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
     return res.json({ success: true, status: result.status });
   } catch (err) {
     console.error("Error updating booking status:", err);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 });
 
@@ -98,7 +129,9 @@ bookingsRouter.get("/", async (req, res) => {
     const docs = await Booking.find({}).sort({ createdAt: -1 }).lean();
     return res.json({ success: true, bookings: docs });
   } catch (err) {
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 });
 
