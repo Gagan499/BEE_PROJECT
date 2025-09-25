@@ -6,7 +6,7 @@ const bookingsRouter = express.Router();
 
 // Create a booking (no auth required, not tied to email/user)
 bookingsRouter.post("/", async (req, res) => {
-  try {s
+  try {
     const {
       customerName,
       phoneNumber,

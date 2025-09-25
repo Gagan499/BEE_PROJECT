@@ -291,7 +291,7 @@ footer {
 }
 
 .new-booking-btn {
-    background: #4CAF50;
+    background: #25A85C;
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -304,9 +304,9 @@ footer {
 }
 
 .new-booking-btn:hover {
-    background: #45a049;
+    background: #1F8E50;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 8px 25px rgba(37, 168, 92, 0.4);
 }
 
 .filter-controls {
@@ -319,7 +319,7 @@ footer {
 }
 
 .filter-btn, .location-btn, .sort-btn, .trips-btn {
-    background: #4CAF50;
+    background: #25A85C;
     color: white;
     border: none;
     padding: 0.6rem 1.2rem;
@@ -331,13 +331,13 @@ footer {
 }
 
 .filter-btn:hover, .location-btn:hover, .sort-btn:hover, .trips-btn:hover {
-    background: #45a049;
+    background: #1F8E50;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 6px 20px rgba(37, 168, 92, 0.3);
 }
 
 .admin-tag {
-    background: #4CAF50;
+    background: #25A85C;
     color: white;
     padding: 0.6rem 1.2rem;
     border-radius: 20px;
@@ -370,12 +370,12 @@ footer {
 }
 
 .tab-btn.active {
-    color: #4CAF50;
-    border-bottom-color: #4CAF50;
+    color: #25A85C;
+    border-bottom-color: #25A85C;
 }
 
 .tab-btn:hover {
-    color: #4CAF50;
+    color: #25A85C;
 }
 
 .booking-content {
@@ -418,7 +418,7 @@ footer {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, #4CAF50, #45a049);
+    background: linear-gradient(90deg, #25A85C, #1F8E50);
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -428,9 +428,9 @@ footer {
 }
 
 .booking-card:hover {
-    border-color: #4CAF50;
+    border-color: #25A85C;
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(76, 175, 80, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(37, 168, 92, 0.1);
 }
 
 .hotel-name {
@@ -460,7 +460,7 @@ footer {
 
 .view-booking-btn {
     width: 100%;
-    background: #4CAF50;
+    background: #25A85C;
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -489,9 +489,9 @@ footer {
 }
 
 .view-booking-btn:hover {
-    background: #45a049;
+    background: #1F8E50;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4), 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(37, 168, 92, 0.4), 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .view-booking-btn:active {
@@ -618,7 +618,7 @@ footer {
 }
 
 .slide-panel .form-group select:focus {
-    border-bottom-color: #4CAF50;
+    border-bottom-color: #25A85C;
 }
 
 /* Booking Form Modal Styles */
@@ -708,7 +708,7 @@ footer {
 }
 
 .form-group input:focus {
-    border-bottom-color: #4CAF50;
+    border-bottom-color: #25A85C;
     user-select: text;
     pointer-events: auto;
 }
@@ -735,7 +735,7 @@ footer {
 }
 
 .form-group select:focus {
-    border-bottom-color: #4CAF50;
+    border-bottom-color: #25A85C;
 }
 
 .booking-type {
@@ -754,7 +754,7 @@ footer {
 .radio-group input[type="radio"] {
     width: 18px;
     height: 18px;
-    accent-color: #4CAF50;
+    accent-color: #25A85C;
 }
 
 .radio-group label {
@@ -806,7 +806,7 @@ footer {
 }
 
 .people-input-group input:focus {
-    border-color: #4CAF50;
+    border-color: #25A85C;
 }
 
 .form-buttons {
@@ -828,14 +828,14 @@ footer {
 }
 
 .submit-btn {
-    background: #4CAF50;
+    background: #25A85C;
     color: white;
 }
 
 .submit-btn:hover {
-    background: #45a049;
+    background: #1F8E50;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 6px 20px rgba(37, 168, 92, 0.3);
 }
 
 .clear-btn {
