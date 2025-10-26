@@ -7,6 +7,10 @@ pageRoutes.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 
+pageRoutes.get("/change-password",(req,res)=>{
+  res.render("forgotpass.ejs");
+})
+
 pageRoutes.get("/user", async (req, res) => {
   try {
     const docs = await Booking.find({}).sort({ createdAt: -1 }).lean();

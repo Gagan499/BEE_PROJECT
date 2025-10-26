@@ -1,47 +1,173 @@
 <header>
-  <!-- Navbar -->
   <nav class="text-white px-6 py-4 flex justify-between items-center">
     <a href="/" class="hover:opacity-80 transition-opacity duration-200">
-      <img src="/assets/images/logo.png" alt="logo" class="w-12 cursor-pointer">
+      <img
+        src="/assets/images/logo.png"
+        alt="logo"
+        class="w-12 cursor-pointer"
+      />
     </a>
     <button id="menuBtn" class="text-2xl focus:outline-none">&#9776;</button>
   </nav>
 
-  <!-- Overlay -->
-  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+  <div
+    id="overlay"
+    class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"
+  ></div>
 
-  <!-- Slide Menu -->
-  <div id="sideMenu" class="fixed top-0 right-0 w-64 h-full bg-gray-900 text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-lg">
-    <!-- Close Button -->
-    <button id="closeBtn" class="absolute top-4 left-4 text-2xl focus:outline-none">&times;</button>
+  <div
+    id="sideMenu"
+    class="fixed top-0 right-0 w-64 h-full bg-gray-900 text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-lg flex flex-col justify-between"
+  >
+    <div>
+      <button
+        id="closeBtn"
+        class="absolute top-4 left-4 text-2xl focus:outline-none"
+      >
+        &times;
+      </button>
 
-    <ul class="mt-20 space-y-1 text-center">
-      <li><a href="/" class="block text-lg py-2 hover:bg-gray-700">Home</a></li>
-      <li><a href="/about" class="block text-lg py-2 hover:bg-gray-700">About</a></li>
-      <li><a href="/contact" class="block text-lg py-2 hover:bg-gray-700">Contact</a></li>
-      <li><a href="/api/login" class="block text-lg py-2 hover:bg-gray-700">Login</a></li>
-    </ul>
+      <ul class="mt-20 space-y-1 text-center">
+        <li>
+          <a href="/" class="block text-lg py-2 hover:bg-gray-700">Home</a>
+        </li>
+        <li>
+          <a href="/about" class="block text-lg py-2 hover:bg-gray-700"
+            >About</a
+          >
+        </li>
+        <li>
+          <a href="/contact" class="block text-lg py-2 hover:bg-gray-700"
+            >Contact</a
+          >
+        </li>
+        <li>
+          <a href="/packages" class="block text-lg py-2 hover:bg-gray-700"
+            >Packages</a
+          >
+        </li>
+        <li>
+          <a
+            id="who_book"
+            href="#"
+            class="block text-lg py-2 hover:bg-gray-700 hidden"
+            >Booking</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="mb-2.5 text-center border-t border-gray-700 pt-4 px-4">
+      <div id="user_detail" class="flex items-center justify-center gap-3 mb-4 hidden">
+        <img
+          src="https://i.pravatar.cc/40"
+          alt="User Avatar"
+          class="w-10 h-10 rounded-full border-2 border-gray-600 object-cover"
+        />
+        <p id="who_username" class="text-lg font-medium"></p>
+      </div>
+
+      <div class="space-y-0.5">
+        <a
+          id="change-password"
+          href="/api/change-password"
+          class="block text-lg py-2 hover:bg-gray-700 hidden"
+          >Change Password</a
+        >
+        <a
+          id="authLink"
+          href="/api/login"
+          class="block text-lg py-2 hover:bg-gray-700"
+          >Login</a
+        >
+      </div>
+    </div>
   </div>
 </header>
 
 <!-- Script -->
 <script>
-  const menuBtn = document.getElementById('menuBtn');
-  const sideMenu = document.getElementById('sideMenu');
-  const closeBtn = document.getElementById('closeBtn');
-  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById("menuBtn");
+  const sideMenu = document.getElementById("sideMenu");
+  const closeBtn = document.getElementById("closeBtn");
+  const overlay = document.getElementById("overlay");
 
   function openMenu() {
-    sideMenu.classList.remove('translate-x-full');
-    overlay.classList.remove('hidden');
+    sideMenu.classList.remove("translate-x-full");
+    overlay.classList.remove("hidden");
   }
 
   function closeMenu() {
-    sideMenu.classList.add('translate-x-full');
-    overlay.classList.add('hidden');
+    sideMenu.classList.add("translate-x-full");
+    overlay.classList.add("hidden");
   }
 
-  menuBtn.addEventListener('click', openMenu);
-  closeBtn.addEventListener('click', closeMenu);
-  overlay.addEventListener('click', closeMenu);
+  menuBtn.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", closeMenu);
+  overlay.addEventListener("click", closeMenu);
+</script>
+<script>
+  const authLink = document.getElementById("authLink");
+  const who_username = document.getElementById("who_username");
+  const who_book = document.getElementById("who_book");
+  const user_detail = document.getElementById("user_detail");
+  const change_password = document.getElementById("change-password");
+  let base_api = window.location.origin;
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch(`${base_api}/auth/login/status`, {
+        method: "GET",
+        credentials: "include", // send cookies (important for JWT)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // User is logged in
+        user_detail.classList.remove("hidden");
+        who_username.textContent = data.name;
+        change_password.classList.remove("hidden");
+        authLink.textContent = "Logout";
+        authLink.href = "#";
+        who_book.classList.remove("hidden");
+
+        if(data.name == "Admin"){
+          who_book.textContent = "All Booking";
+          who_book.href = "/api/admin";
+        }
+        else if(data.name == undefined){
+          return;
+        }
+        else{
+          who_book.textContent = "My Booking";
+          who_book.href = "/api/user";
+        }
+
+        authLink.addEventListener("click", async () => {
+          await fetch(`${base_api}/auth/logout`, {
+            method: "POST",
+            credentials: "include",
+          });
+          who_username.textContent="";
+          user_detail.classList.add("hidden");
+          change_password.classList.add("hidden");
+          who_book.textContent = "";
+          who_book.href = "#";
+          who_book.classList.add("hidden");
+          window.location.reload();
+        });
+      } else {
+        // Not logged in
+        authLink.textContent = "Login";
+        // user_detail.classList.add("hidden");
+        authLink.href = "/api/login";
+      }
+    } catch (error) {
+      console.error("Error checking auth status:", error);
+      authLink.textContent = "Login";
+      // user_detail.classList.add("hidden");
+      authLink.href = "/api/login";
+    }
+  }
+  checkAuthStatus();
 </script>

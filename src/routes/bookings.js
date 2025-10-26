@@ -1,6 +1,7 @@
 import express from "express";
 import Booking from "../../models/booking.js";
 import { getIO } from "../../config/socket.js";
+import { DefaultEmail,AcceptRequestEmail,RejectRequestEmail } from "./bookings_mail.js";
 
 const bookingsRouter = express.Router();
 
@@ -69,6 +70,7 @@ bookingsRouter.post("/", async (req, res) => {
     });
 
     await doc.save();
+    await DefaultEmail(emailId,req,res);
     return res
       .status(201)
       .json({ success: true, message: "Booking created", bookingId: doc._id });
@@ -96,11 +98,16 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
       { $set: { status } },
       { new: true }
     ).lean();
-
     if (!result)
       return res
         .status(404)
         .json({ success: false, message: "Booking not found" });
+    if(result.status == "approved"){
+      await AcceptRequestEmail(result.email,req,res);
+    }
+    if(result.status == "rejected"){
+      await RejectRequestEmail(result.email,req,res);
+    }
     try {
       const io = getIO();
       io.emit("booking-status", {

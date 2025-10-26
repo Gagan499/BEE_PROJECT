@@ -104,14 +104,9 @@
       });
       if(data.ok){
         console.log("Login success");
-        if (email === "admin@gmail.com") {
-          window.location.href="/api/admin";
-          return;
-        }
-        else{
-         window.location.href = "/api/user"; 
-        }
+        window.location.href="/";
       }
+      window.location.href = "/api/login";
     })
 
     // register form intergration
