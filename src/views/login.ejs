@@ -106,7 +106,9 @@
         console.log("Login success");
         window.location.href="/";
       }
-      window.location.href = "/api/login";
+      else{
+        window.location.href = "/api/login";
+      }
     })
 
     // register form intergration
@@ -125,8 +127,8 @@
       });
 
       if(data.ok){
+        window.location.href="/api/login";
         console.log('success');
-        alert('register done');
       }
     })
     
