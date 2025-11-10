@@ -2,6 +2,7 @@ import chalk from "chalk";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { generate_random_number } from "./random_no.js";
+import client from "../redis_server.js";
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const OTP_EXPIRY = 10 * 60; // 10 minutes
+
 export async function sendForgotPasswordMail(req, res) {
   try {
     const { email } = req.body;
@@ -21,11 +24,17 @@ export async function sendForgotPasswordMail(req, res) {
       return res.status(400).json({ error: "Email is required" });
     }
 
+    const otp = generate_random_number().toString();
+    const otpKey = `otp:${email}`;
+
+    // Store OTP in Redis with expiry
+    await client.set(otpKey, otp, { EX: OTP_EXPIRY });
+
     const mailOptions = {
       from: process.env.Email_User,
       to: email,
       subject: "Password Reset Request",
-      text: generate_random_number().toString(),
+      text: `Your password reset OTP is: ${otp}. This OTP will expire in 10 minutes.`,
     };
 
     await transporter.sendMail(mailOptions);

@@ -3,8 +3,10 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import { generateToken, verifyToken } from "./jwtutils.js";
 import user from "../../models/user.js";
-import {LoginPerDay,isblocked} from "./loginlimit_redis.js";
+import {FailedLoginPerDay, isBlocked, clearFailedAttempts} from "./loginlimit_redis.js";
 import { sendForgotPasswordMail } from "./forgot_mail.js";
+import client from "../redis_server.js";
+import crypto from "crypto";
 
 
 dotenv.config();
@@ -68,13 +70,22 @@ authRouter.post("/login", async (req, res) => {
         .json({ success: false, message: "Email and Password required !" });
     }
     // Check Redis limit first
-    if(await isblocked(email)){
-      return res.status(429).json({ success:false,messgae: "Login Per day Limit Reached.."})
+    const blockStatus = await isBlocked(email);
+    if(blockStatus.blocked){
+      const remainingMinutes = Math.ceil(blockStatus.remainingSeconds / 60);
+      return res.status(429).json({ 
+        success: false, 
+        message: `Login limit reached. Your account is temporarily blocked. Please try again after ${remainingMinutes} minute(s).`,
+        blocked: true,
+        remainingSeconds: blockStatus.remainingSeconds
+      })
     }
 
     // find user
     const User = await user.findOne({ email });
     if (!User) {
+      // Increment failed login attempts for invalid email
+      await FailedLoginPerDay(email);
       return res
         .status(401)
         .json({ success: false, message: "Invalid Email and Password !" });
@@ -84,12 +95,15 @@ authRouter.post("/login", async (req, res) => {
     // compare passowrd
     const isMatch = await bcrypt.compare(password, User.password);
     if (!isMatch) {
+      // Increment failed login attempts for wrong password
+      await FailedLoginPerDay(email);
       return res
         .status(401)
         .json({ success: false, message: "Invalid Credentials" });
     }
 
-    await LoginPerDay(email);
+    // Clear failed attempts on successful login
+    await clearFailedAttempts(email);
     //Genertae token
     const token = generateToken({ name, email });
     res
@@ -147,6 +161,113 @@ authRouter.post("/logout", async (req, res) => {
 });
 
 authRouter.post("/forgot", sendForgotPasswordMail);
+
+// Verify OTP
+authRouter.post("/verify-otp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Email and OTP are required" 
+      });
+    }
+
+    const otpKey = `otp:${email}`;
+    const storedOtp = await client.get(otpKey);
+
+    if (!storedOtp) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "OTP expired or invalid" 
+      });
+    }
+
+    if (storedOtp !== otp) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Invalid OTP" 
+      });
+    }
+
+    // OTP verified successfully - create a reset token and store it
+    const resetTokenKey = `reset:${email}`;
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    await client.set(resetTokenKey, resetToken, { EX: 10 * 60 }); // 10 minutes
+
+    // Delete the OTP after successful verification
+    await client.del(otpKey);
+
+    return res.status(200).json({ 
+      success: true, 
+      message: "OTP verified successfully",
+      resetToken 
+    });
+  } catch (err) {
+    console.error("Error verifying OTP:", err);
+    return res.status(500).json({ 
+      success: false, 
+      message: "Internal server error" 
+    });
+  }
+});
+
+// Reset password
+authRouter.post("/reset-password", async (req, res) => {
+  try {
+    const { email, newPassword, resetToken } = req.body;
+
+    if (!email || !newPassword || !resetToken) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Email, new password, and reset token are required" 
+      });
+    }
+
+    // Verify reset token
+    const resetTokenKey = `reset:${email}`;
+    const storedToken = await client.get(resetTokenKey);
+
+    if (!storedToken || storedToken !== resetToken) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Invalid or expired reset token" 
+      });
+    }
+
+    // Find user
+    const User = await user.findOne({ email });
+    if (!User) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User not found" 
+      });
+    }
+
+    // Hash new password
+    const saltRounds = 10;
+    const hashpassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Update password
+    User.password = hashpassword;
+    await User.save();
+
+    // Delete reset token
+    await client.del(resetTokenKey);
+
+    return res.status(200).json({ 
+      success: true, 
+      message: "Password reset successfully" 
+    });
+  } catch (err) {
+    console.error("Error resetting password:", err);
+    return res.status(500).json({ 
+      success: false, 
+      message: "Internal server error" 
+    });
+  }
+});
 
 // current user info from cookie or header
 authRouter.get("/me", async (req, res) => {

@@ -48,6 +48,7 @@ body {
     background-position: center;
     background-attachment: fixed;
     height: 40vh;
+    min-height: 300px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -77,6 +78,8 @@ nav {
     margin: auto;
     font-size: 3.5rem;
     font-weight: 500;
+    text-align: center;
+    padding: 0 1rem;
 }
 
 /* --- Main Content Container --- */
@@ -170,6 +173,14 @@ nav {
   background: #16a34a;
 }
 
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .packages-rows-container {
+    max-width: 95%;
+    padding: 2rem 1.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .packages-row {
     flex-direction: column;
@@ -177,6 +188,76 @@ nav {
   }
   .packages-rows-container {
     gap: 24px;
-    padding: 10px;
+    padding: 2rem 1rem;
+    margin: -3vh auto 3rem auto;
+  }
+  
+  .hero-section {
+    height: 30vh;
+    min-height: 250px;
+    padding: 1.5rem 1rem;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+  
+  .logo img {
+    height: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 25vh;
+    min-height: 200px;
+    padding: 1rem;
+    background-attachment: scroll;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+  
+  .packages-rows-container {
+    width: 100%;
+    margin: -2vh auto 2rem auto;
+    padding: 1.5rem 1rem;
+    border-radius: 0;
+  }
+  
+  .package-card {
+    margin-bottom: 1rem;
+  }
+  
+  .package-title {
+    font-size: 1.1rem;
+  }
+  
+  .package-desc {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 20vh;
+    min-height: 150px;
+  }
+  
+  .hero-section h1 {
+    font-size: 1.5rem;
+  }
+  
+  .packages-rows-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .package-content {
+    padding: 15px;
+  }
+  
+  .package-img {
+    height: 140px;
   }
 }

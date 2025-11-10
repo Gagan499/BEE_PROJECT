@@ -19,6 +19,7 @@ body {
     background-size: cover;
     background-position: center;
     height: 40vh;
+    min-height: 300px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -45,6 +46,8 @@ nav {
     margin: auto;
     font-size: 3.5rem;
     font-weight: 500;
+    text-align: center;
+    padding: 0 1rem;
 }
 
 /* --- Main Content & Grid Layout --- */
@@ -583,12 +586,84 @@ footer {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Modal Responsive Design */
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content-wrapper {
+        width: 90%;
+        padding: 1.5rem 2rem;
+    }
+    
+    .bookings-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+        gap: 0.5rem 0;
+    }
+    
+    .decision-slider.initial-state {
+        width: 220px;
+    }
+}
+
 @media (max-width: 768px) {
+    .hero-section {
+        height: 30vh;
+        min-height: 250px;
+        padding: 1.5rem 1rem;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .logo img {
+        height: 2rem;
+    }
+    
+    .content-wrapper {
+        width: 95%;
+        margin: -3vh auto 3rem auto;
+        padding: 1rem 1.5rem;
+    }
+    
+    .admin-tag {
+        position: static;
+        text-align: center;
+        margin-bottom: 1rem;
+        display: inline-block;
+    }
+    
+    .bookings-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem 0;
+    }
+    
+    .grid-header {
+        display: none;
+    }
+    
+    .grid-cell {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 0.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .decision-slider.initial-state {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .decision-slider.final-state {
+        width: 100%;
+        max-width: 170px;
+    }
+    
     .modal-content {
         width: 95%;
         padding: 1.5rem;
         margin: 1rem;
+        max-height: 95vh;
     }
     
     .form-row {
@@ -610,6 +685,40 @@ footer {
     .form-buttons {
         flex-direction: column;
         gap: 0.8rem;
+    }
+    
+    .submit-btn, .clear-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        height: 25vh;
+        min-height: 200px;
+        padding: 1rem;
+    }
+    
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+    
+    .content-wrapper {
+        width: 100%;
+        margin: -2vh auto 2rem auto;
+        padding: 1rem;
+        border-radius: 0;
+    }
+    
+    .modal-content {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        padding: 1rem;
+    }
+    
+    .decision-slider {
+        width: 100% !important;
     }
 }
 

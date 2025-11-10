@@ -27,12 +27,12 @@
   >
     <div
       id="forget_page"
-      class="w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 py-12"
+      class="w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 md:px-8 sm:px-6 py-12 md:py-10 sm:py-8 mx-4"
     >
-      <h2 class="text-3xl font-bold text-white text-center mb-6">
+      <h2 class="text-3xl md:text-2xl sm:text-xl font-bold text-white text-center mb-6 md:mb-4 sm:mb-3">
         Forgot Password
       </h2>
-      <p class="text-gray-300 text-center text-sm mb-8">
+      <p class="text-gray-300 text-center text-sm md:text-xs sm:text-xs mb-8 md:mb-6 sm:mb-4">
         Enter your email address below and we’ll send you instructions to reset
         your password.
       </p>
@@ -73,21 +73,83 @@
 
     <div
       id="otp-container"
-      class="hidden w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 py-12"
+      class="hidden w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 md:px-8 sm:px-6 py-12 md:py-10 sm:py-8 mx-4"
     >
-      <h2 class="text-2xl font-bold text-white text-center mb-6">Enter OTP</h2>
+      <h2 class="text-2xl md:text-xl sm:text-lg font-bold text-white text-center mb-6 md:mb-4 sm:mb-3">Enter OTP</h2>
+      <p class="text-gray-300 text-center text-sm md:text-xs sm:text-xs mb-6 md:mb-4 sm:mb-3">
+        Please enter the OTP sent to your email address.
+      </p>
       <input
         id="otp"
         type="text"
         placeholder="Enter OTP"
+        maxlength="4"
         class="w-full py-3 px-4 rounded border border-gray-500 text-white bg-transparent focus:outline-none focus:border-purple-500 mb-4"
       />
       <button
         id="verifyOtp"
-        class="w-full py-3 text-lg font-semibold text-white bg-purple-600 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+        class="w-full py-3 text-lg font-semibold text-white bg-purple-600 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 mb-4"
       >
         Verify OTP
       </button>
+      <div class="text-center">
+        <a
+          href="#"
+          id="backToEmail"
+          class="text-purple-400 hover:text-purple-200 transition"
+          >Back to Email</a
+        >
+      </div>
+    </div>
+
+    <div
+      id="reset-password-container"
+      class="hidden w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 md:px-8 sm:px-6 py-12 md:py-10 sm:py-8 mx-4"
+    >
+      <h2 class="text-2xl md:text-xl sm:text-lg font-bold text-white text-center mb-6 md:mb-4 sm:mb-3">Reset Password</h2>
+      <p class="text-gray-300 text-center text-sm md:text-xs sm:text-xs mb-6 md:mb-4 sm:mb-3">
+        Enter your new password below.
+      </p>
+      <form id="resetPasswordForm" class="flex flex-col space-y-6">
+        <div class="relative w-full">
+          <input
+            id="newPassword"
+            name="newPassword"
+            type="password"
+            required
+            class="peer w-full py-3 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+            placeholder="New Password"
+          />
+          <label
+            for="newPassword"
+            class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm"
+          >
+            New Password
+          </label>
+        </div>
+        <div class="relative w-full">
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+            class="peer w-full py-3 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+            placeholder="Confirm Password"
+          />
+          <label
+            for="confirmPassword"
+            class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm"
+          >
+            Confirm Password
+          </label>
+        </div>
+        <button
+          type="submit"
+          class="w-full mt-8 py-3 text-lg font-semibold text-white bg-[#25A85B] rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+        >
+          Reset Password
+        </button>
+      </form>
     </div>
 
     <script>
@@ -95,31 +157,115 @@
       const forgot_form = document.getElementById("ForgotForm");
       const container = document.getElementById("forget_page");
       const otpContainer = document.getElementById("otp-container");
+      const resetPasswordContainer = document.getElementById("reset-password-container");
       const verifyBtn = document.getElementById("verifyOtp");
+      const resetPasswordForm = document.getElementById("resetPasswordForm");
+      const backToEmailBtn = document.getElementById("backToEmail");
+
+      let userEmail = "";
+      let resetToken = "";
 
       forgot_form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const email = document.getElementById("email").value;
-        const data = await fetch(`${form_api}/auth/forgot`, {
+        userEmail = document.getElementById("email").value;
+        const response = await fetch(`${form_api}/auth/forgot`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             credentials: "include"
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email: userEmail }),
         });
 
-        if (data.ok) {
+        const data = await response.json();
+        if (response.ok) {
           container.classList.add("hidden");
           otpContainer.classList.remove("hidden");
           alert("OTP sent to your email!");
         } else {
-          alert("Failed to send OTP. Please try again.");
+          alert(data.error || "Failed to send OTP. Please try again.");
         }
       });
 
       verifyBtn.addEventListener("click", async () => {
         const otp = document.getElementById("otp").value;
+        if (!otp) {
+          alert("Please enter the OTP");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${form_api}/auth/verify-otp`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              credentials: "include"
+            },
+            body: JSON.stringify({ email: userEmail, otp }),
+          });
+
+          const data = await response.json();
+          if (response.ok && data.success) {
+            resetToken = data.resetToken;
+            otpContainer.classList.add("hidden");
+            resetPasswordContainer.classList.remove("hidden");
+            alert("OTP verified successfully! Please enter your new password.");
+          } else {
+            alert(data.message || "Invalid OTP. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error verifying OTP:", error);
+          alert("An error occurred. Please try again.");
+        }
+      });
+
+      resetPasswordForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (newPassword !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        if (newPassword.length < 6) {
+          alert("Password must be at least 6 characters long!");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${form_api}/auth/reset-password`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              credentials: "include"
+            },
+            body: JSON.stringify({ 
+              email: userEmail, 
+              newPassword, 
+              resetToken 
+            }),
+          });
+
+          const data = await response.json();
+          if (response.ok && data.success) {
+            alert("Password reset successfully! Redirecting to login...");
+            window.location.href = "/api/login";
+          } else {
+            alert(data.message || "Failed to reset password. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error resetting password:", error);
+          alert("An error occurred. Please try again.");
+        }
+      });
+
+      backToEmailBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        otpContainer.classList.add("hidden");
+        container.classList.remove("hidden");
+        document.getElementById("otp").value = "";
       });
     </script>
   </body>
