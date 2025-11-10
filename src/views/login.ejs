@@ -136,27 +136,30 @@
         
         if(response.ok){
           console.log("Login success");
-          window.location.href="/";
+          showAlert("Login successful! Redirecting...", "success", 2000);
+          setTimeout(() => {
+            window.location.href="/";
+          }, 1500);
         }
         else{
           // Check if user is blocked (status 429)
           if(response.status === 429){
             const message = result.message || 'Login limit reached. Please try again after some time.';
-            alert(`⚠️ ${message}`);
-            // Optionally show remaining time if available
+            let fullMessage = message;
             if(result.remainingSeconds){
               const minutes = Math.ceil(result.remainingSeconds / 60);
-              console.log(`Account blocked. Remaining time: ${minutes} minute(s)`);
+              fullMessage += ` (Try again in ${minutes} minute(s))`;
             }
+            showAlert(fullMessage, "warning", 6000);
           }
           else{
             // Show alert for other errors
-            alert(`❌ ${result.message || 'Login failed. Please check your credentials.'}`);
+            showAlert(result.message || 'Login failed. Please check your credentials.', "error");
           }
         }
       } catch (error) {
         console.error('Login error:', error);
-        alert('❌ An error occurred. Please try again.');
+        showAlert('An error occurred. Please try again.', "error");
       }
     })
 
@@ -176,8 +179,14 @@
       });
 
       if(data.ok){
-        window.location.href="/api/login";
+        showAlert("Registration successful! Redirecting to login...", "success", 2000);
+        setTimeout(() => {
+          window.location.href="/api/login";
+        }, 1500);
         console.log('success');
+      } else {
+        const result = await data.json();
+        showAlert(result.message || "Registration failed. Please try again.", "error");
       }
     })
     

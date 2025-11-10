@@ -25,6 +25,7 @@
   <body
     class="bg-gradient-to-tr from-[#1E202B] to-[#2D2F3E] flex items-center justify-center min-h-screen"
   >
+    <%- include('partials/alert') %>
     <div
       id="forget_page"
       class="w-full max-w-md bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm px-10 md:px-8 sm:px-6 py-12 md:py-10 sm:py-8 mx-4"
@@ -181,16 +182,16 @@
         if (response.ok) {
           container.classList.add("hidden");
           otpContainer.classList.remove("hidden");
-          alert("OTP sent to your email!");
+          showAlert("OTP sent to your email!", "success");
         } else {
-          alert(data.error || "Failed to send OTP. Please try again.");
+          showAlert(data.error || "Failed to send OTP. Please try again.", "error");
         }
       });
 
       verifyBtn.addEventListener("click", async () => {
         const otp = document.getElementById("otp").value;
         if (!otp) {
-          alert("Please enter the OTP");
+          showAlert("Please enter the OTP", "warning");
           return;
         }
 
@@ -209,13 +210,13 @@
             resetToken = data.resetToken;
             otpContainer.classList.add("hidden");
             resetPasswordContainer.classList.remove("hidden");
-            alert("OTP verified successfully! Please enter your new password.");
+            showAlert("OTP verified successfully! Please enter your new password.", "success");
           } else {
-            alert(data.message || "Invalid OTP. Please try again.");
+            showAlert(data.message || "Invalid OTP. Please try again.", "error");
           }
         } catch (error) {
           console.error("Error verifying OTP:", error);
-          alert("An error occurred. Please try again.");
+          showAlert("An error occurred. Please try again.", "error");
         }
       });
 
@@ -225,12 +226,12 @@
         const confirmPassword = document.getElementById("confirmPassword").value;
 
         if (newPassword !== confirmPassword) {
-          alert("Passwords do not match!");
+          showAlert("Passwords do not match!", "error");
           return;
         }
 
         if (newPassword.length < 6) {
-          alert("Password must be at least 6 characters long!");
+          showAlert("Password must be at least 6 characters long!", "warning");
           return;
         }
 
@@ -250,14 +251,16 @@
 
           const data = await response.json();
           if (response.ok && data.success) {
-            alert("Password reset successfully! Redirecting to login...");
-            window.location.href = "/api/login";
+            showAlert("Password reset successfully! Redirecting to login...", "success", 3000);
+            setTimeout(() => {
+              window.location.href = "/api/login";
+            }, 2000);
           } else {
-            alert(data.message || "Failed to reset password. Please try again.");
+            showAlert(data.message || "Failed to reset password. Please try again.", "error");
           }
         } catch (error) {
           console.error("Error resetting password:", error);
-          alert("An error occurred. Please try again.");
+          showAlert("An error occurred. Please try again.", "error");
         }
       });
 
