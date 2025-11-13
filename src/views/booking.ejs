@@ -1,484 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Booking</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Customer Booking</title>
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
-    <header class="hero-section">
-        <nav>
-            <div class="logo">
-                <a href="/" style="display: inline-block; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                    <img src="/assets/images/logo.png" alt="Company Logo" style="cursor: pointer;">
-                </a>
-            </div>
-            <div class="menu-icon">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </nav>
-        <h1>My Bookings</h1>
-    </header>
+	<header class="hero-section">
+		<%- include('partials/navbar') %>
+		<h1>My Bookings</h1>
+	</header>
 
-    <main class="content-wrapper">
-        <div class="booking-controls">
-            <button class="new-booking-btn">New Booking</button>
-            <div class="filter-controls">
-                <button class="filter-btn">Filter <i class="fas fa-filter"></i></button>
-                <button class="location-btn">Dubai</button>
-                <button class="sort-btn">Sort <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-                <button class="trips-btn">Upcoming Trips</button>
-            </div>
-            <div class="admin-tag">1234@gmail.com</div>
-        </div>
+	<main class="content-wrapper">
+		<div class="booking-controls">
+			<button class="new-booking-btn">New Booking</button>
+			<div class="filter-controls">
+				<button class="filter-btn">Filter <i class="fas fa-filter"></i></button>
+				<button class="location-btn">Dubai</button>
+				<button class="sort-btn">Sort <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+				<button class="trips-btn">Upcoming Trips</button>
+			</div>
+			<div class="admin-tag">1234@gmail.com</div>
+		</div>
 
-        <div class="booking-tabs">
-            <div class="tab-header">
-                <button class="tab-btn active" data-tab="upcoming">Upcoming bookings</button>
-                <button class="tab-btn" data-tab="past">Past bookings</button>
-            </div>
-        </div>
+		<div class="booking-tabs">
+			<div class="tab-header">
+				<button class="tab-btn active" data-tab="upcoming">Upcoming bookings</button>
+				<button class="tab-btn" data-tab="past">Past bookings</button>
+			</div>
+		</div>
 
-        <div class="booking-content">
-            <div class="tab-content active" id="upcoming">
-                <div class="booking-cards">
-                    <div class="booking-card">
-                        <div class="hotel-name">American Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Dubai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
-                        </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
+		<div class="booking-content">
+			<div class="tab-content active" id="upcoming">
+				<div class="booking-cards">
+					<div class="booking-card">
+						<div class="hotel-name">American Hotel</div>
+						<div class="booking-details">
+							<div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
+							<div class="detail-line"><strong>From:</strong> Dubai</div>
+							<div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
+							<div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
+						</div>
+						<button class="view-booking-btn">View this booking</button>
+					</div>
+				</div>
+			</div>
 
-                    <div class="booking-card">
-                        <div class="hotel-name">American Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Dubai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
-                        </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
+			<div class="tab-content" id="past">
+				<div class="booking-cards">
+					<div class="booking-card">
+						<div class="hotel-name">Grand Palace Hotel</div>
+						<div class="booking-details">
+							<div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
+							<div class="detail-line"><strong>From:</strong> Mumbai</div>
+							<div class="detail-line"><strong>Arrival:</strong> 2025-03-15 at 10:00</div>
+							<div class="detail-line"><strong>Return:</strong> 2025-03-17 at 12:00</div>
+						</div>
+						<button class="view-booking-btn">View this booking</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 
-                    <div class="booking-card">
-                        <div class="hotel-name">American Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Dubai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
-                        </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
-                </div>
-            </div>
+	<!-- Booking Form Modal -->
+	<div class="modal-overlay" id="bookingModal">
+		<div class="modal-content">
+			<form class="booking-form-modal" id="bookingForm">
+				<div class="form-row">
+					<div class="form-group">
+						<label for="customerName">Name :</label>
+						<input type="text" id="customerName" name="customerName" required>
+					</div>
+					<div class="form-group">
+						<label for="phoneNumber">Phone No. :</label>
+						<input type="tel" id="phoneNumber" name="phoneNumber" required>
+					</div>
+				</div>
 
-            <div class="tab-content" id="past">
-                <div class="booking-cards">
-                    <div class="booking-card">
-                        <div class="hotel-name">Grand Palace Hotel</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Mumbai</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-03-15 at 10:00</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-03-17 at 12:00</div>
-                        </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
+				<div class="form-row">
+					<div class="form-group full-width">
+						<label for="emailId">Email id :</label>
+						<input type="email" id="emailId" name="emailId" required>
+					</div>
+				</div>
 
-                    <div class="booking-card">
-                        <div class="hotel-name">Luxury Resort</div>
-                        <div class="booking-details">
-                            <div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
-                            <div class="detail-line"><strong>From:</strong> Delhi</div>
-                            <div class="detail-line"><strong>Arrival:</strong> 2025-02-20 at 14:30</div>
-                            <div class="detail-line"><strong>Return:</strong> 2025-02-23 at 11:00</div>
-                        </div>
-                        <button class="view-booking-btn">View this booking</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+				<div class="form-row">
+					<div class="booking-type">
+						<div class="radio-group">
+							<input type="radio" id="package" name="bookingType" value="package" checked>
+							<label for="package">Package</label>
+						</div>
+						<div class="radio-group">
+							<input type="radio" id="stayOnly" name="bookingType" value="stayOnly">
+							<label for="stayOnly">Stay only</label>
+						</div>
+					</div>
+				</div>
 
-    <!-- Booking Form Modal -->
-    <div class="modal-overlay" id="bookingModal">
-        <div class="modal-content">
-            <form class="booking-form-modal" id="bookingForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="customerName">Name :</label>
-                        <input type="text" id="customerName" name="customerName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phoneNumber">Phone No. :</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group full-width">
-                        <label for="emailId">Email id :</label>
-                        <input type="email" id="emailId" name="emailId" required>
-                    </div>
-                </div>
+				<div class="sliding-container">
+					<div class="sliding-content" id="slidingContent">
+						<div class="slide-panel active" id="packagePanel">
+							<div class="form-group">
+								<label for="packageName">Package Name :</label>
+								<select id="packageName" name="packageName" required>
+									<option value="">Select a package</option>
+									<option value="Bali Exploration" selected>Bali Exploration</option>
+									<option value="Paradise Gateway">Paradise Gateway</option>
+								</select>
+							</div>
+						</div>
+						<div class="slide-panel" id="hotelPanel">
+							<div class="form-group">
+								<label for="hotelName">Hotel :</label>
+								<select id="hotelName" name="hotelName">
+									<option value="">Select a hotel</option>
+									<option value="Jet 2 Holiday">Jet 2 Holiday</option>
+									<option value="Grand Palace Resort">Grand Palace Resort</option>
+									<option value="Azure Bay Hotel">Azure Bay Hotel</option>
+									<option value="Sunset Paradise Inn">Sunset Paradise Inn</option>
+									<option value="Royal Crown Hotel">Royal Crown Hotel</option>
+									<option value="Ocean Breeze Resort">Ocean Breeze Resort</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                <div class="form-row">
-                    <div class="booking-type">
-                        <div class="radio-group">
-                            <input type="radio" id="package" name="bookingType" value="package" checked>
-                            <label for="package">Package</label>
-                        </div>
-                        <div class="radio-group">
-                            <input type="radio" id="stayOnly" name="bookingType" value="stayOnly">
-                            <label for="stayOnly">Stay only</label>
-                        </div>
-                    </div>
-                </div>
+				<div class="form-row people-section">
+					<div class="form-group">
+						<label>People :</label>
+						<div class="people-inputs">
+							<div class="people-input-group">
+								<label for="adults">Adults :</label>
+								<input type="number" id="adults" name="adults" value="2" min="1" required>
+							</div>
+							<div class="people-input-group">
+								<label for="children">Children :</label>
+								<input type="number" id="children" name="children" value="0" min="0">
+							</div>
+						</div>
+					</div>
+				</div>
 
-                <div class="sliding-container">
-                    <div class="sliding-content" id="slidingContent">
-                        <div class="slide-panel active" id="packagePanel">
-                            <div class="form-group">
-                                <label for="packageName">Package Name :</label>
-                                <select id="packageName" name="packageName" required>
-                                    <option value="">Select a package</option>
-                                    <option value="Bali Exploration" selected>Bali Exploration</option>
-                                    <option value="Paradise Gateway">Paradise Gateway</option>
-                                    <option value="nothing">nothing</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="slide-panel" id="hotelPanel">
-                            <div class="form-group">
-                                <label for="hotelName">Hotel :</label>
-                                <select id="hotelName" name="hotelName">
-                                    <option value="">Select a hotel</option>
-                                    <option value="Jet 2 Holiday">Jet 2 Holiday</option>
-                                    <option value="Grand Palace Resort">Grand Palace Resort</option>
-                                    <option value="Azure Bay Hotel">Azure Bay Hotel</option>
-                                    <option value="Sunset Paradise Inn">Sunset Paradise Inn</option>
-                                    <option value="Royal Crown Hotel">Royal Crown Hotel</option>
-                                    <option value="Ocean Breeze Resort">Ocean Breeze Resort</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="arrivalDate">Arrival Date :</label>
+						<input type="date" id="arrivalDate" name="arrivalDate" required>
+					</div>
+					<div class="form-group">
+						<label for="departureDate">Departure Date :</label>
+						<input type="date" id="departureDate" name="departureDate" required>
+					</div>
+				</div>
 
-                <div class="form-row people-section">
-                    <div class="form-group">
-                        <label>People :</label>
-                        <div class="people-inputs">
-                            <div class="people-input-group">
-                                <label for="adults">Adults :</label>
-                                <input type="number" id="adults" name="adults" value="2" min="1" required>
-                            </div>
-                            <div class="people-input-group">
-                                <label for="children">Children :</label>
-                                <input type="number" id="children" name="children" value="0" min="0">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<div class="form-buttons">
+					<button type="submit" class="submit-btn">Submit</button>
+					<button type="button" class="clear-btn" id="clearBtn">Clear All</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="arrivalDate">Arrival Date :</label>
-                        <input type="date" id="arrivalDate" name="arrivalDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="departureDate">Departure Date :</label>
-                        <input type="date" id="departureDate" name="departureDate" required>
-                    </div>
-                </div>
+	<%- include('partials/footer') %>
 
-                <div class="form-buttons">
-                    <button type="submit" class="submit-btn">Submit</button>
-                    <button type="button" class="clear-btn" onclick="clearForm()">Clear All</button>
-                </div>
-            </form>
-        </div>
-    </div>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Tab switching
+			const tabButtons = document.querySelectorAll('.tab-btn');
+			const tabContents = document.querySelectorAll('.tab-content');
 
-    <footer>
-        <div class="footer-content">
-             <div class="footer-column">
-                <h4>Pages</h4>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Hotels</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Book Hotel</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Know More</h4>
-                <ul>
-                    <li><a href="#">Membership</a></li>
-                    <li><a href="#">Our Team</a></li>
-                    <li><a href="#">News</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Other Details</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>The Trance</h4>
-                <p>Over the last 25 years, The Trance organisation has been known for dependably delivering the true Indian hospitality experience with more than 50 hotels and resorts worldwide.</p>
-            </div>
-        </div>
-        <div class="footer-socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-reddit-alien"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <div class="footer-copyright">
-            The Trance © 2025
-        </div>
-    </footer>
+			tabButtons.forEach(button => {
+				button.addEventListener('click', () => {
+					const tabName = button.getAttribute('data-tab');
+					tabButtons.forEach(btn => btn.classList.remove('active'));
+					tabContents.forEach(tab => tab.classList.remove('active'));
+					button.classList.add('active');
+					document.getElementById(tabName).classList.add('active');
+				});
+			});
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Enhanced parallax effect with sophisticated animations
-            const heroSection = document.querySelector('.hero-section');
-            const heroTitle = document.querySelector('.hero-section h1');
-            const heroNav = document.querySelector('.hero-section nav');
-            let ticking = false;
+			// Booking type toggle (slide panels)
+			const packageRadio = document.getElementById('package');
+			const stayOnlyRadio = document.getElementById('stayOnly');
+			const slidingContent = document.getElementById('slidingContent');
+			const packagePanel = document.getElementById('packagePanel');
+			const hotelPanel = document.getElementById('hotelPanel');
+			const packageNameField = document.getElementById('packageName');
+			const hotelNameField = document.getElementById('hotelName');
 
-            function updateParallax() {
-                const scrolled = window.pageYOffset;
-                const heroRect = heroSection.getBoundingClientRect();
-                const heroHeight = heroSection.offsetHeight;
-                const windowHeight = window.innerHeight;
-                
-                // Calculate scroll progress (0 to 1)
-                const scrollProgress = Math.min(scrolled / (heroHeight + windowHeight * 0.5), 1);
-                
-                // Only apply parallax when hero section is visible or just past it
-                if (heroRect.top < windowHeight && heroRect.bottom > -heroHeight) {
-                    // Background parallax with dramatic movement
-                    const backgroundRate = scrolled * 0.6;
-                    const maxMovement = heroHeight * 0.8;
-                    const clampedRate = Math.max(-maxMovement, Math.min(maxMovement, backgroundRate));
-                    
-                    // Add scaling effect for depth
-                    const scale = 1 + (scrollProgress * 0.1); // Subtle zoom
-                    
-                    // Add subtle rotation for dynamic feel
-                    const rotation = scrollProgress * 1; // Very subtle rotation
-                    
-                    // Apply layered transforms
-                    heroSection.style.transition = 'none';
-                    heroSection.style.transform = `translateY(${clampedRate}px) scale(${scale}) rotate(${rotation}deg)`;
-                    
-                    // Animate title with different speed for layered effect
-                    if (heroTitle) {
-                        const titleRate = scrolled * -0.2; // Opposite direction
-                        const titleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
-                        const titleScale = Math.max(0.8, 1 - scrollProgress * 0.2);
-                        
-                        heroTitle.style.transform = `translateY(${titleRate}px) scale(${titleScale})`;
-                        heroTitle.style.opacity = titleOpacity;
-                    }
-                    
-                    // Animate navigation with subtle effects
-                    if (heroNav) {
-                        const navRate = scrolled * -0.1;
-                        const navOpacity = Math.max(0.3, 1 - scrollProgress * 0.8);
-                        
-                        heroNav.style.transform = `translateY(${navRate}px)`;
-                        heroNav.style.opacity = navOpacity;
-                    }
-                    
-                } else if (heroRect.bottom <= -heroHeight) {
-                    // When hero is completely scrolled past, keep final position
-                    const finalRate = heroHeight * 0.8;
-                    const finalScale = 1.1;
-                    const finalRotation = 1;
-                    
-                    heroSection.style.transform = `translateY(${finalRate}px) scale(${finalScale}) rotate(${finalRotation}deg)`;
-                    
-                    if (heroTitle) {
-                        heroTitle.style.opacity = 0;
-                        heroTitle.style.transform = 'translateY(-100px) scale(0.8)';
-                    }
-                    
-                    if (heroNav) {
-                        heroNav.style.opacity = 0.3;
-                        heroNav.style.transform = 'translateY(-50px)';
-                    }
-                }
-                
-                ticking = false;
-            }
+			window.slideToPanel = function(showPackage) {
+				if (showPackage) {
+					slidingContent.style.transform = 'translateX(0%)';
+					packagePanel.classList.add('active');
+					hotelPanel.classList.remove('active');
+					packageNameField.required = true;
+					hotelNameField.required = false;
+					hotelNameField.value = '';
+				} else {
+					slidingContent.style.transform = 'translateX(-50%)';
+					packagePanel.classList.remove('active');
+					hotelPanel.classList.add('active');
+					packageNameField.required = false;
+					hotelNameField.required = true;
+					packageNameField.value = '';
+				}
+			};
 
-            function requestTick() {
-                if (!ticking) {
-                    requestAnimationFrame(updateParallax);
-                    ticking = true;
-                }
-            }
+			packageRadio.addEventListener('change', () => slideToPanel(true));
+			stayOnlyRadio.addEventListener('change', () => slideToPanel(false));
 
-            window.addEventListener('scroll', requestTick);
+			slideToPanel(true); // default
 
-            // Tab functionality
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
+			// Modal logic
+			const modal = document.getElementById('bookingModal');
+			const newBookingBtn = document.querySelector('.new-booking-btn');
+			const viewBtns = document.querySelectorAll('.view-booking-btn');
+			const clearBtn = document.getElementById('clearBtn');
+			const bookingForm = document.getElementById('bookingForm');
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabName = button.getAttribute('data-tab');
-                    
-                    // Remove active class from all tabs and contents
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    button.classList.add('active');
-                    document.getElementById(tabName).classList.add('active');
-                });
-            });
+			newBookingBtn.addEventListener('click', () => {
+				openModal();
+				clearForm();
+			});
 
-            // Horizontal sliding animation for booking type
-            const packageRadio = document.getElementById('package');
-            const stayOnlyRadio = document.getElementById('stayOnly');
-            const slidingContent = document.getElementById('slidingContent');
-            const packagePanel = document.getElementById('packagePanel');
-            const hotelPanel = document.getElementById('hotelPanel');
-            const packageNameField = document.getElementById('packageName');
-            const hotelNameField = document.getElementById('hotelName');
+			viewBtns.forEach(btn => {
+				btn.addEventListener('click', () => openModal());
+			});
 
-            function slideToPanel(showPackage) {
-                if (showPackage) {
-                    slidingContent.style.transform = 'translateX(0%)';
-                    packagePanel.classList.add('active');
-                    hotelPanel.classList.remove('active');
-                    packageNameField.required = true;
-                    hotelNameField.required = false;
-                    hotelNameField.value = '';
-                } else {
-                    slidingContent.style.transform = 'translateX(-50%)';
-                    packagePanel.classList.remove('active');
-                    hotelPanel.classList.add('active');
-                    packageNameField.required = false;
-                    hotelNameField.required = true;
-                    packageNameField.value = '';
-                }
-            }
+			modal.addEventListener('click', e => {
+				if (e.target === modal) closeModal();
+			});
 
-            packageRadio.addEventListener('change', () => {
-                if (packageRadio.checked) {
-                    slideToPanel(true);
-                }
-            });
+			bookingForm.addEventListener('submit', e => {
+				e.preventDefault();
+				alert('Booking submitted successfully!');
+				closeModal();
+			});
 
-            stayOnlyRadio.addEventListener('change', () => {
-                if (stayOnlyRadio.checked) {
-                    slideToPanel(false);
-                }
-            });
+			clearBtn.addEventListener('click', clearForm);
 
-            // Initialize with package selected
-            slideToPanel(true);
+			// Booking hover effects
+			document.querySelectorAll('.booking-card').forEach(card => {
+				card.addEventListener('mouseenter', () => {
+					card.style.transform = 'translateY(-8px) scale(1.02)';
+					card.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15)';
+				});
+				card.addEventListener('mouseleave', () => {
+					card.style.transform = 'translateY(0) scale(1)';
+					card.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+				});
+			});
+		});
 
-            // Modal functionality
-            const modal = document.getElementById('bookingModal');
-            const newBookingBtn = document.querySelector('.new-booking-btn');
-            const viewButtons = document.querySelectorAll('.view-booking-btn');
-            const bookingForm = document.getElementById('bookingForm');
+		function openModal() {
+			const modal = document.getElementById('bookingModal');
+			modal.style.display = 'flex';
+			document.body.style.overflow = 'hidden';
+		}
 
-            // Open modal for new booking
-            newBookingBtn.addEventListener('click', () => {
-                openModal();
-                clearForm();
-            });
+		function closeModal() {
+			const modal = document.getElementById('bookingModal');
+			modal.style.display = 'none';
+			document.body.style.overflow = 'auto';
+		}
 
-            // Open modal for viewing/editing booking
-            viewButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    button.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        button.style.transform = 'scale(1)';
-                        openModal();
-                        // You can populate form with existing data here
-                    }, 150);
-                });
-            });
-
-            // Close modal when clicking overlay
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            // Form submission
-            bookingForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Booking submitted successfully!');
-                closeModal();
-            });
-
-            // Booking card hover animations
-            const bookingCards = document.querySelectorAll('.booking-card');
-            
-            bookingCards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-8px) scale(1.02)';
-                    card.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) scale(1)';
-                    card.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                });
-            });
-
-            console.log('Customer booking page loaded with enhanced interactions');
-        });
-
-        // Modal functions
-        function openModal() {
-            const modal = document.getElementById('bookingModal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('bookingModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function clearForm() {
-            const form = document.getElementById('bookingForm');
-            form.reset();
-            // Reset to default values
-            document.getElementById('adults').value = '2';
-            document.getElementById('children').value = '0';
-            document.getElementById('package').checked = true;
-            
-            // Reset sliding animation to package
-            slideToPanel(true);
-            document.getElementById('packageName').value = 'Bali Exploration';
-        }
-    </script>
-
+		function clearForm() {
+			const form = document.getElementById('bookingForm');
+			form.reset();
+			document.getElementById('adults').value = '2';
+			document.getElementById('children').value = '0';
+			document.getElementById('package').checked = true;
+			slideToPanel(true);
+			document.getElementById('packageName').value = 'Bali Exploration';
+		}
+	</script>
 </body>
 </html>

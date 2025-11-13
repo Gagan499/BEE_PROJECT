@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,36 +8,14 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-	 <header class="hero-section">
-        <nav>
-            <div class="logo">
-                <a href="/" style="display: inline-block; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                    <img src="/assets/images/logo.png" alt="Company Logo" style="cursor: pointer;">
-                </a>
-            </div>
-            <div class="menu-icon" id="menuBtn" style="cursor: pointer;">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </nav>
-        <h1>More Packages</h1>
-    </header>
+	<!-- Hero Section -->
+	<header class="hero-section">
+		<%- include('partials/navbar') %>
+		<h1>More Packages</h1>
+	</header>
 
-    <!-- Overlay -->
-    <div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none; z-index: 40;"></div>
-
-    <!-- Slide Menu -->
-    <div id="sideMenu" style="position: fixed; top: 0; right: 0; width: 16rem; height: 100%; background-color: #1f2937; color: white; transform: translateX(100%); transition: transform 0.3s ease-in-out; z-index: 50; box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);">
-        <!-- Close Button -->
-        <button id="closeBtn" style="position: absolute; top: 1rem; left: 1rem; font-size: 1.5rem; background: none; border: none; color: white; cursor: pointer;">&times;</button>
-        
-        <ul style="margin-top: 5rem; text-align: center; list-style: none; padding: 0;">
-            <li style="margin: 0.25rem 0;"><a href="/" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">Home</a></li>
-            <li style="margin: 0.25rem 0;"><a href="/about" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">About</a></li>
-            <li style="margin: 0.25rem 0;"><a href="/contact" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">Contact</a></li>
-            <li style="margin: 0.25rem 0;"><a href="/api/login" style="display: block; font-size: 1.125rem; padding: 0.5rem; color: white; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#374151'" onmouseout="this.style.backgroundColor='transparent'">Login</a></li>
-        </ul>
-    </div>
-		<div class="packages-rows-container">
+	<!-- Packages Section -->
+	<div class="packages-rows-container">
 		<% for(let i = 0; i < packages.length; i += 2) { %>
 			<div class="packages-row">
 				<% for(let j = i; j < i + 2 && j < packages.length; j++) { %>
@@ -49,22 +26,23 @@
 							<div class="package-days">
 								<span><strong><%= packages[j].days %> Days</strong> / <%= packages[j].nights %> Nights</span>
 							</div>
-							<p class="package-desc">
-								<%= packages[j].desc %>
-							</p>
+							<p class="package-desc"><%= packages[j].desc %></p>
 						</div>
 					</div>
 				<% } %>
 			</div>
 		<% } %>
 	</div>
-	<%- include("partials/footer.ejs") %>
-    <script>
+
+	<!-- Footer -->
+	<%- include('partials/footer') %>
+
+	<!-- Scripts -->
+	<script>
 		function toggleCardClick(card) {
 			card.classList.toggle('clicked');
 		}
 
-		// Enhanced parallax effect with sophisticated animations
 		document.addEventListener('DOMContentLoaded', () => {
 			const heroSection = document.querySelector('.hero-section');
 			const heroTitle = document.querySelector('.hero-section h1');
@@ -76,52 +54,37 @@
 				const heroRect = heroSection.getBoundingClientRect();
 				const heroHeight = heroSection.offsetHeight;
 				const windowHeight = window.innerHeight;
-
-				// Calculate scroll progress (0 to 1)
 				const scrollProgress = Math.min(scrolled / (heroHeight + windowHeight * 0.5), 1);
 
-				// Only apply parallax when hero section is visible or just past it
 				if (heroRect.top < windowHeight && heroRect.bottom > -heroHeight) {
-					// Background parallax with dramatic movement
 					const backgroundRate = scrolled * 0.6;
 					const maxMovement = heroHeight * 0.8;
 					const clampedRate = Math.max(-maxMovement, Math.min(maxMovement, backgroundRate));
+					const scale = 1 + (scrollProgress * 0.1);
+					const rotation = scrollProgress * 1;
 
-					// Add scaling effect for depth
-					const scale = 1 + (scrollProgress * 0.1); // Subtle zoom
-
-					// Add subtle rotation for dynamic feel
-					const rotation = scrollProgress * 1; // Very subtle rotation
-
-					// Apply layered transforms
 					heroSection.style.transition = 'none';
 					heroSection.style.transform = `translateY(${clampedRate}px) scale(${scale}) rotate(${rotation}deg)`;
 
-					// Animate title with different speed for layered effect
 					if (heroTitle) {
-						const titleRate = scrolled * -0.2; // Opposite direction
+						const titleRate = scrolled * -0.2;
 						const titleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
 						const titleScale = Math.max(0.8, 1 - scrollProgress * 0.2);
-
 						heroTitle.style.transform = `translateY(${titleRate}px) scale(${titleScale})`;
 						heroTitle.style.opacity = titleOpacity;
 					}
 
-					// Animate navigation with subtle effects
 					if (heroNav) {
 						const navRate = scrolled * -0.1;
 						const navOpacity = Math.max(0.3, 1 - scrollProgress * 0.8);
-
 						heroNav.style.transform = `translateY(${navRate}px)`;
 						heroNav.style.opacity = navOpacity;
 					}
 
 				} else if (heroRect.bottom <= -heroHeight) {
-					// When hero is completely scrolled past, keep final position
 					const finalRate = heroHeight * 0.8;
 					const finalScale = 1.1;
 					const finalRotation = 1;
-
 					heroSection.style.transform = `translateY(${finalRate}px) scale(${finalScale}) rotate(${finalRotation}deg)`;
 
 					if (heroTitle) {
@@ -134,7 +97,6 @@
 						heroNav.style.transform = 'translateY(-50px)';
 					}
 				}
-
 				ticking = false;
 			}
 
@@ -147,25 +109,26 @@
 
 			window.addEventListener('scroll', requestTick);
 
-			// Sidebar menu functionality
+			// Sidebar menu functionality (optional if elements exist)
 			const menuBtn = document.getElementById('menuBtn');
 			const sideMenu = document.getElementById('sideMenu');
 			const closeBtn = document.getElementById('closeBtn');
 			const overlay = document.getElementById('overlay');
 
-			function openMenu() {
-				sideMenu.style.transform = 'translateX(0)';
-				overlay.style.display = 'block';
+			if (menuBtn && sideMenu && closeBtn && overlay) {
+				menuBtn.addEventListener('click', () => {
+					sideMenu.style.transform = 'translateX(0)';
+					overlay.style.display = 'block';
+				});
+				closeBtn.addEventListener('click', () => {
+					sideMenu.style.transform = 'translateX(100%)';
+					overlay.style.display = 'none';
+				});
+				overlay.addEventListener('click', () => {
+					sideMenu.style.transform = 'translateX(100%)';
+					overlay.style.display = 'none';
+				});
 			}
-
-			function closeMenu() {
-				sideMenu.style.transform = 'translateX(100%)';
-				overlay.style.display = 'none';
-			}
-
-			menuBtn.addEventListener('click', openMenu);
-			closeBtn.addEventListener('click', closeMenu);
-			overlay.addEventListener('click', closeMenu);
 		});
 	</script>
 </body>

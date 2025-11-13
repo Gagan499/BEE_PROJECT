@@ -309,8 +309,9 @@
 
 <body>
     <div class="page-container">
-
-        <%- include('partials/header') %>
+        <header>
+            <%- include('partials/navbar') %>
+        </header>
             
             <!-- Hero Section with Canvas Carousel -->
             <div class="hero-container flex flex-col justify-center items-center relative" style="margin-top:0 !important;">
@@ -350,10 +351,8 @@
                     </div>
                 </div>
             </div>
-
-            <%- include('partials/footer') %>
-
-    </div>
+                <%- include('partials/footer') %>
+        </div>
 
     <!-- Carousel Animation Script -->
     <script>
