@@ -7,6 +7,7 @@ import {FailedLoginPerDay, isBlocked, clearFailedAttempts} from "./loginlimit_re
 import { sendForgotPasswordMail } from "./forgot_mail.js";
 import client from "../redis_server.js";
 import crypto from "crypto";
+import { validateEmail, testVerifaliaCredentials } from "./emailValidator.js";
 
 
 dotenv.config();
@@ -29,6 +30,29 @@ authRouter.post("/register", async (req, res) => {
         message: "Name , Email and Password required !",
       });
     }
+
+    // Validate email using Verifalia
+    const emailValidation = await validateEmail(email);
+    if (!emailValidation.isValid) {
+      let errorMessage = "Invalid email address";
+      
+      if (emailValidation.result) {
+        if (emailValidation.result.isDisposableEmailAddress) {
+          errorMessage = "Disposable email addresses are not allowed";
+        } else if (emailValidation.result.classification === "Undeliverable") {
+          errorMessage = "Email address is not deliverable";
+        } else if (emailValidation.result.classification === "Invalid") {
+          errorMessage = "Invalid email address format";
+        }
+      }
+      
+      return res.status(400).json({
+        success: false,
+        message: errorMessage,
+        emailValidation: emailValidation.result,
+      });
+    }
+
     const existingUser = await user.findOne({ email });
     if (existingUser) {
       return res
@@ -265,6 +289,20 @@ authRouter.post("/reset-password", async (req, res) => {
     return res.status(500).json({ 
       success: false, 
       message: "Internal server error" 
+    });
+  }
+});
+
+// Test Verifalia credentials (for debugging)
+authRouter.get("/test-verifalia", async (req, res) => {
+  try {
+    const result = await testVerifaliaCredentials();
+    return res.status(result.success ? 200 : 401).json(result);
+  } catch (err) {
+    console.error("Error testing Verifalia credentials:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while testing credentials",
     });
   }
 });

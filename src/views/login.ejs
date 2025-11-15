@@ -217,7 +217,7 @@
 
         if (response.ok) {
           showAlert("Registration successful! Redirecting...", "success", 2000);
-          setTimeout(() => window.location.href = "/login", 1500);
+          setTimeout(() => window.location.href = "/api/login", 1500);
         } else {
           showAlert(result.message || "Registration failed. Please try again.", "error");
         }

@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { generate_random_number } from "./random_no.js";
 import client from "../redis_server.js";
+import { validateEmail } from "./emailValidator.js";
 
 dotenv.config();
 
@@ -22,6 +23,27 @@ export async function sendForgotPasswordMail(req, res) {
 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
+    }
+
+    // Validate email using Verifalia
+    const emailValidation = await validateEmail(email);
+    if (!emailValidation.isValid) {
+      let errorMessage = "Invalid email address";
+      
+      if (emailValidation.result) {
+        if (emailValidation.result.isDisposableEmailAddress) {
+          errorMessage = "Disposable email addresses are not allowed";
+        } else if (emailValidation.result.classification === "Undeliverable") {
+          errorMessage = "Email address is not deliverable";
+        } else if (emailValidation.result.classification === "Invalid") {
+          errorMessage = "Invalid email address format";
+        }
+      }
+      
+      return res.status(400).json({ 
+        error: errorMessage,
+        emailValidation: emailValidation.result 
+      });
     }
 
     const otp = generate_random_number().toString();

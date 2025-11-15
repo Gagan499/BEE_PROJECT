@@ -2,6 +2,7 @@ import express from "express";
 import Booking from "../../models/booking.js";
 import { getIO } from "../../config/socket.js";
 import { DefaultEmail,AcceptRequestEmail,RejectRequestEmail } from "./bookings_mail.js";
+import { validateEmail } from "./emailValidator.js";
 
 const bookingsRouter = express.Router();
 
@@ -53,6 +54,28 @@ bookingsRouter.post("/", async (req, res) => {
           success: false,
           message: "hotelName is required when bookingType is 'stayOnly'",
         });
+    }
+
+    // Validate email using Verifalia
+    const emailValidation = await validateEmail(emailId);
+    if (!emailValidation.isValid) {
+      let errorMessage = "Invalid email address";
+      
+      if (emailValidation.result) {
+        if (emailValidation.result.isDisposableEmailAddress) {
+          errorMessage = "Disposable email addresses are not allowed";
+        } else if (emailValidation.result.classification === "Undeliverable") {
+          errorMessage = "Email address is not deliverable";
+        } else if (emailValidation.result.classification === "Invalid") {
+          errorMessage = "Invalid email address format";
+        }
+      }
+      
+      return res.status(400).json({
+        success: false,
+        message: errorMessage,
+        emailValidation: emailValidation.result,
+      });
     }
 
     const doc = new Booking({
