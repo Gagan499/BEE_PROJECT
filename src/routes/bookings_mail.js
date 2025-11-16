@@ -13,7 +13,8 @@ const transporter = nodemailer.createTransport({
 export async function DefaultEmail(email, req, res) {
   try {
     if (!email) {
-      return res.status(400).json({ success: false, message: "Email is required" });
+      console.error(chalk.red("Email is required for DefaultEmail"));
+      return; // Don't send response, just return
     }
 
     const mailOptions = {
@@ -26,11 +27,12 @@ export async function DefaultEmail(email, req, res) {
     await transporter.sendMail(mailOptions);
 
     console.log(chalk.green(`Default Email sent to ${email}`));
-    res.status(200).json({ success: true, message: "Email sent successfully" });
+    // Don't send response - let the calling route handle it
 
   } catch (err) {
     console.error(chalk.red("Error sending email:", err));
-    res.status(500).json({ success: false, error: "Failed to send email" });
+    // Don't send response - just log the error
+    // The booking will still be created even if email fails
   }
 }
 
@@ -38,7 +40,8 @@ export async function DefaultEmail(email, req, res) {
 export async function AcceptRequestEmail(email,req,res){
     try {
         if (!email) {
-      return res.status(400).json({ success: false, message: "Email is required" });
+      console.error(chalk.red("Email is required for AcceptRequestEmail"));
+      return; // Don't send response, just return
     }
 
     const mailOptions = {
@@ -49,24 +52,25 @@ export async function AcceptRequestEmail(email,req,res){
 
             Your booking request has been approved. We look forward to serving you!
 
-            Thank you,
-            ThePalmWay`,
+          Thank you,
+          ThePalmWay`,
         };
 
     await transporter.sendMail(mailOptions);
 
     console.log(chalk.green(`Acceptance Email sent to ${email}`));
-    res.status(200).json({ success: true, message: "Email sent successfully" });
+    // Don't send response - let the calling route handle it
     } catch (err) {
         console.error(chalk.red("Error sending accepting email: ",err));
-        res.status(500).json({success:false,error:"Failed to send email"});
+        // Don't send response - just log the error
     }
 }
 
 export async function RejectRequestEmail(email,req,res){
     try {
         if (!email) {
-      return res.status(400).json({ success: false, message: "Email is required" });
+      console.error(chalk.red("Email is required for RejectRequestEmail"));
+      return; // Don't send response, just return
     }
 
  const mailOptions = {
@@ -78,16 +82,16 @@ export async function RejectRequestEmail(email,req,res){
         We regret to inform you that your booking request has been rejected. 
         Please contact support if you have any questions.
 
-        Thank you,
-        ThePalmWay`
+      Thank you,
+      ThePalmWay`
     };
 
     await transporter.sendMail(mailOptions);
 
     console.log(chalk.green(`Rejecting Email sent to ${email}`));
-    res.status(200).json({ success: true, message: "Email sent successfully" });
+    // Don't send response - let the calling route handle it
     } catch (err) {
         console.error(chalk.red("Error sending rejecting email: ",err));
-        res.status(500).json({success:false,error:"Failed to send email"});
+        // Don't send response - just log the error
     }
 }

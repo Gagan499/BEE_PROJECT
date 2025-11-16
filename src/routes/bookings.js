@@ -56,6 +56,50 @@ bookingsRouter.post("/", async (req, res) => {
         });
     }
 
+    // Validate dates
+    const arrival = new Date(arrivalDate);
+    const departure = new Date(departureDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+
+    // Check if dates are valid
+    if (isNaN(arrival.getTime())) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Invalid arrival date format",
+        });
+    }
+    if (isNaN(departure.getTime())) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Invalid departure date format",
+        });
+    }
+
+    // Check if arrival date is in the past
+    if (arrival < today) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Arrival date cannot be in the past",
+        });
+    }
+
+    // Check if departure date is before or equal to arrival date
+    if (departure <= arrival) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Departure date must be after arrival date",
+        });
+    }
+
     // Validate email using Verifalia
     const emailValidation = await validateEmail(emailId);
     if (!emailValidation.isValid) {
@@ -93,7 +137,15 @@ bookingsRouter.post("/", async (req, res) => {
     });
 
     await doc.save();
-    await DefaultEmail(emailId,req,res);
+    
+    // Send email asynchronously - don't fail booking if email fails
+    try {
+      await DefaultEmail(emailId, req, res);
+    } catch (emailErr) {
+      console.error("Email sending failed, but booking was created:", emailErr);
+      // Continue - booking is already saved
+    }
+    
     return res
       .status(201)
       .json({ success: true, message: "Booking created", bookingId: doc._id });
@@ -125,11 +177,18 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
       return res
         .status(404)
         .json({ success: false, message: "Booking not found" });
-    if(result.status == "approved"){
-      await AcceptRequestEmail(result.email,req,res);
-    }
-    if(result.status == "rejected"){
-      await RejectRequestEmail(result.email,req,res);
+    
+    // Send email asynchronously - don't fail status update if email fails
+    try {
+      if(result.status == "approved"){
+        await AcceptRequestEmail(result.email, req, res);
+      }
+      if(result.status == "rejected"){
+        await RejectRequestEmail(result.email, req, res);
+      }
+    } catch (emailErr) {
+      console.error("Email sending failed, but status was updated:", emailErr);
+      // Continue - status is already updated
     }
     try {
       const io = getIO();

@@ -1,4 +1,6 @@
-<nav class="text-white px-6 py-4 flex justify-between items-center">
+<nav
+  class="absolute top-0 left-0 right-0 z-10 text-white px-6 py-4 flex justify-between items-center bg-gradient-to-b from-black/30 to-transparent"
+>
   <a href="/" class="hover:opacity-80 transition-opacity duration-200">
     <img src="/assets/images/logo.png" alt="logo" class="w-12 cursor-pointer" />
   </a>
@@ -40,7 +42,7 @@
       <li>
         <a
           id="who_book"
-          href="#"
+          href=""
           class="block text-lg py-2 hover:bg-gray-700 hidden"
           >Booking</a
         >
@@ -78,13 +80,11 @@
   </div>
 </div>
 
-<!-- Script -->
 <script>
   const menuBtn = document.getElementById("menuBtn");
   const sideMenu = document.getElementById("sideMenu");
   const closeBtn = document.getElementById("closeBtn");
   const overlay = document.getElementById("overlay");
-
   function openMenu() {
     sideMenu.classList.remove("translate-x-full");
     overlay.classList.remove("hidden");
@@ -112,10 +112,8 @@
         method: "GET",
         credentials: "include", // send cookies (important for JWT)
       });
-
       if (response.ok) {
         const data = await response.json();
-
         // User is logged in
         user_detail.classList.remove("hidden");
         who_username.textContent = data.name;
@@ -126,12 +124,12 @@
 
         if (data.name == "Admin") {
           who_book.textContent = "All Booking";
-          who_book.href = "/api/admin";
+          who_book.href = "/api/user";
         } else if (data.name == undefined) {
           return;
         } else {
           who_book.textContent = "My Booking";
-          who_book.href = "/api/user";
+          who_book.href = "/api/admin";
         }
 
         authLink.addEventListener("click", async () => {

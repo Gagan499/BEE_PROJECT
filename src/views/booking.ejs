@@ -24,6 +24,8 @@
 		<h1>My Bookings</h1>
 	</header>
 
+	<%- include('partials/alert') %>
+
 	<main class="content-wrapper">
 		<div class="booking-controls">
 			<button class="new-booking-btn">New Booking</button>
@@ -31,9 +33,7 @@
 				<button class="filter-btn">Filter <i class="fas fa-filter"></i></button>
 				<button class="location-btn">Dubai</button>
 				<button class="sort-btn">Sort <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
-				<button class="trips-btn">Upcoming Trips</button>
 			</div>
-			<div class="admin-tag">1234@gmail.com</div>
 		</div>
 
 		<div class="booking-tabs">
@@ -225,6 +225,48 @@
 
 			slideToPanel(true); // default
 
+			// Date validation
+			const arrivalDateInput = document.getElementById('arrivalDate');
+			const departureDateInput = document.getElementById('departureDate');
+			
+			// Set minimum date to today for arrival
+			const today = new Date().toISOString().split('T')[0];
+			arrivalDateInput.setAttribute('min', today);
+			
+			// Update departure date minimum when arrival date changes
+			arrivalDateInput.addEventListener('change', function() {
+				const arrivalDate = this.value;
+				if (arrivalDate) {
+					// Set minimum departure date to day after arrival
+					const minDeparture = new Date(arrivalDate);
+					minDeparture.setDate(minDeparture.getDate() + 1);
+					departureDateInput.setAttribute('min', minDeparture.toISOString().split('T')[0]);
+					
+					// If departure date is before or equal to arrival, clear it
+					if (departureDateInput.value && departureDateInput.value <= arrivalDate) {
+						departureDateInput.value = '';
+						if (typeof showAlert === 'function') {
+							showAlert('Departure date must be after arrival date', 'warning', 3000);
+						}
+					}
+				}
+			});
+			
+			// Validate departure date when it changes
+			departureDateInput.addEventListener('change', function() {
+				const departureDate = this.value;
+				const arrivalDate = arrivalDateInput.value;
+				
+				if (arrivalDate && departureDate && departureDate <= arrivalDate) {
+					this.value = '';
+					if (typeof showAlert === 'function') {
+						showAlert('Departure date must be after arrival date', 'error', 3000);
+					} else {
+						alert('Departure date must be after arrival date');
+					}
+				}
+			});
+
 			// Modal logic
 			const modal = document.getElementById('bookingModal');
 			const newBookingBtn = document.querySelector('.new-booking-btn');
@@ -245,10 +287,107 @@
 				if (e.target === modal) closeModal();
 			});
 
-			bookingForm.addEventListener('submit', e => {
+			bookingForm.addEventListener('submit', async e => {
 				e.preventDefault();
-				alert('Booking submitted successfully!');
-				closeModal();
+				
+				// Client-side date validation
+				const arrivalDate = document.getElementById('arrivalDate').value;
+				const departureDate = document.getElementById('departureDate').value;
+				
+				if (!arrivalDate || !departureDate) {
+					if (typeof showAlert === 'function') {
+						showAlert('Please select both arrival and departure dates', 'error', 3000);
+					} else {
+						alert('Please select both arrival and departure dates');
+					}
+					return;
+				}
+				
+				const arrival = new Date(arrivalDate);
+				const departure = new Date(departureDate);
+				const today = new Date();
+				today.setHours(0, 0, 0, 0);
+				
+				// Validate arrival date is not in the past
+				if (arrival < today) {
+					if (typeof showAlert === 'function') {
+						showAlert('Arrival date cannot be in the past', 'error', 3000);
+					} else {
+						alert('Arrival date cannot be in the past');
+					}
+					return;
+				}
+				
+				// Validate departure date is after arrival date
+				if (departure <= arrival) {
+					if (typeof showAlert === 'function') {
+						showAlert('Departure date must be after arrival date', 'error', 3000);
+					} else {
+						alert('Departure date must be after arrival date');
+					}
+					return;
+				}
+				
+				// Get form values
+				const bookingType = document.querySelector('input[name="bookingType"]:checked').value;
+				const packageName = document.getElementById('packageName').value;
+				const hotelName = document.getElementById('hotelName').value;
+				
+				// Determine location based on booking type
+				const location = bookingType === 'package' ? packageName : hotelName;
+				
+				// Prepare booking data
+				const bookingData = {
+					customerName: document.getElementById('customerName').value,
+					phoneNumber: document.getElementById('phoneNumber').value,
+					emailId: document.getElementById('emailId').value,
+					bookingType: bookingType,
+					packageName: bookingType === 'package' ? packageName : '',
+					hotelName: bookingType === 'stayOnly' ? hotelName : '',
+					location: location,
+					arrivalDate: document.getElementById('arrivalDate').value,
+					departureDate: document.getElementById('departureDate').value,
+					adults: document.getElementById('adults').value,
+					children: document.getElementById('children').value || '0'
+				};
+				
+				try {
+					// Submit to API
+					const response = await fetch('/api/bookings', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(bookingData)
+					});
+					
+					const result = await response.json();
+					
+					if (result.success) {
+						if (typeof showAlert === 'function') {
+							showAlert('Booking submitted successfully!', 'success', 5000);
+						} else {
+							alert('Booking submitted successfully!');
+						}
+						clearForm();
+						closeModal();
+						// Optionally reload the page to show the new booking
+						// window.location.reload();
+					} else {
+						if (typeof showAlert === 'function') {
+							showAlert(result.message || 'Failed to submit booking. Please try again.', 'error', 5000);
+						} else {
+							alert(result.message || 'Failed to submit booking. Please try again.');
+						}
+					}
+				} catch (error) {
+					console.error('Error submitting booking:', error);
+					if (typeof showAlert === 'function') {
+						showAlert('An error occurred while submitting your booking. Please try again.', 'error', 5000);
+					} else {
+						alert('An error occurred while submitting your booking. Please try again.');
+					}
+				}
 			});
 
 			clearBtn.addEventListener('click', clearForm);
@@ -286,6 +425,13 @@
 			document.getElementById('package').checked = true;
 			slideToPanel(true);
 			document.getElementById('packageName').value = 'Bali Exploration';
+			
+			// Reset date validation
+			const arrivalDateInput = document.getElementById('arrivalDate');
+			const departureDateInput = document.getElementById('departureDate');
+			const today = new Date().toISOString().split('T')[0];
+			arrivalDateInput.setAttribute('min', today);
+			departureDateInput.removeAttribute('min');
 		}
 	</script>
 </body>

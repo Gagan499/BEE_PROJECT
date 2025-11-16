@@ -77,13 +77,6 @@
         left: 0;
         width: 100%;
         z-index: 50; /* Increased z-index to stay on top of all content */
-        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Added transition */
-      }
-
-      header.header-scrolled {
-        background-color: rgba(43, 45, 57, 0.85);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 12px rgba(75, 73, 73, 0.15);
       }
 
       .lower-section {
@@ -502,231 +495,81 @@
           </div>
         </section>
 
-        <section
-          id="contact"
-          class="contact-section"
-          style="margin-top: 100px; margin-bottom: 100px"
-        >
-          <h2
-            class="section-title"
-            style="text-align: center; margin-bottom: 3rem"
+        <section id="contact" class="my-24 px-[5%]">
+          <div
+            class="mx-auto max-w-6xl overflow-hidden rounded-2xl bg-white/5 p-12 text-white backdrop-blur-md md:p-16 lg:flex lg:flex-nowrap lg:items-center lg:gap-16"
           >
-            Contact Us
-          </h2>
-          <div class="contact-content" style="max-width: 800px; margin: 0 auto">
-            <div
-              style="
-                background: rgba(255, 255, 255, 0.05);
-                padding: 3rem;
-                border-radius: 20px;
-                backdrop-filter: blur(10px);
-              "
-            >
-              <p
-                style="
-                  font-size: 1.1rem;
-                  line-height: 1.8;
-                  margin-bottom: 2.5rem;
-                  text-align: center;
-                  color: #e0e0e0;
-                "
-              >
-                Have questions or need assistance? We're here to help! Reach out
-                to us through any of the following channels.
-              </p>
+            <div class="flex min-w-[300px] basis-[40%] justify-center">
+              <img
+                src="assets/images/contact-illustration.svg"
+                alt="Contact illustration"
+                class="h-auto w-full max-w-[450px]"
+              />
+            </div>
 
+            <div class="mt-12 min-w-[300px] flex-1 basis-[50%] lg:mt-0">
+              <h2 class="mb-10 text-[2.75rem] font-bold text-white">
+                Contact Us
+              </h2>
+
+              <form id="contactFormNew" class="flex flex-col gap-6">
+                <div class="flex flex-col">
+                  <label
+                    for="contactNameNew"
+                    class="mb-2 text-sm font-semibold text-gray-300"
+                    >FULL NAME</label
+                  >
+                  <input
+                    type="text"
+                    id="contactNameNew"
+                    name="name"
+                    class="w-full rounded-lg border-0 bg-black/20 p-4 text-base text-white placeholder-gray-400 focus:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#5568FE]"
+                    required
+                  />
+                </div>
+
+                <div class="flex flex-col">
+                  <label
+                    for="contactEmailNew"
+                    class="mb-2 text-sm font-semibold text-gray-300"
+                    >EMAIL</label
+                  >
+                  <input
+                    type="email"
+                    id="contactEmailNew"
+                    name="email"
+                    class="w-full rounded-lg border-0 bg-black/20 p-4 text-base text-white placeholder-gray-400 focus:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#5568FE]"
+                    required
+                  />
+                </div>
+
+                <div class="flex flex-col">
+                  <label
+                    for="contactMessageNew"
+                    class="mb-2 text-sm font-semibold text-gray-300"
+                    >MESSAGE</label
+                  >
+                  <textarea
+                    id="contactMessageNew"
+                    name="message"
+                    class="w-full resize-y rounded-lg border-0 bg-black/20 p-4 text-base text-white placeholder-gray-400 focus:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#5568FE]"
+                    rows="5"
+                    required
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  class="self-start rounded-lg bg-[#5568FE] px-8 py-4 text-base font-semibold text-white transition duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-[#4454ca]"
+                >
+                  SEND MESSAGE
+                </button>
+              </form>
               <div
-                class="contact-info"
-                style="
-                  display: grid;
-                  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                  gap: 2rem;
-                  margin-bottom: 2.5rem;
-                "
-              >
-                <div class="contact-item" style="text-align: center">
-                  <div
-                    style="
-                      font-size: 2.5rem;
-                      margin-bottom: 1rem;
-                      color: #25a85c;
-                    "
-                  >
-                    📧
-                  </div>
-                  <h3
-                    style="
-                      font-size: 1.1rem;
-                      margin-bottom: 0.5rem;
-                      font-weight: 600;
-                    "
-                  >
-                    Email
-                  </h3>
-                  <a
-                    href="mailto:info@thepalmway.com"
-                    style="
-                      color: #25a85c;
-                      text-decoration: none;
-                      transition: color 0.3s;
-                    "
-                    onmouseover="this.style.color='#1e864a'"
-                    onmouseout="this.style.color='#25a85c'"
-                  >
-                    info@thepalmway.com
-                  </a>
-                </div>
-                <div class="contact-item" style="text-align: center">
-                  <div
-                    style="
-                      font-size: 2.5rem;
-                      margin-bottom: 1rem;
-                      color: #25a85c;
-                    "
-                  >
-                    📞
-                  </div>
-                  <h3
-                    style="
-                      font-size: 1.1rem;
-                      margin-bottom: 0.5rem;
-                      font-weight: 600;
-                    "
-                  >
-                    Phone
-                  </h3>
-                  <a
-                    href="tel:+1234567890"
-                    style="
-                      color: #25a85c;
-                      text-decoration: none;
-                      transition: color 0.3s;
-                    "
-                    onmouseover="this.style.color='#1e864a'"
-                    onmouseout="this.style.color='#25a85c'"
-                  >
-                    +1 (234) 567-890
-                  </a>
-                </div>
-                <div class="contact-item" style="text-align: center">
-                  <div
-                    style="
-                      font-size: 2.5rem;
-                      margin-bottom: 1rem;
-                      color: #25a85c;
-                    "
-                  >
-                    📍
-                  </div>
-                  <h3
-                    style="
-                      font-size: 1.1rem;
-                      margin-bottom: 0.5rem;
-                      font-weight: 600;
-                    "
-                  >
-                    Address
-                  </h3>
-                  <p style="color: #c0c0c0; line-height: 1.6">
-                    123 Travel Street<br />
-                    Vacation City, VC 12345
-                  </p>
-                </div>
-              </div>
-
-              <div class="contact-form" style="margin-top: 2rem">
-                <h3
-                  style="
-                    font-size: 1.3rem;
-                    margin-bottom: 1.5rem;
-                    text-align: center;
-                    font-weight: 600;
-                  "
-                >
-                  Send us a Message
-                </h3>
-                <form
-                  id="contactForm"
-                  style="display: flex; flex-direction: column; gap: 1.5rem"
-                >
-                  <div>
-                    <input
-                      type="text"
-                      id="contactName"
-                      placeholder="Your Name"
-                      required
-                      style="
-                        width: 100%;
-                        padding: 1rem;
-                        border-radius: 10px;
-                        border: 2px solid rgba(255, 255, 255, 0.2);
-                        background: rgba(255, 255, 255, 0.1);
-                        color: white;
-                        font-size: 1rem;
-                        outline: none;
-                        transition: border-color 0.3s;
-                      "
-                      onfocus="this.style.borderColor='#25a85c'"
-                      onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="email"
-                      id="contactEmail"
-                      placeholder="Your Email"
-                      required
-                      style="
-                        width: 100%;
-                        padding: 1rem;
-                        border-radius: 10px;
-                        border: 2px solid rgba(255, 255, 255, 0.2);
-                        background: rgba(255, 255, 255, 0.1);
-                        color: white;
-                        font-size: 1rem;
-                        outline: none;
-                        transition: border-color 0.3s;
-                      "
-                      onfocus="this.style.borderColor='#25a85c'"
-                      onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
-                    />
-                  </div>
-                  <div>
-                    <textarea
-                      id="contactMessage"
-                      placeholder="Your Message"
-                      rows="5"
-                      required
-                      style="
-                        width: 100%;
-                        padding: 1rem;
-                        border-radius: 10px;
-                        border: 2px solid rgba(255, 255, 255, 0.2);
-                        background: rgba(255, 255, 255, 0.1);
-                        color: white;
-                        font-size: 1rem;
-                        outline: none;
-                        transition: border-color 0.3s;
-                        resize: vertical;
-                        font-family: inherit;
-                      "
-                      onfocus="this.style.borderColor='#25a85c'"
-                      onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    class="green-button"
-                    style="align-self: center; margin-top: 1rem"
-                  >
-                    <span class="button-text">Send Message</span>
-                  </button>
-                </form>
-                <div
-                  id="contactFormMessage"
-                  style="margin-top: 1rem; text-align: center; display: none"
-                ></div>
-              </div>
+                id="contactFormMessageNew"
+                class="mt-4 text-left text-blue-400"
+                style="display: none"
+              ></div>
             </div>
           </div>
         </section>
@@ -1039,28 +882,7 @@
 
         preloadImages();
       });
-
-      /* --- NEW SCRIPT FOR HEADER SCROLL EFFECT --- */
-      document.addEventListener("DOMContentLoaded", () => {
-        const header = document.querySelector("header");
-
-        // Function to add/remove class based on scroll
-        const handleScroll = () => {
-          if (window.scrollY > 50) {
-            // 50px threshold
-            header.classList.add("header-scrolled");
-          } else {
-            header.classList.remove("header-scrolled");
-          }
-        };
-
-        // Listen for scroll events
-        window.addEventListener("scroll", handleScroll);
-
-        // Run once on load in case the page is reloaded halfway down
-        handleScroll();
-      });
-
+      
       // Contact Form Handler
       document.addEventListener("DOMContentLoaded", () => {
         const contactForm = document.getElementById("contactForm");
