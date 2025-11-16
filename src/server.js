@@ -35,8 +35,18 @@ const __dirname = path.dirname(__filename);
 app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "ejs");
 
-// accessing static files in public folder
-app.use(express.static("public"));
+app.use(express.static("public", {
+  maxAge: 120000, // 2 minutes in milliseconds
+  etag: true, 
+  lastModified: true,
+  setHeaders: (res, path) => {
+    // Optional: explicitly enforce 2-min cache
+    if (path.match(/\.(jpg|jpeg|png|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/)) {
+      res.setHeader("Cache-Control", "public, max-age=120");
+    }
+  }
+}));
+
 
 // Global Middlewares
 globalMiddlewares(app);

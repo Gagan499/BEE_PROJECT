@@ -20,6 +20,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+    <!-- Preload contact illustration for better caching and performance -->
+    <link
+      rel="preload"
+      as="image"
+      href="assets/images/contact-illustration.svg"
+      fetchpriority="low"
+    />
     <style>
       #carousel-location-label {
         font-family: "Allura", cursive !important;
@@ -504,6 +511,10 @@
                 src="assets/images/contact-illustration.svg"
                 alt="Contact illustration"
                 class="h-auto w-full max-w-[450px]"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+                style="object-fit: contain;"
               />
             </div>
 
