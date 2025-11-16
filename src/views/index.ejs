@@ -95,21 +95,14 @@
           #262836
         );
         padding: 100px 5%;
-        /* Use padding for spacing */
         color: white;
-        /* NOTE: We add padding-top to the *first child* of the body after the header */
-        /* See .hero-container style change below */
       }
-
-      /* This pushes the content down so it doesn't start *under* the fixed header */
-      /* We apply this to the first main content block */
       .hero-container {
         position: relative;
         width: 100%;
         height: 100vh;
         min-height: 800px;
         margin-top: 0 !important;
-        /* padding-top: 0 !important; <--- This is fine, as the hero is a full-screen visual */
       }
 
       .section-split {
@@ -175,7 +168,6 @@
       }
 
       .package-image {
-        /* CORRECTED: Use flex-basis instead of rigid width */
         flex: 1 1 40%;
         min-width: 280px;
         height: 320px;
@@ -186,13 +178,11 @@
       }
 
       .package-details {
-        /* CORRECTED: Use flex-basis and set color to white */
         flex: 1 1 50%;
         min-width: 280px;
         color: white;
       }
 
-      /* Responsive Styles */
       @media (max-width: 768px) {
         .hero-container {
           min-height: 600px;
@@ -239,12 +229,10 @@
         .package-image {
           width: 100%;
           height: 250px;
-          /* flex-basis is ignored due to flex-direction: column, so width: 100% works */
         }
 
         .package-details {
           width: 100%;
-          /* flex-basis is ignored due to flex-direction: column, so width: 100% works */
         }
 
         .package-title {
