@@ -14,6 +14,7 @@ import pageRoutes from "./page routes/pages.js";
 import globalMiddlewares from "./Middlewares/golbalMiddlewares.js";
 import authRouter from "./routes/auth.js";
 import bookingsRouter from "./routes/bookings.js";
+import contactRouter from "./routes/contact.js";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ connectDB();
 app.use("/api", pageRoutes);
 app.use("/auth", authRouter);
 app.use("/api/bookings", bookingsRouter);
+app.use("/api/contact", contactRouter);
 
 app.get("/", (req, res) => {
   res.render("index.ejs");

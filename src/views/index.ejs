@@ -885,44 +885,69 @@
       
       // Contact Form Handler
       document.addEventListener("DOMContentLoaded", () => {
-        const contactForm = document.getElementById("contactForm");
+        const contactForm = document.getElementById("contactFormNew");
         const contactFormMessage =
-          document.getElementById("contactFormMessage");
+          document.getElementById("contactFormMessageNew");
 
         if (contactForm) {
           contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById("contactName").value;
-            const email = document.getElementById("contactEmail").value;
-            const message = document.getElementById("contactMessage").value;
+            const name = document.getElementById("contactNameNew").value;
+            const email = document.getElementById("contactEmailNew").value;
+            const message = document.getElementById("contactMessageNew").value;
 
             // Show loading state
             const submitButton = contactForm.querySelector(
               'button[type="submit"]'
             );
             const originalText = submitButton.innerHTML;
-            submitButton.innerHTML =
-              '<span class="button-text">Sending...</span>';
+            submitButton.innerHTML = "Sending...";
             submitButton.disabled = true;
 
-            // Simulate form submission (you can replace this with actual API call)
-            setTimeout(() => {
-              contactFormMessage.style.display = "block";
-              contactFormMessage.style.color = "#25a85c";
-              contactFormMessage.style.fontSize = "1.1rem";
-              contactFormMessage.textContent = `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
+            try {
+              // Submit to API
+              const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, email, message }),
+              });
 
-              // Reset form
-              contactForm.reset();
+              const result = await response.json();
+
+              if (result.success) {
+                contactFormMessage.style.display = "block";
+                contactFormMessage.style.color = "#25a85c";
+                contactFormMessage.style.fontSize = "1.1rem";
+                contactFormMessage.textContent = result.message || `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
+
+                // Reset form
+                contactForm.reset();
+              } else {
+                contactFormMessage.style.display = "block";
+                contactFormMessage.style.color = "#ef4444";
+                contactFormMessage.style.fontSize = "1.1rem";
+                contactFormMessage.textContent = result.message || "Failed to send message. Please try again.";
+              }
+            } catch (error) {
+              console.error("Error submitting contact form:", error);
+              contactFormMessage.style.display = "block";
+              contactFormMessage.style.color = "#ef4444";
+              contactFormMessage.style.fontSize = "1.1rem";
+              contactFormMessage.textContent = "An error occurred. Please try again later.";
+            } finally {
               submitButton.innerHTML = originalText;
               submitButton.disabled = false;
 
               // Hide message after 5 seconds
               setTimeout(() => {
-                contactFormMessage.style.display = "none";
+                if (contactFormMessage) {
+                  contactFormMessage.style.display = "none";
+                }
               }, 5000);
-            }, 1000);
+            }
           });
         }
       });
