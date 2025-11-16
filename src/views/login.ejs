@@ -42,6 +42,15 @@
       z-index: 5;
     }
 
+    .overlay {
+      transform: translateX(0%);
+      transition: transform 0.7s ease-in-out;
+    }
+
+    #container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       #container {
@@ -129,20 +138,20 @@
 
       <!-- Overlay Container -->
       <div class="overlay-container absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-transform duration-700 ease-in-out">
-        <div class="relative -left-full h-full w-[200%] bg-gradient-to-br from-[#2A7B9B] to-[#16A34A] text-white transition-transform duration-700 ease-in-out">
-          <div class="absolute top-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center">
-            <h1 class="text-4xl font-bold">Welcome Back!</h1>
-            <p class="text-base my-5 max-w-xs">To keep connected with us please login with your personal info</p>
+        <div class="overlay relative -left-full h-full w-[200%] bg-gradient-to-br from-[#2A7B9B] to-[#16A34A] text-white transition-transform duration-700 ease-in-out">
+          <div class="overlay-panel overlay-left absolute top-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transition-transform duration-700 ease-in-out">
+            <h1 class="text-4xl font-bold">Hello, Friend!</h1>
+            <p class="text-base my-5 max-w-xs">Enter your personal details and start your journey with us</p>
             <button id="signIn"
               class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
               Sign In
             </button>
           </div>
-          <div class="absolute top-0 right-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center">
-            <h1 class="text-4xl font-bold">Hello, Friend!</h1>
-            <p class="text-base my-5 max-w-xs">Enter your personal details and start your journey with us</p>
+          <div class="overlay-panel overlay-right absolute top-0 right-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transform translate-x-0 transition-transform duration-700 ease-in-out">
+            <h1 class="text-4xl font-bold">Welcome Back!</h1>
+            <p class="text-base my-5 max-w-xs">To keep connected with us please login with your personal info</p>
             <button id="signUp"
-              class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
+              class="px-10 py-2 text-sm font-semibel bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
               Sign Up
             </button>
           </div>

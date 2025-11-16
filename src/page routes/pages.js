@@ -2,6 +2,13 @@ import express from "express";
 import Booking from "../../models/booking.js";
 
 const pageRoutes = express.Router();
+pageRoutes.get('/abput',(req,res)=>{
+  res.render('about.ejs');
+});
+
+pageRoutes.get("/contact",(req,res)=>{
+  res.render("contact.ejs");
+});
 
 pageRoutes.get("/login", (req, res) => {
   res.render("login.ejs");

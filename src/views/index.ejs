@@ -26,6 +26,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
            background-color: #1f212d;
@@ -324,7 +328,7 @@
                 <div class="section-split">
                     <div class="split-column">
                         <div class="section-title">Planning for the whole team?</div>
-                        <a class="green-button"><span class="button-text">Contact Us</span></a>
+                        <a href="#contact" class="green-button"><span class="button-text">Contact Us</span></a>
                     </div>
                     <div class="split-column">
                         <div class="section-title">Personal or family booking?</div>
@@ -348,6 +352,132 @@
                         <a href="/api/packages" class="explore-button">Explore More Packages</a>
                     </div>
                 </div>
+
+                <!-- About Section -->
+                <section id="about" class="about-section" style="margin-top: 100px; margin-bottom: 100px;">
+                    <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">About ThePalmWay</h2>
+                    <div class="about-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
+                        <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #e0e0e0;">
+                            Welcome to ThePalmWay, your trusted partner in creating unforgettable travel experiences. 
+                            We specialize in curating exceptional travel packages and accommodations that cater to your 
+                            unique preferences and needs.
+                        </p>
+                        <div class="about-features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🌴</div>
+                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Exotic Destinations</h3>
+                                <p style="color: #c0c0c0; line-height: 1.6;">
+                                    Discover breathtaking locations from Bali to Switzerland, carefully selected for their beauty and cultural richness.
+                                </p>
+                            </div>
+                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">✈</div>
+                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Seamless Booking</h3>
+                                <p style="color: #c0c0c0; line-height: 1.6;">
+                                    Our easy-to-use platform makes booking your dream vacation simple and stress-free.
+                                </p>
+                            </div>
+                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🏨</div>
+                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Premium Accommodations</h3>
+                                <p style="color: #c0c0c0; line-height: 1.6;">
+                                    Stay in handpicked hotels and resorts that offer comfort, luxury, and authentic local experiences.
+                                </p>
+                            </div>
+                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">24/7 Support</h3>
+                                <p style="color: #c0c0c0; line-height: 1.6;">
+                                    Our dedicated team is always ready to assist you before, during, and after your journey.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Us Section -->
+                <section id="contact" class="contact-section" style="margin-top: 100px; margin-bottom: 100px;">
+                    <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Contact Us</h2>
+                    <div class="contact-content" style="max-width: 800px; margin: 0 auto;">
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 3rem; border-radius: 20px; backdrop-filter: blur(10px);">
+                            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2.5rem; text-align: center; color: #e0e0e0;">
+                                Have questions or need assistance? We're here to help! Reach out to us through any of the following channels.
+                            </p>
+                            
+                            <div class="contact-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;">
+                                <div class="contact-item" style="text-align: center;">
+                                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #25a85c;">📧</div>
+                                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Email</h3>
+                                    <a href="mailto:info@thepalmway.com" style="color: #25a85c; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#1e864a'" onmouseout="this.style.color='#25a85c'">
+                                        info@thepalmway.com
+                                    </a>
+                                </div>
+                                <div class="contact-item" style="text-align: center;">
+                                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #25a85c;">📞</div>
+                                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Phone</h3>
+                                    <a href="tel:+1234567890" style="color: #25a85c; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#1e864a'" onmouseout="this.style.color='#25a85c'">
+                                        +1 (234) 567-890
+                                    </a>
+                                </div>
+                                <div class="contact-item" style="text-align: center;">
+                                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #25a85c;">📍</div>
+                                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Address</h3>
+                                    <p style="color: #c0c0c0; line-height: 1.6;">
+                                        123 Travel Street<br>
+                                        Vacation City, VC 12345
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="contact-form" style="margin-top: 2rem;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center; font-weight: 600;">Send us a Message</h3>
+                                <form id="contactForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                    <div>
+                                        <input 
+                                            type="text" 
+                                            id="contactName" 
+                                            placeholder="Your Name" 
+                                            required
+                                            style="width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s;"
+                                            onfocus="this.style.borderColor='#25a85c'"
+                                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                                        >
+                                    </div>
+                                    <div>
+                                        <input 
+                                            type="email" 
+                                            id="contactEmail" 
+                                            placeholder="Your Email" 
+                                            required
+                                            style="width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s;"
+                                            onfocus="this.style.borderColor='#25a85c'"
+                                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                                        >
+                                    </div>
+                                    <div>
+                                        <textarea 
+                                            id="contactMessage" 
+                                            placeholder="Your Message" 
+                                            rows="5" 
+                                            required
+                                            style="width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s; resize: vertical; font-family: inherit;"
+                                            onfocus="this.style.borderColor='#25a85c'"
+                                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                                        ></textarea>
+                                    </div>
+                                    <button 
+                                        type="submit" 
+                                        class="green-button" 
+                                        style="align-self: center; margin-top: 1rem;"
+                                    >
+                                        <span class="button-text">Send Message</span>
+                                    </button>
+                                </form>
+                                <div id="contactFormMessage" style="margin-top: 1rem; text-align: center; display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
                 <%- include('partials/footer') %>
         </div>
@@ -621,6 +751,46 @@
             }
 
             preloadImages();
+        });
+
+        // Contact Form Handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('contactForm');
+            const contactFormMessage = document.getElementById('contactFormMessage');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('contactName').value;
+                    const email = document.getElementById('contactEmail').value;
+                    const message = document.getElementById('contactMessage').value;
+                    
+                    // Show loading state
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+                    submitButton.innerHTML = '<span class="button-text">Sending...</span>';
+                    submitButton.disabled = true;
+                    
+                    // Simulate form submission (you can replace this with actual API call)
+                    setTimeout(() => {
+                        contactFormMessage.style.display = 'block';
+                        contactFormMessage.style.color = '#25a85c';
+                        contactFormMessage.style.fontSize = '1.1rem';
+                        contactFormMessage.textContent = `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
+                        
+                        // Reset form
+                        contactForm.reset();
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                        
+                        // Hide message after 5 seconds
+                        setTimeout(() => {
+                            contactFormMessage.style.display = 'none';
+                        }, 5000);
+                    }, 1000);
+                });
+            }
         });
     </script>
 </body>
