@@ -1,798 +1,1121 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThePalmWay - Travel Booking</title>
 
-    <!-- TypeFaces -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS for the header -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for the footer icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
     <style>
-        #carousel-location-label {
-            font-family: 'Allura', cursive !important;
-            font-size: 4rem !important;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      #carousel-location-label {
+        font-family: "Allura", cursive !important;
+        font-size: 4rem !important;
+      }
 
-        html {
-            scroll-behavior: smooth;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-           background-color: #1f212d;
-            /* Set a base background color */
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+      html {
+        scroll-behavior: smooth;
+      }
 
-        /* Hero Section Container */
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #1f212d;
+        /* Set a base background color */
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Hero Section Container */
+      .hero-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        /* Make hero section fill the viewport height */
+        min-height: 800px;
+        /* Remove default margin and add minimal padding if needed */
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+      }
+
+      /* Canvas Styling */
+      #cardCanvas {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        /* Behind the header */
+      }
+
+      /* --- MODIFIED HEADER CSS --- */
+      /* Header needs to be on top of the canvas AND the rest of the page */
+      header {
+        position: fixed; /* Changed from 'absolute' to 'fixed' */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 50; /* Increased z-index to stay on top of all content */
+        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+      }
+
+      header.header-scrolled {
+        background-color: rgba(43, 45, 57, 0.85);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(75, 73, 73, 0.15);
+      }
+
+      .lower-section {
+        position: relative;
+        background: linear-gradient(
+          to top,
+          #1f212d 15.385%,
+          #2d2f3e 75%,
+          #262836
+        );
+        padding: 100px 5%;
+        /* Use padding for spacing */
+        color: white;
+        /* NOTE: We add padding-top to the *first child* of the body after the header */
+        /* See .hero-container style change below */
+      }
+
+      /* This pushes the content down so it doesn't start *under* the fixed header */
+      /* We apply this to the first main content block */
+      .hero-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        min-height: 800px;
+        margin-top: 0 !important;
+        /* padding-top: 0 !important; <--- This is fine, as the hero is a full-screen visual */
+      }
+
+      .section-split {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-bottom: 1px solid white;
+        padding-bottom: 80px;
+        margin-bottom: 80px;
+        text-align: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .split-column {
+        width: 45%;
+        min-width: 280px;
+      }
+
+      .section-title {
+        font-weight: 500;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .green-button {
+        background: #25a85c;
+        border-radius: 127px;
+        padding: 0.9rem 2.2rem;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .green-button:hover {
+        background: #1e864a;
+      }
+
+      .button-text {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      .browse-text {
+        font-weight: 500;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      /* Package Section */
+      .package-section {
+        background: #64818c;
+        border-radius: 41px;
+        padding: 50px;
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        margin-bottom: 80px;
+        flex-wrap: wrap;
+      }
+
+      .package-image {
+        /* CORRECTED: Use flex-basis instead of rigid width */
+        flex: 1 1 40%;
+        min-width: 280px;
+        height: 320px;
+        border-radius: 1.5rem;
+        background-size: cover;
+        background-position: center;
+        background-image: url("assets/images/carousel/bali.png");
+      }
+
+      .package-details {
+        /* CORRECTED: Use flex-basis and set color to white */
+        flex: 1 1 50%;
+        min-width: 280px;
+        color: white;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
         .hero-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            /* Make hero section fill the viewport height */
-            min-height: 800px;
-            /* Remove default margin and add minimal padding if needed */
-            margin-top: 0 !important;
-            padding-top: 0 !important;
+          min-height: 600px;
         }
 
-        /* Canvas Styling */
-        #cardCanvas {
-            display: block;
-            cursor: pointer;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            /* Behind the header */
+        #carousel-location-label {
+          font-size: 2.5rem !important;
+          bottom: 1rem;
         }
 
-        /* Header needs to be on top of the canvas */
-        header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 10;
-        }
-
-        /* Lower Section Styling */
         .lower-section {
-            position: relative;
-            background: linear-gradient(to top, #1f212d 15.385%, #2d2f3e 75%, #262836);
-            padding: 100px 5%;
-            /* Use padding for spacing */
-            color: white;
+          padding: 60px 3%;
         }
 
         .section-split {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-bottom: 1px solid white;
-            padding-bottom: 80px;
-            margin-bottom: 80px;
-            text-align: center;
-            flex-wrap: wrap;
-            gap: 2rem;
+          flex-direction: column;
+          padding-bottom: 40px;
+          margin-bottom: 40px;
         }
 
         .split-column {
-            width: 45%;
-            min-width: 280px;
+          width: 100%;
         }
 
         .section-title {
-                font-weight: 500;
-                font-size: 2rem;
-                margin-bottom: 1.5rem;
+          font-size: 1.5rem;
         }
-
-        .green-button {
-                background: #25a85c;
-                border-radius: 127px;
-                padding: 0.9rem 2.2rem;
-                text-decoration: none;
-                display: inline-block;
-                cursor: pointer;
-                transition: background 0.2s;
-        }
-            .green-button:hover {
-                background: #1e864a;
-            }
 
         .button-text {
-                font-weight: 700;
-                font-size: 1.5rem;
-            color: white;
+          font-size: 1.2rem;
         }
 
         .browse-text {
-                font-weight: 500;
-                font-size: 2rem;
-                text-align: center;
-                margin-bottom: 2.5rem;
+          font-size: 1.5rem;
         }
 
-        /* Package Section */
         .package-section {
-            background: #64818c;
-            border-radius: 41px;
-            padding: 50px;
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            margin-bottom: 80px;
-            flex-wrap: wrap;
+          flex-direction: column;
+          padding: 30px 20px;
+          gap: 30px;
+          margin-bottom: 40px;
         }
 
         .package-image {
-                width: 45%;
-                min-width: 280px;
-                height: 320px;
-                border-radius: 1.5rem;
-            background-size: cover;
-            background-position: center;
-            background-image: url('assets/images/carousel/bali.png');
+          width: 100%;
+          height: 250px;
+          /* flex-basis is ignored due to flex-direction: column, so width: 100% works */
         }
 
         .package-details {
-            width: 55%;
-            min-width: 280px;
-            color: black;
-        }
-        
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .hero-container {
-                min-height: 600px;
-            }
-            
-            #carousel-location-label {
-                font-size: 2.5rem !important;
-                bottom: 1rem;
-            }
-            
-            .lower-section {
-                padding: 60px 3%;
-            }
-            
-            .section-split {
-                flex-direction: column;
-                padding-bottom: 40px;
-                margin-bottom: 40px;
-            }
-            
-            .split-column {
-                width: 100%;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .button-text {
-                font-size: 1.2rem;
-            }
-            
-            .browse-text {
-                font-size: 1.5rem;
-            }
-            
-            .package-section {
-                flex-direction: column;
-                padding: 30px 20px;
-                gap: 30px;
-                margin-bottom: 40px;
-            }
-            
-            .package-image {
-                width: 100%;
-                height: 250px;
-            }
-            
-            .package-details {
-                width: 100%;
-            }
-            
-            .package-title {
-                font-size: 1.3rem;
-            }
-            
-            .package-description {
-                font-size: 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .hero-container {
-                min-height: 500px;
-            }
-            
-            #carousel-location-label {
-                font-size: 2rem !important;
-                padding: 0.5rem 1rem;
-            }
-            
-            .lower-section {
-                padding: 40px 2%;
-            }
-            
-            .section-title {
-                font-size: 1.2rem;
-            }
-            
-            .button-text {
-                font-size: 1rem;
-            }
-            
-            .browse-text {
-                font-size: 1.2rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .package-section {
-                padding: 20px 15px;
-                border-radius: 20px;
-            }
-            
-            .package-image {
-                height: 200px;
-            }
-            
-            .package-title {
-                font-size: 1.1rem;
-            }
-            
-            .package-duration {
-                font-size: 0.9rem;
-            }
-            
-            .package-description {
-                font-size: 0.9rem;
-            }
-            
-            .explore-button {
-                font-size: 1.1rem;
-                padding: 0.6rem 1.5rem;
-            }
+          width: 100%;
+          /* flex-basis is ignored due to flex-direction: column, so width: 100% works */
         }
 
         .package-title {
-                font-weight: 600;
-                font-size: 1.5rem;
-        }
-
-        .package-duration {
-                font-weight: 400;
-                font-size: 1rem;
-                margin-bottom: 0.7rem;
+          font-size: 1.3rem;
         }
 
         .package-description {
-                font-size: 1.1rem;
-                line-height: 1.5;
-                margin-bottom: 1.2rem;
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-container {
+          min-height: 500px;
+        }
+
+        #carousel-location-label {
+          font-size: 2rem !important;
+          padding: 0.5rem 1rem;
+        }
+
+        .lower-section {
+          padding: 40px 2%;
+        }
+
+        .section-title {
+          font-size: 1.2rem;
+        }
+
+        .button-text {
+          font-size: 1rem;
+        }
+
+        .browse-text {
+          font-size: 1.2rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .package-section {
+          padding: 20px 15px;
+          border-radius: 20px;
+        }
+
+        .package-image {
+          height: 200px;
+        }
+
+        .package-title {
+          font-size: 1.1rem;
+        }
+
+        .package-duration {
+          font-size: 0.9rem;
+        }
+
+        .package-description {
+          font-size: 0.9rem;
         }
 
         .explore-button {
-            background: #25a85c;
-            border-radius: 127px;
-                padding: 0.7rem 2rem;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-            font-weight: 700;
-                font-size: 1.3rem;
-            color: white;
-                transition: background 0.2s;
-            }
-            .explore-button:hover {
-                background: #1e864a;
-            }
+          font-size: 1.1rem;
+          padding: 0.6rem 1.5rem;
+        }
+      }
+
+      .package-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+
+      .package-duration {
+        font-weight: 400;
+        font-size: 1rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .package-description {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 1.2rem;
+      }
+
+      .explore-button {
+        background: #25a85c;
+        border-radius: 127px;
+        padding: 0.7rem 2rem;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: white;
+        transition: background 0.2s;
+      }
+
+      .explore-button:hover {
+        background: #1e864a;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="page-container">
-        <header>
-            <%- include('partials/navbar') %>
-        </header>
-            
-            <!-- Hero Section with Canvas Carousel -->
-            <div class="hero-container flex flex-col justify-center items-center relative" style="margin-top:0 !important;">
-                <canvas id="cardCanvas"></canvas>
-                <div id="carousel-location-label" class="absolute left-1/2 bottom-8 -translate-x-1/2 text-white text-2xl font-semibold px-6 py-2 rounded-full shadow-lg pointer-events-none select-none tracking-wide" style="z-index:2;">
-                    <!-- Location name will be injected here -->
-                </div>
-            </div>
+      <header><%- include('partials/navbar') %></header>
 
-            <!-- Lower Section -->
-            <div class="lower-section">
-                <div class="section-split">
-                    <div class="split-column">
-                        <div class="section-title">Planning for the whole team?</div>
-                        <a href="#contact" class="green-button"><span class="button-text">Contact Us</span></a>
-                    </div>
-                    <div class="split-column">
-                        <div class="section-title">Personal or family booking?</div>
-                        <a href="/api/login" class="green-button"><span class="button-text">Sign in / Sign up</span></a>
-                    </div>
-                </div>
+      <div
+        class="hero-container flex flex-col justify-center items-center relative"
+        style="margin-top: 0 !important"
+      >
+        <canvas id="cardCanvas"></canvas>
+        <div
+          id="carousel-location-label"
+          class="absolute left-1/2 bottom-8 -translate-x-1/2 text-white text-2xl font-semibold px-6 py-2 rounded-full shadow-lg pointer-events-none select-none tracking-wide"
+          style="z-index: 2"
+        ></div>
+      </div>
 
-                <div class="browse-text">Just want to browse? Start here</div>
-
-                <!-- Package Section -->
-                <div class="package-section">
-                    <div class="package-image"></div>
-                    <div class="package-details">
-                        <div class="package-title">The Bali Package</div>
-                        <div class="package-duration">4 days 4 nights</div>
-                        <p class="package-description">
-                            Lorem ipsum dolor sit amet consectetur. Massa mauris nunc ornare est ultrices vulputate.
-                            Nullam imperdiet at faucibus lorem dignissim platea mattis fermentum libero. Nunc vitae
-                            pharetra semper ut.
-                        </p>
-                        <a href="/api/packages" class="explore-button">Explore More Packages</a>
-                    </div>
-                </div>
-
-                <!-- About Section -->
-                <section id="about" class="about-section" style="margin-top: 100px; margin-bottom: 100px;">
-                    <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">About ThePalmWay</h2>
-                    <div class="about-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
-                        <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #e0e0e0;">
-                            Welcome to ThePalmWay, your trusted partner in creating unforgettable travel experiences. 
-                            We specialize in curating exceptional travel packages and accommodations that cater to your 
-                            unique preferences and needs.
-                        </p>
-                        <div class="about-features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">🌴</div>
-                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Exotic Destinations</h3>
-                                <p style="color: #c0c0c0; line-height: 1.6;">
-                                    Discover breathtaking locations from Bali to Switzerland, carefully selected for their beauty and cultural richness.
-                                </p>
-                            </div>
-                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">✈</div>
-                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Seamless Booking</h3>
-                                <p style="color: #c0c0c0; line-height: 1.6;">
-                                    Our easy-to-use platform makes booking your dream vacation simple and stress-free.
-                                </p>
-                            </div>
-                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">🏨</div>
-                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Premium Accommodations</h3>
-                                <p style="color: #c0c0c0; line-height: 1.6;">
-                                    Stay in handpicked hotels and resorts that offer comfort, luxury, and authentic local experiences.
-                                </p>
-                            </div>
-                            <div class="feature-card" style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; backdrop-filter: blur(10px);">
-                                <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
-                                <h3 style="font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">24/7 Support</h3>
-                                <p style="color: #c0c0c0; line-height: 1.6;">
-                                    Our dedicated team is always ready to assist you before, during, and after your journey.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contact Us Section -->
-                <section id="contact" class="contact-section" style="margin-top: 100px; margin-bottom: 100px;">
-                    <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Contact Us</h2>
-                    <div class="contact-content" style="max-width: 800px; margin: 0 auto;">
-                        <div style="background: rgba(255, 255, 255, 0.05); padding: 3rem; border-radius: 20px; backdrop-filter: blur(10px);">
-                            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2.5rem; text-align: center; color: #e0e0e0;">
-                                Have questions or need assistance? We're here to help! Reach out to us through any of the following channels.
-                            </p>
-                            
-                            <div class="contact-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;">
-                                <div class="contact-item" style="text-align: center;">
-                                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #25a85c;">📧</div>
-                                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Email</h3>
-                                    <a href="mailto:info@thepalmway.com" style="color: #25a85c; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#1e864a'" onmouseout="this.style.color='#25a85c'">
-                                        info@thepalmway.com
-                                    </a>
-                                </div>
-                                <div class="contact-item" style="text-align: center;">
-                                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #25a85c;">📞</div>
-                                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Phone</h3>
-                                    <a href="tel:+1234567890" style="color: #25a85c; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#1e864a'" onmouseout="this.style.color='#25a85c'">
-                                        +1 (234) 567-890
-                                    </a>
-                                </div>
-                                <div class="contact-item" style="text-align: center;">
-                                    <div style="font-size: 2.5rem; margin-bottom: 1rem; color: #25a85c;">📍</div>
-                                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">Address</h3>
-                                    <p style="color: #c0c0c0; line-height: 1.6;">
-                                        123 Travel Street<br>
-                                        Vacation City, VC 12345
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="contact-form" style="margin-top: 2rem;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center; font-weight: 600;">Send us a Message</h3>
-                                <form id="contactForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                                    <div>
-                                        <input 
-                                            type="text" 
-                                            id="contactName" 
-                                            placeholder="Your Name" 
-                                            required
-                                            style="width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s;"
-                                            onfocus="this.style.borderColor='#25a85c'"
-                                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
-                                        >
-                                    </div>
-                                    <div>
-                                        <input 
-                                            type="email" 
-                                            id="contactEmail" 
-                                            placeholder="Your Email" 
-                                            required
-                                            style="width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s;"
-                                            onfocus="this.style.borderColor='#25a85c'"
-                                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
-                                        >
-                                    </div>
-                                    <div>
-                                        <textarea 
-                                            id="contactMessage" 
-                                            placeholder="Your Message" 
-                                            rows="5" 
-                                            required
-                                            style="width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s; resize: vertical; font-family: inherit;"
-                                            onfocus="this.style.borderColor='#25a85c'"
-                                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
-                                        ></textarea>
-                                    </div>
-                                    <button 
-                                        type="submit" 
-                                        class="green-button" 
-                                        style="align-self: center; margin-top: 1rem;"
-                                    >
-                                        <span class="button-text">Send Message</span>
-                                    </button>
-                                </form>
-                                <div id="contactFormMessage" style="margin-top: 1rem; text-align: center; display: none;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-                <%- include('partials/footer') %>
+      <div class="lower-section">
+        <div class="section-split">
+          <div class="split-column">
+            <div class="section-title">Planning for the whole team?</div>
+            <a href="#contact" class="green-button"
+              ><span class="button-text">Contact Us</span></a
+            >
+          </div>
+          <div class="split-column">
+            <div class="section-title">Personal or family booking?</div>
+            <a href="/api/login" class="green-button"
+              ><span class="button-text">Sign in / Sign up</span></a
+            >
+          </div>
         </div>
 
-    <!-- Carousel Animation Script -->
+        <div class="browse-text">Just want to browse? Start here</div>
+
+        <div class="package-section">
+          <div class="package-image"></div>
+          <div class="package-details">
+            <div class="package-title">The Bali Package</div>
+            <div class="package-duration">4 days 4 nights</div>
+            <p class="package-description">
+              Lorem ipsum dolor sit amet consectetur. Massa mauris nunc ornare
+              est ultrices vulputate. Nullam imperdiet at faucibus lorem
+              dignissim platea mattis fermentum libero. Nunc vitae pharetra
+              semper ut.
+            </p>
+            <a href="/api/packages" class="explore-button"
+              >Explore More Packages</a
+            >
+          </div>
+        </div>
+
+        <section
+          id="about"
+          class="about-section"
+          style="margin-top: 100px; margin-bottom: 100px"
+        >
+          <h2
+            class="section-title"
+            style="text-align: center; margin-bottom: 3rem"
+          >
+            About ThePalmWay
+          </h2>
+          <div
+            class="about-content"
+            style="max-width: 900px; margin: 0 auto; text-align: center"
+          >
+            <p
+              style="
+                font-size: 1.2rem;
+                line-height: 1.8;
+                margin-bottom: 2rem;
+                color: #e0e0e0;
+              "
+            >
+              Welcome to ThePalmWay, your trusted partner in creating
+              unforgettable travel experiences. We specialize in curating
+              exceptional travel packages and accommodations that cater to your
+              unique preferences and needs.
+            </p>
+            <div
+              class="about-features"
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-top: 3rem;
+              "
+            >
+              <div
+                class="feature-card"
+                style="
+                  background: rgba(255, 255, 255, 0.05);
+                  padding: 2rem;
+                  border-radius: 15px;
+                  backdrop-filter: blur(10px);
+                "
+              >
+                <div style="font-size: 3rem; margin-bottom: 1rem">🌴</div>
+                <h3
+                  style="
+                    font-size: 1.3rem;
+                    margin-bottom: 1rem;
+                    font-weight: 600;
+                  "
+                >
+                  Exotic Destinations
+                </h3>
+                <p style="color: #c0c0c0; line-height: 1.6">
+                  Discover breathtaking locations from Bali to Switzerland,
+                  carefully selected for their beauty and cultural richness.
+                </p>
+              </div>
+              <div
+                class="feature-card"
+                style="
+                  background: rgba(255, 255, 255, 0.05);
+                  padding: 2rem;
+                  border-radius: 15px;
+                  backdrop-filter: blur(10px);
+                "
+              >
+                <div style="font-size: 3rem; margin-bottom: 1rem">✈</div>
+                <h3
+                  style="
+                    font-size: 1.3rem;
+                    margin-bottom: 1rem;
+                    font-weight: 600;
+                  "
+                >
+                  Seamless Booking
+                </h3>
+                <p style="color: #c0c0c0; line-height: 1.6">
+                  Our easy-to-use platform makes booking your dream vacation
+                  simple and stress-free.
+                </p>
+              </div>
+              <div
+                class="feature-card"
+                style="
+                  background: rgba(255, 255, 255, 0.05);
+                  padding: 2rem;
+                  border-radius: 15px;
+                  backdrop-filter: blur(10px);
+                "
+              >
+                <div style="font-size: 3rem; margin-bottom: 1rem">🏨</div>
+                <h3
+                  style="
+                    font-size: 1.3rem;
+                    margin-bottom: 1rem;
+                    font-weight: 600;
+                  "
+                >
+                  Premium Accommodations
+                </h3>
+                <p style="color: #c0c0c0; line-height: 1.6">
+                  Stay in handpicked hotels and resorts that offer comfort,
+                  luxury, and authentic local experiences.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="contact"
+          class="contact-section"
+          style="margin-top: 100px; margin-bottom: 100px"
+        >
+          <h2
+            class="section-title"
+            style="text-align: center; margin-bottom: 3rem"
+          >
+            Contact Us
+          </h2>
+          <div class="contact-content" style="max-width: 800px; margin: 0 auto">
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.05);
+                padding: 3rem;
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
+              "
+            >
+              <p
+                style="
+                  font-size: 1.1rem;
+                  line-height: 1.8;
+                  margin-bottom: 2.5rem;
+                  text-align: center;
+                  color: #e0e0e0;
+                "
+              >
+                Have questions or need assistance? We're here to help! Reach out
+                to us through any of the following channels.
+              </p>
+
+              <div
+                class="contact-info"
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                  gap: 2rem;
+                  margin-bottom: 2.5rem;
+                "
+              >
+                <div class="contact-item" style="text-align: center">
+                  <div
+                    style="
+                      font-size: 2.5rem;
+                      margin-bottom: 1rem;
+                      color: #25a85c;
+                    "
+                  >
+                    📧
+                  </div>
+                  <h3
+                    style="
+                      font-size: 1.1rem;
+                      margin-bottom: 0.5rem;
+                      font-weight: 600;
+                    "
+                  >
+                    Email
+                  </h3>
+                  <a
+                    href="mailto:info@thepalmway.com"
+                    style="
+                      color: #25a85c;
+                      text-decoration: none;
+                      transition: color 0.3s;
+                    "
+                    onmouseover="this.style.color='#1e864a'"
+                    onmouseout="this.style.color='#25a85c'"
+                  >
+                    info@thepalmway.com
+                  </a>
+                </div>
+                <div class="contact-item" style="text-align: center">
+                  <div
+                    style="
+                      font-size: 2.5rem;
+                      margin-bottom: 1rem;
+                      color: #25a85c;
+                    "
+                  >
+                    📞
+                  </div>
+                  <h3
+                    style="
+                      font-size: 1.1rem;
+                      margin-bottom: 0.5rem;
+                      font-weight: 600;
+                    "
+                  >
+                    Phone
+                  </h3>
+                  <a
+                    href="tel:+1234567890"
+                    style="
+                      color: #25a85c;
+                      text-decoration: none;
+                      transition: color 0.3s;
+                    "
+                    onmouseover="this.style.color='#1e864a'"
+                    onmouseout="this.style.color='#25a85c'"
+                  >
+                    +1 (234) 567-890
+                  </a>
+                </div>
+                <div class="contact-item" style="text-align: center">
+                  <div
+                    style="
+                      font-size: 2.5rem;
+                      margin-bottom: 1rem;
+                      color: #25a85c;
+                    "
+                  >
+                    📍
+                  </div>
+                  <h3
+                    style="
+                      font-size: 1.1rem;
+                      margin-bottom: 0.5rem;
+                      font-weight: 600;
+                    "
+                  >
+                    Address
+                  </h3>
+                  <p style="color: #c0c0c0; line-height: 1.6">
+                    123 Travel Street<br />
+                    Vacation City, VC 12345
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-form" style="margin-top: 2rem">
+                <h3
+                  style="
+                    font-size: 1.3rem;
+                    margin-bottom: 1.5rem;
+                    text-align: center;
+                    font-weight: 600;
+                  "
+                >
+                  Send us a Message
+                </h3>
+                <form
+                  id="contactForm"
+                  style="display: flex; flex-direction: column; gap: 1.5rem"
+                >
+                  <div>
+                    <input
+                      type="text"
+                      id="contactName"
+                      placeholder="Your Name"
+                      required
+                      style="
+                        width: 100%;
+                        padding: 1rem;
+                        border-radius: 10px;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                        background: rgba(255, 255, 255, 0.1);
+                        color: white;
+                        font-size: 1rem;
+                        outline: none;
+                        transition: border-color 0.3s;
+                      "
+                      onfocus="this.style.borderColor='#25a85c'"
+                      onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      id="contactEmail"
+                      placeholder="Your Email"
+                      required
+                      style="
+                        width: 100%;
+                        padding: 1rem;
+                        border-radius: 10px;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                        background: rgba(255, 255, 255, 0.1);
+                        color: white;
+                        font-size: 1rem;
+                        outline: none;
+                        transition: border-color 0.3s;
+                      "
+                      onfocus="this.style.borderColor='#25a85c'"
+                      onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                    />
+                  </div>
+                  <div>
+                    <textarea
+                      id="contactMessage"
+                      placeholder="Your Message"
+                      rows="5"
+                      required
+                      style="
+                        width: 100%;
+                        padding: 1rem;
+                        border-radius: 10px;
+                        border: 2px solid rgba(255, 255, 255, 0.2);
+                        background: rgba(255, 255, 255, 0.1);
+                        color: white;
+                        font-size: 1rem;
+                        outline: none;
+                        transition: border-color 0.3s;
+                        resize: vertical;
+                        font-family: inherit;
+                      "
+                      onfocus="this.style.borderColor='#25a85c'"
+                      onblur="this.style.borderColor='rgba(255, 255, 255, 0.2)'"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    class="green-button"
+                    style="align-self: center; margin-top: 1rem"
+                  >
+                    <span class="button-text">Send Message</span>
+                  </button>
+                </form>
+                <div
+                  id="contactFormMessage"
+                  style="margin-top: 1rem; text-align: center; display: none"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <%- include('partials/footer') %>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const canvas = document.getElementById('cardCanvas');
-            const ctx = canvas.getContext('2d');
+      document.addEventListener("DOMContentLoaded", () => {
+        const canvas = document.getElementById("cardCanvas");
+        const ctx = canvas.getContext("2d");
 
-            let width, height;
+        let width, height;
 
-            // --- Configuration ---
-            const imageSources = [
-                'assets/images/carousel/bali.png',
-                'assets/images/carousel/jaipur.png',
-                'assets/images/carousel/la.png',
-                'assets/images/carousel/maldives.png',
-                'assets/images/carousel/switzerland.png'
-            ];
-            const locationNames = [
-                'Bali',
-                'Jaipur',
-                'Los Angeles',
-                'Maldives',
-                'Switzerland'
-            ];
-            const images = [];
-            let imagesLoaded = 0;
+        // --- Configuration ---
+        const imageSources = [
+          "assets/images/carousel/bali.png",
+          "assets/images/carousel/jaipur.png",
+          "assets/images/carousel/la.png",
+          "assets/images/carousel/maldives.png",
+          "assets/images/carousel/switzerland.png",
+        ];
+        const locationNames = [
+          "Bali",
+          "Jaipur",
+          "Los Angeles",
+          "Maldives",
+          "Switzerland",
+        ];
+        const images = [];
+        let imagesLoaded = 0;
 
-            const CARD_ASPECT_RATIO = 1.5;
-            const CARD_WIDTH_RATIO = 0.15;
-            const CARD_SPACING_RATIO = 0.05;
-            const ACTIVE_SCALE = 1.1;
-            const INACTIVE_SCALE = 0.85;
-            const ANIMATION_SPEED = 0.07;
-            const LOOP_ANIMATION_SPEED = 0.14;
+        const CARD_ASPECT_RATIO = 1.5;
+        const CARD_WIDTH_RATIO = 0.15;
+        const CARD_SPACING_RATIO = 0.05;
+        const ACTIVE_SCALE = 1.1;
+        const INACTIVE_SCALE = 0.85;
+        const ANIMATION_SPEED = 0.07;
+        const LOOP_ANIMATION_SPEED = 0.14;
 
-            let cards = [];
-            let currentIndex = 0;
-            let prevIndex = 0;
-            let displayOrder = [];
-            let isAnimating = false;
-            let loopingCardIndex = -1;
-            let bgFade = 1; // 1 = fully current, 0 = fully previous
-            let bgFading = false;
+        let cards = [];
+        let currentIndex = 0;
+        let prevIndex = 0;
+        let displayOrder = [];
+        let isAnimating = false;
+        let loopingCardIndex = -1;
+        let bgFade = 1; // 1 = fully current, 0 = fully previous
+        let bgFading = false;
 
-            function preloadImages() {
-                for (let i = 0; i < imageSources.length; i++) {
-                    images[i] = new Image();
-                    images[i].onload = () => {
-                        imagesLoaded++;
-                        if (imagesLoaded === imageSources.length) init();
-                    };
-                    images[i].onerror = () => {
-                        console.error(`Failed to load image: ${imageSources[i]}`);
-                        imagesLoaded++;
-                        if (imagesLoaded === imageSources.length) init();
-                    };
-                    images[i].src = imageSources[i];
-                }
+        function preloadImages() {
+          for (let i = 0; i < imageSources.length; i++) {
+            images[i] = new Image();
+            images[i].onload = () => {
+              imagesLoaded++;
+              if (imagesLoaded === imageSources.length) init();
+            };
+            images[i].onerror = () => {
+              console.error(`Failed to load image: ${imageSources[i]}`);
+              imagesLoaded++;
+              if (imagesLoaded === imageSources.length) init();
+            };
+            images[i].src = imageSources[i];
+          }
+        }
+
+        function setup() {
+          const heroContainer = document.querySelector(".hero-container");
+          width = canvas.width = heroContainer.offsetWidth;
+          height = canvas.height = heroContainer.offsetHeight;
+
+          displayOrder = images.map((_, i) => i);
+          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
+          currentIndex = displayOrder[centerDisplayIndex];
+
+          cards = images.map((img) => ({
+            img,
+            targetX: 0,
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+            targetScale: 0,
+            scale: 0,
+            targetAlpha: 0,
+            alpha: 0,
+          }));
+
+          updateCardPositions(false);
+          updateLocationLabel();
+        }
+
+        function init() {
+          setup();
+          animate();
+          window.addEventListener("resize", setup);
+          canvas.addEventListener("click", handleClick); // Listen on canvas
+        }
+
+        function handleClick() {
+          triggerAnimation();
+        }
+
+        function triggerAnimation() {
+          isAnimating = true;
+          loopingCardIndex = displayOrder[0];
+          displayOrder.push(displayOrder.shift());
+          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
+          prevIndex = currentIndex;
+          currentIndex = displayOrder[centerDisplayIndex];
+          bgFade = 0;
+          bgFading = true;
+          updateCardPositions(true);
+          updateLocationLabel();
+        }
+        // Update the location label below the carousel
+        function updateLocationLabel() {
+          const label = document.getElementById("carousel-location-label");
+          if (!label) return;
+          // Find the center card's location name
+          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
+          const centerCardIdx = displayOrder[centerDisplayIndex];
+          label.textContent = locationNames[centerCardIdx] || "";
+        }
+
+        function updateCardPositions(animate = true) {
+          const cardWidth = width * CARD_WIDTH_RATIO;
+          const cardHeight = cardWidth * CARD_ASPECT_RATIO;
+          const cardSpacing = width * CARD_SPACING_RATIO;
+          const centerPosX = width / 2 - cardWidth / 2;
+          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
+
+          displayOrder.forEach((cardIndex, displayIndex) => {
+            const card = cards[cardIndex];
+            const offset = displayIndex - centerDisplayIndex;
+            const isCenter = displayIndex === centerDisplayIndex;
+
+            card.targetX = centerPosX + offset * (cardWidth + cardSpacing);
+            card.y = height / 2 - cardHeight / 2;
+            card.width = cardWidth;
+            card.height = cardHeight;
+            card.targetScale = isCenter ? ACTIVE_SCALE : INACTIVE_SCALE;
+            card.targetAlpha = isCenter ? 1.0 : 0.7;
+
+            if (!animate) {
+              card.x = card.targetX;
+              card.scale = card.targetScale;
+              card.alpha = card.targetAlpha;
             }
+          });
+        }
 
-            function setup() {
-                const heroContainer = document.querySelector('.hero-container');
-                width = canvas.width = heroContainer.offsetWidth;
-                height = canvas.height = heroContainer.offsetHeight;
+        function draw() {
+          ctx.clearRect(0, 0, width, height);
+          drawBackground();
+          cards.forEach((card, index) => {
+            const speed =
+              index === loopingCardIndex
+                ? LOOP_ANIMATION_SPEED
+                : ANIMATION_SPEED;
+            card.x += (card.targetX - card.x) * speed;
+            card.scale += (card.targetScale - card.scale) * speed;
+            card.alpha += (card.targetAlpha - card.alpha) * speed;
+            drawCard(card);
+          });
+        }
 
-                displayOrder = images.map((_, i) => i);
-                const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-                currentIndex = displayOrder[centerDisplayIndex];
+        function drawCard(card) {
+          ctx.save();
+          const cardCenterX = card.x + card.width / 2;
+          const cardCenterY = card.y + card.height / 2;
+          ctx.translate(cardCenterX, cardCenterY);
+          ctx.scale(card.scale, card.scale);
+          ctx.translate(-cardCenterX, -cardCenterY);
+          ctx.globalAlpha = card.alpha;
+          ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+          ctx.shadowBlur = 25 * card.scale;
+          ctx.shadowOffsetY = 10 * card.scale;
 
-                cards = images.map((img) => ({
-                    img, targetX: 0, x: 0, y: 0, width: 0, height: 0,
-                    targetScale: 0, scale: 0, targetAlpha: 0, alpha: 0,
-                }));
+          const cornerRadius = 30; // Matched to original CSS
+          ctx.beginPath();
+          ctx.moveTo(card.x + cornerRadius, card.y);
+          ctx.lineTo(card.x + card.width - cornerRadius, card.y);
+          ctx.quadraticCurveTo(
+            card.x + card.width,
+            card.y,
+            card.x + card.width,
+            card.y + cornerRadius
+          );
+          ctx.lineTo(card.x + card.width, card.y + card.height - cornerRadius);
+          ctx.quadraticCurveTo(
+            card.x + card.width,
+            card.y + card.height,
+            card.x + card.width - cornerRadius,
+            card.y + card.height
+          );
+          ctx.lineTo(card.x + cornerRadius, card.y + card.height);
+          ctx.quadraticCurveTo(
+            card.x,
+            card.y + card.height,
+            card.x,
+            card.y + card.height - cornerRadius
+          );
+          ctx.lineTo(card.x, card.y + cornerRadius);
+          ctx.quadraticCurveTo(card.x, card.y, card.x + cornerRadius, card.y);
+          ctx.closePath();
+          ctx.clip();
 
-                updateCardPositions(false);
-                updateLocationLabel();
+          // Draw image: always scale image height to card height, crop width if needed
+          if (card.img && card.img.complete && card.img.naturalHeight !== 0) {
+            const scale = card.height / card.img.height;
+            const drawWidth = card.img.width * scale;
+            const sx = Math.max(0, (drawWidth - card.width) / 2 / scale);
+            const sw = card.width / scale;
+            ctx.drawImage(
+              card.img,
+              sx,
+              0,
+              sw,
+              card.img.height,
+              card.x,
+              card.y,
+              card.width,
+              card.height
+            );
+          }
+          ctx.restore();
+        }
+
+        function drawBackground() {
+          // Fade between prevIndex and currentIndex
+          const currImg = images[currentIndex];
+          const prevImg = images[prevIndex];
+          if (!currImg || !currImg.complete || currImg.naturalHeight === 0)
+            return;
+
+          // Helper to draw a bg image with given alpha (no overlay)
+          function drawBgImage(img, alpha) {
+            if (!img || !img.complete || img.naturalHeight === 0) return;
+            const imgAspectRatio = img.width / img.height;
+            const canvasAspectRatio = width / height;
+            let drawWidth, drawHeight, drawX, drawY;
+            if (imgAspectRatio > canvasAspectRatio) {
+              drawHeight = height;
+              drawWidth = drawHeight * imgAspectRatio;
+              drawX = (width - drawWidth) / 2;
+              drawY = 0;
+            } else {
+              drawWidth = width;
+              drawHeight = drawWidth / imgAspectRatio;
+              drawX = 0;
+              drawY = (height - drawHeight) / 2;
             }
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+            ctx.restore();
+          }
 
-            function init() {
-                setup();
-                animate();
-                window.addEventListener('resize', setup);
-                canvas.addEventListener('click', handleClick); // Listen on canvas
+          if (bgFading && prevIndex !== currentIndex) {
+            drawBgImage(prevImg, 1 - bgFade);
+            drawBgImage(currImg, bgFade);
+          } else {
+            drawBgImage(currImg, 1);
+          }
+          // Always draw the dark overlay at full opacity on top
+          ctx.save();
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = "rgba(0, 0, 0, 0.64)";
+          ctx.fillRect(0, 0, width, height);
+          ctx.restore();
+        }
+
+        function checkAnimationComplete() {
+          // Animate background fade
+          if (bgFading) {
+            bgFade += 0.08; // Fade speed
+            if (bgFade >= 1) {
+              bgFade = 1;
+              bgFading = false;
+              prevIndex = currentIndex;
             }
-
-            function handleClick() {
-                triggerAnimation();
+          }
+          if (!isAnimating) return;
+          let allCardsInPosition = true;
+          for (const card of cards) {
+            if (
+              Math.abs(card.x - card.targetX) > 1 ||
+              Math.abs(card.scale - card.targetScale) > 0.01
+            ) {
+              allCardsInPosition = false;
+              break;
             }
+          }
+          if (allCardsInPosition) {
+            cards.forEach((card) => {
+              card.x = card.targetX;
+              card.scale = card.targetScale;
+              card.alpha = card.targetAlpha;
+            });
+            isAnimating = false;
+            loopingCardIndex = -1;
+          }
+        }
 
-            function triggerAnimation() {
-                isAnimating = true;
-                loopingCardIndex = displayOrder[0];
-                displayOrder.push(displayOrder.shift());
-                const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-                prevIndex = currentIndex;
-                currentIndex = displayOrder[centerDisplayIndex];
-                bgFade = 0;
-                bgFading = true;
-                updateCardPositions(true);
-                updateLocationLabel();
-            }
-            // Update the location label below the carousel
-            function updateLocationLabel() {
-                const label = document.getElementById('carousel-location-label');
-                if (!label) return;
-                // Find the center card's location name
-                const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-                const centerCardIdx = displayOrder[centerDisplayIndex];
-                label.textContent = locationNames[centerCardIdx] || '';
-            }
+        function animate() {
+          draw();
+          checkAnimationComplete();
+          requestAnimationFrame(animate);
+        }
 
-            function updateCardPositions(animate = true) {
-                const cardWidth = width * CARD_WIDTH_RATIO;
-                const cardHeight = cardWidth * CARD_ASPECT_RATIO;
-                const cardSpacing = width * CARD_SPACING_RATIO;
-                const centerPosX = width / 2 - cardWidth / 2;
-                const centerDisplayIndex = Math.floor(displayOrder.length / 2);
+        preloadImages();
+      });
 
-                displayOrder.forEach((cardIndex, displayIndex) => {
-                    const card = cards[cardIndex];
-                    const offset = displayIndex - centerDisplayIndex;
-                    const isCenter = displayIndex === centerDisplayIndex;
+      /* --- NEW SCRIPT FOR HEADER SCROLL EFFECT --- */
+      document.addEventListener("DOMContentLoaded", () => {
+        const header = document.querySelector("header");
 
-                    card.targetX = centerPosX + offset * (cardWidth + cardSpacing);
-                    card.y = height / 2 - cardHeight / 2;
-                    card.width = cardWidth;
-                    card.height = cardHeight;
-                    card.targetScale = isCenter ? ACTIVE_SCALE : INACTIVE_SCALE;
-                    card.targetAlpha = isCenter ? 1.0 : 0.7;
+        // Function to add/remove class based on scroll
+        const handleScroll = () => {
+          if (window.scrollY > 50) {
+            // 50px threshold
+            header.classList.add("header-scrolled");
+          } else {
+            header.classList.remove("header-scrolled");
+          }
+        };
 
-                    if (!animate) {
-                        card.x = card.targetX;
-                        card.scale = card.targetScale;
-                        card.alpha = card.targetAlpha;
-                    }
-                });
-            }
+        // Listen for scroll events
+        window.addEventListener("scroll", handleScroll);
 
-            function draw() {
-                ctx.clearRect(0, 0, width, height);
-                drawBackground();
-                cards.forEach((card, index) => {
-                    const speed = (index === loopingCardIndex) ? LOOP_ANIMATION_SPEED : ANIMATION_SPEED;
-                    card.x += (card.targetX - card.x) * speed;
-                    card.scale += (card.targetScale - card.scale) * speed;
-                    card.alpha += (card.targetAlpha - card.alpha) * speed;
-                    drawCard(card);
-                });
-            }
+        // Run once on load in case the page is reloaded halfway down
+        handleScroll();
+      });
 
-            function drawCard(card) {
-                ctx.save();
-                const cardCenterX = card.x + card.width / 2;
-                const cardCenterY = card.y + card.height / 2;
-                ctx.translate(cardCenterX, cardCenterY);
-                ctx.scale(card.scale, card.scale);
-                ctx.translate(-cardCenterX, -cardCenterY);
-                ctx.globalAlpha = card.alpha;
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
-                ctx.shadowBlur = 25 * card.scale;
-                ctx.shadowOffsetY = 10 * card.scale;
+      // Contact Form Handler
+      document.addEventListener("DOMContentLoaded", () => {
+        const contactForm = document.getElementById("contactForm");
+        const contactFormMessage =
+          document.getElementById("contactFormMessage");
 
-                const cornerRadius = 30; // Matched to original CSS
-                ctx.beginPath();
-                ctx.moveTo(card.x + cornerRadius, card.y);
-                ctx.lineTo(card.x + card.width - cornerRadius, card.y);
-                ctx.quadraticCurveTo(card.x + card.width, card.y, card.x + card.width, card.y + cornerRadius);
-                ctx.lineTo(card.x + card.width, card.y + card.height - cornerRadius);
-                ctx.quadraticCurveTo(card.x + card.width, card.y + card.height, card.x + card.width - cornerRadius, card.y + card.height);
-                ctx.lineTo(card.x + cornerRadius, card.y + card.height);
-                ctx.quadraticCurveTo(card.x, card.y + card.height, card.x, card.y + card.height - cornerRadius);
-                ctx.lineTo(card.x, card.y + cornerRadius);
-                ctx.quadraticCurveTo(card.x, card.y, card.x + cornerRadius, card.y);
-                ctx.closePath();
-                ctx.clip();
+        if (contactForm) {
+          contactForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-                // Draw image: always scale image height to card height, crop width if needed
-                if (card.img && card.img.complete && card.img.naturalHeight !== 0) {
-                    const scale = card.height / card.img.height;
-                    const drawWidth = card.img.width * scale;
-                    const sx = Math.max(0, (drawWidth - card.width) / 2 / scale);
-                    const sw = card.width / scale;
-                    ctx.drawImage(
-                        card.img,
-                        sx, 0, sw, card.img.height,
-                        card.x, card.y, card.width, card.height
-                    );
-                }
-                ctx.restore();
-            }
+            const name = document.getElementById("contactName").value;
+            const email = document.getElementById("contactEmail").value;
+            const message = document.getElementById("contactMessage").value;
 
-            function drawBackground() {
-                // Fade between prevIndex and currentIndex
-                const currImg = images[currentIndex];
-                const prevImg = images[prevIndex];
-                if (!currImg || !currImg.complete || currImg.naturalHeight === 0) return;
+            // Show loading state
+            const submitButton = contactForm.querySelector(
+              'button[type="submit"]'
+            );
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML =
+              '<span class="button-text">Sending...</span>';
+            submitButton.disabled = true;
 
-                // Helper to draw a bg image with given alpha (no overlay)
-                function drawBgImage(img, alpha) {
-                    if (!img || !img.complete || img.naturalHeight === 0) return;
-                    const imgAspectRatio = img.width / img.height;
-                    const canvasAspectRatio = width / height;
-                    let drawWidth, drawHeight, drawX, drawY;
-                    if (imgAspectRatio > canvasAspectRatio) {
-                        drawHeight = height;
-                        drawWidth = drawHeight * imgAspectRatio;
-                        drawX = (width - drawWidth) / 2;
-                        drawY = 0;
-                    } else {
-                        drawWidth = width;
-                        drawHeight = drawWidth / imgAspectRatio;
-                        drawX = 0;
-                        drawY = (height - drawHeight) / 2;
-                    }
-                    ctx.save();
-                    ctx.globalAlpha = alpha;
-                    ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-                    ctx.restore();
-                }
+            // Simulate form submission (you can replace this with actual API call)
+            setTimeout(() => {
+              contactFormMessage.style.display = "block";
+              contactFormMessage.style.color = "#25a85c";
+              contactFormMessage.style.fontSize = "1.1rem";
+              contactFormMessage.textContent = `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
 
-                if (bgFading && prevIndex !== currentIndex) {
-                    drawBgImage(prevImg, 1 - bgFade);
-                    drawBgImage(currImg, bgFade);
-                } else {
-                    drawBgImage(currImg, 1);
-                }
-                // Always draw the dark overlay at full opacity on top
-                ctx.save();
-                ctx.globalAlpha = 1;
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.64)';
-                ctx.fillRect(0, 0, width, height);
-                ctx.restore();
-            }
+              // Reset form
+              contactForm.reset();
+              submitButton.innerHTML = originalText;
+              submitButton.disabled = false;
 
-            function checkAnimationComplete() {
-                // Animate background fade
-                if (bgFading) {
-                    bgFade += 0.08; // Fade speed
-                    if (bgFade >= 1) {
-                        bgFade = 1;
-                        bgFading = false;
-                        prevIndex = currentIndex;
-                    }
-                }
-                if (!isAnimating) return;
-                let allCardsInPosition = true;
-                for (const card of cards) {
-                    if (Math.abs(card.x - card.targetX) > 1 || Math.abs(card.scale - card.targetScale) > 0.01) {
-                        allCardsInPosition = false;
-                        break;
-                    }
-                }
-                if (allCardsInPosition) {
-                    cards.forEach((card) => {
-                        card.x = card.targetX;
-                        card.scale = card.targetScale;
-                        card.alpha = card.targetAlpha;
-                    });
-                    isAnimating = false;
-                    loopingCardIndex = -1;
-                }
-            }
-
-            function animate() {
-                draw();
-                checkAnimationComplete();
-                requestAnimationFrame(animate);
-            }
-
-            preloadImages();
-        });
-
-        // Contact Form Handler
-        document.addEventListener('DOMContentLoaded', () => {
-            const contactForm = document.getElementById('contactForm');
-            const contactFormMessage = document.getElementById('contactFormMessage');
-            
-            if (contactForm) {
-                contactForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    
-                    const name = document.getElementById('contactName').value;
-                    const email = document.getElementById('contactEmail').value;
-                    const message = document.getElementById('contactMessage').value;
-                    
-                    // Show loading state
-                    const submitButton = contactForm.querySelector('button[type="submit"]');
-                    const originalText = submitButton.innerHTML;
-                    submitButton.innerHTML = '<span class="button-text">Sending...</span>';
-                    submitButton.disabled = true;
-                    
-                    // Simulate form submission (you can replace this with actual API call)
-                    setTimeout(() => {
-                        contactFormMessage.style.display = 'block';
-                        contactFormMessage.style.color = '#25a85c';
-                        contactFormMessage.style.fontSize = '1.1rem';
-                        contactFormMessage.textContent = `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
-                        
-                        // Reset form
-                        contactForm.reset();
-                        submitButton.innerHTML = originalText;
-                        submitButton.disabled = false;
-                        
-                        // Hide message after 5 seconds
-                        setTimeout(() => {
-                            contactFormMessage.style.display = 'none';
-                        }, 5000);
-                    }, 1000);
-                });
-            }
-        });
+              // Hide message after 5 seconds
+              setTimeout(() => {
+                contactFormMessage.style.display = "none";
+              }, 5000);
+            }, 1000);
+          });
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>
