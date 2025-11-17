@@ -26,6 +26,18 @@
       body {
         font-family: "Poppins", sans-serif;
       }
+      /* Spacing fixes so header, main panels, and footer don't touch */
+      #forget_page, #otp-container, #reset-password-container {
+        margin-top: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+      /* Extra top spacing to ensure navbar and first panel are separated on larger screens */
+      @media (min-width: 768px) {
+        #forget_page, #otp-container, #reset-password-container {
+          margin-top: 2rem;
+          margin-bottom: 2.5rem;
+        }
+      }
     </style>
   </head>
   <body
@@ -182,8 +194,11 @@
       </form>
     </div>
 
-    <%- include('partials/footer') %>
-
+      
+    <!-- Footer -->
+    <div style="width: 100%;"> <!--  Jugaad   -->
+      <%- include('partials/footer') %>
+    </div>
     <script>
       const form_api = window.location.origin;
       const forgot_form = document.getElementById("ForgotForm");
@@ -289,4 +304,5 @@
       });
     </script>
   </body>
+ 
 </html>
