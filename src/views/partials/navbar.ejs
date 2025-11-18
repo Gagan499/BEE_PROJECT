@@ -124,12 +124,12 @@
 
         if (data.name == "Admin") {
           who_book.textContent = "All Booking";
-          who_book.href = "/api/user";
+          who_book.href = "/api/admin";
         } else if (data.name == undefined) {
           return;
         } else {
           who_book.textContent = "My Booking";
-          who_book.href = "/api/admin";
+          who_book.href = "/api/user";
         }
 
         authLink.addEventListener("click", async () => {
@@ -143,7 +143,7 @@
           who_book.textContent = "";
           who_book.href = "#";
           who_book.classList.add("hidden");
-          window.location.reload();
+          window.location.href = "/api/login";
         });
       } else {
         // Not logged in
