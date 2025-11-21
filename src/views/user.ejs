@@ -1,758 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Bookings</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      body {
-        background-color: #f3f4f6;
-        color: #1c2331;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      /* --- CSS Class Renamed --- */
-      .hero-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 40vh; /* Adjust as needed */
-        width: 100%;
-        background: url("/assets/images/headerbg.jpg"); /* <-- CHANGE THIS */
-        background-size: cover;
-        background-position: center;
-        color: white;
-        /* Text stays white for contrast on image */
-        
-        /* Added from admin.ejs for animation */
-        overflow: hidden;
-        position: relative;
-      }
-
-      /* --- CSS Class Renamed --- */
-      .hero-section h1 {
-        font-size: 3rem;
-        font-weight: bold;
-        /* Changed to dark shadow for light backgrounds */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        
-        /* Added from admin.ejs for animation */
-        z-index: 1;
-        position: relative;
-      }
-      .content-wrapper {
-        flex-grow: 1;
-        width: 100%;
-        max-width: 1200px; /* Max content width */
-        margin: 0 auto;
-        /* Center content */
-        padding: 2rem 1rem;
-        
-        /* Added to appear over the parallax hero */
-        position: relative;
-        z-index: 2;
-        background-color: #f3f4f6;
-      }
-      
-      /* --- .hero-section is now used, so this is unneeded --- */
-      /* .hero-section {
-        display: none;
-      } */
-      
-      .bookings-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 1rem;
-        width: 100%;
-        background-color: #ffffff; /* White background */
-        border: 1px solid #e5e7eb;
-        /* Light border */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        padding: 1rem;
-        border-radius: 8px;
-      }
-
-      .grid-header {
-        font-weight: bold;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #e5e7eb; /* Light gray border */
-        color: #6b7280;
-        /* Muted dark text */
-        text-align: left;
-      }
-
-      .grid-cell {
-        padding: 1rem 0;
-        text-align: left;
-        color: #111827; /* Main dark text color */
-        border-bottom: 1px solid #e5e7eb;
-        /* Separator for rows */
-      }
-
-      .bookings-grid .grid-cell:nth-last-child(-n + 5) {
-        border-bottom: none;
-      }
-
-      .grid-cell .edit-link {
-        color: #3b82f6;
-        /* Blue link */
-        text-decoration: none;
-      }
-      .grid-cell .edit-link:hover {
-        text-decoration: underline;
-      }
-
-      .decision-slider {
-        position: relative;
-        display: flex;
-        width: 210px;
-        height: 30px;
-        background-color: #e5e7eb; /* Light gray */
-        border-radius: 15px;
-        overflow: hidden;
-        border: 1px solid #d1d5db;
-      }
-
-      .decision-slider-thumb {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 70px; /* 1/3 of width */
-        height: 100%;
-        background-color: #ffffff; /* White */
-        border-radius: 15px;
-        transition: transform 0.3s ease;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .decision-label {
-        flex: 1;
-        text-align: center;
-        line-height: 30px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: #6b7280;
-        /* Muted dark text */
-        cursor: pointer;
-        z-index: 1;
-      }
-
-      /* Slider states */
-      .decision-slider.state-pending .decision-slider-thumb {
-        transform: translateX(70px);
-      }
-      .decision-slider.state-approve .decision-slider-thumb {
-        transform: translateX(140px);
-        background-color: #22c55e;
-      }
-      .decision-slider.state-reject .decision-slider-thumb {
-        transform: translateX(0px);
-        background-color: #ef4444;
-      }
-
-      .decision-slider.state-pending .pending {
-        color: #111827;
-        /* Dark text */
-      }
-      .decision-slider.state-approve .approve {
-        color: white;
-        /* Stays white on green */
-      }
-      .decision-slider.state-reject .reject {
-        color: white;
-        /* Stays white on red */
-      }
-
-      .booking-form-modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        z-index: 100;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        /* Dark overlay */
-      }
-
-      .booking-form-modal .modal-content {
-        background-color: #ffffff;
-        /* White background */
-        color: #111827;
-        /* Dark text */
-        margin: 5% auto;
-        padding: 2rem;
-        border: 1px solid #e5e7eb;
-        width: 90%;
-        max-width: 700px;
-        border-radius: 8px;
-        position: relative;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      }
-
-      .booking-form-modal h2 {
-        margin-top: 0;
-        border-bottom: 1px solid #e5e7eb;
-        padding-bottom: 1rem;
-      }
-
-      .modal-close {
-        position: absolute;
-        top: 1rem;
-        right: 1.5rem;
-        color: #9ca3af;
-        font-size: 2rem;
-        font-weight: bold;
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
-      .modal-close:hover {
-        color: #111827;
-      }
-
-      /* Form Layout */
-      .form-row {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 1rem;
-      }
-      .form-group {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-      .form-group.full-width {
-        flex-basis: 100%;
-      }
-      .form-group label {
-        margin-bottom: 0.5rem;
-        color: #6b7280;
-        font-size: 0.9rem;
-      }
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        padding: 0.75rem;
-        background-color: #ffffff;
-        color: #111827;
-        border: 1px solid #d1d5db;
-        border-radius: 4px;
-      }
-      .form-group input:focus,
-      .form-group select:focus {
-        outline: none;
-        border-color: #3b82f6;
-      }
-
-      /* Form Buttons */
-      .form-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: flex-end;
-        margin-top: 2rem;
-        border-top: 1px solid #e5e7eb;
-        padding-top: 1.5rem;
-      }
-      .submit-btn,
-      .clear-btn {
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 4px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      .submit-btn {
-        background-color: #3b82f6;
-        /* Blue */
-        color: white;
-      }
-      .clear-btn {
-        background-color: #e5e7eb;
-        /* Light Gray */
-        color: #374151;
-      }
-
-      .booking-type {
-        display: flex;
-        gap: 1rem;
-      }
-      .sliding-container {
-        width: 100%;
-        overflow: hidden;
-      }
-      .sliding-content {
-        display: flex;
-        width: 200%;
-        /* Two panels */
-        transition: transform 0.4s ease;
-      }
-      .slide-panel {
-        width: 50%;
-      }
-    </style>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Bookings - Palm Ways</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						'poppins': ['Poppins', 'sans-serif']
+					}
+				}
+			}
+		}
+	</script>
   </head>
 
-  <body>
-    
-    <header class="hero-section">
-      <%- include('partials/navbar') %>
-      <h1>Customer Bookings</h1>
-    </header>
-    
+  <body class="font-poppins bg-gray-100 min-h-screen pt-[76px]">
+    <%- include('partials/navbar') %>
     <%- include('partials/alert') %>
 
-    <main class="content-wrapper">
-      <div class="bookings-grid">
-        <div class="grid-header">Name</div>
-        <div class="grid-header">Location</div>
-        <div class="grid-header">Arrival Date</div>
-        <div class="grid-header">Actions</div>
-        <div class="grid-header">Decision</div>
-
-        <% bookings.forEach((booking, index)=> { %>
-        <div class="grid-cell name-cell" data-row-index="<%= index %>">
-          <%= booking.name %>
-        </div>
-        <div class="grid-cell location-cell" data-row-index="<%= index %>">
-          <%= booking.location %>
-        </div>
-        <div class="grid-cell date-cell" data-row-index="<%= index %>">
-          <%= booking.date %>
-        </div>
-        <div class="grid-cell actions-cell">
-          <a href="#" class="edit-link" data-index="<%= index %>">Edit</a>
-        </div>
-        <div class="grid-cell approve-cell">
-          <div
-            class="decision-slider <%= booking.status === 'pending' ?
- 'initial-state' : 'final-state' %> state-<%= booking.cssStatus %>"
-            data-booking-id="<%= booking._id %>"
-            data-status="<%= booking.status %>"
-          >
-            <div class="decision-slider-thumb"></div>
-            <div class="decision-label approve" data-decision="approve">
-              Approve
-            </div>
-            <div class="decision-label pending" data-decision="pending">
-              Pending
-            </div>
-            <div class="decision-label reject" data-decision="reject">
-              Reject
-            </div>
-          </div>
-        </div>
-        <% }); %>
+    <div class="max-w-7xl mx-auto p-8">
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-2">My Bookings</h1>
+        <p class="text-gray-500">Manage your travel reservations</p>
       </div>
-    </main>
+
+      <% if (bookings && bookings.length > 0) { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <% bookings.forEach((booking) => { 
+            const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
+            const statusText = booking.status ? booking.status.charAt(0).toUpperCase() + booking.status.slice(1) : 'Pending';
+            
+            const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
+            const departureDate = new Date(booking.departureDate || booking.departure);
+            const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
+            
+            const checkInDate = arrivalDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const checkOutDate = departureDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+            const totalAmount = booking.totalAmount || booking.price || 0;
+            
+            let statusBg = 'bg-amber-500';
+            if (statusClass === 'confirmed') statusBg = 'bg-green-500';
+            else if (statusClass === 'completed') statusBg = 'bg-blue-500';
+            else if (statusClass === 'rejected') statusBg = 'bg-red-500';
+          %>
+            <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl" data-booking-id="<%= booking._id %>">
+              <div class="<%= statusBg %> text-white px-5 py-3 flex items-center gap-2 font-semibold text-sm">
+                <i class="fas fa-circle text-xs"></i>
+                <span><%= statusText %></span>
+              </div>
+              
+              <div class="p-5">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4"><%= booking.hotelName || booking.packageName || booking.title || booking.roomType || '' %></h3>
+                
+                <div class="space-y-3 mb-4">
+                  <div class="flex items-center gap-2 text-gray-600 text-sm">
+                    <i class="fas fa-calendar-check w-5 text-orange-500"></i>
+                    <span><strong>Check-in:</strong> <%= checkInDate %></span>
+                  </div>
+                  
+                  <div class="flex items-center gap-2 text-gray-600 text-sm">
+                    <i class="fas fa-calendar-times w-5 text-orange-500"></i>
+                    <span><strong>Check-out:</strong> <%= checkOutDate %></span>
+                  </div>
+                  
+                  <div class="flex items-center gap-2 text-gray-600 text-sm">
+                    <i class="fas fa-moon w-5 text-orange-500"></i>
+                    <span><strong>Nights:</strong> <%= nights %></span>
+                  </div>
+                  
+                  <div class="flex items-center gap-2 text-gray-600 text-sm">
+                    <i class="fas fa-users w-5 text-orange-500"></i>
+                    <span><strong>Guests:</strong> <%= booking.adults || 0 %> Adults<% if (booking.children && booking.children > 0) { %>, <%= booking.children %> Children<% } %></span>
+                  </div>
+                  
+                  <% if (booking.bookingType) { %>
+                  <div class="flex items-center gap-2 text-gray-600 text-sm">
+                    <i class="fas fa-tag w-5 text-orange-500"></i>
+                    <span><strong>Type:</strong> <%= booking.bookingType %></span>
+                  </div>
+                  <% } %>
+                </div>
+                
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                  <div class="text-2xl font-bold text-gray-800 mb-4">$<%= typeof totalAmount === 'number' ? totalAmount.toFixed(2) : totalAmount %></div>
+                  
+                  <button class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2" onclick="viewDetails('<%= booking._id %>')">
+                    <i class="fas fa-eye"></i> View Details
+                  </button>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div class="text-center py-16 text-gray-500">
+          <i class="fas fa-calendar-times text-6xl text-gray-300 mb-4"></i>
+          <h3 class="text-2xl font-semibold text-gray-800 mb-2">No Bookings Yet</h3>
+          <p class="text-base mb-6">You haven't made any reservations. Start planning your next adventure!</p>
+          <a href="/api/booking" class="inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+            <i class="fas fa-plus"></i> New Booking
+          </a>
+        </div>
+      <% } %>
+    </div>
 
     <%- include('partials/footer') %>
 
-    <form class="booking-form-modal" id="bookingForm">
-      <div class="modal-content">
-        <button type="button" class="modal-close" onclick="clearForm()">
-          &times;
-        </button>
-        <h2>Edit Booking</h2>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="customerName">Name :</label>
-            <input type="text" id="customerName" name="customerName" required />
-          </div>
-          <div class="form-group">
-            <label for="phoneNumber">Phone No. :</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label for="emailId">Email id :</label>
-            <input type="email" id="emailId" name="emailId" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="booking-type">
-            <label class="radio-group">
-              <input
-                type="radio"
-                id="package"
-                name="bookingType"
-                value="package"
-                checked
-              />
-              Package
-            </label>
-            <label class="radio-group">
-              <input
-                type="radio"
-                id="stayOnly"
-                name="bookingType"
-                value="stayOnly"
-              />
-              Stay only
-            </label>
-          </div>
-        </div>
-
-        <div class="sliding-container">
-          <div class="sliding-content" id="slidingContent">
-            <div class="slide-panel active" id="packagePanel">
-              <div class="form-group">
-                <label for="packageName">Package Name :</label>
-                <select id="packageName" name="packageName" required>
-                  <option value="">Select a package</option>
-                  <option value="Bali Exploration" selected>
-                    Bali Exploration
-                  </option>
-                  <option value="Paradise Gateway">Paradise Gateway</option>
-                  <option value="nothing">nothing</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="slide-panel" id="hotelPanel">
-              <div class="form-group">
-                <label for="hotelName">Hotel :</label>
-                <select id="hotelName" name="hotelName">
-                  <option value="">Select a hotel</option>
-                  <option value="Jet 2 Holiday">Jet 2 Holiday</option>
-                  <option value="Grand Palace Resort">
-                    Grand Palace Resort
-                  </option>
-                  <option value="Azure Bay Hotel">Azure Bay Hotel</option>
-                  <option value="Sunset Paradise Inn">
-                    Sunset Paradise Inn
-                  </option>
-                  <option value="Royal Crown Hotel">Royal Crown Hotel</option>
-                  <option value="Ocean Breeze Resort">
-                    Ocean Breeze Resort
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row people-section">
-          <div class="form-group">
-            <label>People :</label>
-            <div class="people-inputs">
-              <div class="people-input-group">
-                <label for="adults">Adults :</label>
-                <input
-                  type="number"
-                  id="adults"
-                  name="adults"
-                  value="2"
-                  min="1"
-                  required
-                />
-              </div>
-              <div class="people-input-group">
-                <label for="children">Children :</label>
-                <input
-                  type="number"
-                  id="children"
-                  name="children"
-                  value="0"
-                  min="0"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="arrivalDate">Arrival Date :</label>
-            <input type="date" id="arrivalDate" name="arrivalDate" required />
-          </div>
-          <div class="form-group">
-            <label for="departureDate">Departure Date :</label>
-            <input
-              type="date"
-              id="departureDate"
-              name="departureDate"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="form-buttons">
-          <button type="submit" class="submit-btn">Submit</button>
-          <button type="button" class="clear-btn" onclick="clearForm()">
-            Clear All
-          </button>
-        </div>
-      </div>
-    </form>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script id="bookingsJson" type="application/json">
-      <%- JSON.stringify(bookings) %>
-    </script>
-
     <script>
-      const bookingsData = JSON.parse(
-        document.getElementById("bookingsJson").textContent
-      );
-      document.addEventListener("DOMContentLoaded", () => {
-        
-        /* --- PARALLAX SCRIPT ADDED --- */
-        const heroSection = document.querySelector('.hero-section');
-        if (heroSection) { // Check if hero-section exists
-          const heroTitle = heroSection.querySelector('h1');
-          const heroNav = heroSection.querySelector('nav');
-          let ticking = false;
-
-          function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const heroHeight = heroSection.offsetHeight;
-            const windowHeight = window.innerHeight;
-            const scrollProgress = Math.min(scrolled / (heroHeight + windowHeight * 0.5), 1);
-
-            const backgroundRate = scrolled * 0.6;
-            const clampedRate = Math.max(-heroHeight * 0.8, Math.min(heroHeight * 0.8, backgroundRate));
-            const scale = 1 + scrollProgress * 0.1;
-            heroSection.style.transform = `translateY(${clampedRate}px) scale(${scale})`;
-
-            if (heroTitle) {
-              heroTitle.style.transform = `translateY(${scrolled * -0.2}px) scale(${1 - scrollProgress * 0.2})`;
-              heroTitle.style.opacity = Math.max(0, 1 - scrollProgress * 1.5);
-            }
-            if (heroNav) {
-              heroNav.style.transform = `translateY(${scrolled * -0.1}px)`;
-              heroNav.style.opacity = Math.max(0.3, 1 - scrollProgress * 0.8);
-            }
-            ticking = false;
-          }
-
-          window.addEventListener('scroll', () => {
-            if (!ticking) {
-              requestAnimationFrame(updateParallax);
-              ticking = true;
-            }
-          });
+      // View booking details
+      function viewDetails(bookingId) {
+        // For now, scroll to the booking card and highlight it
+        const card = document.querySelector(`[data-booking-id="${bookingId}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.boxShadow = '0 8px 24px rgba(255, 140, 0, 0.4)';
+          setTimeout(() => {
+            card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+          }, 2000);
         }
-        /* --- END PARALLAX SCRIPT --- */
         
-        
-        const socket = io();
-        socket.on("connect", () =>
-          console.log("Admin socket connected", socket.id)
-        );
+        // TODO: Implement modal with full booking details
+        alert('Booking details view - coming soon!');
+      }
 
-        socket.on("booking-status", (payload) => {
-          const slider = document.querySelector(
-            `.decision-slider[data-booking-id="${payload.bookingId}"]`
-          );
-          if (!slider) return;
-          slider.classList.remove(
-            "state-approve",
-            "state-pending",
-            "state-reject"
-          );
-          const cls = payload.status === "approved" ? "approve" : "reject";
-          slider.classList.add("final-state", `state-${cls}`);
-          slider
-            .querySelectorAll(".decision-label")
-            .forEach((l) => (l.style.pointerEvents = "none"));
-        });
+      // Cancel booking
+      async function cancelBooking(bookingId) {
+        if (!confirm('Are you sure you want to cancel this booking?')) {
+          return;
+        }
 
-        // Decision slider logic
-        const sliders = document.querySelectorAll(".decision-slider");
-        sliders.forEach((slider) => {
-          const bookingId = slider.getAttribute("data-booking-id");
-          const locked = slider.classList.contains("final-state");
-          if (locked) {
-            slider
-              .querySelectorAll(".decision-label")
-              .forEach((l) => (l.style.pointerEvents = "none"));
-            return;
-          }
-
-          slider.querySelectorAll(".decision-label").forEach((label) => {
-            label.addEventListener("click", async () => {
-              const decision = label.dataset.decision;
-              if (decision === "pending") return;
-
-              try {
-                const res = await fetch(`/api/bookings/${bookingId}/status`, {
-                  method: "PATCH",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    status: decision === "approve" ? "approved" : "rejected",
-                  }),
-                });
-                const json = await res.json();
-                if (!res.ok || !json.success)
-                  throw new Error(json.message || "Failed");
-
-                const css = json.status === "approved" ? "approve" : "reject";
-                slider.classList.remove(
-                  "state-approve",
-                  "state-pending",
-                  "state-reject"
-                );
-                slider.classList.add("final-state", `state-${css}`);
-                slider
-                  .querySelectorAll(".decision-label")
-                  .forEach((l) => (l.style.pointerEvents = "none"));
-              } catch (e) {
-                alert("Failed to update booking status");
-              }
-            });
+        try {
+          const response = await fetch(`/api/bookings/${bookingId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
           });
-        });
-        // --- Booking form modal logic ---
-        const bookingForm = document.getElementById("bookingForm");
-        const editLinks = document.querySelectorAll(".edit-link");
-        bookingForm.style.display = "none";
 
-        function updatePanels(type) {
-          const slidingContent = document.getElementById("slidingContent");
-          const packagePanel = document.getElementById("packagePanel");
-          const hotelPanel = document.getElementById("hotelPanel");
-
-          if (type === "package") {
-            slidingContent.style.transform = "translateX(0%)";
-            packagePanel.classList.add("active");
-            hotelPanel.classList.remove("active");
+          if (response.ok) {
+            alert('Booking cancelled successfully!');
+            location.reload();
           } else {
-            slidingContent.style.transform = "translateX(-50%)";
-            packagePanel.classList.remove("active");
-            hotelPanel.classList.add("active");
+            const error = await response.json();
+            alert('Failed to cancel booking: ' + (error.message || 'Unknown error'));
           }
+        } catch (error) {
+          console.error('Error cancelling booking:', error);
+          alert('An error occurred while cancelling the booking.');
         }
-
-        document
-          .getElementById("package")
-          .addEventListener("change", () => updatePanels("package"));
-        document
-          .getElementById("stayOnly")
-          .addEventListener("change", () => updatePanels("stayOnly"));
-        // Open & populate form
-        function openBookingForm(index) {
-          const booking = bookingsData[index];
-          bookingForm.dataset.editIndex = index; // For UI update
-          bookingForm.dataset.editId = booking._id;
-          // For API call
-
-          document.getElementById("customerName").value = booking.name || "";
-          document.getElementById("phoneNumber").value = booking.phone || "";
-          document.getElementById("emailId").value = booking.email || "";
-          document.getElementById("adults").value = booking.adults || 1;
-          document.getElementById("children").value = booking.children || 0;
-          document.getElementById("arrivalDate").value = booking.date || "";
-          document.getElementById("departureDate").value =
-            booking.departureDate || "";
-
-          if (booking.bookingType === "stayOnly") {
-            document.getElementById("stayOnly").checked = true;
-            updatePanels("stayOnly");
-          } else {
-            document.getElementById("package").checked = true;
-            updatePanels("package");
-          }
-
-          document.getElementById("packageName").value =
-            booking.packageName || "";
-          document.getElementById("hotelName").value = booking.hotel || "";
-
-          bookingForm.style.display = "block";
-        }
-
-        editLinks.forEach((link) => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            openBookingForm(e.target.dataset.index);
-          });
-        });
-        // --- Corrected submit handler ---
-        bookingForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          const index = bookingForm.dataset.editIndex; // For UI update
-          const bookingId = bookingForm.dataset.editId; // For API call
-
-          const bookingType = bookingForm.querySelector(
-            'input[name="bookingType"]:checked'
-          ).value;
-
-          const locationText =
-            bookingType === "package"
-              ? document.getElementById("packageName").value
-              : document.getElementById("hotelName").value;
-
-          const updatedBooking = {
-            name: document.getElementById("customerName").value,
-            phone: document.getElementById("phoneNumber").value,
-            email: document.getElementById("emailId").value,
-            bookingType: bookingType,
-            packageName: document.getElementById("packageName").value,
-            hotel: document.getElementById("hotelName").value,
-            adults: document.getElementById("adults").value,
-            children: document.getElementById("children").value,
-            date: document.getElementById("arrivalDate").value,
-            departureDate: document.getElementById("departureDate").value,
-            location: locationText,
-          };
-          fetch(`/api/bookings/${bookingId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedBooking),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.success) {
-                bookingsData[index] = {
-                  ...bookingsData[index],
-                  ...updatedBooking,
-                };
-
-                document.querySelector(
-                  `.name-cell[data-row-index="${index}"]`
-                ).textContent = updatedBooking.name;
-                document.querySelector(
-                  `.location-cell[data-row-index="${index}"]`
-                ).textContent = updatedBooking.location;
-                document.querySelector(
-                  `.date-cell[data-row-index="${index}"]`
-                ).textContent = updatedBooking.date;
-
-                bookingForm.style.display = "none";
-              } else {
-                alert("Failed to update booking.");
-              }
-            })
-            .catch((error) => console.error("Error:", error));
-        });
-
-        window.clearForm = function () {
-          bookingForm.reset();
-          bookingForm.style.display = "none";
-        };
-      });
+      }
     </script>
   </body>
 </html>

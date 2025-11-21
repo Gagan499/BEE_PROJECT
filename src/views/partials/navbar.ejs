@@ -1,17 +1,150 @@
-<nav
-  class="absolute top-0 left-0 right-0 z-10 text-white px-6 py-4 flex justify-between items-center bg-gradient-to-b from-black/30 to-transparent"
->
-  <a href="/" class="hover:opacity-80 transition-opacity duration-200">
-    <img src="/assets/images/logo.png" alt="logo" class="w-12 cursor-pointer" />
-  </a>
-  <button id="menuBtn" class="text-2xl focus:outline-none">&#9776;</button>
-</nav>
+<style>
+  .main-header {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
 
+  .header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+  }
+
+  .logo-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+  }
+
+  .logo-text h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .logo-text p {
+    font-size: 0.85rem;
+    color: #ff8c00;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+    margin: 0;
+  }
+
+  .nav-menu li a {
+    text-decoration: none;
+    color: #5f6368;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .nav-menu li a:hover,
+  .nav-menu li a.active {
+    color: #ff8c00;
+    border-bottom-color: #ff8c00;
+  }
+
+  .sign-in-btn {
+    background: linear-gradient(135deg, #ff8c00, #ff6b00);
+    color: white !important;
+    padding: 0.6rem 1.5rem !important;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none !important;
+    cursor: pointer;
+  }
+
+  .sign-in-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .nav-menu {
+      display: none;
+    }
+
+    .mobile-menu-btn {
+      display: block;
+    }
+  }
+</style>
+
+<header class="main-header">
+  <div class="header-container">
+    <div class="logo-section" onclick="window.location.href='/'">
+      <div class="logo-icon">
+        <i class="fas fa-building"></i>
+      </div>
+      <div class="logo-text">
+        <h1>Palm Ways</h1>
+        <p>Luxury Resort & Spa</p>
+      </div>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="/" id="nav-home">Home</a></li>
+        <li><a href="/api/packages" id="nav-packages">Packages</a></li>
+        <li><a href="#" id="nav-contact">Contact Us</a></li>
+        <li id="nav-booking-li" style="display: none;"><a href="/api/booking" id="nav-booking">Booking</a></li>
+        <li id="nav-my-bookings-li" style="display: none;"><a href="#" id="nav-my-bookings">My Bookings</a></li>
+        <li><a href="/api/login" class="sign-in-btn" id="authLink">Sign In</a></li>
+      </ul>
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
 <div
   id="overlay"
   class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"
 ></div>
 
+<!-- Mobile Side Menu -->
 <div
   id="sideMenu"
   class="fixed top-0 right-0 w-64 h-full bg-gray-900 text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-lg flex flex-col justify-between"
@@ -28,24 +161,17 @@
       <li>
         <a href="/" class="block text-lg py-2 hover:bg-gray-700">Home</a>
       </li>
-      <a href="#about" class="scroll-link block text-lg py-2 hover:bg-gray-700"
-        >About</a
-      >
-      <a href="#contact" class="scroll-link block text-lg py-2 hover:bg-gray-700"
-        >Contact</a
-      >
       <li>
-        <a href="/packages" class="block text-lg py-2 hover:bg-gray-700"
-          >Packages</a
-        >
+        <a href="/api/packages" class="block text-lg py-2 hover:bg-gray-700">Packages</a>
       </li>
       <li>
-        <a
-          id="who_book"
-          href=""
-          class="block text-lg py-2 hover:bg-gray-700 hidden"
-          >Booking</a
-        >
+        <a href="#" id="mobile-contact" class="block text-lg py-2 hover:bg-gray-700">Contact Us</a>
+      </li>
+      <li id="mobile-booking-li" style="display: none;">
+        <a href="/api/booking" class="block text-lg py-2 hover:bg-gray-700">Booking</a>
+      </li>
+      <li id="mobile-my-bookings-li" style="display: none;">
+        <a id="mobile-my-bookings" href="" class="block text-lg py-2 hover:bg-gray-700">My Bookings</a>
       </li>
     </ul>
   </div>
@@ -71,7 +197,7 @@
         >Change Password</a
       >
       <a
-        id="authLink"
+        id="authLinkMobile"
         href="/api/login"
         class="block text-lg py-2 hover:bg-gray-700"
         >Login</a
@@ -85,6 +211,7 @@
   const sideMenu = document.getElementById("sideMenu");
   const closeBtn = document.getElementById("closeBtn");
   const overlay = document.getElementById("overlay");
+  
   function openMenu() {
     sideMenu.classList.remove("translate-x-full");
     overlay.classList.remove("hidden");
@@ -98,83 +225,144 @@
   menuBtn.addEventListener("click", openMenu);
   closeBtn.addEventListener("click", closeMenu);
   overlay.addEventListener("click", closeMenu);
-</script>
-<script>
+
+  // Contact Us scroll functionality
+  const navContact = document.getElementById("nav-contact");
+  const mobileContact = document.getElementById("mobile-contact");
+  
+  function handleContactClick(e) {
+    e.preventDefault();
+    const currentPath = window.location.pathname;
+    
+    // If on home page, scroll to contact section
+    if (currentPath === '/' || currentPath === '/api/') {
+      const contactSection = document.getElementById("booking");
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        closeMenu();
+      }
+    } else {
+      // If on other page, go to home page with hash
+      window.location.href = "/#booking";
+    }
+  }
+  
+  if (navContact) {
+    navContact.addEventListener("click", handleContactClick);
+  }
+  
+  if (mobileContact) {
+    mobileContact.addEventListener("click", handleContactClick);
+  }
+
+  // Auth status check
   const authLink = document.getElementById("authLink");
+  const authLinkMobile = document.getElementById("authLinkMobile");
   const who_username = document.getElementById("who_username");
-  const who_book = document.getElementById("who_book");
   const user_detail = document.getElementById("user_detail");
   const change_password = document.getElementById("change-password");
+  const navMyBookings = document.getElementById("nav-my-bookings");
+  const navMyBookingsLi = document.getElementById("nav-my-bookings-li");
+  const navBookingLi = document.getElementById("nav-booking-li");
+  const mobileMyBookings = document.getElementById("mobile-my-bookings");
+  const mobileMyBookingsLi = document.getElementById("mobile-my-bookings-li");
+  const mobileBookingLi = document.getElementById("mobile-booking-li");
+  
   let base_api = window.location.origin;
+  
   async function checkAuthStatus() {
     try {
       const response = await fetch(`${base_api}/auth/login/status`, {
         method: "GET",
-        credentials: "include", // send cookies (important for JWT)
+        credentials: "include",
       });
+      
       if (response.ok) {
         const data = await response.json();
-        // User is logged in
+        
+        // User is logged in - Show Booking and My Bookings
         user_detail.classList.remove("hidden");
         who_username.textContent = data.name;
         change_password.classList.remove("hidden");
         authLink.textContent = "Logout";
         authLink.href = "#";
-        who_book.classList.remove("hidden");
+        authLinkMobile.textContent = "Logout";
+        authLinkMobile.href = "#";
+
+        // Show Booking link for logged-in users
+        navBookingLi.style.display = "block";
+        mobileBookingLi.style.display = "block";
 
         if (data.name == "Admin") {
-          who_book.textContent = "All Booking";
-          who_book.href = "/api/admin";
-        } else if (data.name == undefined) {
-          return;
-        } else {
-          who_book.textContent = "My Booking";
-          who_book.href = "/api/user";
+          navMyBookings.textContent = "All Bookings";
+          navMyBookings.href = "/api/admin";
+          navMyBookingsLi.style.display = "block";
+          mobileMyBookings.textContent = "All Bookings";
+          mobileMyBookings.href = "/api/admin";
+          mobileMyBookingsLi.style.display = "block";
+        } else if (data.name !== undefined) {
+          navMyBookings.textContent = "My Bookings";
+          navMyBookings.href = "/api/user";
+          navMyBookingsLi.style.display = "block";
+          mobileMyBookings.textContent = "My Bookings";
+          mobileMyBookings.href = "/api/user";
+          mobileMyBookingsLi.style.display = "block";
         }
 
-        authLink.addEventListener("click", async () => {
+        // Logout handler
+        const handleLogout = async (e) => {
+          e.preventDefault();
           await fetch(`${base_api}/auth/logout`, {
             method: "POST",
             credentials: "include",
           });
-          who_username.textContent = "";
-          user_detail.classList.add("hidden");
-          change_password.classList.add("hidden");
-          who_book.textContent = "";
-          who_book.href = "#";
-          who_book.classList.add("hidden");
           window.location.href = "/api/login";
-        });
+        };
+
+        authLink.addEventListener("click", handleLogout);
+        authLinkMobile.addEventListener("click", handleLogout);
       } else {
         // Not logged in
-        authLink.textContent = "Login";
-        // user_detail.classList.add("hidden");
+        authLink.textContent = "Sign In";
         authLink.href = "/api/login";
+        authLinkMobile.textContent = "Login";
+        authLinkMobile.href = "/api/login";
       }
     } catch (error) {
       console.error("Error checking auth status:", error);
-      authLink.textContent = "Login";
-      // user_detail.classList.add("hidden");
+      authLink.textContent = "Sign In";
       authLink.href = "/api/login";
+      authLinkMobile.textContent = "Login";
+      authLinkMobile.href = "/api/login";
     }
   }
+  
   checkAuthStatus();
-</script>
-<script>
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 70,
-          behavior: "smooth",
-        });
-      }
 
-      // Auto-close menu after clicking
-      sideMenu.classList.add("translate-x-full");
-      overlay.classList.add("hidden");
-    });
-  });
+  // Highlight active page
+  const currentPath = window.location.pathname;
+  const navLinks = {
+    '/': 'nav-home',
+    '/api/packages': 'nav-packages',
+    '/api/booking': 'nav-booking',
+    '/api/user': 'nav-my-bookings',
+    '/api/admin': 'nav-my-bookings'
+  };
+
+  if (navLinks[currentPath]) {
+    const activeLink = document.getElementById(navLinks[currentPath]);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+  }
+
+  // Scroll to contact section if coming from URL with hash
+  if (window.location.hash === '#booking') {
+    setTimeout(() => {
+      const contactSection = document.getElementById("booking");
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 300);
+  }
 </script>

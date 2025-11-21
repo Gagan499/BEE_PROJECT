@@ -3,143 +3,163 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>More Packages - ThePalmWay</title>
-	<link rel="stylesheet" href="/assets/css/packages.css">
+	<title>Curated Packages - Palm Ways</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
-		rel="stylesheet">
-	<!-- Tailwind CSS for the header -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<script src="https://cdn.tailwindcss.com"></script>
-	<!-- Font Awesome for the footer icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
-<body>
-	<!-- Hero Section -->
-	<header class="hero-section">
-		<%- include('partials/navbar') %>
-		<h1>More Packages</h1>
-	</header>
-
-	<!-- Packages Section -->
-	<div class="packages-rows-container">
-		<% for(let i = 0; i < packages.length; i += 2) { %>
-			<div class="packages-row">
-				<% for(let j = i; j < i + 2 && j < packages.length; j++) { %>
-					<div class="package-card" onclick="toggleCardClick(this)">
-						<img src="<%= packages[j].img %>" alt="<%= packages[j].title %>" class="package-img">
-						<div class="package-content">
-							<h3 class="package-title"><%= packages[j].title %></h3>
-							<div class="package-days">
-								<span><strong><%= packages[j].days %> Days</strong> / <%= packages[j].nights %> Nights</span>
-							</div>
-							<p class="package-desc"><%= packages[j].desc %></p>
-						</div>
-					</div>
-				<% } %>
-			</div>
-		<% } %>
-	</div>
-
-	<!-- Footer -->
-	<div>
-	<%- include('partials/footer') %>
-</div>
-	<!-- Scripts -->
 	<script>
-		function toggleCardClick(card) {
-			card.classList.toggle('clicked');
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						'poppins': ['Poppins', 'sans-serif']
+					}
+				}
+			}
 		}
-
-		document.addEventListener('DOMContentLoaded', () => {
-			const heroSection = document.querySelector('.hero-section');
-			const heroTitle = document.querySelector('.hero-section h1');
-			const heroNav = document.querySelector('.hero-section nav');
-			let ticking = false;
-
-			function updateParallax() {
-				const scrolled = window.pageYOffset;
-				const heroRect = heroSection.getBoundingClientRect();
-				const heroHeight = heroSection.offsetHeight;
-				const windowHeight = window.innerHeight;
-				const scrollProgress = Math.min(scrolled / (heroHeight + windowHeight * 0.5), 1);
-
-				if (heroRect.top < windowHeight && heroRect.bottom > -heroHeight) {
-					const backgroundRate = scrolled * 0.6;
-					const maxMovement = heroHeight * 0.8;
-					const clampedRate = Math.max(-maxMovement, Math.min(maxMovement, backgroundRate));
-					const scale = 1 + (scrollProgress * 0.1);
-					const rotation = scrollProgress * 1;
-
-					heroSection.style.transition = 'none';
-					heroSection.style.transform = `translateY(${clampedRate}px) scale(${scale}) rotate(${rotation}deg)`;
-
-					if (heroTitle) {
-						const titleRate = scrolled * -0.2;
-						const titleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
-						const titleScale = Math.max(0.8, 1 - scrollProgress * 0.2);
-						heroTitle.style.transform = `translateY(${titleRate}px) scale(${titleScale})`;
-						heroTitle.style.opacity = titleOpacity;
-					}
-
-					if (heroNav) {
-						const navRate = scrolled * -0.1;
-						const navOpacity = Math.max(0.3, 1 - scrollProgress * 0.8);
-						heroNav.style.transform = `translateY(${navRate}px)`;
-						heroNav.style.opacity = navOpacity;
-					}
-
-				} else if (heroRect.bottom <= -heroHeight) {
-					const finalRate = heroHeight * 0.8;
-					const finalScale = 1.1;
-					const finalRotation = 1;
-					heroSection.style.transform = `translateY(${finalRate}px) scale(${finalScale}) rotate(${finalRotation}deg)`;
-
-					if (heroTitle) {
-						heroTitle.style.opacity = 0;
-						heroTitle.style.transform = 'translateY(-100px) scale(0.8)';
-					}
-
-					if (heroNav) {
-						heroNav.style.opacity = 0.3;
-						heroNav.style.transform = 'translateY(-50px)';
-					}
-				}
-				ticking = false;
-			}
-
-			function requestTick() {
-				if (!ticking) {
-					requestAnimationFrame(updateParallax);
-					ticking = true;
-				}
-			}
-
-			window.addEventListener('scroll', requestTick);
-
-			// Sidebar menu functionality (optional if elements exist)
-			const menuBtn = document.getElementById('menuBtn');
-			const sideMenu = document.getElementById('sideMenu');
-			const closeBtn = document.getElementById('closeBtn');
-			const overlay = document.getElementById('overlay');
-
-			if (menuBtn && sideMenu && closeBtn && overlay) {
-				menuBtn.addEventListener('click', () => {
-					sideMenu.style.transform = 'translateX(0)';
-					overlay.style.display = 'block';
-				});
-				closeBtn.addEventListener('click', () => {
-					sideMenu.style.transform = 'translateX(100%)';
-					overlay.style.display = 'none';
-				});
-				overlay.addEventListener('click', () => {
-					sideMenu.style.transform = 'translateX(100%)';
-					overlay.style.display = 'none';
-				});
-			}
-		});
 	</script>
+	<style>
+
+
+	</style>
+</head>
+<body class="font-poppins bg-gray-50 overflow-x-hidden pt-[76px]">
+	<%- include('partials/navbar') %>
+
+	<!-- Hero Banner -->
+	<section class="bg-gradient-to-br from-indigo-500 to-purple-600 py-32 px-8 text-white text-center relative overflow-hidden">
+		<div class="absolute inset-0 opacity-10 z-0" style="background: url('/assets/images/pattern.svg') repeat;"></div>
+		<div class="relative z-10 max-w-4xl mx-auto">
+			<div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-lg px-5 py-2 rounded-full text-sm mb-6">
+				<i class="fas fa-sparkles"></i>
+				<span>🎉 Exclusive Offers · Save up to 30%</span>
+			</div>
+			<h1 class="text-5xl md:text-6xl font-bold mb-4">Curated Packages</h1>
+			<p class="text-lg md:text-xl opacity-95 leading-relaxed">Discover our handcrafted vacation packages designed to create unforgettable experiences</p>
+		</div>
+	</section>
+
+	<!-- Stats Section -->
+	<section class="bg-white py-12 px-8 shadow-sm">
+		<div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+			<div>
+				<h3 class="text-4xl font-bold text-indigo-500 mb-2">10,000+</h3>
+				<p class="text-gray-600 text-sm font-medium">Happy Guests</p>
+			</div>
+			<div>
+				<h3 class="text-4xl font-bold text-indigo-500 mb-2">50+</h3>
+				<p class="text-gray-600 text-sm font-medium">Destinations</p>
+			</div>
+			<div>
+				<h3 class="text-4xl font-bold text-indigo-500 mb-2">15+</h3>
+				<p class="text-gray-600 text-sm font-medium">Years Experience</p>
+			</div>
+			<div>
+				<h3 class="text-4xl font-bold text-indigo-500 mb-2">4.9/5</h3>
+				<p class="text-gray-600 text-sm font-medium">Guest Rating</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Packages Grid -->
+	<main class="max-w-7xl mx-auto py-16 px-8">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<% 
+			const borderColors = ['border-t-blue-500', 'border-t-orange-500', 'border-t-pink-500', 'border-t-green-500'];
+			const badgeColors = ['bg-blue-500/90', 'bg-orange-500/90', 'bg-pink-500/90', 'bg-green-500/90'];
+			const iconBgColors = ['bg-blue-50', 'bg-orange-50', 'bg-pink-50', 'bg-green-50'];
+			const iconTextColors = ['text-blue-500', 'text-orange-500', 'text-pink-500', 'text-green-500'];
+			const btnGradients = ['from-blue-500 to-blue-600', 'from-orange-500 to-orange-600', 'from-pink-500 to-pink-600', 'from-green-500 to-green-600'];
+			const icons = ['fa-umbrella-beach', 'fa-mountain-sun', 'fa-palm-tree', 'fa-water'];
+			const badges = ['Best Value', 'Most Popular', 'Exclusive', 'Family Friendly'];
+			
+			packages.forEach((pkg, index) => { 
+				const colorIndex = index % 4;
+			%>
+				<div class="bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 <%= borderColors[colorIndex] %>">
+					<div class="relative h-64 overflow-hidden">
+						<img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+						<div class="absolute top-4 right-4 px-4 py-2 rounded-full font-semibold text-sm text-white backdrop-blur-lg <%= badgeColors[colorIndex] %>">
+							<%= pkg.badge || badges[colorIndex] %>
+						</div>
+						<% if (pkg.price) { %>
+						<div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-2xl font-bold shadow-lg">
+							<span class="text-lg text-gray-800">$<%= pkg.price %></span>
+							<small class="text-xs text-gray-600 font-medium">/per person</small>
+						</div>
+						<% } %>
+					</div>
+
+					<div class="p-7">
+						<div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
+							<i class="fas <%= pkg.icon || icons[colorIndex] %>"></i>
+						</div>
+
+						<h3 class="text-2xl font-bold text-gray-800 mb-2"><%= pkg.packageName || pkg.title %></h3>
+						<% if (pkg.location) { %>
+						<p class="text-gray-600 text-sm mb-4 flex items-center gap-1">
+							<i class="fas fa-map-marker-alt"></i>
+							<%= pkg.location %>
+						</p>
+						<% } %>
+						<% if (pkg.days || pkg.nights || pkg.duration) { %>
+						<div class="inline-flex items-center gap-1 text-gray-600 text-sm font-medium mb-4">
+							<i class="fas fa-calendar-alt"></i>
+							<strong><%= pkg.days || pkg.nights || '' %> Nights</strong> / <%= pkg.nights || pkg.days || '' %> Days
+						</div>
+						<% } %>
+
+						<ul class="list-none my-6">
+							<% if (pkg.Stay) { %>
+							<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100">
+								<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
+									<i class="fas fa-hotel"></i>
+								</div>
+								<span><%= pkg.Stay %></span>
+							</li>
+							<% } %>
+							<% if (pkg.hotelName) { %>
+							<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100">
+								<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
+									<i class="fas fa-building"></i>
+								</div>
+								<span>Hotel: <%= pkg.hotelName %></span>
+							</li>
+							<% } %>
+							<% if (pkg.Activities && pkg.Activities.length > 0) { %>
+								<% pkg.Activities.slice(0, 8).forEach(activity => { %>
+								<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100 last:border-0">
+									<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
+										<i class="fas fa-check"></i>
+									</div>
+									<span><%= activity %></span>
+								</li>
+								<% }); %>
+							<% } %>
+							<% if (pkg.features && pkg.features.length > 0) { %>
+								<% pkg.features.slice(0, 8).forEach(feature => { %>
+								<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100 last:border-0">
+									<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
+										<i class="fas fa-check"></i>
+									</div>
+									<span><%= feature %></span>
+								</li>
+								<% }); %>
+							<% } %>
+						</ul>
+
+						<button class="w-full py-4 border-0 rounded-xl font-semibold text-base cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradients[colorIndex] %> hover:-translate-y-0.5 hover:shadow-xl" onclick="window.location.href='/api/login'">
+							<span>Book This Package</span>
+							<i class="fas fa-arrow-right"></i>
+						</button>
+					</div>
+				</div>
+			<% }); %>
+		</div>
+	</main>
+
+	<%- include('partials/footer') %>
 </body>
 </html>

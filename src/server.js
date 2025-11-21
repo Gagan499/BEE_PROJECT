@@ -15,6 +15,7 @@ import globalMiddlewares from "./Middlewares/golbalMiddlewares.js";
 import authRouter from "./routes/auth.js";
 import bookingsRouter from "./routes/bookings.js";
 import contactRouter from "./routes/contact.js";
+import Package from "../models/package.js";
 
 dotenv.config();
 
@@ -60,8 +61,14 @@ app.use("/auth", authRouter);
 app.use("/api/bookings", bookingsRouter);
 app.use("/api/contact", contactRouter);
 
-app.get("/", (req, res) => {
-  res.render("index.ejs");
+app.get("/", async (req, res) => {
+  try {
+    const packages = await Package.find({}).limit(3).lean();
+    res.render("index.ejs", { packages });
+  } catch (error) {
+    console.error("Error fetching packages:", error);
+    res.render("index.ejs", { packages: [] });
+  }
 });
 
 const samplePackages = [

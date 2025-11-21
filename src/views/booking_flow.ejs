@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reserve Your Paradise - Palm Ways</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						'poppins': ['Poppins', 'sans-serif']
+					}
+				}
+			}
+		}
+	</script>
+	<style>
+
+		.room-card.selected .room-selected-badge {
+			display: block !important;
+		}
+	</style>
+</head>
+<body class="font-poppins bg-gradient-to-b from-orange-500 via-orange-600 to-pink-500 min-h-screen pt-[76px]">
+	<%- include('partials/navbar') %>
+
+	<!-- Hero Banner -->
+	<section class="bg-gradient-to-br from-orange-500 to-orange-600 py-12 px-8 text-white text-center">
+		<div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm mb-4">
+			<i class="fas fa-shield-alt"></i>
+			<span>🔒 Secure Booking</span>
+		</div>
+		<h1 class="text-4xl font-bold mb-2">Reserve Your Paradise</h1>
+		<p class="text-lg opacity-95">Book your luxurious stay and create unforgettable memories</p>
+	</section>
+
+	<!-- Progress Steps -->
+	<section class="max-w-6xl -mt-8 mx-auto px-8 relative z-10">
+		<div class="bg-white rounded-[50px] py-6 px-8 shadow-lg flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
+			<div class="step flex items-center gap-3 active">
+				<div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gradient-to-br from-orange-500 to-orange-600 text-white">1</div>
+				<div class="text-base font-medium text-orange-500">Select Room</div>
+			</div>
+			<div class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"></div>
+			<div class="step flex items-center gap-3">
+				<div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400">2</div>
+				<div class="text-base font-medium text-gray-500">Guest Details</div>
+			</div>
+			<div class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"></div>
+			<div class="step flex items-center gap-3">
+				<div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400">3</div>
+				<div class="text-base font-medium text-gray-500">Confirm</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Main Content -->
+	<main class="max-w-7xl mx-auto my-12 px-8 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8">
+		<!-- Step 1: Room Selection -->
+		<div class="bg-white rounded-2xl p-8 shadow-lg" id="step1">
+			<div class="flex items-center gap-3 mb-8">
+				<div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+				<h2 class="text-2xl font-bold text-gray-800">Choose Your Package</h2>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<% if (packages && packages.length > 0) { %>
+					<% packages.forEach((pkg, index) => { %>
+						<div class="room-card border-2 border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-orange-500 hover:-translate-y-1 hover:shadow-lg relative" data-room="<%= pkg._id %>" data-price="<%= pkg.price || 0 %>" data-package-name="<%= pkg.packageName || pkg.title %>">
+							<div class="relative h-44">
+								<img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="w-full h-full object-cover">
+								<% if (pkg.price) { %>
+								<div class="absolute top-4 right-4 bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-base">$<%= pkg.price %>/night</div>
+								<% } %>
+								<div class="room-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden">✓ Selected</div>
+							</div>
+							<div class="p-5">
+								<h3 class="text-lg font-bold text-gray-800 mb-3"><%= pkg.packageName || pkg.title %></h3>
+								<div class="flex flex-wrap gap-2 mb-4">
+									<% if (pkg.Stay) { %>
+										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.Stay %></span>
+									<% } %>
+									<% if (pkg.type) { %>
+										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.type %></span>
+									<% } %>
+									<% if (pkg.hotelName) { %>
+										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.hotelName %></span>
+									<% } %>
+									<% if (pkg.Activities && pkg.Activities.length > 0) { %>
+										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.Activities[0] %></span>
+									<% } %>
+								</div>
+								<% if (pkg.description) { %>
+								<p class="text-sm text-gray-400 mt-2"><%= pkg.description.substring(0, 50) %>...</p>
+								<% } %>
+							</div>
+						</div>
+					<% }); %>
+				<% } else { %>
+					<p class="text-center p-8 text-gray-500 col-span-2">No packages available at the moment. Please check back later.</p>
+				<% } %>
+			</div>
+
+			<!-- Booking Dates -->
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-check"></i> Check-in *</label>
+					<input type="date" id="checkIn" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-times"></i> Check-out *</label>
+					<input type="date" id="checkOut" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-users"></i> Guests *</label>
+					<select id="guests" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500">
+						<option value="1">1 Guest</option>
+						<option value="2" selected>2 Guests</option>
+						<option value="3">3 Guests</option>
+						<option value="4">4 Guests</option>
+					</select>
+				</div>
+			</div>
+
+			<button class="w-full bg-gradient-to-br from-orange-500 to-orange-600 text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer mt-8 transition-all hover:-translate-y-0.5 hover:shadow-xl" id="continueToStep2">
+				Continue to Guest Details
+			</button>
+		</div>
+
+		<!-- Step 2: Guest Information -->
+		<div class="bg-white rounded-2xl p-8 shadow-lg mt-8 hidden" id="step2">
+			<div class="flex items-center gap-3 mb-8">
+				<div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+				<h2 class="text-2xl font-bold text-gray-800">Guest Information</h2>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-user"></i> Full Name *</label>
+					<input type="text" id="fullName" placeholder="John Doe" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-envelope"></i> Email Address *</label>
+					<input type="email" id="email" placeholder="john@example.com" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+				</div>
+			</div>
+
+			<div class="flex flex-col gap-2 mb-6">
+				<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-phone"></i> Phone Number *</label>
+				<input type="tel" id="phone" placeholder="+1 234 567 890" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-comment"></i> Special Requests (Optional)</label>
+				<textarea id="specialRequests" placeholder="Any special requirements..." class="min-h-[100px] px-3 py-3 border-2 border-gray-200 rounded-lg text-base font-poppins resize-y focus:outline-none focus:border-orange-500"></textarea>
+			</div>
+
+			<div class="flex gap-4 mt-8">
+				<button class="bg-gray-200 text-gray-600 px-6 py-4 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" id="backToStep1">
+					Back
+				</button>
+				<button class="flex-1 bg-gradient-to-br from-orange-500 to-orange-600 text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl" id="continueToStep3">
+					Review Booking
+				</button>
+			</div>
+		</div>
+
+		<!-- Step 3: Confirm Booking -->
+		<div class="bg-white rounded-2xl p-8 shadow-lg mt-8 hidden" id="step3">
+			<div class="flex items-center gap-3 mb-8">
+				<div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold">3</div>
+				<h2 class="text-2xl font-bold text-gray-800">Confirm Your Booking</h2>
+			</div>
+
+			<div class="bg-amber-100 p-6 rounded-2xl mb-6">
+				<div class="flex items-center gap-3 mb-2">
+					<i class="fas fa-shield-alt text-amber-500 text-2xl"></i>
+					<h4 class="text-amber-900 text-lg font-bold">Secure Booking Guarantee</h4>
+				</div>
+				<p class="text-amber-900 text-sm leading-relaxed">
+					Your information is encrypted and secure. Free cancellation up to 24 hours before check-in.
+				</p>
+			</div>
+
+			<div class="flex gap-4 mt-8">
+				<button class="bg-gray-200 text-gray-600 px-6 py-4 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" id="backToStep2">
+					Back
+				</button>
+				<button class="flex-1 bg-gradient-to-br from-orange-500 to-orange-600 text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl" id="confirmBooking">
+					<i class="fas fa-check-circle"></i> Confirm Booking
+				</button>
+			</div>
+		</div>
+
+		<!-- Booking Summary -->
+		<div class="bg-white rounded-2xl p-8 shadow-lg h-fit sticky top-5">
+			<h3 class="text-xl font-bold text-gray-800 mb-6">Booking Summary</h3>
+
+			<div class="rounded-2xl overflow-hidden mb-6">
+				<img src="/assets/images/carousel/maldives.png" alt="Premium Suite" class="w-full h-36 object-cover">
+				<div class="p-4 bg-gray-50">
+					<h4 class="text-lg font-bold text-gray-800 mb-2" id="summaryRoomName">Premium Suite</h4>
+					<div class="text-amber-400 text-sm mb-3">
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+					</div>
+				</div>
+			</div>
+
+			<div class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600">
+				<i class="fas fa-calendar-check w-5 text-orange-500"></i>
+				<span>Check-in:</span>
+				<strong id="summaryCheckIn">Not selected</strong>
+			</div>
+			<div class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600">
+				<i class="fas fa-calendar-times w-5 text-orange-500"></i>
+				<span>Check-out:</span>
+				<strong id="summaryCheckOut">Not selected</strong>
+			</div>
+			<div class="flex items-center gap-2 py-3 text-sm text-gray-600">
+				<i class="fas fa-users w-5 text-orange-500"></i>
+				<span>Guests:</span>
+				<strong id="summaryGuests">1 Guest</strong>
+			</div>
+
+			<div class="mt-6 pt-6 border-t-2 border-gray-200">
+				<div class="flex justify-between mb-3 text-base">
+					<span class="text-gray-600">Room Rate</span>
+					<span class="font-semibold text-gray-800" id="roomRate">$1,201.5</span>
+				</div>
+				<div class="flex justify-between mb-3 text-base">
+					<span class="text-gray-600">Subtotal</span>
+					<span class="font-semibold text-gray-800" id="subtotal">$840</span>
+				</div>
+				<div class="flex justify-between mb-3 text-base">
+					<span class="text-gray-600">Tax & Service (15%)</span>
+					<span class="font-semibold text-gray-800" id="tax">$126</span>
+				</div>
+				<div class="flex justify-between pt-4 mt-4 border-t-2 border-gray-200 text-lg font-bold">
+					<span class="text-gray-800">Total Amount</span>
+					<span class="text-orange-500 text-xl" id="totalAmount">$966</span>
+				</div>
+			</div>
+
+			<div class="bg-emerald-50 p-4 rounded-xl mt-6">
+				<p class="text-emerald-800 text-sm mb-1"><i class="fas fa-check-circle text-emerald-500"></i> <strong>Free Cancellation</strong></p>
+				<p class="text-emerald-800 text-sm leading-relaxed">Cancel up to 24 hours before check-in for a full refund</p>
+			</div>
+		</div>
+	</main>
+
+	<%- include('partials/footer') %>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const roomCards = document.querySelectorAll('.room-card');
+			const checkInInput = document.getElementById('checkIn');
+			const checkOutInput = document.getElementById('checkOut');
+			const guestsSelect = document.getElementById('guests');
+
+			let selectedRoom = null;
+			let pricePerNight = 280;
+
+			// Set minimum date to today
+			const today = new Date().toISOString().split('T')[0];
+			checkInInput.setAttribute('min', today);
+
+			// Room selection
+			roomCards.forEach(card => {
+				card.addEventListener('click', () => {
+					roomCards.forEach(c => c.classList.remove('selected'));
+					card.classList.add('selected');
+					selectedRoom = card.dataset.room;
+					pricePerNight = parseInt(card.dataset.price);
+					
+					// Update summary
+					const roomName = card.querySelector('.room-name').textContent;
+					const roomImage = card.querySelector('.room-image').src;
+					document.getElementById('summaryRoomName').textContent = roomName;
+					document.querySelector('.summary-room-image').src = roomImage;
+					
+					calculateTotal();
+				});
+			});
+
+			// Date change handlers
+			checkInInput.addEventListener('change', function() {
+				const checkInDate = new Date(this.value);
+				const minCheckOut = new Date(checkInDate);
+				minCheckOut.setDate(minCheckOut.getDate() + 1);
+				checkOutInput.setAttribute('min', minCheckOut.toISOString().split('T')[0]);
+				
+				if (checkOutInput.value && new Date(checkOutInput.value) <= checkInDate) {
+					checkOutInput.value = '';
+				}
+				
+				updateSummary();
+				calculateTotal();
+			});
+
+			checkOutInput.addEventListener('change', () => {
+				updateSummary();
+				calculateTotal();
+			});
+
+			guestsSelect.addEventListener('change', updateSummary);
+
+			function updateSummary() {
+				const checkIn = checkInInput.value;
+				const checkOut = checkOutInput.value;
+				const guests = guestsSelect.value;
+
+				document.getElementById('summaryCheckIn').textContent = checkIn || 'Not selected';
+				document.getElementById('summaryCheckOut').textContent = checkOut || 'Not selected';
+				document.getElementById('summaryGuests').textContent = guests + (guests == 1 ? ' Guest' : ' Guests');
+			}
+
+			function calculateTotal() {
+				const checkIn = checkInInput.value;
+				const checkOut = checkOutInput.value;
+
+				if (checkIn && checkOut) {
+					const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+					const subtotal = pricePerNight * nights;
+					const tax = subtotal * 0.15;
+					const total = subtotal + tax;
+
+					document.getElementById('roomRate').textContent = `$${pricePerNight}/night`;
+					document.getElementById('subtotal').textContent = `$${subtotal.toFixed(0)}`;
+					document.getElementById('tax').textContent = `$${tax.toFixed(0)}`;
+					document.getElementById('totalAmount').textContent = `$${total.toFixed(0)}`;
+				}
+			}
+
+			// Select first room by default
+			roomCards[0].click();
+
+			// Step Navigation
+			const step1 = document.getElementById('step1');
+			const step2 = document.getElementById('step2');
+			const step3 = document.getElementById('step3');
+			const continueToStep2Btn = document.getElementById('continueToStep2');
+			const continueToStep3Btn = document.getElementById('continueToStep3');
+			const confirmBookingBtn = document.getElementById('confirmBooking');
+			const backToStep1Btn = document.getElementById('backToStep1');
+			const backToStep2Btn = document.getElementById('backToStep2');
+
+			// Progress step elements
+			const progressSteps = document.querySelectorAll('.step');
+
+			function updateProgressSteps(activeStep) {
+				progressSteps.forEach((step, index) => {
+					if (index < activeStep) {
+						step.classList.add('active');
+					} else if (index === activeStep) {
+						step.classList.add('active');
+					} else {
+						step.classList.remove('active');
+					}
+				});
+			}
+
+			// Step 1 to Step 2
+			continueToStep2Btn.addEventListener('click', () => {
+				// Validate step 1
+				if (!checkInInput.value || !checkOutInput.value) {
+					alert('Please select check-in and check-out dates');
+					return;
+				}
+
+				step1.style.display = 'none';
+				step2.style.display = 'block';
+				step3.style.display = 'none';
+				updateProgressSteps(1);
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+
+			// Step 2 to Step 3
+			continueToStep3Btn.addEventListener('click', () => {
+				// Validate step 2
+				const fullName = document.getElementById('fullName').value;
+				const email = document.getElementById('email').value;
+				const phone = document.getElementById('phone').value;
+
+				if (!fullName || !email || !phone) {
+					alert('Please fill in all required fields');
+					return;
+				}
+
+				step1.style.display = 'none';
+				step2.style.display = 'none';
+				step3.style.display = 'block';
+				updateProgressSteps(2);
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+
+			// Back to Step 1
+			backToStep1Btn.addEventListener('click', () => {
+				step1.style.display = 'block';
+				step2.style.display = 'none';
+				step3.style.display = 'none';
+				updateProgressSteps(0);
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+
+			// Back to Step 2
+			backToStep2Btn.addEventListener('click', () => {
+				step1.style.display = 'none';
+				step2.style.display = 'block';
+				step3.style.display = 'none';
+				updateProgressSteps(1);
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+
+			// Confirm Booking
+			confirmBookingBtn.addEventListener('click', () => {
+				// Here you would submit the booking
+				alert('Booking confirmed! Redirecting to booking confirmation...');
+				// window.location.href = '/api/book';
+			});
+		});
+	</script>
+</body>
+</html>
