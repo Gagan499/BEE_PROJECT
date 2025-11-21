@@ -3,16 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ThePalmWay - Travel Booking</title>
+    <title>Palm Ways - Luxury Resort & Spa</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,19 +16,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
-    <!-- Preload contact illustration for better caching and performance -->
-    <link
-      rel="preload"
-      as="image"
-      href="assets/images/contact-illustration.svg"
-      fetchpriority="low"
-    />
     <style>
-      #carousel-location-label {
-        font-family: "Allura", cursive !important;
-        font-size: 4rem !important;
-      }
-
       * {
         margin: 0;
         padding: 0;
@@ -45,879 +29,880 @@
 
       body {
         font-family: "Poppins", sans-serif;
-        background-color: #1f212d;
-        /* Set a base background color */
+        background-color: #f8f9fa;
         min-height: 100vh;
         overflow-x: hidden;
       }
 
-      /* Hero Section Container */
-      .hero-container {
+      /* Hero Section */
+      .hero-section {
         position: relative;
-        width: 100%;
         height: 100vh;
-        /* Make hero section fill the viewport height */
-        min-height: 800px;
-        /* Remove default margin and add minimal padding if needed */
-        margin-top: 0 !important;
-        padding-top: 0 !important;
+        min-height: 600px;
+        margin-top: 76px;
+        background: url('/assets/images/hero-bg.jpg') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
       }
 
-      /* Canvas Styling */
-      #cardCanvas {
-        display: block;
-        cursor: pointer;
+      .hero-overlay {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
         z-index: 1;
-        /* Behind the header */
       }
 
-      /* --- MODIFIED HEADER CSS --- */
-      /* Header needs to be on top of the canvas AND the rest of the page */
-      header {
-        position: fixed; /* Changed from 'absolute' to 'fixed' */
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 50; /* Increased z-index to stay on top of all content */
-      }
-
-      .lower-section {
+      .hero-content {
         position: relative;
-        background: linear-gradient(
-          to top,
-          #1f212d 15.385%,
-          #2d2f3e 75%,
-          #262836
-        );
-        padding: 100px 5%;
+        z-index: 2;
+        max-width: 900px;
+        padding: 2rem;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 0.6rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .hero-title {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-description {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        margin-bottom: 3rem;
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .hero-btn-primary {
+        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .hero-btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(255, 140, 0, 0.4);
+      }
+
+      .hero-btn-secondary {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .hero-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-3px);
+      }
+
+      .hero-scroll {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        animation: bounce 2s infinite;
+      }
+
+      .hero-scroll i {
+        font-size: 2rem;
+        color: white;
+        opacity: 0.7;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+
+      /* Feature Bar */
+      .feature-bar {
+        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        padding: 2.5rem 2rem;
+      }
+
+      .feature-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .feature-item {
         color: white;
       }
-      .hero-container {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        min-height: 800px;
-        margin-top: 0 !important;
+
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
       }
 
-      .section-split {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        border-bottom: 1px solid white;
-        padding-bottom: 80px;
-        margin-bottom: 80px;
+      .feature-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      /* Section Title */
+      .section-header {
         text-align: center;
-        flex-wrap: wrap;
-        gap: 2rem;
+        margin-bottom: 3rem;
       }
 
-      .split-column {
-        width: 45%;
-        min-width: 280px;
+      .section-icon {
+        color: #ff8c00;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
       }
 
       .section-title {
-        font-weight: 500;
+        color: #ff8c00;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+      }
+
+      .section-subtitle {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.75rem;
+      }
+
+      .section-description {
+        color: #6c757d;
+        font-size: 1.05rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* Amenities Grid */
+      .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .amenity-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+      }
+
+      .amenity-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      }
+
+      .amenity-icon-circle {
+        width: 80px;
+        height: 80px;
+        background: #fff5e6;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.25rem;
+      }
+
+      .amenity-icon {
         font-size: 2rem;
+        color: #ff8c00;
+      }
+
+      .amenity-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+      }
+
+      .amenity-description {
+        color: #6c757d;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      /* Rooms Section */
+      .rooms-section {
+        background: white;
+        padding: 4rem 2rem;
+        margin-top: 4rem;
+      }
+
+      .rooms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.5rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .room-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+      }
+
+      .room-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      }
+
+      .room-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        position: relative;
+      }
+
+      .room-price {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: white;
+        padding: 0.5rem 1.25rem;
+        border-radius: 25px;
+        font-weight: 600;
+        color: #2c3e50;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+
+      .room-price span {
+        color: #ff8c00;
+        font-size: 1.25rem;
+      }
+
+      .room-details {
+        padding: 1.75rem;
+      }
+
+      .room-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+      }
+
+      .room-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
         margin-bottom: 1.5rem;
       }
 
-      .green-button {
-        background: #25a85c;
-        border-radius: 127px;
-        padding: 0.9rem 2.2rem;
-        text-decoration: none;
-        display: inline-block;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      .green-button:hover {
-        background: #1e864a;
-      }
-
-      .button-text {
-        font-weight: 700;
-        font-size: 1.5rem;
-        color: white;
-      }
-
-      .browse-text {
+      .room-feature {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.4rem 0.85rem;
+        background: #fff5e6;
+        border-radius: 20px;
+        color: #ff8c00;
+        font-size: 0.85rem;
         font-weight: 500;
-        font-size: 2rem;
-        text-align: center;
-        margin-bottom: 2.5rem;
       }
 
-      /* Package Section */
-      .package-section {
-        background: #64818c;
-        border-radius: 41px;
-        padding: 50px;
+      .book-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        color: white;
+        border: none;
+        padding: 0.9rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .book-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3);
+      }
+
+      /* Contact Section */
+      .contact-section {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 4rem 2rem;
+        margin-top: 4rem;
+      }
+
+      .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .contact-info h3 {
+        color: #3a7bd5;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-info h2 {
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .contact-detail {
         display: flex;
         align-items: center;
-        gap: 50px;
-        margin-bottom: 80px;
-        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
       }
 
-      .package-image {
-        flex: 1 1 40%;
-        min-width: 280px;
-        height: 320px;
-        border-radius: 1.5rem;
-        background-size: cover;
-        background-position: center;
-        background-image: url("assets/images/carousel/bali.png");
-      }
-
-      .package-details {
-        flex: 1 1 50%;
-        min-width: 280px;
+      .contact-icon-circle {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: white;
+        font-size: 1.25rem;
+        flex-shrink: 0;
       }
 
+      .contact-text h4 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.25rem;
+      }
+
+      .contact-text p {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+
+      /* Contact Form */
+      .contact-form-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      }
+
+      .contact-form-container h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.5px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: #adb5bd;
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 1rem 2.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      /* Help Button */
+      .help-button {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 50px;
+        height: 50px;
+        background: #2c3e50;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .help-button:hover {
+        transform: scale(1.1);
+        background: #1a252f;
+      }
+
+      /* Mobile Responsive */
       @media (max-width: 768px) {
-        .hero-container {
-          min-height: 600px;
+        .header-container {
+          padding: 1rem;
         }
 
-        #carousel-location-label {
-          font-size: 2.5rem !important;
-          bottom: 1rem;
+        nav ul {
+          display: none;
         }
 
-        .lower-section {
-          padding: 60px 3%;
-        }
-
-        .section-split {
-          flex-direction: column;
-          padding-bottom: 40px;
-          margin-bottom: 40px;
-        }
-
-        .split-column {
-          width: 100%;
-        }
-
-        .section-title {
-          font-size: 1.5rem;
-        }
-
-        .button-text {
-          font-size: 1.2rem;
-        }
-
-        .browse-text {
-          font-size: 1.5rem;
-        }
-
-        .package-section {
-          flex-direction: column;
-          padding: 30px 20px;
-          gap: 30px;
-          margin-bottom: 40px;
-        }
-
-        .package-image {
-          width: 100%;
-          height: 250px;
-        }
-
-        .package-details {
-          width: 100%;
-        }
-
-        .package-title {
-          font-size: 1.3rem;
-        }
-
-        .package-description {
-          font-size: 1rem;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .hero-container {
+        .hero-section {
+          height: 80vh;
           min-height: 500px;
         }
 
-        #carousel-location-label {
-          font-size: 2rem !important;
-          padding: 0.5rem 1rem;
+        .hero-title {
+          font-size: 2.5rem;
         }
 
-        .lower-section {
-          padding: 40px 2%;
+        .hero-description {
+          font-size: 1.05rem;
         }
 
-        .section-title {
-          font-size: 1.2rem;
+        .hero-buttons {
+          flex-direction: column;
+          gap: 1rem;
         }
 
-        .button-text {
-          font-size: 1rem;
+        .hero-btn-primary,
+        .hero-btn-secondary {
+          width: 100%;
+          max-width: 300px;
         }
 
-        .browse-text {
-          font-size: 1.2rem;
-          margin-bottom: 1.5rem;
+        .feature-container {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
 
-        .package-section {
-          padding: 20px 15px;
-          border-radius: 20px;
+        .amenities-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
 
-        .package-image {
-          height: 200px;
+        .rooms-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
         }
 
-        .package-title {
-          font-size: 1.1rem;
+        .contact-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
         }
 
-        .package-duration {
-          font-size: 0.9rem;
+        .main-content {
+          padding: 2rem 1rem;
         }
 
-        .package-description {
-          font-size: 0.9rem;
-        }
-
-        .explore-button {
-          font-size: 1.1rem;
-          padding: 0.6rem 1.5rem;
+        .section-subtitle {
+          font-size: 1.25rem;
         }
       }
 
-      .package-title {
-        font-weight: 600;
-        font-size: 1.5rem;
-      }
 
-      .package-duration {
-        font-weight: 400;
-        font-size: 1rem;
-        margin-bottom: 0.7rem;
-      }
-
-      .package-description {
-        font-size: 1.1rem;
-        line-height: 1.5;
-        margin-bottom: 1.2rem;
-      }
-
-      .explore-button {
-        background: #25a85c;
-        border-radius: 127px;
-        padding: 0.7rem 2rem;
-        text-decoration: none;
-        display: inline-block;
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 1.3rem;
-        color: white;
-        transition: background 0.2s;
-      }
-
-      .explore-button:hover {
-        background: #1e864a;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
     </style>
   </head>
 
   <body>
-    <div class="page-container">
-      <header><%- include('partials/navbar') %></header>
+    <%- include('partials/navbar') %>
 
-      <div
-        class="hero-container flex flex-col justify-center items-center relative"
-        style="margin-top: 0 !important"
-      >
-        <canvas id="cardCanvas"></canvas>
-        <div
-          id="carousel-location-label"
-          class="absolute left-1/2 bottom-8 -translate-x-1/2 text-white text-2xl font-semibold px-6 py-2 rounded-full shadow-lg pointer-events-none select-none tracking-wide"
-          style="z-index: 2"
-        ></div>
-      </div>
-
-      <div class="lower-section">
-        <div class="section-split">
-          <div class="split-column">
-            <div class="section-title">Planning for the whole team?</div>
-            <a href="#contact" class="green-button"
-              ><span class="button-text">Contact Us</span></a
-            >
-          </div>
-          <div class="split-column">
-            <div class="section-title">Personal or family booking?</div>
-            <a href="/api/login" class="green-button"
-              ><span class="button-text">Sign in / Sign up</span></a
-            >
-          </div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-award"></i>
+          <span>5-Star Luxury Resort & Spa</span>
         </div>
-
-        <div class="browse-text">Just want to browse? Start here</div>
-
-        <div class="package-section">
-          <div class="package-image"></div>
-          <div class="package-details">
-            <div class="package-title">The Bali Package</div>
-            <div class="package-duration">4 days 4 nights</div>
-            <p class="package-description">
-              Lorem ipsum dolor sit amet consectetur. Massa mauris nunc ornare
-              est ultrices vulputate. Nullam imperdiet at faucibus lorem
-              dignissim platea mattis fermentum libero. Nunc vitae pharetra
-              semper ut.
-            </p>
-            <a href="/api/packages" class="explore-button"
-              >Explore More Packages</a
-            >
-          </div>
+        <h1 class="hero-title">Welcome to Palm Ways</h1>
+        <p class="hero-description">
+          Experience unparalleled luxury in a tropical paradise where every moment becomes an unforgettable memory
+        </p>
+        <div class="hero-buttons">
+          <a href="#booking" class="hero-btn-primary">
+            Book Your Stay
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="/api/packages" class="hero-btn-secondary">
+            Explore Packages
+          </a>
         </div>
-
-        <section
-          id="about"
-          class="about-section"
-          style="margin-top: 100px; margin-bottom: 100px"
-        >
-          <h2
-            class="section-title"
-            style="text-align: center; margin-bottom: 3rem"
-          >
-            About ThePalmWay
-          </h2>
-          <div
-            class="about-content"
-            style="max-width: 900px; margin: 0 auto; text-align: center"
-          >
-            <p
-              style="
-                font-size: 1.2rem;
-                line-height: 1.8;
-                margin-bottom: 2rem;
-                color: #e0e0e0;
-              "
-            >
-              Welcome to ThePalmWay, your trusted partner in creating
-              unforgettable travel experiences. We specialize in curating
-              exceptional travel packages and accommodations that cater to your
-              unique preferences and needs.
-            </p>
-            <div
-              class="about-features"
-              style="
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 2rem;
-                margin-top: 3rem;
-              "
-            >
-              <div
-                class="feature-card"
-                style="
-                  background: rgba(255, 255, 255, 0.05);
-                  padding: 2rem;
-                  border-radius: 15px;
-                  backdrop-filter: blur(10px);
-                "
-              >
-                <div style="font-size: 3rem; margin-bottom: 1rem">🌴</div>
-                <h3
-                  style="
-                    font-size: 1.3rem;
-                    margin-bottom: 1rem;
-                    font-weight: 600;
-                  "
-                >
-                  Exotic Destinations
-                </h3>
-                <p style="color: #c0c0c0; line-height: 1.6">
-                  Discover breathtaking locations from Bali to Switzerland,
-                  carefully selected for their beauty and cultural richness.
-                </p>
-              </div>
-              <div
-                class="feature-card"
-                style="
-                  background: rgba(255, 255, 255, 0.05);
-                  padding: 2rem;
-                  border-radius: 15px;
-                  backdrop-filter: blur(10px);
-                "
-              >
-                <div style="font-size: 3rem; margin-bottom: 1rem">✈</div>
-                <h3
-                  style="
-                    font-size: 1.3rem;
-                    margin-bottom: 1rem;
-                    font-weight: 600;
-                  "
-                >
-                  Seamless Booking
-                </h3>
-                <p style="color: #c0c0c0; line-height: 1.6">
-                  Our easy-to-use platform makes booking your dream vacation
-                  simple and stress-free.
-                </p>
-              </div>
-              <div
-                class="feature-card"
-                style="
-                  background: rgba(255, 255, 255, 0.05);
-                  padding: 2rem;
-                  border-radius: 15px;
-                  backdrop-filter: blur(10px);
-                "
-              >
-                <div style="font-size: 3rem; margin-bottom: 1rem">🏨</div>
-                <h3
-                  style="
-                    font-size: 1.3rem;
-                    margin-bottom: 1rem;
-                    font-weight: 600;
-                  "
-                >
-                  Premium Accommodations
-                </h3>
-                <p style="color: #c0c0c0; line-height: 1.6">
-                  Stay in handpicked hotels and resorts that offer comfort,
-                  luxury, and authentic local experiences.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" class="my-24 px-[5%]">
-          <div
-            class="mx-auto max-w-6xl overflow-hidden rounded-2xl bg-white/5 p-12 text-white backdrop-blur-md md:p-16 lg:flex lg:flex-nowrap lg:items-center lg:gap-16"
-          >
-            <div class="flex min-w-[300px] basis-[40%] justify-center">
-              <img
-                src="assets/images/contact-illustration.svg"
-                alt="Contact illustration"
-                class="h-auto w-full max-w-[450px]"
-                loading="lazy"
-                decoding="async"
-                fetchpriority="low"
-                style="object-fit: contain;"
-              />
-            </div>
-
-            <div class="mt-12 min-w-[300px] flex-1 basis-[50%] lg:mt-0">
-              <h2 class="mb-10 text-[2.75rem] font-bold text-white">
-                Contact Us
-              </h2>
-
-              <form id="contactFormNew" class="flex flex-col gap-6">
-                <div class="flex flex-col">
-                  <label
-                    for="contactNameNew"
-                    class="mb-2 text-sm font-semibold text-gray-300"
-                    >FULL NAME</label
-                  >
-                  <input
-                    type="text"
-                    id="contactNameNew"
-                    name="name"
-                    class="w-full rounded-lg border-0 bg-black/20 p-4 text-base text-white placeholder-gray-400 focus:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#5568FE]"
-                    required
-                  />
-                </div>
-
-                <div class="flex flex-col">
-                  <label
-                    for="contactEmailNew"
-                    class="mb-2 text-sm font-semibold text-gray-300"
-                    >EMAIL</label
-                  >
-                  <input
-                    type="email"
-                    id="contactEmailNew"
-                    name="email"
-                    class="w-full rounded-lg border-0 bg-black/20 p-4 text-base text-white placeholder-gray-400 focus:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#5568FE]"
-                    required
-                  />
-                </div>
-
-                <div class="flex flex-col">
-                  <label
-                    for="contactMessageNew"
-                    class="mb-2 text-sm font-semibold text-gray-300"
-                    >MESSAGE</label
-                  >
-                  <textarea
-                    id="contactMessageNew"
-                    name="message"
-                    class="w-full resize-y rounded-lg border-0 bg-black/20 p-4 text-base text-white placeholder-gray-400 focus:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#5568FE]"
-                    rows="5"
-                    required
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  class="self-start rounded-lg bg-[#5568FE] px-8 py-4 text-base font-semibold text-white transition duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-[#4454ca]"
-                >
-                  SEND MESSAGE
-                </button>
-              </form>
-              <div
-                id="contactFormMessageNew"
-                class="mt-4 text-left text-blue-400"
-                style="display: none"
-              ></div>
-            </div>
-          </div>
-        </section>
       </div>
-      <%- include('partials/footer') %>
+      <div class="hero-scroll">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <!-- Feature Bar -->
+    <div class="feature-bar">
+      <div class="feature-container">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <p class="feature-text">World-Class Service</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="feature-text">5.0 Rating</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <p class="feature-text">Prime Location</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <p class="feature-text">24/7 Concierge</p>
+        </div>
+      </div>
     </div>
 
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Amenities Section -->
+      <section class="amenities-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-sparkles"></i>
+          </div>
+          <p class="section-title">WORLD-CLASS AMENITIES</p>
+          <h2 class="section-subtitle">Everything You Need</h2>
+          <p class="section-description">
+            Indulge in premium facilities designed for your comfort and pleasure
+          </p>
+        </div>
+
+        <div class="amenities-grid">
+          <div class="amenity-card">
+            <div class="amenity-icon-circle">
+              <i class="fas fa-wifi amenity-icon"></i>
+            </div>
+            <h3 class="amenity-title">High-Speed WiFi</h3>
+            <p class="amenity-description">Stay connected</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon-circle">
+              <i class="fas fa-coffee amenity-icon"></i>
+            </div>
+            <h3 class="amenity-title">Gourmet Breakfast</h3>
+            <p class="amenity-description">Daily buffet</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon-circle">
+              <i class="fas fa-swimming-pool amenity-icon"></i>
+            </div>
+            <h3 class="amenity-title">Infinity Pool</h3>
+            <p class="amenity-description">Ocean views</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon-circle">
+              <i class="fas fa-utensils amenity-icon"></i>
+            </div>
+            <h3 class="amenity-title">Fine Dining</h3>
+            <p class="amenity-description">3 restaurants</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon-circle">
+              <i class="fas fa-dumbbell amenity-icon"></i>
+            </div>
+            <h3 class="amenity-title">Fitness Center</h3>
+            <p class="amenity-description">24/7 access</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon-circle">
+              <i class="fas fa-car amenity-icon"></i>
+            </div>
+            <h3 class="amenity-title">Valet Parking</h3>
+            <p class="amenity-description">Complimentary</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rooms Section -->
+      <section class="rooms-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-sparkles"></i>
+          </div>
+          <p class="section-title">LUXURIOUS ACCOMMODATIONS</p>
+          <h2 class="section-subtitle">Our Signature Rooms</h2>
+          <p class="section-description">
+            Each room is meticulously designed to provide the ultimate comfort and elegance
+          </p>
+        </div>
+
+        <div class="rooms-grid">
+          <% if (packages && packages.length > 0) { %>
+            <% packages.forEach(pkg => { %>
+              <div class="room-card">
+                <div style="position: relative;">
+                  <img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="room-image">
+                  <% if (pkg.price) { %>
+                    <div class="room-price"><span>$<%= pkg.price %></span>/night</div>
+                  <% } %>
+                </div>
+                <div class="room-details">
+                  <h3 class="room-name"><%= pkg.packageName || pkg.title %></h3>
+                  <div class="room-features">
+                    <% if (pkg.Stay) { %>
+                      <span class="room-feature"><%= pkg.Stay %></span>
+                    <% } %>
+                    <% if (pkg.type) { %>
+                      <span class="room-feature"><%= pkg.type %></span>
+                    <% } %>
+                    <% if (pkg.hotelName) { %>
+                      <span class="room-feature"><%= pkg.hotelName %></span>
+                    <% } %>
+                    <% if (pkg.location) { %>
+                      <span class="room-feature"><%= pkg.location %></span>
+                    <% } %>
+                  </div>
+                  <button class="book-btn" onclick="window.location.href='/api/login'">Book Now</button>
+                </div>
+              </div>
+            <% }); %>
+          <% } else { %>
+            <div style="text-align: center; padding: 3rem; color: #6c757d;">
+              <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem; color: #dee2e6;"></i>
+              <h3 style="font-size: 1.5rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.5rem;">No Packages Available</h3>
+              <p style="font-size: 1rem;">Please check back later or contact us for more information.</p>
+            </div>
+          <% } %>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact-section" id="booking">
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>📧 GET IN TOUCH</h3>
+            <h2>Have Questions? Contact Us<br><br>Our team is here to help you plan the perfect stay. Send us a message and we'll respond within 24 hours.</h2>
+            
+            <div class="contact-detail">
+              <div class="contact-icon-circle">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-text">
+                <h4>Call Us</h4>
+                <p>+1 (234) 567-890</p>
+                <p style="font-size: 0.8rem; color: #999;">Available 24/7</p>
+              </div>
+            </div>
+
+            <div class="contact-detail">
+              <div class="contact-icon-circle">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-text">
+                <h4>Email Us</h4>
+                <p>info@palmways.com</p>
+                <p style="font-size: 0.8rem; color: #999;">Response within 24 hours</p>
+              </div>
+            </div>
+
+            <div class="contact-detail">
+              <div class="contact-icon-circle">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-text">
+                <h4>Visit Us</h4>
+                <p>123 Paradise Beach Road</p>
+                <p style="font-size: 0.8rem; color: #999;">Tropical Island, PI 12345</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-container">
+            <h3>Send us a Message</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Tell us how we can help you..." required></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i>
+                Send Message
+              </button>
+            </form>
+            <div id="contactFormMessage" style="margin-top: 1rem; display: none;"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Help Button -->
+    <div class="help-button">
+      <i class="fas fa-question"></i>
+    </div>
+
+    <%- include('partials/footer') %>
+
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const canvas = document.getElementById("cardCanvas");
-        const ctx = canvas.getContext("2d");
-
-        let width, height;
-
-        // --- Configuration ---
-        const imageSources = [
-          "assets/images/carousel/bali.png",
-          "assets/images/carousel/jaipur.png",
-          "assets/images/carousel/la.png",
-          "assets/images/carousel/maldives.png",
-          "assets/images/carousel/switzerland.png",
-        ];
-        const locationNames = [
-          "Bali",
-          "Jaipur",
-          "Los Angeles",
-          "Maldives",
-          "Switzerland",
-        ];
-        const images = [];
-        let imagesLoaded = 0;
-
-        const CARD_ASPECT_RATIO = 1.5;
-        const CARD_WIDTH_RATIO = 0.15;
-        const CARD_SPACING_RATIO = 0.05;
-        const ACTIVE_SCALE = 1.1;
-        const INACTIVE_SCALE = 0.85;
-        const ANIMATION_SPEED = 0.07;
-        const LOOP_ANIMATION_SPEED = 0.14;
-
-        let cards = [];
-        let currentIndex = 0;
-        let prevIndex = 0;
-        let displayOrder = [];
-        let isAnimating = false;
-        let loopingCardIndex = -1;
-        let bgFade = 1; // 1 = fully current, 0 = fully previous
-        let bgFading = false;
-
-        function preloadImages() {
-          for (let i = 0; i < imageSources.length; i++) {
-            images[i] = new Image();
-            images[i].onload = () => {
-              imagesLoaded++;
-              if (imagesLoaded === imageSources.length) init();
-            };
-            images[i].onerror = () => {
-              console.error(`Failed to load image: ${imageSources[i]}`);
-              imagesLoaded++;
-              if (imagesLoaded === imageSources.length) init();
-            };
-            images[i].src = imageSources[i];
-          }
-        }
-
-        function setup() {
-          const heroContainer = document.querySelector(".hero-container");
-          width = canvas.width = heroContainer.offsetWidth;
-          height = canvas.height = heroContainer.offsetHeight;
-
-          displayOrder = images.map((_, i) => i);
-          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-          currentIndex = displayOrder[centerDisplayIndex];
-
-          cards = images.map((img) => ({
-            img,
-            targetX: 0,
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 0,
-            targetScale: 0,
-            scale: 0,
-            targetAlpha: 0,
-            alpha: 0,
-          }));
-
-          updateCardPositions(false);
-          updateLocationLabel();
-        }
-
-        function init() {
-          setup();
-          animate();
-          window.addEventListener("resize", setup);
-          canvas.addEventListener("click", handleClick); // Listen on canvas
-        }
-
-        function handleClick() {
-          triggerAnimation();
-        }
-
-        function triggerAnimation() {
-          isAnimating = true;
-          loopingCardIndex = displayOrder[0];
-          displayOrder.push(displayOrder.shift());
-          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-          prevIndex = currentIndex;
-          currentIndex = displayOrder[centerDisplayIndex];
-          bgFade = 0;
-          bgFading = true;
-          updateCardPositions(true);
-          updateLocationLabel();
-        }
-        // Update the location label below the carousel
-        function updateLocationLabel() {
-          const label = document.getElementById("carousel-location-label");
-          if (!label) return;
-          // Find the center card's location name
-          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-          const centerCardIdx = displayOrder[centerDisplayIndex];
-          label.textContent = locationNames[centerCardIdx] || "";
-        }
-
-        function updateCardPositions(animate = true) {
-          const cardWidth = width * CARD_WIDTH_RATIO;
-          const cardHeight = cardWidth * CARD_ASPECT_RATIO;
-          const cardSpacing = width * CARD_SPACING_RATIO;
-          const centerPosX = width / 2 - cardWidth / 2;
-          const centerDisplayIndex = Math.floor(displayOrder.length / 2);
-
-          displayOrder.forEach((cardIndex, displayIndex) => {
-            const card = cards[cardIndex];
-            const offset = displayIndex - centerDisplayIndex;
-            const isCenter = displayIndex === centerDisplayIndex;
-
-            card.targetX = centerPosX + offset * (cardWidth + cardSpacing);
-            card.y = height / 2 - cardHeight / 2;
-            card.width = cardWidth;
-            card.height = cardHeight;
-            card.targetScale = isCenter ? ACTIVE_SCALE : INACTIVE_SCALE;
-            card.targetAlpha = isCenter ? 1.0 : 0.7;
-
-            if (!animate) {
-              card.x = card.targetX;
-              card.scale = card.targetScale;
-              card.alpha = card.targetAlpha;
-            }
-          });
-        }
-
-        function draw() {
-          ctx.clearRect(0, 0, width, height);
-          drawBackground();
-          cards.forEach((card, index) => {
-            const speed =
-              index === loopingCardIndex
-                ? LOOP_ANIMATION_SPEED
-                : ANIMATION_SPEED;
-            card.x += (card.targetX - card.x) * speed;
-            card.scale += (card.targetScale - card.scale) * speed;
-            card.alpha += (card.targetAlpha - card.alpha) * speed;
-            drawCard(card);
-          });
-        }
-
-        function drawCard(card) {
-          ctx.save();
-          const cardCenterX = card.x + card.width / 2;
-          const cardCenterY = card.y + card.height / 2;
-          ctx.translate(cardCenterX, cardCenterY);
-          ctx.scale(card.scale, card.scale);
-          ctx.translate(-cardCenterX, -cardCenterY);
-          ctx.globalAlpha = card.alpha;
-          ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-          ctx.shadowBlur = 25 * card.scale;
-          ctx.shadowOffsetY = 10 * card.scale;
-
-          const cornerRadius = 30; // Matched to original CSS
-          ctx.beginPath();
-          ctx.moveTo(card.x + cornerRadius, card.y);
-          ctx.lineTo(card.x + card.width - cornerRadius, card.y);
-          ctx.quadraticCurveTo(
-            card.x + card.width,
-            card.y,
-            card.x + card.width,
-            card.y + cornerRadius
-          );
-          ctx.lineTo(card.x + card.width, card.y + card.height - cornerRadius);
-          ctx.quadraticCurveTo(
-            card.x + card.width,
-            card.y + card.height,
-            card.x + card.width - cornerRadius,
-            card.y + card.height
-          );
-          ctx.lineTo(card.x + cornerRadius, card.y + card.height);
-          ctx.quadraticCurveTo(
-            card.x,
-            card.y + card.height,
-            card.x,
-            card.y + card.height - cornerRadius
-          );
-          ctx.lineTo(card.x, card.y + cornerRadius);
-          ctx.quadraticCurveTo(card.x, card.y, card.x + cornerRadius, card.y);
-          ctx.closePath();
-          ctx.clip();
-
-          // Draw image: always scale image height to card height, crop width if needed
-          if (card.img && card.img.complete && card.img.naturalHeight !== 0) {
-            const scale = card.height / card.img.height;
-            const drawWidth = card.img.width * scale;
-            const sx = Math.max(0, (drawWidth - card.width) / 2 / scale);
-            const sw = card.width / scale;
-            ctx.drawImage(
-              card.img,
-              sx,
-              0,
-              sw,
-              card.img.height,
-              card.x,
-              card.y,
-              card.width,
-              card.height
-            );
-          }
-          ctx.restore();
-        }
-
-        function drawBackground() {
-          // Fade between prevIndex and currentIndex
-          const currImg = images[currentIndex];
-          const prevImg = images[prevIndex];
-          if (!currImg || !currImg.complete || currImg.naturalHeight === 0)
-            return;
-
-          // Helper to draw a bg image with given alpha (no overlay)
-          function drawBgImage(img, alpha) {
-            if (!img || !img.complete || img.naturalHeight === 0) return;
-            const imgAspectRatio = img.width / img.height;
-            const canvasAspectRatio = width / height;
-            let drawWidth, drawHeight, drawX, drawY;
-            if (imgAspectRatio > canvasAspectRatio) {
-              drawHeight = height;
-              drawWidth = drawHeight * imgAspectRatio;
-              drawX = (width - drawWidth) / 2;
-              drawY = 0;
-            } else {
-              drawWidth = width;
-              drawHeight = drawWidth / imgAspectRatio;
-              drawX = 0;
-              drawY = (height - drawHeight) / 2;
-            }
-            ctx.save();
-            ctx.globalAlpha = alpha;
-            ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-            ctx.restore();
-          }
-
-          if (bgFading && prevIndex !== currentIndex) {
-            drawBgImage(prevImg, 1 - bgFade);
-            drawBgImage(currImg, bgFade);
-          } else {
-            drawBgImage(currImg, 1);
-          }
-          // Always draw the dark overlay at full opacity on top
-          ctx.save();
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = "rgba(0, 0, 0, 0.64)";
-          ctx.fillRect(0, 0, width, height);
-          ctx.restore();
-        }
-
-        function checkAnimationComplete() {
-          // Animate background fade
-          if (bgFading) {
-            bgFade += 0.08; // Fade speed
-            if (bgFade >= 1) {
-              bgFade = 1;
-              bgFading = false;
-              prevIndex = currentIndex;
-            }
-          }
-          if (!isAnimating) return;
-          let allCardsInPosition = true;
-          for (const card of cards) {
-            if (
-              Math.abs(card.x - card.targetX) > 1 ||
-              Math.abs(card.scale - card.targetScale) > 0.01
-            ) {
-              allCardsInPosition = false;
-              break;
-            }
-          }
-          if (allCardsInPosition) {
-            cards.forEach((card) => {
-              card.x = card.targetX;
-              card.scale = card.targetScale;
-              card.alpha = card.targetAlpha;
-            });
-            isAnimating = false;
-            loopingCardIndex = -1;
-          }
-        }
-
-        function animate() {
-          draw();
-          checkAnimationComplete();
-          requestAnimationFrame(animate);
-        }
-
-        preloadImages();
-      });
-      
       // Contact Form Handler
       document.addEventListener("DOMContentLoaded", () => {
-        const contactForm = document.getElementById("contactFormNew");
-        const contactFormMessage =
-          document.getElementById("contactFormMessageNew");
+        const contactForm = document.getElementById("contactForm");
+        const contactFormMessage = document.getElementById("contactFormMessage");
 
         if (contactForm) {
           contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById("contactNameNew").value;
-            const email = document.getElementById("contactEmailNew").value;
-            const message = document.getElementById("contactMessageNew").value;
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
 
             // Show loading state
-            const submitButton = contactForm.querySelector(
-              'button[type="submit"]'
-            );
-            const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = "Sending...";
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalHTML = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitButton.disabled = true;
 
             try {
-              // Submit to API
               const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: {
@@ -931,28 +916,25 @@
               if (result.success) {
                 contactFormMessage.style.display = "block";
                 contactFormMessage.style.color = "#25a85c";
-                contactFormMessage.style.fontSize = "1.1rem";
+                contactFormMessage.style.fontWeight = "500";
                 contactFormMessage.textContent = result.message || `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
-
-                // Reset form
                 contactForm.reset();
               } else {
                 contactFormMessage.style.display = "block";
                 contactFormMessage.style.color = "#ef4444";
-                contactFormMessage.style.fontSize = "1.1rem";
+                contactFormMessage.style.fontWeight = "500";
                 contactFormMessage.textContent = result.message || "Failed to send message. Please try again.";
               }
             } catch (error) {
               console.error("Error submitting contact form:", error);
               contactFormMessage.style.display = "block";
               contactFormMessage.style.color = "#ef4444";
-              contactFormMessage.style.fontSize = "1.1rem";
+              contactFormMessage.style.fontWeight = "500";
               contactFormMessage.textContent = "An error occurred. Please try again later.";
             } finally {
-              submitButton.innerHTML = originalText;
+              submitButton.innerHTML = originalHTML;
               submitButton.disabled = false;
 
-              // Hide message after 5 seconds
               setTimeout(() => {
                 if (contactFormMessage) {
                   contactFormMessage.style.display = "none";
