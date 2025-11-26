@@ -41,6 +41,20 @@
 			display: block !important;
 		}
 
+		.stay-only-card.selected .stay-selected-badge {
+			display: block !important;
+		}
+
+		.booking-type-card.selected {
+			border-color: #008080;
+			background: #e6f7f7;
+		}
+
+		.booking-type-radio:checked + .booking-type-card {
+			border-color: #008080;
+			background: #e6f7f7;
+		}
+
 		/* Styling for progress steps (Teal Theme) */
 		.step.active .w-11 {
 			@apply teal-gradient-bg text-white;
@@ -57,6 +71,46 @@
 		
 		.focus\:border-teal-500:focus {
 			border-color: #008080;
+		}
+
+		/* Floating Booking Button */
+		.floating-booking-btn {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			width: 60px;
+			height: 60px;
+			background: linear-gradient(135deg, #008080, #00cec9);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 1.5rem;
+			box-shadow: 0 4px 20px rgba(0, 128, 128, 0.4);
+			cursor: pointer;
+			transition: all 0.3s ease;
+			z-index: 999;
+			border: none;
+		}
+
+		.floating-booking-btn:hover {
+			transform: scale(1.1);
+			box-shadow: 0 6px 25px rgba(0, 128, 128, 0.5);
+		}
+
+		.floating-booking-btn:active {
+			transform: scale(0.95);
+		}
+
+		@media (max-width: 768px) {
+			.floating-booking-btn {
+				bottom: 20px;
+				right: 20px;
+				width: 56px;
+				height: 56px;
+				font-size: 1.3rem;
+			}
 		}
 	</style>
 </head>
@@ -96,10 +150,36 @@
 		<div class="bg-white rounded-2xl p-8 shadow-lg" id="step1">
 			<div class="flex items-center gap-3 mb-8">
 				<div class="w-10 h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold">1</div>
-				<h2 class="text-2xl font-bold text-gray-800">Choose Your Package</h2>
+				<h2 class="text-2xl font-bold text-gray-800">Choose Your Booking Type</h2>
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<!-- Booking Type Selection -->
+			<div class="mb-8">
+				<label class="text-sm font-semibold text-gray-600 mb-4 block">Booking Type *</label>
+				<div class="flex gap-4">
+					<label class="flex-1 cursor-pointer">
+						<input type="radio" name="bookingType" value="package" checked class="hidden booking-type-radio" id="bookingTypePackage">
+						<div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal booking-type-card" data-type="package">
+							<i class="fas fa-suitcase text-2xl text-primary-teal mb-2"></i>
+							<div class="font-semibold text-gray-800">Package</div>
+							<div class="text-xs text-gray-500 mt-1">Full vacation package</div>
+						</div>
+					</label>
+					<label class="flex-1 cursor-pointer">
+						<input type="radio" name="bookingType" value="stayOnly" class="hidden booking-type-radio" id="bookingTypeStayOnly">
+						<div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal booking-type-card" data-type="stayOnly">
+							<i class="fas fa-bed text-2xl text-primary-teal mb-2"></i>
+							<div class="font-semibold text-gray-800">Stay Only</div>
+							<div class="text-xs text-gray-500 mt-1">Hotel accommodation only</div>
+						</div>
+					</label>
+				</div>
+			</div>
+
+			<!-- Package Selection (shown when package is selected) -->
+			<div id="packageSelection" class="mb-6">
+				<label class="text-sm font-semibold text-gray-600 mb-4 block">Select Package *</label>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<% if (packages && packages.length > 0) { %>
 					<% packages.forEach((pkg, index) => { %>
 						<div class="room-card border-2 border-gray-200 rounded-2xl 
@@ -141,9 +221,74 @@
 					<p class="text-center p-8 text-gray-500 col-span-2">No packages available at the moment.
 					Please check back later.</p>
 				<% } %>
+				</div>
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+			<!-- Stay Only Accommodation Selection (hidden by default) -->
+			<div id="stayOnlySelection" class="mb-6 hidden">
+				<label class="text-sm font-semibold text-gray-600 mb-4 block">Select Accommodation *</label>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<% if (stayOnlyList && stayOnlyList.length > 0) { %>
+						<% stayOnlyList.forEach((stay, index) => { %>
+							<div class="stay-only-card border-2 border-gray-200 rounded-2xl 
+								overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-teal hover:-translate-y-1 hover:shadow-lg relative" 
+								data-stay-id="<%= stay._id %>" 
+								data-price="<%= stay.price || 0 %>" 
+								data-stay-name="<%= stay.name %>"
+								data-stay-type="<%= stay.type %>">
+								<div class="relative h-44">
+									<img src="<%= stay.image || stay.img || '/assets/images/carousel/default.png' %>" 
+										alt="<%= stay.name %>" 
+										class="w-full h-full object-cover stay-only-image">
+									<% if (stay.price) { %>
+									<div class="absolute top-4 right-4 bg-primary-teal text-white px-4 py-2 rounded-full font-bold text-base">$<%= stay.price %>/night</div>
+									<% } %>
+									<div class="stay-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden">✓ Selected</div>
+									<% if (stay.type) { %>
+									<div class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-full text-xs font-semibold text-gray-700 capitalize">
+										<%= stay.type %>
+									</div>
+									<% } %>
+								</div>
+								<div class="p-5">
+									<h3 class="text-lg font-bold text-gray-800 mb-3 stay-only-name"><%= stay.name %></h3>
+									<% if (stay.location) { %>
+									<div class="flex items-center gap-2 mb-2 text-sm text-gray-600">
+										<i class="fas fa-map-marker-alt text-primary-teal"></i>
+										<span><%= stay.location %></span>
+									</div>
+									<% } %>
+									<% if (stay.rating) { %>
+									<div class="flex items-center gap-1 mb-3">
+										<% for (let i = 0; i < 5; i++) { %>
+											<i class="fas fa-star <%= i < Math.floor(stay.rating) ? 'text-yellow-400' : 'text-gray-300' %> text-xs"></i>
+										<% } %>
+										<span class="text-xs text-gray-600 ml-1"><%= stay.rating %></span>
+									</div>
+									<% } %>
+									<% if (stay.description) { %>
+									<p class="text-sm text-gray-400 mt-2"><%= stay.description.substring(0, 60) %>...</p>
+									<% } %>
+									<% if (stay.amenities && stay.amenities.length > 0) { %>
+									<div class="flex flex-wrap gap-2 mt-3">
+										<% stay.amenities.slice(0, 3).forEach(amenity => { %>
+											<span class="bg-gray-100 px-2 py-1 rounded-lg text-xs text-gray-600"><%= amenity %></span>
+										<% }); %>
+										<% if (stay.amenities.length > 3) { %>
+											<span class="bg-gray-100 px-2 py-1 rounded-lg text-xs text-gray-600">+<%= stay.amenities.length - 3 %> more</span>
+										<% } %>
+									</div>
+									<% } %>
+								</div>
+							</div>
+						<% }); %>
+					<% } else { %>
+						<p class="text-center p-8 text-gray-500 col-span-2">No stay-only accommodations available at the moment. Please check back later.</p>
+					<% } %>
+				</div>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
 				<div class="flex flex-col gap-2">
 					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-check text-primary-teal"></i> Check-in *</label>
 					<input type="date" id="checkIn" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
@@ -153,12 +298,21 @@
 					<input type="date" id="checkOut" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
 				</div>
 				<div class="flex flex-col gap-2">
-					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-users text-primary-teal"></i> Guests *</label>
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-users text-primary-teal"></i> Adults *</label>
 					<select id="guests" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal">
-						<option value="1">1 Guest</option>
-						<option value="2" selected>2 Guests</option>
-						<option value="3">3 Guests</option>
-						<option value="4">4 Guests</option>
+						<option value="1">1 Adult</option>
+						<option value="2" selected>2 Adults</option>
+						<option value="3">3 Adults</option>
+						<option value="4">4 Adults</option>
+					</select>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-child text-primary-teal"></i> Children</label>
+					<select id="children" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal">
+						<option value="0" selected>0 Children</option>
+						<option value="1">1 Child</option>
+						<option value="2">2 Children</option>
+						<option value="3">3 Children</option>
 					</select>
 				</div>
 			</div>
@@ -238,9 +392,9 @@
 			<h3 class="text-xl font-bold text-gray-800 mb-6">Booking Summary</h3>
 
 			<div class="rounded-2xl overflow-hidden mb-6">
-				<img src="/assets/images/carousel/maldives.png" alt="Premium Suite" class="w-full h-36 object-cover summary-room-image">
+				<img src="<%= packages && packages.length > 0 && packages[0].image ? packages[0].image : '/assets/images/carousel/default.png' %>" alt="Package" class="w-full h-36 object-cover summary-room-image">
 				<div class="p-4 bg-gray-50">
-					<h4 class="text-lg font-bold text-gray-800 mb-2" id="summaryRoomName">Premium Suite</h4>
+					<h4 class="text-lg font-bold text-gray-800 mb-2" id="summaryRoomName"><%= packages && packages.length > 0 ? (packages[0].packageName || packages[0].title || 'Select a Package') : 'Select a Package' %></h4>
 					<div class="text-secondary-teal text-sm mb-3">
 						<i class="fas fa-star"></i>
 						<i class="fas fa-star"></i>
@@ -294,6 +448,11 @@
 		</div>
 	</main>
 
+	<!-- Floating Booking Button -->
+	<button class="floating-booking-btn" onclick="window.location.href='/api/booking'" aria-label="New Booking" title="New Booking">
+		<i class="fas fa-plus"></i>
+	</button>
+
 	<%- include('partials/footer') %>
 
 	<script>
@@ -305,30 +464,93 @@
 			const guestsSelect = document.getElementById('guests');
 			const summaryRoomImage = document.querySelector('.summary-room-image');
 
+			const stayOnlyCards = document.querySelectorAll('.stay-only-card');
 			let selectedRoom = null;
+			let selectedStayOnly = null;
 			let pricePerNight = 280;
+			let bookingType = 'package'; // Default to package
+			let selectedPackageName = null;
+			let selectedHotelName = null;
 
 			// Set minimum date to today
 			const today = new Date().toISOString().split('T')[0];
 			checkInInput.setAttribute('min', today);
 
-			// Room selection
+			// Booking Type Toggle
+			const bookingTypeRadios = document.querySelectorAll('.booking-type-radio');
+			const packageSelection = document.getElementById('packageSelection');
+			const stayOnlySelection = document.getElementById('stayOnlySelection');
+
+			bookingTypeRadios.forEach(radio => {
+				radio.addEventListener('change', () => {
+					bookingType = radio.value;
+					if (bookingType === 'package') {
+						packageSelection.classList.remove('hidden');
+						stayOnlySelection.classList.add('hidden');
+						selectedHotelName = null;
+						selectedStayOnly = null;
+						// Reset room selection
+						selectedRoom = null;
+						roomCards.forEach(c => c.classList.remove('selected'));
+						stayOnlyCards.forEach(c => c.classList.remove('selected'));
+					} else {
+						packageSelection.classList.add('hidden');
+						stayOnlySelection.classList.remove('hidden');
+						selectedPackageName = null;
+						// Reset room selection
+						selectedRoom = null;
+						roomCards.forEach(c => c.classList.remove('selected'));
+						stayOnlyCards.forEach(c => c.classList.remove('selected'));
+						// Reset price
+						pricePerNight = 0;
+						calculateTotal();
+					}
+				});
+			});
+
+			// Stay-only accommodation selection
+			stayOnlyCards.forEach(card => {
+				card.addEventListener('click', () => {
+					if (bookingType === 'stayOnly') {
+						stayOnlyCards.forEach(c => c.classList.remove('selected'));
+						card.classList.add('selected');
+						selectedStayOnly = card.dataset.stayId;
+						selectedHotelName = card.dataset.stayName;
+						pricePerNight = parseFloat(card.dataset.price) || 0;
+						
+						// Update summary
+						const stayName = card.querySelector('.stay-only-name').textContent;
+						const stayImageElement = card.querySelector('.stay-only-image');
+						
+						document.getElementById('summaryRoomName').textContent = stayName;
+						// Update the image source in the summary section
+						summaryRoomImage.src = stayImageElement ? stayImageElement.src : '/assets/images/carousel/default.png';
+						
+						calculateTotal();
+					}
+				});
+			});
+
+			// Room selection (only for package type)
 			roomCards.forEach(card => {
 				card.addEventListener('click', () => {
-					roomCards.forEach(c => c.classList.remove('selected'));
-					card.classList.add('selected');
-					selectedRoom = card.dataset.room;
-					pricePerNight = parseInt(card.dataset.price);
-					
-					// Update summary
-					const roomName = card.querySelector('.room-name').textContent;
-					const roomImageElement = card.querySelector('.summary-room-image');
-					
-					document.getElementById('summaryRoomName').textContent = roomName;
-					// Update the image source in the summary section
-					summaryRoomImage.src = roomImageElement ? roomImageElement.src : '/assets/images/carousel/default.png';
-					
-					calculateTotal();
+					if (bookingType === 'package') {
+						roomCards.forEach(c => c.classList.remove('selected'));
+						card.classList.add('selected');
+						selectedRoom = card.dataset.room;
+						selectedPackageName = card.dataset.packageName;
+						pricePerNight = parseInt(card.dataset.price) || 0;
+						
+						// Update summary
+						const roomName = card.querySelector('.room-name').textContent;
+						const roomImageElement = card.querySelector('.summary-room-image');
+						
+						document.getElementById('summaryRoomName').textContent = roomName;
+						// Update the image source in the summary section
+						summaryRoomImage.src = roomImageElement ? roomImageElement.src : '/assets/images/carousel/default.png';
+						
+						calculateTotal();
+					}
 				});
 			});
 
@@ -352,16 +574,21 @@
 				calculateTotal();
 			});
 
+			const childrenSelect = document.getElementById('children');
 			guestsSelect.addEventListener('change', updateSummary);
+			childrenSelect.addEventListener('change', updateSummary);
 
 			function updateSummary() {
 				const checkIn = checkInInput.value;
 				const checkOut = checkOutInput.value;
 				const guests = guestsSelect.value;
+				const children = childrenSelect.value;
 				
 				document.getElementById('summaryCheckIn').textContent = checkIn || 'Not selected';
 				document.getElementById('summaryCheckOut').textContent = checkOut || 'Not selected';
-				document.getElementById('summaryGuests').textContent = guests + (guests == 1 ? ' Guest' : ' Guests');
+				const guestText = guests + (guests == 1 ? ' Adult' : ' Adults');
+				const childrenText = children > 0 ? ', ' + children + (children == 1 ? ' Child' : ' Children') : '';
+				document.getElementById('summaryGuests').textContent = guestText + childrenText;
 			}
 
 			function calculateTotal() {
@@ -389,14 +616,38 @@
 					document.getElementById('subtotal').textContent = `$${subtotal.toFixed(0)}`;
 					document.getElementById('tax').textContent = `$${tax.toFixed(0)}`;
 					document.getElementById('totalAmount').textContent = `$${total.toFixed(0)}`;
+				} else {
+					document.getElementById('roomRate').textContent = `Not selected`;
+					document.getElementById('subtotal').textContent = `N/A`;
+					document.getElementById('tax').textContent = `N/A`;
+					document.getElementById('totalAmount').textContent = `N/A`;
 				}
 			}
 
-			// Select first room by default
-			if (roomCards.length > 0) {
+			function calculateTotalAmount() {
+				const checkIn = checkInInput.value;
+				const checkOut = checkOutInput.value;
+
+				if (checkIn && checkOut && pricePerNight) {
+					const diffTime = new Date(checkOut) - new Date(checkIn);
+					const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+					if (nights > 0) {
+						const subtotal = pricePerNight * nights;
+						const tax = subtotal * 0.15;
+						return subtotal + tax;
+					}
+				}
+				return 0;
+			}
+
+			// Select first room by default (only for package type)
+			if (bookingType === 'package' && roomCards.length > 0) {
 				roomCards[0].click();
+			} else if (bookingType === 'stayOnly' && stayOnlyCards.length > 0) {
+				// Select first stay-only accommodation by default
+				stayOnlyCards[0].click();
 			} else {
-				// Initialize summary with default price if no rooms are present
+				// Initialize summary with default price if no options are present
 				calculateTotal(); 
 			}
 
@@ -451,10 +702,18 @@
 			// Step 1 to Step 2
 			continueToStep2Btn.addEventListener('click', () => {
 				// Validate step 1
-				if (!selectedRoom) {
-					alert('Please select a room package first.');
-					return;
+				if (bookingType === 'package') {
+					if (!selectedRoom || !selectedPackageName) {
+						alert('Please select a package first.');
+						return;
+					}
+				} else {
+					if (!selectedStayOnly || !selectedHotelName) {
+						alert('Please select an accommodation first.');
+						return;
+					}
 				}
+				
 				if (!checkInInput.value || !checkOutInput.value) {
 					alert('Please select check-in and check-out dates');
 					return;
@@ -514,12 +773,96 @@
 			});
 			
 			// Confirm Booking
-			confirmBookingBtn.addEventListener('click', () => {
-				// Here you would submit the booking
-				alert('Booking confirmed! Redirecting to booking confirmation...');
-				// For real submission, you'd collect all data and send a POST request here
-				// window.location.href = '/api/book';
+			confirmBookingBtn.addEventListener('click', async () => {
+				const fullName = document.getElementById('fullName').value.trim();
+				const email = document.getElementById('email').value.trim();
+				const phone = document.getElementById('phone').value.trim();
+				const specialRequests = document.getElementById('specialRequests').value.trim();
+				const checkIn = checkInInput.value;
+				const checkOut = checkOutInput.value;
+				const adults = parseInt(guestsSelect.value);
+				const children = parseInt(childrenSelect.value) || 0;
+
+				// Validate all fields
+				if (!fullName || !email || !phone || !checkIn || !checkOut || !adults) {
+					alert('Please fill in all required fields');
+					return;
+				}
+
+				if (bookingType === 'package' && !selectedPackageName) {
+					alert('Please select a package');
+					return;
+				}
+
+				if (bookingType === 'stayOnly' && (!selectedStayOnly || !selectedHotelName)) {
+					alert('Please select an accommodation');
+					return;
+				}
+
+				// Prepare booking data
+				const bookingData = {
+					customerName: fullName,
+					phoneNumber: phone,
+					emailId: email,
+					bookingType: bookingType,
+					packageName: bookingType === 'package' ? selectedPackageName : undefined,
+					hotelName: bookingType === 'stayOnly' ? selectedHotelName : undefined,
+					arrivalDate: checkIn,
+					departureDate: checkOut,
+					adults: parseInt(adults),
+					children: parseInt(children),
+					specialRequests: specialRequests || undefined,
+					totalAmount: calculateTotalAmount()
+				};
+
+				// Disable button and show loading
+				confirmBookingBtn.disabled = true;
+				const originalText = confirmBookingBtn.innerHTML;
+				confirmBookingBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+				try {
+					const response = await fetch('/api/bookings', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						credentials: 'include',
+						body: JSON.stringify(bookingData)
+					});
+
+					const result = await response.json();
+
+					if (result.success) {
+						alert('Booking submitted successfully! You will receive a confirmation email shortly.');
+						window.location.href = '/api/user';
+					} else {
+						alert('Failed to submit booking: ' + (result.message || 'Unknown error'));
+						confirmBookingBtn.disabled = false;
+						confirmBookingBtn.innerHTML = originalText;
+					}
+				} catch (error) {
+					console.error('Error submitting booking:', error);
+					alert('An error occurred while submitting your booking. Please try again.');
+					confirmBookingBtn.disabled = false;
+					confirmBookingBtn.innerHTML = originalText;
+				}
 			});
+
+			function calculateTotalAmount() {
+				const checkIn = checkInInput.value;
+				const checkOut = checkOutInput.value;
+
+				if (checkIn && checkOut && pricePerNight) {
+					const diffTime = new Date(checkOut) - new Date(checkIn);
+					const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+					if (nights > 0) {
+						const subtotal = pricePerNight * nights;
+						const tax = subtotal * 0.15;
+						return subtotal + tax;
+					}
+				}
+				return 0;
+			}
 			
 			// Initialize progress steps on load
 			updateProgressSteps(0);

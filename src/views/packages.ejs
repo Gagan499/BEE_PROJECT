@@ -56,7 +56,7 @@
 
 	</style>
 </head>
-<body class="font-poppins bg-gray-50 overflow-x-hidden pt-[76px]">
+<body class="font-poppins bg-gray-50 overflow-x-hidden pt-[76px] transparent-navbar">
 	<%- include('partials/navbar') %>
 
 	<section class="bg-gradient-to-br from-primary-teal to-secondary-teal py-32 px-8 text-white text-center relative overflow-hidden">
@@ -121,69 +121,65 @@
 						<% } %>
 					</div>
 
-					<div class="p-7">
-						<div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
-							<i class="fas <%= 
-								pkg.icon || icons[colorIndex] %>"></i>
-						</div>
-
-						<h3 class="text-2xl font-bold text-gray-800 mb-2"><%= pkg.packageName || pkg.title %></h3>
-						<% if (pkg.location) { %>
-						<p class="text-gray-600 text-sm mb-4 flex items-center gap-1">
-							<i class="fas fa-map-marker-alt"></i>
-							<%= pkg.location %>
-						</p>
-						<% } %>
-						<% if (pkg.days || pkg.nights || pkg.duration) { %>
-						<div class="inline-flex items-center gap-1 text-gray-600 text-sm font-medium mb-4">
-							<i class="fas fa-calendar-alt"></i>
-							<strong><%= pkg.days || pkg.nights || '' %> Nights</strong> / <%= pkg.nights || pkg.days || '' %> Days
-						</div>
-						<% } %>
-
-						<ul class="list-none my-6">
+					<div class="p-5">
+						<h3 class="text-xl font-bold text-gray-800 mb-3"><%= pkg.packageName || pkg.title %></h3>
+						
+						<!-- Compressed Info Row -->
+						<div class="flex flex-wrap items-center gap-2 mb-4 text-xs text-gray-600">
+							<% if (pkg.location) { %>
+							<span class="flex items-center gap-1">
+								<i class="fas fa-map-marker-alt"></i>
+								<%= pkg.location %>
+							</span>
+							<% } %>
+							<% if (pkg.days || pkg.nights || pkg.duration) { %>
+							<span class="flex items-center gap-1">
+								<i class="fas fa-calendar-alt"></i>
+								<%= pkg.days || pkg.nights || '' %>N/<%= pkg.nights || pkg.days || '' %>D
+							</span>
+							<% } %>
 							<% if (pkg.Stay) { %>
-							<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100">
-								<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
-									<i class="fas fa-hotel"></i>
-								</div>
-								<span><%= pkg.Stay %></span>
-							</li>
+							<span class="flex items-center gap-1">
+								<i class="fas fa-hotel"></i>
+								<%= pkg.Stay %>
+							</span>
 							<% } %>
-							<% if (pkg.hotelName) { 
-							%>
-							<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100">
-								<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
-									<i class="fas fa-building"></i>
-								</div>
-								<span>Hotel: <%= pkg.hotelName %></span>
-							</li>
+							<% if (pkg.hotelName) { %>
+							<span class="flex items-center gap-1">
+								<i class="fas fa-building"></i>
+								<%= pkg.hotelName %>
+							</span>
 							<% } %>
-							<% if (pkg.Activities && pkg.Activities.length > 0) { %>
-								<% pkg.Activities.slice(0, 8).forEach(activity => { %>
-								<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100 last:border-0">
-									<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
-										<i class="fas fa-check"></i>
-									</div>
-									<span><%= activity %></span>
-								</li>
-								<% });
-							%>
-							<% } %>
-							<% if (pkg.features && pkg.features.length > 0) { %>
-								<% pkg.features.slice(0, 8).forEach(feature => { %>
-								<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100 last:border-0">
-									<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
-										<i class="fas fa-check"></i>
-									</div>
-									<span><%= feature %></span>
-								</li>
-								<% });
-							%>
-							<% } %>
-						</ul>
+						</div>
 
-						<button class="w-full py-4 border-0 rounded-xl font-semibold text-base cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradients[colorIndex] %> hover:-translate-y-0.5 hover:shadow-xl" onclick="window.location.href='/api/login'">
+						<!-- Compressed Activities/Features - Show only first 3 -->
+						<% if ((pkg.Activities && pkg.Activities.length > 0) || (pkg.features && pkg.features.length > 0)) { %>
+						<div class="mb-4">
+							<div class="flex flex-wrap gap-1.5">
+								<% if (pkg.Activities && pkg.Activities.length > 0) { %>
+									<% pkg.Activities.slice(0, 3).forEach(activity => { %>
+									<span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
+										<%= activity %>
+									</span>
+									<% }); %>
+									<% if (pkg.Activities.length > 3) { %>
+									<span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md">
+										+<%= pkg.Activities.length - 3 %> more
+									</span>
+									<% } %>
+								<% } %>
+								<% if (pkg.features && pkg.features.length > 0 && (!pkg.Activities || pkg.Activities.length <= 3)) { %>
+									<% pkg.features.slice(0, 3 - (pkg.Activities ? Math.min(pkg.Activities.length, 3) : 0)).forEach(feature => { %>
+									<span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
+										<%= feature %>
+									</span>
+									<% }); %>
+								<% } %>
+							</div>
+						</div>
+						<% } %>
+
+						<button class="w-full py-3 border-0 rounded-xl font-semibold text-sm cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradients[colorIndex] %> hover:-translate-y-0.5 hover:shadow-xl" onclick="window.location.href='/api/login'">
 							<span>Book This Package</span>
 							<i class="fas fa-arrow-right"></i>
 						</button>
@@ -195,5 +191,47 @@
 	</main>
 
 	<%- include('partials/footer') %>
+
+	<script>
+		// Navbar scroll effect - change from transparent to solid after hero section
+		document.addEventListener("DOMContentLoaded", () => {
+			const header = document.querySelector(".main-header");
+			const heroSection = document.querySelector("section.bg-gradient-to-br");
+			
+			if (header && heroSection) {
+				// Ensure navbar starts transparent (remove scrolled class if present)
+				header.classList.remove("scrolled");
+				
+				function handleScroll() {
+					const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+					const scrollPosition = window.pageYOffset || window.scrollY;
+					
+					// Change navbar when scrolling past the hero section
+					if (scrollPosition >= heroBottom - 50) {
+						header.classList.add("scrolled");
+					} else {
+						header.classList.remove("scrolled");
+					}
+				}
+				
+				// Check on initial load (after a small delay to ensure DOM is ready)
+				setTimeout(() => {
+					handleScroll();
+				}, 100);
+				
+				// Check on scroll with throttling for better performance
+				let ticking = false;
+				window.addEventListener("scroll", () => {
+					if (!ticking) {
+						window.requestAnimationFrame(() => {
+							handleScroll();
+							ticking = false;
+						});
+						ticking = true;
+					}
+				});
+			}
+		});
+	</script>
 </body>
 </html>

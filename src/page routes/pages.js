@@ -1,7 +1,9 @@
 import express from "express";
 import Booking from "../../models/booking.js";
 import Package from "../../models/package.js";
+import StayOnly from "../../models/stayOnly.js";
 import authenticator from "../Middlewares/authenticator.js";
+import adminAuth from "../Middlewares/adminAuth.js";
 
 const pageRoutes = express.Router();
 
@@ -96,19 +98,19 @@ pageRoutes.get("/admin", authenticator, async (req, res) => {
   }
 });
 
-pageRoutes.get("/book", authenticator, (req, res) => {
-  //insert data retrieval and preparation logic here
-  res.render("booking.ejs");
-});
-
 pageRoutes.get("/booking", authenticator, async (req, res) => {
   try {
     // Fetch available rooms/packages for booking
     const packages = await Package.find({}).lean();
-    res.render("booking_flow.ejs", { packages: packages || [] });
+    // Fetch stay-only accommodations
+    const stayOnlyList = await StayOnly.find({ isActive: true }).lean();
+    res.render("booking_flow.ejs", { 
+      packages: packages || [],
+      stayOnlyList: stayOnlyList || []
+    });
   } catch (err) {
     console.error("Failed to load booking data:", err);
-    res.render("booking_flow.ejs", { packages: [] });
+    res.render("booking_flow.ejs", { packages: [], stayOnlyList: [] });
   }
 });
 
@@ -120,6 +122,16 @@ pageRoutes.get("/packages", async (req, res) => {
     console.error("Failed to load packages:", err);
     res.render("packages.ejs", { packages: [] });
   }
+});
+
+// Admin package creation page
+pageRoutes.get("/create-package", adminAuth, (req, res) => {
+  res.render("create-package.ejs");
+});
+
+// Admin stay-only creation page
+pageRoutes.get("/create-stay-only", adminAuth, (req, res) => {
+  res.render("create-stay-only.ejs");
 });
 
 export default pageRoutes;

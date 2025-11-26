@@ -18,6 +18,54 @@
     transition: background-color 0.3s, box-shadow 0.3s;
   }
 
+  /* Transparent navbar for index and packages pages only */
+  .transparent-navbar .main-header {
+    /* FIX 1: Changed background to a darker transparent color (black with 30% opacity) */
+    background: rgba(0, 0, 0, 0.3) !important; 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: none !important;
+  }
+
+  .transparent-navbar .main-header.scrolled {
+    background: var(--bg-color, white) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+  }
+
+  /* Text colors for transparent navbar */
+  .transparent-navbar .main-header:not(.scrolled) .logo-text h1 {
+    color: white;
+  }
+
+  .transparent-navbar .main-header:not(.scrolled) .nav-menu li a {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .transparent-navbar .main-header:not(.scrolled) .nav-menu li a:hover,
+  .transparent-navbar .main-header:not(.scrolled) .nav-menu li a.active {
+    color: white;
+    border-bottom-color: white;
+  }
+
+  .transparent-navbar .main-header:not(.scrolled) .mobile-menu-btn,
+  .transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop {
+    color: white;
+  }
+
+  .transparent-navbar .main-header:not(.scrolled) .user-icon-btn {
+    color: white;
+  }
+
+  /* Dark mode transparent navbar */
+  .dark .transparent-navbar .main-header {
+    background: rgba(31, 41, 55, 0.5) !important; /* Darkened transparency for dark mode */
+  }
+
+  .dark .transparent-navbar .main-header.scrolled {
+    background: var(--bg-color, #1f2937) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+  }
+
   .header-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -126,18 +174,164 @@
     font-size: 1.5rem;
     color: var(--text-color, #2c3e50);
     cursor: pointer;
-    transition: color 0.3s;
+    transition: all 0.3s;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
   }
   
   .mobile-menu-btn:hover, .theme-toggle-desktop:hover {
       color: var(--primary-teal);
+      background: rgba(0, 128, 128, 0.1);
+  }
+
+  /* Interactive Hamburger Animation */
+  .mobile-menu-btn {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: currentColor;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  /* User Dropdown for Desktop/Tablet */
+  .user-dropdown {
+    position: relative;
+  }
+
+  .user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--bg-color, white);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;
+  }
+
+  .user-dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .user-dropdown-menu .dropdown-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .user-dropdown-menu .dropdown-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-teal);
+  }
+
+  .user-dropdown-menu .dropdown-header .user-info {
+    flex: 1;
+  }
+
+  .user-dropdown-menu .dropdown-header .user-info .user-name {
+    font-weight: 600;
+    color: var(--text-color, #2c3e50);
+    font-size: 0.95rem;
+  }
+
+  .user-dropdown-menu .dropdown-header .user-info .user-email {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary, #5f6368);
+  }
+
+  .user-dropdown-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-color, #2c3e50);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .user-dropdown-menu .dropdown-item:last-child {
+    border-bottom: none;
+  }
+
+  .user-dropdown-menu .dropdown-item:hover {
+    background: rgba(0, 128, 128, 0.1);
+    color: var(--primary-teal);
+  }
+
+  .user-dropdown-menu .dropdown-item i {
+    width: 20px;
+    text-align: center;
+    color: var(--primary-teal);
+  }
+
+  .user-dropdown-menu .dropdown-item.logout {
+    color: #dc2626;
+  }
+
+  .user-dropdown-menu .dropdown-item.logout:hover {
+    background: rgba(220, 38, 38, 0.1);
+  }
+
+  .user-dropdown-menu .dropdown-item.logout i {
+    color: #dc2626;
+  }
+
+  .dark .user-dropdown-menu {
+    background: #1f2937;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark .user-dropdown-menu .dropdown-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .user-dropdown-menu .dropdown-item {
+    color: var(--text-color);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
   }
 
   /* Dark Mode Styles */
   .dark .main-header {
-    --bg-color: #1f2937; /* Gray-800 */
+    --bg-color: #1f2937;
+    /* Gray-800 */
     --text-color: #f3f4f6; /* Gray-100 */
-    --text-color-secondary: #d1d5db; /* Gray-300 */
+    --text-color-secondary: #d1d5db;
+    /* Gray-300 */
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
   
@@ -162,8 +356,15 @@
           gap: 1rem;
       }
       .sign-in-btn, .theme-toggle-desktop {
-          display: none; /* Hide desktop elements on mobile */
+          display: none;
+          /* Hide desktop elements on mobile */
       }
+      
+      /* FIX 2: Hide desktop user icon on mobile */
+      #userIconDesktop {
+          display: none !important;
+      }
+      
       .mobile-menu-btn {
           display: block;
       }
@@ -196,8 +397,8 @@
       </div>
     </div>
     
-    <!-- Desktop Navigation and Controls -->
     <div class="flex items-center gap-6">
+        
         <nav class="hidden lg:block">
             <ul class="nav-menu">
                 <li><a href="/" id="nav-home">Home</a></li>
@@ -210,25 +411,47 @@
         </nav>
         
         <div class="auth-controls">
-            <!-- Desktop Theme Toggle -->
-            <button class="theme-toggle-desktop" id="themeToggleDesktop" aria-label="Toggle Theme">
+            <button 
+                class="theme-toggle-desktop" id="themeToggleDesktop" aria-label="Toggle Theme">
                 <i class="fas fa-sun" id="themeIconDesktop"></i>
             </button>
             
-            <!-- Desktop User Icon (for logged in users) -->
-            <a href="#" id="userIconDesktop" class="user-icon-btn hidden" aria-label="User Profile">
-                <i class="fas fa-user-circle"></i>
-            </a>
+            <div class="user-dropdown hidden" id="userDropdownDesktop">
+                <a href="#" id="userIconDesktop" class="user-icon-btn" aria-label="User Profile">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+                <div class="user-dropdown-menu" id="userDropdownMenu">
+                    <div class="dropdown-header">
+                        <img src="https://i.pravatar.cc/40" alt="User Avatar" id="dropdownUserAvatar" class="w-10 h-10 rounded-full border-2 border-primary-teal object-cover" />
+                        <div class="user-info">
+                            <div class="user-name" id="dropdownUserName">User Name</div>
+                            <div class="user-email" id="dropdownUserEmail">user@example.com</div>
+                        </div>
+                    </div>
+                    <a href="#" id="dropdownUserInfo" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        <span>User Info</span>
+                    </a>
+                    <a href="/api/change-password" class="dropdown-item">
+                        <i class="fas fa-key"></i>
+                        <span>Change Password</span>
+                    </a>
+                    <a href="#" id="dropdownLogout" class="dropdown-item logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
 
-            <!-- Mobile Menu and Theme Toggle Group -->
             <div class="mobile-group lg:hidden">
-                <!-- Mobile Theme Toggle -->
                 <button class="theme-toggle-mobile" id="themeToggleMobile" aria-label="Toggle Theme">
+             
                     <i class="fas fa-sun" id="themeIconMobile"></i>
                 </button>
-                <!-- Hamburger Button -->
-                <button class="mobile-menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i>
+                <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
         </div>
@@ -236,74 +459,113 @@
   </div>
 </header>
 
-<!-- Mobile Menu Overlay -->
 <div
   id="overlay"
   class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"
 ></div>
 
-<!-- Mobile Side Menu (Teal Theme and Responsive) -->
 <div
   id="sideMenu"
-  class="fixed top-0 right-0 w-64 h-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-lg flex flex-col justify-between"
+  class="fixed top-0 right-0 w-80 h-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-2xl flex flex-col"
 >
-  <div>
+  <!-- Header with User Info -->
+  <div class="bg-gradient-to-br from-primary-teal to-secondary-teal text-white p-6">
     <button
       id="closeBtn"
-      class="absolute top-4 left-4 text-2xl text-gray-800 dark:text-white focus:outline-none"
+      class="absolute top-4 right-4 text-2xl text-white focus:outline-none hover:opacity-80 transition-opacity"
     >
-      &times;
+      <i class="fas fa-times"></i>
     </button>
     
-    <!-- Mobile User Details (Teal Accent) -->
     <div
       id="user_detail"
-      class="flex items-center justify-center gap-3 pt-16 pb-4 border-b border-gray-200 dark:border-gray-700 hidden"
+      class="flex items-center gap-4 pt-8 pb-4 hidden"
     >
         <img
             src="https://i.pravatar.cc/40"
             alt="User Avatar"
-            class="w-10 h-10 rounded-full border-2 border-primary-teal object-cover"
-        />
-        <p id="who_username" class="text-lg font-medium text-gray-800 dark:text-white"></p>
+            id="mobile_user_avatar"
+            class="w-16 h-16 rounded-full border-3 border-white object-cover shadow-lg"
+          />
+        <div>
+          <p id="who_username" class="text-xl font-semibold text-white mb-1"></p>
+          <p id="mobile_user_email" class="text-sm text-white/80"></p>
+        </div>
     </div>
 
-
-    <ul class="mt-4 space-y-1">
-      <li>
-        <a href="/" class="block text-lg py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">Home</a>
-      </li>
-      <li>
-        <a href="/api/packages" class="block text-lg py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">Packages</a>
-      </li>
-      <li>
-        <a href="#" id="mobile-contact" class="block text-lg py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">Contact Us</a>
-      </li>
-      <li id="mobile-booking-li" style="display: none;">
-        <a href="/api/booking" class="block text-lg py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">Booking</a>
-      </li>
-      <li id="mobile-my-bookings-li" style="display: none;">
-        <a id="mobile-my-bookings" href="" class="block text-lg py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">My Bookings</a>
-      </li>
-    </ul>
+    <!-- Guest View -->
+    <div id="guest_view" class="pt-8 pb-4">
+      <p class="text-lg font-semibold text-white">Welcome Guest</p>
+      <p class="text-sm text-white/80">Sign in to access your account</p>
+    </div>
   </div>
 
-  <!-- Bottom controls -->
-  <div class="mb-4 border-t border-gray-200 dark:border-gray-700 pt-4 px-4">
-    <div class="space-y-1">
-      <a
-        id="change-password"
-        href="/api/change-password"
-        class="block text-lg py-2 px-4 rounded-lg text-primary-teal dark:text-secondary-teal hover:bg-gray-100 dark:hover:bg-gray-700 hidden"
-        >Change Password</a
-      >
-      <a
-        id="authLinkMobile"
-        href="/api/login"
-        class="block text-lg py-2 px-4 rounded-lg bg-primary-teal text-white hover:opacity-90 transition-opacity"
-        >Login</a
-      >
+  <!-- Navigation Menu -->
+  <div class="flex-1 overflow-y-auto">
+    <ul class="mt-4 space-y-1 px-4">
+      <li>
+        <a href="/" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <i class="fas fa-home text-primary-teal w-5"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/api/packages" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <i class="fas fa-suitcase text-primary-teal w-5"></i>
+          <span>Packages</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" id="mobile-contact" 
+            class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <i class="fas fa-envelope text-primary-teal w-5"></i>
+          <span>Contact Us</span>
+        </a>
+      </li>
+      <li id="mobile-booking-li" style="display: none;">
+        <a href="/api/booking" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <i class="fas fa-calendar-check text-primary-teal w-5"></i>
+          <span>Booking</span>
+        </a>
+      </li>
+      <li id="mobile-my-bookings-li" style="display: none;">
+        <a id="mobile-my-bookings" href="" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <i class="fas fa-book text-primary-teal w-5"></i>
+          <span>My Bookings</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Actions (when logged in) -->
+    <div id="mobile-user-actions" class="mt-4 px-4 hidden">
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+        <a
+          href="#" id="mobile-user-info"
+          class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        >
+          <i class="fas fa-user text-primary-teal w-5"></i>
+          <span>User Info</span>
+        </a>
+        <a
+          id="change-password"
+          href="/api/change-password"
+          class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        >
+          <i class="fas fa-key text-primary-teal w-5"></i>
+          <span>Change Password</span>
+        </a>
+      </div>
     </div>
+  </div>
+
+  <!-- Footer with Auth Button -->
+  <div class="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800">
+    <a
+      id="authLinkMobile"
+      href="/api/login"
+      class="block text-center text-lg py-3 px-4 rounded-lg bg-primary-teal text-white hover:opacity-90 transition-opacity font-semibold"
+      >Login</a
+    >
   </div>
 </div>
 
@@ -312,7 +574,7 @@
   const sideMenu = document.getElementById("sideMenu");
   const closeBtn = document.getElementById("closeBtn");
   const overlay = document.getElementById("overlay");
-  const userIconDesktop = document.getElementById("userIconDesktop");
+  let base_api = window.location.origin;
   
   const themeToggleDesktop = document.getElementById("themeToggleDesktop");
   const themeToggleMobile = document.getElementById("themeToggleMobile");
@@ -349,23 +611,74 @@
   
   themeToggleDesktop.addEventListener('click', toggleTheme);
   themeToggleMobile.addEventListener('click', toggleTheme);
-  
   // --- Mobile Menu Logic ---
   function openMenu() {
     sideMenu.classList.remove("translate-x-full");
     overlay.classList.remove("hidden");
-    document.body.style.overflow = 'hidden'; // Prevent scrolling background
+    menuBtn.classList.add("active");
+    document.body.style.overflow = 'hidden';
   }
 
   function closeMenu() {
     sideMenu.classList.add("translate-x-full");
     overlay.classList.add("hidden");
+    menuBtn.classList.remove("active");
     document.body.style.overflow = '';
   }
 
-  menuBtn.addEventListener("click", openMenu);
+  menuBtn.addEventListener("click", () => {
+    if (sideMenu.classList.contains("translate-x-full")) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
   closeBtn.addEventListener("click", closeMenu);
   overlay.addEventListener("click", closeMenu);
+
+  // --- User Dropdown Logic (Desktop/Tablet) ---
+  const userDropdownDesktop = document.getElementById("userDropdownDesktop");
+  const userDropdownMenu = document.getElementById("userDropdownMenu");
+  const userIconDesktop = document.getElementById("userIconDesktop");
+  const dropdownLogout = document.getElementById("dropdownLogout");
+  const dropdownUserInfo = document.getElementById("dropdownUserInfo");
+
+  // Toggle dropdown
+  if (userIconDesktop) {
+    userIconDesktop.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      userDropdownMenu.classList.toggle("show");
+    });
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (userDropdownDesktop && !userDropdownDesktop.contains(e.target)) {
+      userDropdownMenu.classList.remove("show");
+    }
+  });
+
+  // Handle logout from dropdown
+  if (dropdownLogout) {
+    dropdownLogout.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await fetch(`${base_api}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      window.location.href = "/api/login";
+    });
+  }
+
+  // Handle user info click
+  if (dropdownUserInfo) {
+    dropdownUserInfo.addEventListener("click", (e) => {
+      e.preventDefault();
+      const bookingLinkTarget = document.getElementById("nav-my-bookings")?.href || "/api/user";
+      window.location.href = bookingLinkTarget;
+    });
+  }
 
   // --- Contact Us scroll functionality ---
   const navContact = document.getElementById("nav-contact");
@@ -374,7 +687,6 @@
   function handleContactClick(e) {
     e.preventDefault();
     const currentPath = window.location.pathname;
-    
     if (currentPath === '/' || currentPath === '/api/' || currentPath === '/api/index') {
       const contactSection = document.getElementById("booking");
       if (contactSection) {
@@ -408,32 +720,45 @@
   const mobileBookingLi = document.getElementById("mobile-booking-li");
   const navAuthLi = document.getElementById("nav-auth-li");
   
-  let base_api = window.location.origin;
-  
   async function checkAuthStatus() {
     try {
       const response = await fetch(`${base_api}/auth/login/status`, {
         method: "GET",
         credentials: "include",
       });
-      
       if (response.ok) {
         const data = await response.json();
-        
         // User is logged in
-        navAuthLi.style.display = 'none'; // Hide the "Sign In" button
+        navAuthLi.style.display = 'none';
+        // Hide the "Sign In" button
 
-        userIconDesktop.classList.remove("hidden"); // Show desktop user icon
+        userDropdownDesktop.classList.remove("hidden");
+        // Show desktop user dropdown
         user_detail.classList.remove("hidden");
         who_username.textContent = data.name;
-        change_password.classList.remove("hidden");
+        document.getElementById("mobile_user_email").textContent = data.email || "";
+        document.getElementById("mobile-user-actions").classList.remove("hidden");
+        document.getElementById("guest_view").classList.add("hidden");
         
+        // Update dropdown user info
+        document.getElementById("dropdownUserName").textContent = data.name;
+        document.getElementById("dropdownUserEmail").textContent = data.email || "";
+        
+        // Update mobile user avatar
+        const mobileAvatar = document.getElementById("mobile_user_avatar");
+        if (mobileAvatar) {
+          mobileAvatar.src = `https://i.pravatar.cc/40?u=${data.email || data.name}`;
+        }
+        const dropdownAvatar = document.getElementById("dropdownUserAvatar");
+        if (dropdownAvatar) {
+          dropdownAvatar.src = `https://i.pravatar.cc/40?u=${data.email || data.name}`;
+        }
         // Show Booking link
         navBookingLi.style.display = "block";
         mobileBookingLi.style.display = "block";
-        
         // Set the link target for My Bookings/All Bookings
-        const bookingLinkTarget = (data.name === "Admin") ? "/api/admin" : "/api/user";
+        const bookingLinkTarget = (data.name === "Admin") ?
+            "/api/admin" : "/api/user";
         const bookingLinkText = (data.name === "Admin") ? "All Bookings" : "My Bookings";
 
         navMyBookings.textContent = bookingLinkText;
@@ -443,11 +768,9 @@
         mobileMyBookings.textContent = bookingLinkText;
         mobileMyBookings.href = bookingLinkTarget;
         mobileMyBookingsLi.style.display = "block";
-        
         // Update Mobile Auth Link for Logout
         authLinkMobile.textContent = "Logout";
         authLinkMobile.href = "#";
-
         // Logout handler
         const handleLogout = async (e) => {
           e.preventDefault();
@@ -459,16 +782,22 @@
         };
 
         authLinkMobile.addEventListener("click", handleLogout);
-        userIconDesktop.addEventListener("click", (e) => {
+        
+        // Mobile user info click
+        const mobileUserInfo = document.getElementById("mobile-user-info");
+        if (mobileUserInfo) {
+          mobileUserInfo.addEventListener("click", (e) => {
             e.preventDefault();
-            // Go to the user's main booking/admin page when clicking the icon
             window.location.href = bookingLinkTarget;
-        });
-
+            closeMenu();
+          });
+        }
       } else {
         // Not logged in
         navAuthLi.style.display = 'block';
-        userIconDesktop.classList.add("hidden");
+        userDropdownDesktop.classList.add("hidden");
+        document.getElementById("guest_view").classList.remove("hidden");
+        document.getElementById("mobile-user-actions").classList.add("hidden");
         // Ensure Sign In links are correct (default)
         authLink.textContent = "Sign In";
         authLink.href = "/api/login";
@@ -492,7 +821,6 @@
   }
   
   checkAuthStatus();
-
   // Highlight active page
   const currentPath = window.location.pathname;
   const navLinks = {
@@ -504,7 +832,6 @@
     '/api/user': 'nav-my-bookings',
     '/api/admin': 'nav-my-bookings'
   };
-
   if (navLinks[currentPath]) {
     const activeLink = document.getElementById(navLinks[currentPath]);
     if (activeLink) {

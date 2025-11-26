@@ -3,6 +3,7 @@ import Booking from "../../models/booking.js";
 import { getIO } from "../../config/socket.js";
 import { DefaultEmail,AcceptRequestEmail,RejectRequestEmail } from "./bookings_mail.js";
 import { validateEmail } from "./emailValidator.js";
+import adminAuth from "../Middlewares/adminAuth.js";
 
 const bookingsRouter = express.Router();
 
@@ -138,9 +139,23 @@ bookingsRouter.post("/", async (req, res) => {
 
     await doc.save();
     
+    // Prepare booking data for email
+    const bookingDataForEmail = {
+      name: customerName,
+      bookingType: bookingType,
+      packageName: packageName,
+      hotelName: hotelName,
+      arrivalDate: arrivalDate,
+      departureDate: departureDate,
+      adults: Number(adults),
+      children: children != null ? Number(children) : 0,
+      totalAmount: doc.totalAmount,
+      specialRequests: doc.specialRequests
+    };
+    
     // Send email asynchronously - don't fail booking if email fails
     try {
-      await DefaultEmail(emailId, req, res);
+      await DefaultEmail(emailId, bookingDataForEmail);
     } catch (emailErr) {
       console.error("Email sending failed, but booking was created:", emailErr);
       // Continue - booking is already saved
@@ -178,13 +193,27 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
         .status(404)
         .json({ success: false, message: "Booking not found" });
     
+    // Prepare booking data for email
+    const bookingDataForEmail = {
+      name: result.name,
+      bookingType: result.bookingType,
+      packageName: result.packageName,
+      hotelName: result.hotelName,
+      arrivalDate: result.arrivalDate,
+      departureDate: result.departureDate,
+      adults: result.adults,
+      children: result.children || 0,
+      totalAmount: result.totalAmount,
+      specialRequests: result.specialRequests
+    };
+
     // Send email asynchronously - don't fail status update if email fails
     try {
       if(result.status == "approved"){
-        await AcceptRequestEmail(result.email, req, res);
+        await AcceptRequestEmail(result.email, bookingDataForEmail);
       }
       if(result.status == "rejected"){
-        await RejectRequestEmail(result.email, req, res);
+        await RejectRequestEmail(result.email, bookingDataForEmail);
       }
     } catch (emailErr) {
       console.error("Email sending failed, but status was updated:", emailErr);
@@ -209,6 +238,84 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
     return res
       .status(500)
       .json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+// Get single booking by ID (Admin only)
+bookingsRouter.get("/:id", async (req, res) => {
+  try {
+    const bookingData = await Booking.findById(req.params.id).lean();
+    if (!bookingData) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      booking: bookingData,
+    });
+  } catch (error) {
+    console.error("Error fetching booking:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch booking.",
+    });
+  }
+});
+
+// Update booking (Admin only)
+bookingsRouter.put("/:id", adminAuth, async (req, res) => {
+  try {
+    const bookingData = await Booking.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!bookingData) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Booking updated successfully!",
+      booking: bookingData,
+    });
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to update booking.",
+    });
+  }
+});
+
+// Delete booking (Admin only)
+bookingsRouter.delete("/:id", adminAuth, async (req, res) => {
+  try {
+    const bookingData = await Booking.findByIdAndDelete(req.params.id);
+
+    if (!bookingData) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Booking deleted successfully!",
+    });
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete booking.",
+    });
   }
 });
 

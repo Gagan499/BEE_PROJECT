@@ -15,6 +15,8 @@ import globalMiddlewares from "./Middlewares/golbalMiddlewares.js";
 import authRouter from "./routes/auth.js";
 import bookingsRouter from "./routes/bookings.js";
 import contactRouter from "./routes/contact.js";
+import packagesRouter from "./routes/packages.js";
+import stayOnlyRouter from "./routes/stayOnly.js";
 import Package from "../models/package.js";
 
 dotenv.config();
@@ -60,6 +62,8 @@ app.use("/api", pageRoutes);
 app.use("/auth", authRouter);
 app.use("/api/bookings", bookingsRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/packages", packagesRouter);
+app.use("/api/stay-only", stayOnlyRouter);
 
 app.get("/", async (req, res) => {
   try {
@@ -69,69 +73,6 @@ app.get("/", async (req, res) => {
     console.error("Error fetching packages:", error);
     res.render("index.ejs", { packages: [] });
   }
-});
-
-const samplePackages = [
-  {
-    title: "The Bali Package",
-    days: 4,
-    nights: 4,
-    desc: "Experience the beauty of Bali with guided tours, beaches, and cultural sites.",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-  },
-  {
-    title: "Swiss Alps Adventure",
-    days: 6,
-    nights: 5,
-    desc: "Explore the Swiss Alps with scenic train rides and mountain hikes.",
-    img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-  },
-  {
-    title: "Maldives Escape",
-    days: 5,
-    nights: 4,
-    desc: "Relax in the Maldives with luxury resorts and crystal-clear waters.",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-  },
-  {
-    title: "Jaipur Heritage",
-    days: 3,
-    nights: 2,
-    desc: "Discover Jaipur's palaces, forts, and vibrant markets.",
-    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-  },
-  {
-    title: "Los Angeles Fun",
-    days: 4,
-    nights: 3,
-    desc: "Enjoy the sights and sounds of LA, from Hollywood to Santa Monica.",
-    img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca",
-  },
-  {
-    title: "Bali Adventure",
-    days: 7,
-    nights: 6,
-    desc: "A week-long adventure in Bali with surfing, temples, and food tours.",
-    img: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368",
-  },
-  {
-    title: "Paris Romance",
-    days: 5,
-    nights: 4,
-    desc: "Romantic getaway in Paris with Seine cruises and Eiffel Tower views.",
-    img: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b",
-  },
-  {
-    title: "Tokyo Explorer",
-    days: 6,
-    nights: 5,
-    desc: "Dive into Tokyo's culture, cuisine, and neon-lit nightlife.",
-    img: "https://images.unsplash.com/photo-1509228468518-180dd4864904",
-  },
-];
-
-app.get("/packages", (req, res) => {
-  res.render("packages", { packages: samplePackages });
 });
 
 // Socket.IO basic connection log

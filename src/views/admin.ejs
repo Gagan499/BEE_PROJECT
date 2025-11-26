@@ -46,12 +46,22 @@
 				<h1 class="text-4xl font-bold text-gray-800 mb-2">Pending Booking Requests</h1>
 				<p class="text-gray-500">Review and manage incoming booking requests</p>
 			</div>
-			<% 
-				const pendingCount = bookings.filter(b => b.status === 'pending').length;
-			%>
-			<div class="teal-gradient text-white px-5 py-2 rounded-full text-sm font-semibold inline-flex items-center gap-2">
-				<i class="fas fa-clock"></i>
-				<span><%= pendingCount %> Pending</span>
+			<div class="flex items-center gap-4">
+				<a href="/api/create-package" class="teal-gradient text-white px-5 py-2 rounded-lg text-sm font-semibold inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
+					<i class="fas fa-suitcase"></i>
+					<span>Create Package</span>
+				</a>
+				<a href="/api/create-stay-only" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-semibold inline-flex items-center gap-2 hover:opacity-90 transition-opacity">
+					<i class="fas fa-bed"></i>
+					<span>Add Stay-Only</span>
+				</a>
+				<% 
+					const pendingCount = bookings.filter(b => b.status === 'pending').length;
+				%>
+				<div class="teal-gradient text-white px-5 py-2 rounded-full text-sm font-semibold inline-flex items-center gap-2">
+					<i class="fas fa-clock"></i>
+					<span><%= pendingCount %> Pending</span>
+				</div>
 			</div>
 		</div>
 
@@ -159,18 +169,26 @@
 				</div>
 				<% } %>
 
-				<% if (statusClass === 'pending') { %>
 				<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-					<button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" onclick="updateBookingStatus('<%= booking._id %>', 'approved')">
+					<% if (statusClass === 'pending') { %>
+					<button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn" onclick="updateBookingStatus('<%= booking._id %>', 'approved')">
 						<i class="fas fa-check"></i>
 						Accept Booking
 					</button>
-					<button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" onclick="updateBookingStatus('<%= booking._id %>', 'rejected')">
+					<button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn" onclick="updateBookingStatus('<%= booking._id %>', 'rejected')">
 						<i class="fas fa-times"></i>
 						Reject Booking
 					</button>
+					<% } %>
+					<button class="bg-primary-teal hover:bg-dark-teal text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn" onclick="editBooking('<%= booking._id %>')">
+						<i class="fas fa-edit"></i>
+						Edit Booking
+					</button>
+					<button class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn" onclick="deleteBooking('<%= booking._id %>')">
+						<i class="fas fa-trash"></i>
+						Delete Booking
+					</button>
 				</div>
-				<% } %>
 			</div>
 			<% });
 			%>
@@ -233,6 +251,110 @@
 			} catch (error) {
 				console.error('Error updating booking:', error);
 				alert('An error occurred while updating the booking.');
+				buttons.forEach(btn => btn.disabled = false);
+			}
+		}
+
+		// Edit Booking
+		async function editBooking(bookingId) {
+			try {
+				// Fetch booking details
+				const response = await fetch(`/api/bookings/${bookingId}`);
+				const result = await response.json();
+				
+				if (!result.success) {
+					alert('Failed to fetch booking details');
+					return;
+				}
+
+				const booking = result.booking;
+				
+				// Create edit form (simple prompt-based for now, can be enhanced with modal)
+				const newName = prompt('Customer Name:', booking.name || '');
+				if (newName === null) return; // User cancelled
+				
+				const newEmail = prompt('Email:', booking.email || '');
+				if (newEmail === null) return;
+				
+				const newPhone = prompt('Phone:', booking.phoneNumber || booking.phone || '');
+				if (newPhone === null) return;
+
+				const updateData = {
+					name: newName,
+					email: newEmail,
+					phoneNumber: newPhone,
+					...(booking.arrivalDate && { arrivalDate: booking.arrivalDate }),
+					...(booking.departureDate && { departureDate: booking.departureDate }),
+					...(booking.adults && { adults: booking.adults }),
+					...(booking.children && { children: booking.children }),
+					...(booking.specialRequests && { specialRequests: booking.specialRequests })
+				};
+
+				const updateResponse = await fetch(`/api/bookings/${bookingId}`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					credentials: 'include',
+					body: JSON.stringify(updateData)
+				});
+
+				const updateResult = await updateResponse.json();
+
+				if (updateResult.success) {
+					alert('Booking updated successfully!');
+					location.reload();
+				} else {
+					alert('Failed to update booking: ' + (updateResult.message || 'Unknown error'));
+				}
+			} catch (error) {
+				console.error('Error editing booking:', error);
+				alert('An error occurred while editing the booking.');
+			}
+		}
+
+		// Delete Booking
+		async function deleteBooking(bookingId) {
+			if (!confirm('Are you sure you want to delete this booking? This action cannot be undone.')) {
+				return;
+			}
+
+			const card = document.querySelector(`[data-booking-id="${bookingId}"]`);
+			const buttons = card ? card.querySelectorAll('.btn') : [];
+
+			buttons.forEach(btn => btn.disabled = true);
+
+			try {
+				const response = await fetch(`/api/bookings/${bookingId}`, {
+					method: 'DELETE',
+					credentials: 'include'
+				});
+
+				const result = await response.json();
+
+				if (result.success) {
+					alert('Booking deleted successfully!');
+					
+					// Remove the card with animation
+					if (card) {
+						card.style.transition = 'all 0.3s ease';
+						card.style.opacity = '0';
+						card.style.transform = 'translateX(-100%)';
+						
+						setTimeout(() => {
+							card.remove();
+							location.reload();
+						}, 300);
+					} else {
+						location.reload();
+					}
+				} else {
+					alert('Failed to delete booking: ' + (result.message || 'Unknown error'));
+					buttons.forEach(btn => btn.disabled = false);
+				}
+			} catch (error) {
+				console.error('Error deleting booking:', error);
+				alert('An error occurred while deleting the booking.');
 				buttons.forEach(btn => btn.disabled = false);
 			}
 		}

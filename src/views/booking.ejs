@@ -246,8 +246,11 @@
 								<label for="packageName" class="block text-sm font-medium text-gray-700">Package Name :</label>
 								<select id="packageName" name="packageName" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 									<option value="">Select a package</option>
-									<option value="Bali Exploration" selected>Bali Exploration</option>
-									<option value="Paradise Gateway">Paradise Gateway</option>
+									<% if (packages && packages.length > 0) { %>
+										<% packages.forEach(pkg => { %>
+											<option value="<%= pkg.packageName || pkg.title %>"><%= pkg.packageName || pkg.title %></option>
+										<% }); %>
+									<% } %>
 								</select>
 							</div>
 						</div>
@@ -419,7 +422,8 @@
 				document.getElementById('children').value = '0';
 				document.getElementById('package').checked = true;
 				slideToPanel(true);
-				document.getElementById('packageName').value = 'Bali Exploration';
+				// Reset package selection - no default value
+				document.getElementById('packageName').value = '';
 				
 				// Reset date validation
 				const arrivalDateInput = document.getElementById('arrivalDate');
