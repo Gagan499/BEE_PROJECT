@@ -139,6 +139,22 @@ bookingsRouter.post("/", async (req, res) => {
 
     await doc.save();
     
+    // Emit new booking event via WebSocket
+    try {
+      const io = getIO();
+      io.emit("new-booking", {
+        bookingId: String(doc._id),
+        name: customerName,
+        bookingType: bookingType,
+        title: packageName || hotelName || "Booking",
+        arrivalDate: arrivalDate,
+        departureDate: departureDate,
+      });
+    } catch (socketErr) {
+      console.error("WebSocket emit failed, but booking was created:", socketErr);
+      // Continue - booking is already saved
+    }
+    
     // Prepare booking data for email
     const bookingDataForEmail = {
       name: customerName,

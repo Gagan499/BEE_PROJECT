@@ -54,9 +54,14 @@
     <%- include('partials/alert') %>
 
     <div class="max-w-7xl mx-auto p-8">
-      <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-800 mb-2">My Bookings</h1>
-        <p class="text-gray-500">Manage your travel reservations</p>
+      <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">My Bookings</h1>
+          <p class="text-gray-500">Manage your travel reservations</p>
+        </div>
+        <a href="/api/booking" class="teal-gradient-bg text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg inline-flex items-center gap-2">
+          <i class="fas fa-plus"></i> New Booking
+        </a>
       </div>
 
       <% if 
@@ -151,50 +156,6 @@
 
     <%- include('partials/footer') %>
 
-    <script>
-      // View booking details
-      function 
-        viewDetails(bookingId) {
-        // For now, scroll to the booking card and highlight it
-        const card = document.querySelector(`[data-booking-id="${bookingId}"]`);
-        if (card) {
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          // Teal shadow highlight
-          card.style.boxShadow = '0 8px 24px rgba(0, 128, 128, 0.4)'; 
-          setTimeout(() => {
-            card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-          }, 2000);
-        }
-        
-        // TODO: Implement modal with full booking details
-        alert('Booking details view - coming soon!');
-      }
-
-      // Cancel booking
-      async function cancelBooking(bookingId) {
-        if (!confirm('Are you sure you want to cancel this booking?')) {
-          return;
-        }
-
-        try {
-          const response = await fetch(`/api/bookings/${bookingId}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-          if (response.ok) {
-            alert('Booking cancelled successfully!');
-            location.reload();
-          } else {
-            const error = await response.json();
-            alert('Failed to cancel booking: ' + (error.message || 'Unknown error'));
-          }
-        } catch (error) {
-          console.error('Error cancelling booking:', error);
-          alert('An error occurred while cancelling the booking.');
-        }
-      }
-    </script>
+    <script src="/assets/js/user.js"></script>
   </body>
 </html>

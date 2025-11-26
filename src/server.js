@@ -75,11 +75,24 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Socket.IO basic connection log
+// Socket.IO connection handling
 io.on("connection", (socket) => {
   console.log(chalk.green("WebSocket client connected:"), socket.id);
+  
+  // Handle disconnection
   socket.on("disconnect", () => {
     console.log(chalk.yellow("WebSocket client disconnected:"), socket.id);
+  });
+
+  // Handle errors
+  socket.on("error", (error) => {
+    console.error(chalk.red("WebSocket error:"), error);
+  });
+
+  // Optional: Send connection confirmation
+  socket.emit("connected", { 
+    message: "Connected to Palm Ways server",
+    socketId: socket.id 
   });
 });
 
