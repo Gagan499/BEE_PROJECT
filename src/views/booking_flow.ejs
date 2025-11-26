@@ -15,23 +15,55 @@
 				extend: {
 					fontFamily: {
 						'poppins': ['Poppins', 'sans-serif']
-					}
+					},
+                    colors: {
+                        'primary-teal': '#008080',
+                        'secondary-teal': '#00cec9',
+                        'dark-teal': '#1a535c',
+                        'light-mint': '#e6f7f7',
+                    }
 				}
 			}
 		}
 	</script>
 	<style>
+		/* Custom Teal Gradient for Hero */
+		.hero-banner-bg {
+			background: linear-gradient(to bottom, #008080, #00cec9); /* Teal to Turquoise */
+		}
+		
+		/* Custom Teal Gradient for Step Highlights/Buttons */
+		.teal-gradient-bg {
+			background: linear-gradient(to bottom right, #008080, #00cec9);
+		}
 
 		.room-card.selected .room-selected-badge {
 			display: block !important;
 		}
+
+		/* Styling for progress steps (Teal Theme) */
+		.step.active .w-11 {
+			@apply teal-gradient-bg text-white;
+		}
+
+		.step.active .text-base {
+			color: #008080; /* Primary Teal */
+		}
+		
+		/* Text colors */
+		.text-teal-500 {
+			color: #008080;
+		}
+		
+		.focus\:border-teal-500:focus {
+			border-color: #008080;
+		}
 	</style>
 </head>
-<body class="font-poppins bg-gradient-to-b from-orange-500 via-orange-600 to-pink-500 min-h-screen pt-[76px]">
+<body class="font-poppins bg-gradient-to-b hero-banner-bg min-h-screen pt-[76px]">
 	<%- include('partials/navbar') %>
 
-	<!-- Hero Banner -->
-	<section class="bg-gradient-to-br from-orange-500 to-orange-600 py-12 px-8 text-white text-center">
+	<section class="bg-gradient-to-br from-primary-teal to-secondary-teal py-12 px-8 text-white text-center">
 		<div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm mb-4">
 			<i class="fas fa-shield-alt"></i>
 			<span>🔒 Secure Booking</span>
@@ -40,16 +72,16 @@
 		<p class="text-lg opacity-95">Book your luxurious stay and create unforgettable memories</p>
 	</section>
 
-	<!-- Progress Steps -->
 	<section class="max-w-6xl -mt-8 mx-auto px-8 relative z-10">
 		<div class="bg-white rounded-[50px] py-6 px-8 shadow-lg flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
 			<div class="step flex items-center gap-3 active">
-				<div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gradient-to-br from-orange-500 to-orange-600 text-white">1</div>
-				<div class="text-base font-medium text-orange-500">Select Room</div>
+				<div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg teal-gradient-bg text-white">1</div>
+				<div class="text-base font-medium text-primary-teal">Select Room</div>
 			</div>
 			<div class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"></div>
 			<div class="step flex items-center gap-3">
-				<div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400">2</div>
+				<div 
+					class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400">2</div>
 				<div class="text-base font-medium text-gray-500">Guest Details</div>
 			</div>
 			<div class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"></div>
@@ -60,28 +92,29 @@
 		</div>
 	</section>
 
-	<!-- Main Content -->
 	<main class="max-w-7xl mx-auto my-12 px-8 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8">
-		<!-- Step 1: Room Selection -->
 		<div class="bg-white rounded-2xl p-8 shadow-lg" id="step1">
 			<div class="flex items-center gap-3 mb-8">
-				<div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+				<div class="w-10 h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold">1</div>
 				<h2 class="text-2xl font-bold text-gray-800">Choose Your Package</h2>
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<% if (packages && packages.length > 0) { %>
 					<% packages.forEach((pkg, index) => { %>
-						<div class="room-card border-2 border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-orange-500 hover:-translate-y-1 hover:shadow-lg relative" data-room="<%= pkg._id %>" data-price="<%= pkg.price || 0 %>" data-package-name="<%= pkg.packageName || pkg.title %>">
+						<div class="room-card border-2 border-gray-200 rounded-2xl 
+							overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-teal hover:-translate-y-1 hover:shadow-lg relative" data-room="<%= pkg._id %>" data-price="<%= pkg.price || 0 %>" data-package-name="<%= pkg.packageName ||
+							pkg.title %>">
 							<div class="relative h-44">
-								<img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="w-full h-full object-cover">
+								<img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName ||
+								pkg.title %>" class="w-full h-full object-cover summary-room-image">
 								<% if (pkg.price) { %>
-								<div class="absolute top-4 right-4 bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-base">$<%= pkg.price %>/night</div>
+								<div class="absolute top-4 right-4 bg-primary-teal text-white px-4 py-2 rounded-full font-bold text-base">$<%= pkg.price %>/night</div>
 								<% } %>
 								<div class="room-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden">✓ Selected</div>
 							</div>
 							<div class="p-5">
-								<h3 class="text-lg font-bold text-gray-800 mb-3"><%= pkg.packageName || pkg.title %></h3>
+								<h3 class="text-lg font-bold text-gray-800 mb-3 room-name"><%= pkg.packageName || pkg.title %></h3>
 								<div class="flex flex-wrap gap-2 mb-4">
 									<% if (pkg.Stay) { %>
 										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.Stay %></span>
@@ -93,7 +126,8 @@
 										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.hotelName %></span>
 									<% } %>
 									<% if (pkg.Activities && pkg.Activities.length > 0) { %>
-										<span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.Activities[0] %></span>
+										<span class="bg-gray-100 
+										px-3 py-1 rounded-xl text-xs text-gray-600"><%= pkg.Activities[0] %></span>
 									<% } %>
 								</div>
 								<% if (pkg.description) { %>
@@ -101,25 +135,26 @@
 								<% } %>
 							</div>
 						</div>
-					<% }); %>
+					<% });
+				%>
 				<% } else { %>
-					<p class="text-center p-8 text-gray-500 col-span-2">No packages available at the moment. Please check back later.</p>
+					<p class="text-center p-8 text-gray-500 col-span-2">No packages available at the moment.
+					Please check back later.</p>
 				<% } %>
 			</div>
 
-			<!-- Booking Dates -->
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
 				<div class="flex flex-col gap-2">
-					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-check"></i> Check-in *</label>
-					<input type="date" id="checkIn" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-check text-primary-teal"></i> Check-in *</label>
+					<input type="date" id="checkIn" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
 				</div>
 				<div class="flex flex-col gap-2">
-					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-times"></i> Check-out *</label>
-					<input type="date" id="checkOut" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-calendar-times text-primary-teal"></i> Check-out *</label>
+					<input type="date" id="checkOut" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
 				</div>
 				<div class="flex flex-col gap-2">
-					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-users"></i> Guests *</label>
-					<select id="guests" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500">
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-users text-primary-teal"></i> Guests *</label>
+					<select id="guests" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal">
 						<option value="1">1 Guest</option>
 						<option value="2" selected>2 Guests</option>
 						<option value="3">3 Guests</option>
@@ -128,63 +163,64 @@
 				</div>
 			</div>
 
-			<button class="w-full bg-gradient-to-br from-orange-500 to-orange-600 text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer mt-8 transition-all hover:-translate-y-0.5 hover:shadow-xl" id="continueToStep2">
+			<button class="w-full bg-gradient-to-br from-primary-teal to-secondary-teal 
+				text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer mt-8 transition-all hover:-translate-y-0.5 hover:shadow-xl" id="continueToStep2">
 				Continue to Guest Details
 			</button>
 		</div>
 
-		<!-- Step 2: Guest Information -->
 		<div class="bg-white rounded-2xl p-8 shadow-lg mt-8 hidden" id="step2">
 			<div class="flex items-center gap-3 mb-8">
-				<div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+				<div class="w-10 h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold">2</div>
 				<h2 class="text-2xl font-bold text-gray-800">Guest Information</h2>
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 				<div class="flex flex-col gap-2">
-					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-user"></i> Full Name *</label>
-					<input type="text" id="fullName" placeholder="John Doe" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-user text-primary-teal"></i> Full Name *</label>
+					<input type="text" id="fullName" placeholder="John Doe" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
 				</div>
 				<div class="flex flex-col gap-2">
-					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-envelope"></i> Email Address *</label>
-					<input type="email" id="email" placeholder="john@example.com" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+					<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-envelope text-primary-teal"></i> Email Address *</label>
+					<input type="email" id="email" placeholder="john@example.com" class="px-3 py-3 border-2 border-gray-200 
+					rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
 				</div>
 			</div>
 
 			<div class="flex flex-col gap-2 mb-6">
-				<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-phone"></i> Phone Number *</label>
-				<input type="tel" id="phone" placeholder="+1 234 567 890" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-orange-500" required>
+				<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-phone text-primary-teal"></i> Phone Number *</label>
+				<input type="tel" id="phone" placeholder="+1 234 567 890" class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal" required>
 			</div>
 
 			<div class="flex flex-col gap-2">
-				<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-comment"></i> Special Requests (Optional)</label>
-				<textarea id="specialRequests" placeholder="Any special requirements..." class="min-h-[100px] px-3 py-3 border-2 border-gray-200 rounded-lg text-base font-poppins resize-y focus:outline-none focus:border-orange-500"></textarea>
+				<label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i class="fas fa-comment text-primary-teal"></i> Special Requests (Optional)</label>
+				<textarea id="specialRequests" placeholder="Any special requirements..." class="min-h-[100px] px-3 py-3 border-2 border-gray-200 rounded-lg text-base font-poppins resize-y focus:outline-none focus:border-primary-teal"></textarea>
 			</div>
 
 			<div class="flex gap-4 mt-8">
 				<button class="bg-gray-200 text-gray-600 px-6 py-4 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" id="backToStep1">
 					Back
 				</button>
-				<button class="flex-1 bg-gradient-to-br from-orange-500 to-orange-600 text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl" id="continueToStep3">
+				<button class="flex-1 bg-gradient-to-br from-primary-teal to-secondary-teal text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl" id="continueToStep3">
 					Review Booking
 				</button>
 			</div>
 		</div>
 
-		<!-- Step 3: Confirm Booking -->
 		<div class="bg-white rounded-2xl p-8 shadow-lg mt-8 hidden" id="step3">
 			<div class="flex items-center gap-3 mb-8">
-				<div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold">3</div>
+				<div class="w-10 h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold">3</div>
 				<h2 class="text-2xl font-bold text-gray-800">Confirm Your Booking</h2>
 			</div>
 
-			<div class="bg-amber-100 p-6 rounded-2xl mb-6">
+			<div class="bg-light-mint p-6 rounded-2xl mb-6">
 				<div class="flex items-center gap-3 mb-2">
-					<i class="fas fa-shield-alt text-amber-500 text-2xl"></i>
-					<h4 class="text-amber-900 text-lg font-bold">Secure Booking Guarantee</h4>
+					<i class="fas fa-shield-alt text-primary-teal text-2xl"></i>
+					<h4 class="text-dark-teal text-lg font-bold">Secure Booking Guarantee</h4>
 				</div>
-				<p class="text-amber-900 text-sm leading-relaxed">
-					Your information is encrypted and secure. Free cancellation up to 24 hours before check-in.
+				<p class="text-dark-teal text-sm leading-relaxed">
+					Your information is encrypted and secure.
+					Free cancellation up to 24 hours before check-in.
 				</p>
 			</div>
 
@@ -192,21 +228,20 @@
 				<button class="bg-gray-200 text-gray-600 px-6 py-4 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" id="backToStep2">
 					Back
 				</button>
-				<button class="flex-1 bg-gradient-to-br from-orange-500 to-orange-600 text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl" id="confirmBooking">
+				<button class="flex-1 bg-gradient-to-br from-primary-teal to-secondary-teal text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl" id="confirmBooking">
 					<i class="fas fa-check-circle"></i> Confirm Booking
 				</button>
 			</div>
 		</div>
 
-		<!-- Booking Summary -->
 		<div class="bg-white rounded-2xl p-8 shadow-lg h-fit sticky top-5">
 			<h3 class="text-xl font-bold text-gray-800 mb-6">Booking Summary</h3>
 
 			<div class="rounded-2xl overflow-hidden mb-6">
-				<img src="/assets/images/carousel/maldives.png" alt="Premium Suite" class="w-full h-36 object-cover">
+				<img src="/assets/images/carousel/maldives.png" alt="Premium Suite" class="w-full h-36 object-cover summary-room-image">
 				<div class="p-4 bg-gray-50">
 					<h4 class="text-lg font-bold text-gray-800 mb-2" id="summaryRoomName">Premium Suite</h4>
-					<div class="text-amber-400 text-sm mb-3">
+					<div class="text-secondary-teal text-sm mb-3">
 						<i class="fas fa-star"></i>
 						<i class="fas fa-star"></i>
 						<i class="fas fa-star"></i>
@@ -217,17 +252,18 @@
 			</div>
 
 			<div class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600">
-				<i class="fas fa-calendar-check w-5 text-orange-500"></i>
+				<i class="fas fa-calendar-check w-5 text-primary-teal"></i>
 				<span>Check-in:</span>
-				<strong id="summaryCheckIn">Not selected</strong>
+				<strong 
+				id="summaryCheckIn">Not selected</strong>
 			</div>
 			<div class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600">
-				<i class="fas fa-calendar-times w-5 text-orange-500"></i>
+				<i class="fas fa-calendar-times w-5 text-primary-teal"></i>
 				<span>Check-out:</span>
 				<strong id="summaryCheckOut">Not selected</strong>
 			</div>
 			<div class="flex items-center gap-2 py-3 text-sm text-gray-600">
-				<i class="fas fa-users w-5 text-orange-500"></i>
+				<i class="fas fa-users w-5 text-primary-teal"></i>
 				<span>Guests:</span>
 				<strong id="summaryGuests">1 Guest</strong>
 			</div>
@@ -247,13 +283,13 @@
 				</div>
 				<div class="flex justify-between pt-4 mt-4 border-t-2 border-gray-200 text-lg font-bold">
 					<span class="text-gray-800">Total Amount</span>
-					<span class="text-orange-500 text-xl" id="totalAmount">$966</span>
+					<span class="text-primary-teal text-xl" id="totalAmount">$966</span>
 				</div>
 			</div>
 
-			<div class="bg-emerald-50 p-4 rounded-xl mt-6">
-				<p class="text-emerald-800 text-sm mb-1"><i class="fas fa-check-circle text-emerald-500"></i> <strong>Free Cancellation</strong></p>
-				<p class="text-emerald-800 text-sm leading-relaxed">Cancel up to 24 hours before check-in for a full refund</p>
+			<div class="bg-light-mint p-4 rounded-xl mt-6">
+				<p class="text-dark-teal text-sm mb-1"><i class="fas fa-check-circle text-primary-teal"></i> <strong>Free Cancellation</strong></p>
+				<p class="text-dark-teal text-sm leading-relaxed">Cancel up to 24 hours before check-in for a full refund</p>
 			</div>
 		</div>
 	</main>
@@ -261,11 +297,13 @@
 	<%- include('partials/footer') %>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', () => {
+		document.addEventListener('DOMContentLoaded', 
+			() => {
 			const roomCards = document.querySelectorAll('.room-card');
 			const checkInInput = document.getElementById('checkIn');
 			const checkOutInput = document.getElementById('checkOut');
 			const guestsSelect = document.getElementById('guests');
+			const summaryRoomImage = document.querySelector('.summary-room-image');
 
 			let selectedRoom = null;
 			let pricePerNight = 280;
@@ -284,9 +322,11 @@
 					
 					// Update summary
 					const roomName = card.querySelector('.room-name').textContent;
-					const roomImage = card.querySelector('.room-image').src;
+					const roomImageElement = card.querySelector('.summary-room-image');
+					
 					document.getElementById('summaryRoomName').textContent = roomName;
-					document.querySelector('.summary-room-image').src = roomImage;
+					// Update the image source in the summary section
+					summaryRoomImage.src = roomImageElement ? roomImageElement.src : '/assets/images/carousel/default.png';
 					
 					calculateTotal();
 				});
@@ -306,7 +346,7 @@
 				updateSummary();
 				calculateTotal();
 			});
-
+			
 			checkOutInput.addEventListener('change', () => {
 				updateSummary();
 				calculateTotal();
@@ -318,7 +358,7 @@
 				const checkIn = checkInInput.value;
 				const checkOut = checkOutInput.value;
 				const guests = guestsSelect.value;
-
+				
 				document.getElementById('summaryCheckIn').textContent = checkIn || 'Not selected';
 				document.getElementById('summaryCheckOut').textContent = checkOut || 'Not selected';
 				document.getElementById('summaryGuests').textContent = guests + (guests == 1 ? ' Guest' : ' Guests');
@@ -328,12 +368,23 @@
 				const checkIn = checkInInput.value;
 				const checkOut = checkOutInput.value;
 
-				if (checkIn && checkOut) {
-					const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+				if (checkIn && checkOut && pricePerNight) {
+					const diffTime = new Date(checkOut) - new Date(checkIn);
+					const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+					
+					if (nights <= 0) {
+						// Reset summary to default if dates are invalid
+						document.getElementById('roomRate').textContent = `Not selected`;
+						document.getElementById('subtotal').textContent = `N/A`;
+						document.getElementById('tax').textContent = `N/A`;
+						document.getElementById('totalAmount').textContent = `N/A`;
+						return;
+					}
+
 					const subtotal = pricePerNight * nights;
 					const tax = subtotal * 0.15;
 					const total = subtotal + tax;
-
+					
 					document.getElementById('roomRate').textContent = `$${pricePerNight}/night`;
 					document.getElementById('subtotal').textContent = `$${subtotal.toFixed(0)}`;
 					document.getElementById('tax').textContent = `$${tax.toFixed(0)}`;
@@ -342,7 +393,12 @@
 			}
 
 			// Select first room by default
-			roomCards[0].click();
+			if (roomCards.length > 0) {
+				roomCards[0].click();
+			} else {
+				// Initialize summary with default price if no rooms are present
+				calculateTotal(); 
+			}
 
 			// Step Navigation
 			const step1 = document.getElementById('step1');
@@ -353,29 +409,65 @@
 			const confirmBookingBtn = document.getElementById('confirmBooking');
 			const backToStep1Btn = document.getElementById('backToStep1');
 			const backToStep2Btn = document.getElementById('backToStep2');
-
+			
 			// Progress step elements
 			const progressSteps = document.querySelectorAll('.step');
 
 			function updateProgressSteps(activeStep) {
 				progressSteps.forEach((step, index) => {
-					if (index < activeStep) {
-						step.classList.add('active');
-					} else if (index === activeStep) {
+					// Toggle active class on the main step container
+					if (index <= activeStep) {
 						step.classList.add('active');
 					} else {
 						step.classList.remove('active');
 					}
+					
+					// Update styling for the circle based on index
+					const circle = step.querySelector('.w-11');
+					const text = step.querySelector('.text-base');
+					
+					if (index === activeStep) {
+						circle.classList.add('teal-gradient-bg', 'text-white');
+						circle.classList.remove('bg-gray-100', 'text-gray-400');
+						text.classList.add('text-primary-teal');
+						text.classList.remove('text-gray-500');
+					} else if (index < activeStep) {
+						// Completed steps
+						circle.classList.add('teal-gradient-bg', 'text-white');
+						circle.classList.remove('bg-gray-100', 'text-gray-400');
+						text.classList.add('text-gray-500');
+						text.classList.remove('text-primary-teal');
+					} else {
+						// Future steps
+						circle.classList.add('bg-gray-100', 'text-gray-400');
+						circle.classList.remove('teal-gradient-bg', 'text-white');
+						text.classList.add('text-gray-500');
+						text.classList.remove('text-primary-teal');
+					}
 				});
 			}
+
 
 			// Step 1 to Step 2
 			continueToStep2Btn.addEventListener('click', () => {
 				// Validate step 1
+				if (!selectedRoom) {
+					alert('Please select a room package first.');
+					return;
+				}
 				if (!checkInInput.value || !checkOutInput.value) {
 					alert('Please select check-in and check-out dates');
 					return;
 				}
+				
+				const arrival = new Date(checkInInput.value);
+				const departure = new Date(checkOutInput.value);
+				
+				if (departure <= arrival) {
+					alert('Check-out date must be after check-in date.');
+					return;
+				}
+
 
 				step1.style.display = 'none';
 				step2.style.display = 'block';
@@ -383,16 +475,16 @@
 				updateProgressSteps(1);
 				window.scrollTo({ top: 0, behavior: 'smooth' });
 			});
-
+			
 			// Step 2 to Step 3
 			continueToStep3Btn.addEventListener('click', () => {
 				// Validate step 2
-				const fullName = document.getElementById('fullName').value;
-				const email = document.getElementById('email').value;
-				const phone = document.getElementById('phone').value;
+				const fullName = document.getElementById('fullName').value.trim();
+				const email = document.getElementById('email').value.trim();
+				const phone = document.getElementById('phone').value.trim();
 
 				if (!fullName || !email || !phone) {
-					alert('Please fill in all required fields');
+					alert('Please fill in all required fields (Full Name, Email, Phone Number)');
 					return;
 				}
 
@@ -402,7 +494,7 @@
 				updateProgressSteps(2);
 				window.scrollTo({ top: 0, behavior: 'smooth' });
 			});
-
+			
 			// Back to Step 1
 			backToStep1Btn.addEventListener('click', () => {
 				step1.style.display = 'block';
@@ -411,7 +503,7 @@
 				updateProgressSteps(0);
 				window.scrollTo({ top: 0, behavior: 'smooth' });
 			});
-
+			
 			// Back to Step 2
 			backToStep2Btn.addEventListener('click', () => {
 				step1.style.display = 'none';
@@ -420,13 +512,17 @@
 				updateProgressSteps(1);
 				window.scrollTo({ top: 0, behavior: 'smooth' });
 			});
-
+			
 			// Confirm Booking
 			confirmBookingBtn.addEventListener('click', () => {
 				// Here you would submit the booking
 				alert('Booking confirmed! Redirecting to booking confirmation...');
+				// For real submission, you'd collect all data and send a POST request here
 				// window.location.href = '/api/book';
 			});
+			
+			// Initialize progress steps on load
+			updateProgressSteps(0);
 		});
 	</script>
 </body>

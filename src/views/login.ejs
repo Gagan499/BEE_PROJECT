@@ -11,10 +11,21 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
     rel="stylesheet">
-  <!-- Tailwind CSS for the header -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome for the footer icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'primary-teal': '#008080',
+                    'secondary-teal': '#00cec9',
+                    'dark-teal': '#1a535c',
+                }
+            }
+        }
+    }
+  </script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -51,6 +62,25 @@
       transform: translateX(50%);
     }
 
+    /* New Teal Colors (Replacing purple/green) */
+    .peer-focus\:border-primary-teal:focus {
+        border-color: #008080;
+    }
+    .peer-focus\:text-secondary-teal:focus {
+        color: #00cec9;
+    }
+    .bg-primary-teal {
+        background-color: #008080;
+    }
+    .hover\:bg-dark-teal:hover {
+        background-color: #1a535c;
+    }
+    
+    /* Overlay Background (Teal Gradient) */
+    .overlay-container .overlay {
+        background: linear-gradient(to br, #00cec9, #008080); /* Turquoise to Teal */
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       #container {
@@ -62,8 +92,33 @@
         width: 100% !important;
       }
 
+      /* On mobile, ensure forms take up the full width */
+      .form-container {
+        width: 100% !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        z-index: 1 !important;
+        transition: none !important;
+        /* Ensure sign-up form is visible below sign-in on mobile */
+      }
+      
+      .form-container.sign-up-container {
+        margin-top: 2rem;
+      }
+
       .overlay-container {
-        display: none; /* hide sliding panel on mobile */
+        display: none;
+        /* hide sliding panel on mobile */
+      }
+      
+      /* New: Add padding to body on mobile if background image is not full bleed */
+      body > div.flex.items-center.justify-center {
+          padding-top: 20px;
+          padding-bottom: 20px;
+          min-height: 100vh;
       }
     }
   </style>
@@ -73,81 +128,84 @@
   style="background-image: url('/assets/images/LoginFormBG.png'); background-size: cover; background-position: center;">
 
   <div class="flex items-center justify-center min-h-screen px-4">
-    <div id="container" class="relative w-full max-w-4xl min-h-[550px] bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-700 ease-in-out">
+    <div id="container" class="relative w-full max-w-4xl min-h-[600px] bg-[#282A37]/60 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden transition-all duration-700 ease-in-out">
       
-      <!-- Sign In Form -->
       <div class="form-container sign-in-container absolute top-0 left-0 w-1/2 h-full flex items-center justify-center transition-all duration-700 ease-in-out z-20">
-        <form id="loginform" method="POST" class="flex flex-col items-start px-12 w-full max-w-sm">
+        <form id="loginform" method="POST" 
+          class="flex flex-col items-start px-12 w-full max-w-sm">
           <h2 class="text-4xl font-bold text-white mb-8">Sign In</h2>
           <div class="relative w-full my-4">
             <input id="email-signin" name="email" type="email" required
-              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
               placeholder="Email Address">
-            <label for="email-signin"
-              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm">Email Address</label>
+            <label 
+              for="email-signin"
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Email Address</label>
           </div>
           <div class="relative w-full my-4">
             <input id="password-signin" name="password" type="password" required
-              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
               placeholder="Password">
             <label for="password-signin"
-              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm">Password</label>
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Password</label>
           </div>
           <button type="submit"
-            class="w-full mt-8 py-3 text-lg font-semibold text-white bg-[#25A85B] rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
             Sign In
           </button>
         </form>
       </div>
 
-      <!-- Sign Up Form -->
       <div class="form-container sign-up-container absolute top-0 left-0 w-1/2 h-full flex items-center justify-center transition-all duration-700 ease-in-out opacity-0 z-10">
         <form id="registerform" method="POST" class="flex flex-col items-start px-12 w-full max-w-sm">
           <h2 class="text-4xl font-bold text-white mb-8">Sign Up</h2>
           <div class="relative w-full my-4">
             <input id="name-signup" name="name" type="text" required
-              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
               placeholder="Name">
             <label for="name-signup"
-              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm">Name</label>
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Name</label>
           </div>
           <div class="relative w-full my-4">
             <input id="email-signup" name="email" type="email" required
-              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
               placeholder="Email Address">
             <label for="email-signup"
-              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm">Email Address</label>
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 
+              peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Email Address</label>
           </div>
           <div class="relative w-full my-4">
             <input id="password-signup" name="password" type="password" required
-              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-purple-500"
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
               placeholder="Password">
             <label for="password-signup"
-              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-purple-400 peer-focus:text-sm">Password</label>
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Password</label>
           </div>
           <button type="submit"
-            class="w-full mt-8 py-3 text-lg font-semibold text-white bg-[#25A85B] rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
             Sign Up
           </button>
         </form>
       </div>
 
-      <!-- Overlay Container -->
+  
       <div class="overlay-container absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-transform duration-700 ease-in-out">
-        <div class="overlay relative -left-full h-full w-[200%] bg-gradient-to-br from-[#2A7B9B] to-[#16A34A] text-white transition-transform duration-700 ease-in-out">
+        <div class="overlay relative -left-full h-full w-[200%] bg-gradient-to-br from-secondary-teal to-primary-teal text-white transition-transform duration-700 ease-in-out">
           <div class="overlay-panel overlay-left absolute top-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transition-transform duration-700 ease-in-out">
             <h1 class="text-4xl font-bold">Hello, Friend!</h1>
-            <p class="text-base my-5 max-w-xs">Enter your personal details and start your journey with us</p>
+            <p class="text-base my-5 max-w-xs">Enter your 
+              personal details and start your journey with us</p>
             <button id="signIn"
-              class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
+              class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-dark-teal transition-colors duration-300">
               Sign In
             </button>
           </div>
-          <div class="overlay-panel overlay-right absolute top-0 right-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transform translate-x-0 transition-transform duration-700 ease-in-out">
+          <div class="overlay-panel overlay-right absolute top-0 right-0 
+            h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transform translate-x-0 transition-transform duration-700 ease-in-out">
             <h1 class="text-4xl font-bold">Welcome Back!</h1>
             <p class="text-base my-5 max-w-xs">To keep connected with us please login with your personal info</p>
             <button id="signUp"
-              class="px-10 py-2 text-sm font-semibel bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
+              class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-dark-teal transition-colors duration-300">
               Sign Up
             </button>
           </div>
@@ -178,6 +236,10 @@
       e.preventDefault();
       const email = document.getElementById('email-signin').value;
       const password = document.getElementById('password-signin').value;
+      const submitButton = e.submitter;
+      const originalText = submitButton.textContent;
+      submitButton.textContent = 'Logging in...';
+      submitButton.disabled = true;
 
       try {
         const response = await fetch(`${api}/auth/login`, {
@@ -193,14 +255,19 @@
           setTimeout(() => window.location.href = "/", 1500);
         } else if (response.status === 429) {
           const message = result.message || 'Login limit reached. Please try again later.';
-          const minutes = Math.ceil((result.remainingSeconds || 0) / 60);
+          const minutes = Math.ceil((result.remainingSeconds 
+            || 0) / 60);
           showAlert(`${message} (Try again in ${minutes} minute(s))`, "warning", 6000);
         } else {
-          showAlert(result.message || 'Login failed. Please check credentials.', "error");
+          showAlert(result.message ||
+            'Login failed. Please check credentials.', "error");
         }
       } catch (err) {
         console.error('Login error:', err);
         showAlert('An error occurred. Please try again.', "error");
+      } finally {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
       }
     });
 
@@ -210,12 +277,17 @@
       const name = document.getElementById('name-signup').value;
       const email = document.getElementById('email-signup').value;
       const password = document.getElementById('password-signup').value;
+      const submitButton = e.submitter;
+      const originalText = submitButton.textContent;
+      submitButton.textContent = 'Registering...';
+      submitButton.disabled = true;
 
       try {
         const response = await fetch(`${api}/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password })
+          body: JSON.stringify({ name, 
+            email, password })
         });
 
         const result = await response.json();
@@ -229,6 +301,9 @@
       } catch (err) {
         console.error('Register error:', err);
         showAlert("An error occurred during registration.", "error");
+      } finally {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
       }
     });
   </script>

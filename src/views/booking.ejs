@@ -12,10 +12,137 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
 		rel="stylesheet">
-	<!-- Tailwind CSS for the header -->
 	<script src="https://cdn.tailwindcss.com"></script>
-	<!-- Font Awesome for the footer icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<style>
+		/* Custom Teal Styles for this page, replacing Orange/Gold */
+		:root {
+			--primary-color: #008080; /* Teal */
+			--secondary-color: #00cec9; /* Turquoise */
+			--dark-color: #1a535c; /* Dark Teal */
+			--light-mint: #e6f7f7;
+		}
+		
+		/* The original style.css is linked, so these override the most important color elements */
+		.hero-section {
+			background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+			color: white;
+		}
+
+		.booking-controls .new-booking-btn {
+			background-color: var(--primary-color);
+		}
+		
+		.filter-controls button {
+			border: 1px solid var(--primary-color);
+			color: var(--primary-color);
+		}
+		
+		.tab-header .tab-btn.active {
+			border-bottom-color: var(--primary-color);
+			color: var(--primary-color);
+		}
+		
+		/* Booking Card Hover Effect - using a soft teal shadow */
+		.booking-card:hover {
+			box-shadow: 0 15px 35px rgba(0, 128, 128, 0.15) !important;
+		}
+
+		/* Modal styling - adjust colors to Teal theme */
+		.modal-content {
+			border-top: 5px solid var(--primary-color);
+		}
+		
+		.booking-form-modal input:focus, .booking-form-modal select:focus, .booking-form-modal textarea:focus {
+			border-color: var(--secondary-color);
+			box-shadow: 0 0 0 3px rgba(0, 206, 201, 0.3);
+		}
+		
+		.booking-type .radio-group input:checked + label {
+			background-color: var(--primary-color);
+		}
+
+		.submit-btn {
+			background-color: var(--primary-color);
+		}
+
+		.clear-btn {
+			background-color: var(--dark-color);
+		}
+		
+		/* Add basic responsiveness for the main content wrapper */
+		.content-wrapper {
+			max-width: 1200px;
+			margin: 2rem auto;
+			padding: 0 1rem;
+		}
+		
+		/* Mobile Layout for Controls */
+		@media (max-width: 768px) {
+			.booking-controls {
+				flex-direction: column;
+				gap: 1rem;
+			}
+			
+			.filter-controls {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 10px;
+			}
+			
+			.filter-controls button, .new-booking-btn {
+				padding: 0.75rem 1rem;
+				font-size: 0.9rem;
+				width: 100%;
+			}
+			
+			.booking-tabs {
+				padding: 0.5rem 0;
+			}
+			
+			.tab-header {
+				display: flex;
+				justify-content: space-around;
+			}
+			
+			.tab-btn {
+				flex: 1;
+				text-align: center;
+				font-size: 1rem;
+			}
+			
+			.booking-cards {
+				grid-template-columns: 1fr; /* Single column for cards on mobile */
+			}
+			
+			/* Modal form responsiveness */
+			.modal-content {
+				width: 95%;
+				max-width: 95%;
+				margin: 1rem;
+				padding: 1rem;
+			}
+			
+			.form-row {
+				flex-direction: column;
+				gap: 0;
+			}
+			
+			.form-group {
+				width: 100%;
+			}
+			
+			.form-buttons {
+				flex-direction: column-reverse;
+			}
+			
+			.form-buttons button {
+				width: 100%;
+				margin-top: 10px;
+			}
+		}
+	</style>
 </head>
 <body>
 
@@ -27,106 +154,107 @@
 	<%- include('partials/alert') %>
 
 	<main class="content-wrapper">
-		<div class="booking-controls">
-			<button class="new-booking-btn">New Booking</button>
-			<div class="filter-controls">
-				<button class="filter-btn">Filter <i class="fas fa-filter"></i></button>
-				<button class="location-btn">Dubai</button>
-				<button class="sort-btn">Sort <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
+		<div class="booking-controls flex justify-between items-center mb-6">
+			<button class="new-booking-btn bg-primary-teal text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:opacity-90 transition">New Booking</button>
+			<div class="filter-controls flex gap-3">
+				<button class="filter-btn border-primary-teal text-primary-teal px-3 py-1 rounded-lg">Filter <i class="fas fa-filter"></i></button>
+				<button class="location-btn border-primary-teal text-primary-teal px-3 py-1 rounded-lg">Dubai</button>
+				<button class="sort-btn border-primary-teal text-primary-teal px-3 py-1 rounded-lg">Sort <i class="fas fa-sort-up"></i><i class="fas fa-sort-down"></i></button>
 			</div>
 		</div>
 
-		<div class="booking-tabs">
-			<div class="tab-header">
-				<button class="tab-btn active" data-tab="upcoming">Upcoming bookings</button>
-				<button class="tab-btn" data-tab="past">Past bookings</button>
+		<div class="booking-tabs mb-6">
+			<div class="tab-header flex border-b border-gray-300">
+				<button class="tab-btn active text-primary-teal font-semibold px-4 py-2 border-b-2 border-primary-teal transition" data-tab="upcoming">Upcoming bookings</button>
+				<button class="tab-btn text-gray-500 font-semibold px-4 py-2 border-b-2 border-transparent hover:border-gray-400 transition" data-tab="past">Past bookings</button>
 			</div>
 		</div>
 
 		<div class="booking-content">
 			<div class="tab-content active" id="upcoming">
-				<div class="booking-cards">
-					<div class="booking-card">
-						<div class="hotel-name">American Hotel</div>
-						<div class="booking-details">
+				<div class="booking-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					<div class="booking-card bg-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:translate-y-[-8px] hover:shadow-xl">
+						<div class="hotel-name text-xl font-bold text-dark-color mb-3">American Hotel</div>
+						<div class="booking-details space-y-2 text-gray-600">
 							<div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
 							<div class="detail-line"><strong>From:</strong> Dubai</div>
 							<div class="detail-line"><strong>Arrival:</strong> 2025-05-05 at 11:01</div>
 							<div class="detail-line"><strong>Return:</strong> 2025-05-06 at 11:01</div>
 						</div>
-						<button class="view-booking-btn">View this booking</button>
+						<button class="view-booking-btn w-full mt-4 bg-secondary-color text-white py-2 rounded-lg font-semibold hover:bg-primary-teal transition">View this booking</button>
 					</div>
 				</div>
 			</div>
 
 			<div class="tab-content" id="past">
-				<div class="booking-cards">
-					<div class="booking-card">
-						<div class="hotel-name">Grand Palace Hotel</div>
-						<div class="booking-details">
+				<div class="booking-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					<div class="booking-card bg-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:translate-y-[-8px] hover:shadow-xl">
+						<div class="hotel-name text-xl font-bold text-dark-color mb-3">Grand Palace Hotel</div>
+						<div class="booking-details space-y-2 text-gray-600">
 							<div class="detail-line"><strong>Name:</strong> Gagandeep Singh</div>
 							<div class="detail-line"><strong>From:</strong> Mumbai</div>
 							<div class="detail-line"><strong>Arrival:</strong> 2025-03-15 at 10:00</div>
 							<div class="detail-line"><strong>Return:</strong> 2025-03-17 at 12:00</div>
 						</div>
-						<button class="view-booking-btn">View this booking</button>
+						<button class="view-booking-btn w-full mt-4 bg-secondary-color text-white py-2 rounded-lg font-semibold hover:bg-primary-teal transition">View this booking</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
 
-	<!-- Booking Form Modal -->
-	<div class="modal-overlay" id="bookingModal">
-		<div class="modal-content">
-			<form class="booking-form-modal" id="bookingForm">
-				<div class="form-row">
-					<div class="form-group">
-						<label for="customerName">Name :</label>
-						<input type="text" id="customerName" name="customerName" required>
+	<div class="modal-overlay fixed inset-0 bg-black/50 hidden items-center justify-center z-50" id="bookingModal">
+		<div class="modal-content bg-white p-6 rounded-xl shadow-2xl w-full max-w-2xl transform transition-all duration-300">
+			<form class="booking-form-modal space-y-4" id="bookingForm">
+				<h3 class="text-2xl font-bold text-dark-color mb-4">New Reservation</h3>
+				<div class="form-row flex gap-4">
+					<div class="form-group flex-1">
+						<label for="customerName" class="block text-sm font-medium text-gray-700">Name :</label>
+						<input type="text" id="customerName" name="customerName" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 					</div>
-					<div class="form-group">
-						<label for="phoneNumber">Phone No. :</label>
-						<input type="tel" id="phoneNumber" name="phoneNumber" required>
+					<div class="form-group flex-1">
+						<label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone No. :</label>
+						<input type="tel" id="phoneNumber" name="phoneNumber" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
+					</div>
+				</div>
+
+				<div class="form-row flex">
+					<div class="form-group full-width w-full">
+						<label for="emailId" class="block text-sm font-medium text-gray-700">Email id :</label>
+						<input type="email" id="emailId" name="emailId" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 					</div>
 				</div>
 
 				<div class="form-row">
-					<div class="form-group full-width">
-						<label for="emailId">Email id :</label>
-						<input type="email" id="emailId" name="emailId" required>
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="booking-type">
-						<div class="radio-group">
-							<input type="radio" id="package" name="bookingType" value="package" checked>
-							<label for="package">Package</label>
+					<label class="block text-sm font-medium text-gray-700 mb-2">Booking Type :</label>
+					<div class="booking-type flex gap-6">
+						<div class="radio-group flex items-center">
+							<input type="radio" id="package" name="bookingType" value="package" checked class="text-primary-teal focus:ring-primary-teal">
+							<label for="package" class="ml-2 text-gray-900">Package</label>
 						</div>
-						<div class="radio-group">
-							<input type="radio" id="stayOnly" name="bookingType" value="stayOnly">
-							<label for="stayOnly">Stay only</label>
+						<div class="radio-group flex items-center">
+							<input type="radio" id="stayOnly" name="bookingType" value="stayOnly" class="text-primary-teal focus:ring-primary-teal">
+							<label for="stayOnly" class="ml-2 text-gray-900">Stay only</label>
 						</div>
 					</div>
 				</div>
 
-				<div class="sliding-container">
-					<div class="sliding-content" id="slidingContent">
-						<div class="slide-panel active" id="packagePanel">
+				<div class="sliding-container overflow-hidden">
+					<div class="sliding-content flex transition-transform duration-500 ease-in-out" id="slidingContent" style="width: 200%;">
+						<div class="slide-panel w-1/2 px-2 -ml-2" id="packagePanel">
 							<div class="form-group">
-								<label for="packageName">Package Name :</label>
-								<select id="packageName" name="packageName" required>
+								<label for="packageName" class="block text-sm font-medium text-gray-700">Package Name :</label>
+								<select id="packageName" name="packageName" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 									<option value="">Select a package</option>
 									<option value="Bali Exploration" selected>Bali Exploration</option>
 									<option value="Paradise Gateway">Paradise Gateway</option>
 								</select>
 							</div>
 						</div>
-						<div class="slide-panel" id="hotelPanel">
+						<div class="slide-panel w-1/2 px-2 -mr-2" id="hotelPanel">
 							<div class="form-group">
-								<label for="hotelName">Hotel :</label>
-								<select id="hotelName" name="hotelName">
+								<label for="hotelName" class="block text-sm font-medium text-gray-700">Hotel :</label>
+								<select id="hotelName" name="hotelName" class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 									<option value="">Select a hotel</option>
 									<option value="Jet 2 Holiday">Jet 2 Holiday</option>
 									<option value="Grand Palace Resort">Grand Palace Resort</option>
@@ -140,36 +268,36 @@
 					</div>
 				</div>
 
-				<div class="form-row people-section">
-					<div class="form-group">
-						<label>People :</label>
-						<div class="people-inputs">
-							<div class="people-input-group">
-								<label for="adults">Adults :</label>
-								<input type="number" id="adults" name="adults" value="2" min="1" required>
+				<div class="form-row people-section flex items-end gap-4">
+					<div class="form-group flex-1">
+						<label class="block text-sm font-medium text-gray-700">People :</label>
+						<div class="people-inputs flex gap-4">
+							<div class="people-input-group flex-1">
+								<label for="adults" class="block text-xs text-gray-500">Adults :</label>
+								<input type="number" id="adults" name="adults" value="2" min="1" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 							</div>
-							<div class="people-input-group">
-								<label for="children">Children :</label>
-								<input type="number" id="children" name="children" value="0" min="0">
+							<div class="people-input-group flex-1">
+								<label for="children" class="block text-xs text-gray-500">Children :</label>
+								<input type="number" id="children" name="children" value="0" min="0" class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="form-row">
-					<div class="form-group">
-						<label for="arrivalDate">Arrival Date :</label>
-						<input type="date" id="arrivalDate" name="arrivalDate" required>
+				<div class="form-row flex gap-4">
+					<div class="form-group flex-1">
+						<label for="arrivalDate" class="block text-sm font-medium text-gray-700">Arrival Date :</label>
+						<input type="date" id="arrivalDate" name="arrivalDate" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 					</div>
-					<div class="form-group">
-						<label for="departureDate">Departure Date :</label>
-						<input type="date" id="departureDate" name="departureDate" required>
+					<div class="form-group flex-1">
+						<label for="departureDate" class="block text-sm font-medium text-gray-700">Departure Date :</label>
+						<input type="date" id="departureDate" name="departureDate" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg">
 					</div>
 				</div>
 
-				<div class="form-buttons">
-					<button type="submit" class="submit-btn">Submit</button>
-					<button type="button" class="clear-btn" id="clearBtn">Clear All</button>
+				<div class="form-buttons flex justify-end gap-3 pt-4">
+					<button type="submit" class="submit-btn bg-primary-teal text-white px-6 py-2 rounded-lg font-semibold hover:bg-secondary-color transition">Submit</button>
+					<button type="button" class="clear-btn bg-dark-color text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition" id="clearBtn">Clear All</button>
 				</div>
 			</form>
 		</div>
@@ -201,7 +329,7 @@
 			const hotelPanel = document.getElementById('hotelPanel');
 			const packageNameField = document.getElementById('packageName');
 			const hotelNameField = document.getElementById('hotelName');
-
+			
 			window.slideToPanel = function(showPackage) {
 				if (showPackage) {
 					slidingContent.style.transform = 'translateX(0%)';
@@ -228,11 +356,11 @@
 			// Date validation
 			const arrivalDateInput = document.getElementById('arrivalDate');
 			const departureDateInput = document.getElementById('departureDate');
-			
+
 			// Set minimum date to today for arrival
 			const today = new Date().toISOString().split('T')[0];
 			arrivalDateInput.setAttribute('min', today);
-			
+
 			// Update departure date minimum when arrival date changes
 			arrivalDateInput.addEventListener('change', function() {
 				const arrivalDate = this.value;
@@ -251,7 +379,7 @@
 					}
 				}
 			});
-			
+
 			// Validate departure date when it changes
 			departureDateInput.addEventListener('change', function() {
 				const departureDate = this.value;
@@ -273,6 +401,33 @@
 			const viewBtns = document.querySelectorAll('.view-booking-btn');
 			const clearBtn = document.getElementById('clearBtn');
 			const bookingForm = document.getElementById('bookingForm');
+			
+			function openModal() {
+				modal.style.display = 'flex';
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeModal() {
+				modal.style.display = 'none';
+				document.body.style.overflow = 'auto';
+			}
+
+			function clearForm() {
+				const form = document.getElementById('bookingForm');
+				form.reset();
+				document.getElementById('adults').value = '2';
+				document.getElementById('children').value = '0';
+				document.getElementById('package').checked = true;
+				slideToPanel(true);
+				document.getElementById('packageName').value = 'Bali Exploration';
+				
+				// Reset date validation
+				const arrivalDateInput = document.getElementById('arrivalDate');
+				const departureDateInput = document.getElementById('departureDate');
+				const today = new Date().toISOString().split('T')[0];
+				arrivalDateInput.setAttribute('min', today);
+				departureDateInput.removeAttribute('min');
+			}
 
 			newBookingBtn.addEventListener('click', () => {
 				openModal();
@@ -318,7 +473,7 @@
 					return;
 				}
 				
-				// Validate departure date is after arrival date
+				// Validate departure date is after 
 				if (departure <= arrival) {
 					if (typeof showAlert === 'function') {
 						showAlert('Departure date must be after arrival date', 'error', 3000);
@@ -334,7 +489,8 @@
 				const hotelName = document.getElementById('hotelName').value;
 				
 				// Determine location based on booking type
-				const location = bookingType === 'package' ? packageName : hotelName;
+				const location = bookingType === 'package' ?
+				packageName : hotelName;
 				
 				// Prepare booking data
 				const bookingData = {
@@ -342,7 +498,8 @@
 					phoneNumber: document.getElementById('phoneNumber').value,
 					emailId: document.getElementById('emailId').value,
 					bookingType: bookingType,
-					packageName: bookingType === 'package' ? packageName : '',
+					packageName: bookingType === 'package' ?
+					packageName : '',
 					hotelName: bookingType === 'stayOnly' ? hotelName : '',
 					location: location,
 					arrivalDate: document.getElementById('arrivalDate').value,
@@ -350,7 +507,13 @@
 					adults: document.getElementById('adults').value,
 					children: document.getElementById('children').value || '0'
 				};
-				
+
+				// Simple loading state
+				const submitBtn = e.target.querySelector('.submit-btn');
+				const originalText = submitBtn.textContent;
+				submitBtn.textContent = 'Submitting...';
+				submitBtn.disabled = true;
+
 				try {
 					// Submit to API
 					const response = await fetch('/api/bookings', {
@@ -363,7 +526,7 @@
 					
 					const result = await response.json();
 					
-					if (result.success) {
+					if (response.ok && result.success) {
 						if (typeof showAlert === 'function') {
 							showAlert('Booking submitted successfully!', 'success', 5000);
 						} else {
@@ -372,7 +535,7 @@
 						clearForm();
 						closeModal();
 						// Optionally reload the page to show the new booking
-						// window.location.reload();
+						// window.location.reload(); 
 					} else {
 						if (typeof showAlert === 'function') {
 							showAlert(result.message || 'Failed to submit booking. Please try again.', 'error', 5000);
@@ -387,16 +550,19 @@
 					} else {
 						alert('An error occurred while submitting your booking. Please try again.');
 					}
+				} finally {
+					submitBtn.textContent = originalText;
+					submitBtn.disabled = false;
 				}
 			});
 
 			clearBtn.addEventListener('click', clearForm);
-
+			
 			// Booking hover effects
 			document.querySelectorAll('.booking-card').forEach(card => {
 				card.addEventListener('mouseenter', () => {
 					card.style.transform = 'translateY(-8px) scale(1.02)';
-					card.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15)';
+					card.style.boxShadow = '0 15px 35px rgba(0, 128, 128, 0.15)'; // Teal shadow
 				});
 				card.addEventListener('mouseleave', () => {
 					card.style.transform = 'translateY(0) scale(1)';
@@ -404,35 +570,6 @@
 				});
 			});
 		});
-
-		function openModal() {
-			const modal = document.getElementById('bookingModal');
-			modal.style.display = 'flex';
-			document.body.style.overflow = 'hidden';
-		}
-
-		function closeModal() {
-			const modal = document.getElementById('bookingModal');
-			modal.style.display = 'none';
-			document.body.style.overflow = 'auto';
-		}
-
-		function clearForm() {
-			const form = document.getElementById('bookingForm');
-			form.reset();
-			document.getElementById('adults').value = '2';
-			document.getElementById('children').value = '0';
-			document.getElementById('package').checked = true;
-			slideToPanel(true);
-			document.getElementById('packageName').value = 'Bali Exploration';
-			
-			// Reset date validation
-			const arrivalDateInput = document.getElementById('arrivalDate');
-			const departureDateInput = document.getElementById('departureDate');
-			const today = new Date().toISOString().split('T')[0];
-			arrivalDateInput.setAttribute('min', today);
-			departureDateInput.removeAttribute('min');
-		}
 	</script>
 </body>
 </html>

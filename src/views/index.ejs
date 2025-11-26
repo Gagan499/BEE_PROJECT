@@ -34,13 +34,24 @@
         overflow-x: hidden;
       }
 
-      /* Hero Section */
+      /* Teal Color Palette */
+      /* Primary Teal: #008080 (Teal), Secondary Teal: #00cec9 (Turquoise) */
+      /* Dark Teal for text: #1a535c */
+      /* Light Teal/Mint background: #e6f7f7 */
+      /* Accent Blue-Teal: #00bfff (Deep Sky Blue) */
+
+      /* Utility function for primary gradient */
+      .teal-gradient {
+        background: linear-gradient(135deg, #008080, #00cec9); /* Teal to Turquoise */
+      }
+      
+      /* --- Hero Section --- */
       .hero-section {
         position: relative;
         height: 100vh;
         min-height: 600px;
         margin-top: 76px;
-        background: url('/assets/images/hero-bg.jpg') center/cover no-repeat;
+        background: url('/assets/images/headerbg.jpg') center/cover no-repeat;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -102,7 +113,8 @@
       }
 
       .hero-btn-primary {
-        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        /* Teal Gradient Button */
+        background: linear-gradient(135deg, #008080, #00cec9); 
         color: white;
         padding: 1rem 2.5rem;
         border-radius: 30px;
@@ -119,7 +131,7 @@
 
       .hero-btn-primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(255, 140, 0, 0.4);
+        box-shadow: 0 10px 30px rgba(0, 128, 128, 0.4); /* Teal shadow */
       }
 
       .hero-btn-secondary {
@@ -170,9 +182,10 @@
         }
       }
 
-      /* Feature Bar */
+      /* --- Feature Bar --- */
       .feature-bar {
-        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        /* Teal Gradient */
+        background: linear-gradient(135deg, #008080, #00cec9); 
         padding: 2.5rem 2rem;
       }
 
@@ -180,7 +193,8 @@
         max-width: 1400px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        /* Adjusted minmax for better responsiveness */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
         gap: 2rem;
         text-align: center;
       }
@@ -200,27 +214,27 @@
         margin: 0;
       }
 
-      /* Main Content */
+      /* --- Main Content --- */
       .main-content {
         max-width: 1400px;
         margin: 0 auto;
         padding: 4rem 2rem;
       }
 
-      /* Section Title */
+      /* --- Section Title --- */
       .section-header {
         text-align: center;
         margin-bottom: 3rem;
       }
 
       .section-icon {
-        color: #ff8c00;
+        color: #008080; /* Primary Teal */
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
       }
 
       .section-title {
-        color: #ff8c00;
+        color: #008080; /* Primary Teal */
         font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 2px;
@@ -231,7 +245,7 @@
       .section-subtitle {
         font-size: 1.5rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: #1a535c; /* Dark Teal for contrast */
         margin-bottom: 0.75rem;
       }
 
@@ -242,10 +256,11 @@
         margin: 0 auto;
       }
 
-      /* Amenities Grid */
+      /* --- Amenities Grid --- */
       .amenities-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* Adjusted minmax for better responsiveness */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
         gap: 2rem;
         margin-top: 3rem;
       }
@@ -267,7 +282,7 @@
       .amenity-icon-circle {
         width: 80px;
         height: 80px;
-        background: #fff5e6;
+        background: #e6f7f7; /* Light Teal/Mint background */
         border-radius: 20px;
         display: flex;
         align-items: center;
@@ -277,13 +292,13 @@
 
       .amenity-icon {
         font-size: 2rem;
-        color: #ff8c00;
+        color: #008080; /* Primary Teal */
       }
 
       .amenity-title {
         font-size: 1.15rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: #1a535c; /* Dark Teal for contrast */
         margin-bottom: 0.5rem;
       }
 
@@ -293,7 +308,7 @@
         line-height: 1.5;
       }
 
-      /* Rooms Section */
+      /* --- Rooms Section --- */
       .rooms-section {
         background: white;
         padding: 4rem 2rem;
@@ -302,7 +317,8 @@
 
       .rooms-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        /* Adjusted minmax for better responsiveness */
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
         gap: 2.5rem;
         max-width: 1400px;
         margin: 0 auto;
@@ -336,12 +352,12 @@
         padding: 0.5rem 1.25rem;
         border-radius: 25px;
         font-weight: 600;
-        color: #2c3e50;
+        color: #1a535c;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       }
 
       .room-price span {
-        color: #ff8c00;
+        color: #008080; /* Primary Teal */
         font-size: 1.25rem;
       }
 
@@ -352,7 +368,7 @@
       .room-name {
         font-size: 1.3rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: #1a535c;
         margin-bottom: 1rem;
       }
 
@@ -368,16 +384,17 @@
         align-items: center;
         gap: 0.25rem;
         padding: 0.4rem 0.85rem;
-        background: #fff5e6;
+        background: #e6f7f7; /* Light Teal/Mint background */
+        color: #008080; /* Primary Teal */
         border-radius: 20px;
-        color: #ff8c00;
         font-size: 0.85rem;
         font-weight: 500;
       }
 
       .book-btn {
         width: 100%;
-        background: linear-gradient(135deg, #ff8c00, #ff6b00);
+        /* Teal Gradient Button */
+        background: linear-gradient(135deg, #008080, #00cec9);
         color: white;
         border: none;
         padding: 0.9rem 2rem;
@@ -390,10 +407,10 @@
 
       .book-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3);
+        box-shadow: 0 6px 20px rgba(0, 128, 128, 0.3); /* Teal shadow */
       }
 
-      /* Contact Section */
+      /* --- Contact Section --- */
       .contact-section {
         background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         padding: 4rem 2rem;
@@ -404,13 +421,13 @@
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1.5fr;
+        grid-template-columns: 1fr 1.5fr; /* Desktop layout */
         gap: 4rem;
         align-items: start;
       }
 
       .contact-info h3 {
-        color: #3a7bd5;
+        color: #00bfff; /* Blue-Teal Accent */
         font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 2px;
@@ -420,7 +437,7 @@
       .contact-info h2 {
         font-size: 1.15rem;
         font-weight: 500;
-        color: #2c3e50;
+        color: #1a535c; /* Dark Teal */
         margin-bottom: 2rem;
         line-height: 1.6;
       }
@@ -435,7 +452,8 @@
       .contact-icon-circle {
         width: 50px;
         height: 50px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        /* Teal-Blue Gradient */
+        background: linear-gradient(135deg, #00bfff, #008080);
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -448,7 +466,7 @@
       .contact-text h4 {
         font-size: 0.95rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: #1a535c; /* Dark Teal */
         margin-bottom: 0.25rem;
       }
 
@@ -458,7 +476,7 @@
         margin: 0;
       }
 
-      /* Contact Form */
+      /* --- Contact Form --- */
       .contact-form-container {
         background: white;
         padding: 2.5rem;
@@ -469,7 +487,7 @@
       .contact-form-container h3 {
         font-size: 1.5rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: #1a535c; /* Dark Teal */
         margin-bottom: 2rem;
       }
 
@@ -500,8 +518,8 @@
       .form-group input:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        border-color: #00bfff; /* Blue-Teal focus */
+        box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.1);
       }
 
       .form-group textarea {
@@ -515,7 +533,8 @@
       }
 
       .submit-btn {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        /* Teal-Blue Gradient */
+        background: linear-gradient(135deg, #00bfff, #008080);
         color: white;
         border: none;
         padding: 1rem 2.5rem;
@@ -531,17 +550,17 @@
 
       .submit-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 6px 20px rgba(0, 191, 255, 0.3);
       }
 
-      /* Help Button */
+      /* --- Help Button --- */
       .help-button {
         position: fixed;
         bottom: 2rem;
         right: 2rem;
         width: 50px;
         height: 50px;
-        background: #2c3e50;
+        background: #1a535c; /* Dark Teal */
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -556,10 +575,10 @@
 
       .help-button:hover {
         transform: scale(1.1);
-        background: #1a252f;
+        background: #0d292f; /* Even darker Teal */
       }
 
-      /* Mobile Responsive */
+      /* --- Mobile Responsive (max-width: 768px) --- */
       @media (max-width: 768px) {
         .header-container {
           padding: 1rem;
@@ -591,6 +610,8 @@
         .hero-btn-secondary {
           width: 100%;
           max-width: 300px;
+          margin-left: auto; /* Center items when stacked */
+          margin-right: auto;
         }
 
         .feature-container {
@@ -621,15 +642,12 @@
           font-size: 1.25rem;
         }
       }
-
-
     </style>
   </head>
 
   <body>
     <%- include('partials/navbar') %>
 
-    <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -637,7 +655,8 @@
           <i class="fas fa-award"></i>
           <span>5-Star Luxury Resort & Spa</span>
         </div>
-        <h1 class="hero-title">Welcome to Palm Ways</h1>
+        <h1 class="hero-title">Welcome to 
+          Palm Ways</h1>
         <p class="hero-description">
           Experience unparalleled luxury in a tropical paradise where every moment becomes an unforgettable memory
         </p>
@@ -656,7 +675,6 @@
       </div>
     </section>
 
-    <!-- Feature Bar -->
     <div class="feature-bar">
       <div class="feature-container">
         <div class="feature-item">
@@ -686,9 +704,7 @@
       </div>
     </div>
 
-    <!-- Main Content -->
     <main class="main-content">
-      <!-- Amenities Section -->
       <section class="amenities-section">
         <div class="section-header">
           <div class="section-icon">
@@ -752,7 +768,6 @@
         </div>
       </section>
 
-      <!-- Rooms Section -->
       <section class="rooms-section">
         <div class="section-header">
           <div class="section-icon">
@@ -770,12 +785,14 @@
             <% packages.forEach(pkg => { %>
               <div class="room-card">
                 <div style="position: relative;">
-                  <img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="room-image">
+                  <img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName ||
+                    pkg.title %>" class="room-image">
                   <% if (pkg.price) { %>
                     <div class="room-price"><span>$<%= pkg.price %></span>/night</div>
                   <% } %>
                 </div>
-                <div class="room-details">
+                <div 
+                  class="room-details">
                   <h3 class="room-name"><%= pkg.packageName || pkg.title %></h3>
                   <div class="room-features">
                     <% if (pkg.Stay) { %>
@@ -784,6 +801,7 @@
                     <% if (pkg.type) { %>
                       <span class="room-feature"><%= pkg.type %></span>
                     <% } %>
+                
                     <% if (pkg.hotelName) { %>
                       <span class="room-feature"><%= pkg.hotelName %></span>
                     <% } %>
@@ -798,19 +816,21 @@
           <% } else { %>
             <div style="text-align: center; padding: 3rem; color: #6c757d;">
               <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem; color: #dee2e6;"></i>
-              <h3 style="font-size: 1.5rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.5rem;">No Packages Available</h3>
+              <h3 style="font-size: 1.5rem; font-weight: 600; color: #1a535c; margin-bottom: 0.5rem;">No Packages Available</h3>
               <p style="font-size: 1rem;">Please check back later or contact us for more information.</p>
             </div>
           <% } %>
         </div>
       </section>
 
-      <!-- Contact Section -->
       <section class="contact-section" id="booking">
         <div class="contact-container">
           <div class="contact-info">
-            <h3>📧 GET IN TOUCH</h3>
-            <h2>Have Questions? Contact Us<br><br>Our team is here to help you plan the perfect stay. Send us a message and we'll respond within 24 hours.</h2>
+            <h3>📧 
+              GET IN TOUCH</h3>
+            <h2>Have Questions?
+              Contact Us<br><br>Our team is here to help you plan the perfect stay.
+              Send us a message and we'll respond within 24 hours.</h2>
             
             <div class="contact-detail">
               <div class="contact-icon-circle">
@@ -841,7 +861,8 @@
               <div class="contact-text">
                 <h4>Visit Us</h4>
                 <p>123 Paradise Beach Road</p>
-                <p style="font-size: 0.8rem; color: #999;">Tropical Island, PI 12345</p>
+                <p style="font-size: 0.8rem;
+                  color: #999;">Tropical Island, PI 12345</p>
               </div>
             </div>
           </div>
@@ -856,7 +877,8 @@
 
               <div class="form-group">
                 <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                <input 
+                  type="email" id="email" name="email" placeholder="john@example.com" required>
               </div>
 
               <div class="form-group">
@@ -869,13 +891,13 @@
                 Send Message
               </button>
             </form>
-            <div id="contactFormMessage" style="margin-top: 1rem; display: none;"></div>
+            <div id="contactFormMessage" style="margin-top: 1rem;
+              display: none;"></div>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- Help Button -->
     <div class="help-button">
       <i class="fas fa-question"></i>
     </div>
@@ -886,6 +908,7 @@
       // Contact Form Handler
       document.addEventListener("DOMContentLoaded", () => {
         const contactForm = document.getElementById("contactForm");
+        
         const contactFormMessage = document.getElementById("contactFormMessage");
 
         if (contactForm) {
@@ -901,7 +924,7 @@
             const originalHTML = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitButton.disabled = true;
-
+            
             try {
               const response = await fetch("/api/contact", {
                 method: "POST",
@@ -910,25 +933,26 @@
                 },
                 body: JSON.stringify({ name, email, message }),
               });
-
+              
               const result = await response.json();
 
               if (result.success) {
                 contactFormMessage.style.display = "block";
-                contactFormMessage.style.color = "#25a85c";
+                contactFormMessage.style.color = "#008080"; /* Primary Teal for success */
                 contactFormMessage.style.fontWeight = "500";
-                contactFormMessage.textContent = result.message || `Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
+                contactFormMessage.textContent = result.message || `Thank you, ${name}! Your message has been received.
+                  We'll get back to you at ${email} soon.`;
                 contactForm.reset();
               } else {
                 contactFormMessage.style.display = "block";
-                contactFormMessage.style.color = "#ef4444";
+                contactFormMessage.style.color = "#ef4444"; /* Red for error */
                 contactFormMessage.style.fontWeight = "500";
                 contactFormMessage.textContent = result.message || "Failed to send message. Please try again.";
               }
             } catch (error) {
               console.error("Error submitting contact form:", error);
               contactFormMessage.style.display = "block";
-              contactFormMessage.style.color = "#ef4444";
+              contactFormMessage.style.color = "#ef4444"; /* Red for error */
               contactFormMessage.style.fontWeight = "500";
               contactFormMessage.textContent = "An error occurred. Please try again later.";
             } finally {

@@ -15,11 +15,38 @@
 				extend: {
 					fontFamily: {
 						'poppins': ['Poppins', 'sans-serif']
-					}
+					},
+                    colors: {
+                        'primary-teal': '#008080',
+                        'secondary-teal': '#00cec9',
+                        'dark-teal': '#1a535c',
+                    }
 				}
 			}
 		}
 	</script>
+	<style>
+		/* Custom Teal Gradient for Buttons */
+		.teal-gradient-bg {
+			background: linear-gradient(to right, #008080, #00cec9);
+		}
+		
+		/* Text colors for customization */
+		.text-primary-teal { color: #008080; }
+		
+		/* Responsive adjustments to grid columns */
+		@media (min-width: 1024px) {
+			.lg\:grid-cols-3 {
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+			}
+		}
+
+		@media (max-width: 768px) {
+			.md\:grid-cols-2 {
+				grid-template-columns: repeat(1, minmax(0, 1fr));
+			}
+		}
+	</style>
   </head>
 
   <body class="font-poppins bg-gray-100 min-h-screen pt-[76px]">
@@ -32,24 +59,26 @@
         <p class="text-gray-500">Manage your travel reservations</p>
       </div>
 
-      <% if (bookings && bookings.length > 0) { %>
+      <% if 
+        (bookings && bookings.length > 0) { %>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           <% bookings.forEach((booking) => { 
-            const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
+            const statusClass = booking.status ?
+            booking.status.toLowerCase() : 'pending';
             const statusText = booking.status ? booking.status.charAt(0).toUpperCase() + booking.status.slice(1) : 'Pending';
             
             const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
             const departureDate = new Date(booking.departureDate || booking.departure);
             const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
-            
             const checkInDate = arrivalDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             const checkOutDate = departureDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
             const totalAmount = booking.totalAmount || booking.price || 0;
             
-            let statusBg = 'bg-amber-500';
+            // Map status to a Teal-friendly palette
+            let statusBg = 'bg-primary-teal'; // Pending (Teal)
             if (statusClass === 'confirmed') statusBg = 'bg-green-500';
-            else if (statusClass === 'completed') statusBg = 'bg-blue-500';
+            else if (statusClass === 'completed') statusBg = 'bg-dark-teal'; // Darker Teal for completed
             else if (statusClass === 'rejected') statusBg = 'bg-red-500';
           %>
             <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl" data-booking-id="<%= booking._id %>">
@@ -59,54 +88,61 @@
               </div>
               
               <div class="p-5">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4"><%= booking.hotelName || booking.packageName || booking.title || booking.roomType || '' %></h3>
+                <h3 class="text-xl font-semibold text-gray-800 mb-4"><%= booking.hotelName ||
+                booking.packageName || booking.title || booking.roomType || '' %></h3>
                 
                 <div class="space-y-3 mb-4">
                   <div class="flex items-center gap-2 text-gray-600 text-sm">
-                    <i class="fas fa-calendar-check w-5 text-orange-500"></i>
+                    <i class="fas fa-calendar-check w-5 text-primary-teal"></i>
                     <span><strong>Check-in:</strong> <%= checkInDate %></span>
                   </div>
                   
                   <div class="flex items-center gap-2 text-gray-600 text-sm">
-                    <i class="fas fa-calendar-times w-5 text-orange-500"></i>
+                    <i class="fas fa-calendar-times w-5 text-primary-teal"></i>
                     <span><strong>Check-out:</strong> <%= checkOutDate %></span>
                   </div>
                   
                   <div class="flex items-center gap-2 text-gray-600 text-sm">
-                    <i class="fas fa-moon w-5 text-orange-500"></i>
+                    <i class="fas fa-moon w-5 
+                    text-primary-teal"></i>
                     <span><strong>Nights:</strong> <%= nights %></span>
                   </div>
                   
                   <div class="flex items-center gap-2 text-gray-600 text-sm">
-                    <i class="fas fa-users w-5 text-orange-500"></i>
-                    <span><strong>Guests:</strong> <%= booking.adults || 0 %> Adults<% if (booking.children && booking.children > 0) { %>, <%= booking.children %> Children<% } %></span>
+                    <i class="fas fa-users w-5 text-primary-teal"></i>
+                    <span><strong>Guests:</strong> <%= booking.adults ||
+                    0 %> Adults<% if (booking.children && booking.children > 0) { %>, <%= booking.children %> Children<% } %></span>
                   </div>
                   
                   <% if (booking.bookingType) { %>
                   <div class="flex items-center gap-2 text-gray-600 text-sm">
-                    <i class="fas fa-tag w-5 text-orange-500"></i>
+                    <i class="fas fa-tag w-5 text-primary-teal"></i>
                     <span><strong>Type:</strong> <%= booking.bookingType %></span>
                   </div>
                   <% } %>
                 </div>
+  
                 
                 <div class="border-t border-gray-200 pt-4 mt-4">
-                  <div class="text-2xl font-bold text-gray-800 mb-4">$<%= typeof totalAmount === 'number' ? totalAmount.toFixed(2) : totalAmount %></div>
+                  <div class="text-2xl font-bold text-gray-800 mb-4">$<%= typeof totalAmount === 'number' ?
+                  totalAmount.toFixed(2) : totalAmount %></div>
                   
-                  <button class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2" onclick="viewDetails('<%= booking._id %>')">
+                  <button class="w-full teal-gradient-bg text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2" onclick="viewDetails('<%= booking._id %>')">
                     <i class="fas fa-eye"></i> View Details
                   </button>
                 </div>
               </div>
             </div>
-          <% }); %>
+          <% });
+          %>
         </div>
       <% } else { %>
         <div class="text-center py-16 text-gray-500">
           <i class="fas fa-calendar-times text-6xl text-gray-300 mb-4"></i>
           <h3 class="text-2xl font-semibold text-gray-800 mb-2">No Bookings Yet</h3>
-          <p class="text-base mb-6">You haven't made any reservations. Start planning your next adventure!</p>
-          <a href="/api/booking" class="inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+          <p class="text-base mb-6">You haven't made any reservations.
+          Start planning your next adventure!</p>
+          <a href="/api/booking" class="inline-block teal-gradient-bg text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
             <i class="fas fa-plus"></i> New Booking
           </a>
         </div>
@@ -117,12 +153,14 @@
 
     <script>
       // View booking details
-      function viewDetails(bookingId) {
+      function 
+        viewDetails(bookingId) {
         // For now, scroll to the booking card and highlight it
         const card = document.querySelector(`[data-booking-id="${bookingId}"]`);
         if (card) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          card.style.boxShadow = '0 8px 24px rgba(255, 140, 0, 0.4)';
+          // Teal shadow highlight
+          card.style.boxShadow = '0 8px 24px rgba(0, 128, 128, 0.4)'; 
           setTimeout(() => {
             card.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
           }, 2000);
@@ -145,7 +183,6 @@
               'Content-Type': 'application/json'
             }
           });
-
           if (response.ok) {
             alert('Booking cancelled successfully!');
             location.reload();

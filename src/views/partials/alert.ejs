@@ -1,6 +1,7 @@
 <!-- Global Alert Component -->
 <div id="globalAlert" class="fixed top-4 right-2 sm:right-4 z-[9999] max-w-md w-[calc(100%-1rem)] sm:w-full mx-2 sm:mx-4 hidden">
-  <div id="alertContent" class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl border-l-4 p-4 flex items-start gap-3 transform transition-all duration-500 ease-out translate-x-full opacity-0 scale-95 relative overflow-hidden group hover:shadow-3xl hover:scale-[1.02] transition-all duration-300">
+  <!-- Added dark:bg-gray-700 and dark:text-gray-200 for dark mode support -->
+  <div id="alertContent" class="bg-white dark:bg-gray-700 rounded-lg shadow-2xl border-l-4 p-4 flex items-start gap-3 transform transition-all duration-500 ease-out translate-x-full opacity-0 scale-95 relative overflow-hidden group hover:shadow-3xl hover:scale-[1.02] transition-all duration-300">
     <!-- Progress Bar -->
     <div id="alertProgressBar" class="absolute bottom-0 left-0 h-1 bg-current opacity-30 transition-all ease-linear" style="width: 100%;"></div>
     
@@ -26,15 +27,16 @@
     
     <!-- Message Container -->
     <div class="flex-1 min-w-0">
-      <p id="alertMessage" class="text-sm font-medium text-gray-800 dark:text-gray-200 break-words transform transition-all duration-300"></p>
+      <!-- Applied dark:text-gray-100 -->
+      <p id="alertMessage" class="text-sm font-medium text-gray-800 dark:text-gray-100 break-words transform transition-all duration-300"></p>
     </div>
     
     <!-- Close Button with Ripple -->
-    <button id="alertCloseBtn" class="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-all duration-200 focus:outline-none relative p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 group/close">
+    <button id="alertCloseBtn" class="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-100 transition-all duration-200 focus:outline-none relative p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600 group/close">
       <svg class="w-5 h-5 transform group-hover/close:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
-      <span class="absolute inset-0 rounded-full bg-gray-200 dark:bg-gray-600 opacity-0 group-hover/close:opacity-20 group-hover/close:scale-150 transition-all duration-300"></span>
+      <span class="absolute inset-0 rounded-full bg-gray-200 dark:bg-gray-800 opacity-0 group-hover/close:opacity-20 group-hover/close:scale-150 transition-all duration-300"></span>
     </button>
   </div>
 </div>
@@ -268,6 +270,13 @@
       // Update border color and remove old ones
       alertContent.className = alertContent.className.replace(/border-(green|red|yellow|blue)-500/g, '');
       alertContent.classList.add(config.borderColor);
+      
+      // Apply background color for the content
+      alertContent.className = alertContent.className.replace(/bg-(green|red|yellow|blue)-50 dark:bg-(green|red|yellow|blue)-900\/20/g, 'bg-white dark:bg-gray-700'); // Clean up old colors first
+      // The current theme logic relies on Tailwind classes on the alertContent, 
+      // but to ensure the background color aligns with the type's intent, we stick to the base color logic.
+      // Since alert.ejs uses generic `bg-white dark:bg-gray-700`, we rely on `tailwind.config`
+      // in the parent file to define the dark mode colors for the primary UI.
 
       // Show alert container
       alertElement.classList.remove('hidden');
@@ -384,4 +393,3 @@
     // };
   })();
 </script>
-

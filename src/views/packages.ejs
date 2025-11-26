@@ -15,22 +15,52 @@
 				extend: {
 					fontFamily: {
 						'poppins': ['Poppins', 'sans-serif']
-					}
+					},
+                    colors: {
+                        'primary-teal': '#008080',
+                        'secondary-teal': '#00cec9',
+                        'dark-teal': '#1a535c',
+                        'light-mint': '#e6f7f7',
+                        'accent-blue': '#00bfff', // Using a cyan/blue accent for variety
+                    }
 				}
 			}
 		}
 	</script>
 	<style>
+		/* Custom Teal Gradient for Hero */
+		.hero-banner-bg {
+			background: linear-gradient(to br, #008080, #00cec9); /* Teal to Turquoise */
+		}
+		
+		/* Custom Teal Colors for Price/Text */
+		.text-primary-teal { color: #008080; }
+		.bg-light-mint { background-color: #e6f7f7; }
 
+		/* Responsive Grid Adjustments for Packages */
+		.packages-grid {
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		}
+
+		@media (max-width: 1024px) {
+			.packages-grid {
+				grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+			}
+		}
+		
+		@media (max-width: 640px) {
+			.packages-grid {
+				grid-template-columns: 1fr;
+			}
+		}
 
 	</style>
 </head>
 <body class="font-poppins bg-gray-50 overflow-x-hidden pt-[76px]">
 	<%- include('partials/navbar') %>
 
-	<!-- Hero Banner -->
-	<section class="bg-gradient-to-br from-indigo-500 to-purple-600 py-32 px-8 text-white text-center relative overflow-hidden">
-		<div class="absolute inset-0 opacity-10 z-0" style="background: url('/assets/images/pattern.svg') repeat;"></div>
+	<section class="bg-gradient-to-br from-primary-teal to-secondary-teal py-32 px-8 text-white text-center relative overflow-hidden">
+		<div class="absolute inset-0 opacity-10 z-0" style="background: url('/assets/images/headerbg.jpg') repeat;"></div>
 		<div class="relative z-10 max-w-4xl mx-auto">
 			<div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-lg px-5 py-2 rounded-full text-sm mb-6">
 				<i class="fas fa-sparkles"></i>
@@ -41,40 +71,39 @@
 		</div>
 	</section>
 
-	<!-- Stats Section -->
-	<section class="bg-white py-12 px-8 shadow-sm">
+	<section class="bg-white py-12 px-8 
+		shadow-sm">
 		<div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
 			<div>
-				<h3 class="text-4xl font-bold text-indigo-500 mb-2">10,000+</h3>
+				<h3 class="text-4xl font-bold text-primary-teal mb-2">10,000+</h3>
 				<p class="text-gray-600 text-sm font-medium">Happy Guests</p>
 			</div>
 			<div>
-				<h3 class="text-4xl font-bold text-indigo-500 mb-2">50+</h3>
+				<h3 class="text-4xl font-bold text-primary-teal mb-2">50+</h3>
 				<p class="text-gray-600 text-sm font-medium">Destinations</p>
 			</div>
 			<div>
-				<h3 class="text-4xl font-bold text-indigo-500 mb-2">15+</h3>
+				<h3 class="text-4xl font-bold text-primary-teal mb-2">15+</h3>
 				<p class="text-gray-600 text-sm font-medium">Years Experience</p>
 			</div>
 			<div>
-				<h3 class="text-4xl font-bold text-indigo-500 mb-2">4.9/5</h3>
+				<h3 class="text-4xl font-bold text-primary-teal mb-2">4.9/5</h3>
 				<p class="text-gray-600 text-sm font-medium">Guest Rating</p>
 			</div>
 		</div>
 	</section>
 
-	<!-- Packages Grid -->
 	<main class="max-w-7xl mx-auto py-16 px-8">
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+		<div class="packages-grid grid grid-cols-1 lg:grid-cols-2 gap-8">
 			<% 
-			const borderColors = ['border-t-blue-500', 'border-t-orange-500', 'border-t-pink-500', 'border-t-green-500'];
-			const badgeColors = ['bg-blue-500/90', 'bg-orange-500/90', 'bg-pink-500/90', 'bg-green-500/90'];
-			const iconBgColors = ['bg-blue-50', 'bg-orange-50', 'bg-pink-50', 'bg-green-50'];
-			const iconTextColors = ['text-blue-500', 'text-orange-500', 'text-pink-500', 'text-green-500'];
-			const btnGradients = ['from-blue-500 to-blue-600', 'from-orange-500 to-orange-600', 'from-pink-500 to-pink-600', 'from-green-500 to-green-600'];
+			// Mapping the original colors to a Teal-centric palette
+			const borderColors = ['border-t-accent-blue', 'border-t-primary-teal', 'border-t-secondary-teal', 'border-t-dark-teal'];
+			const badgeColors = ['bg-accent-blue/90', 'bg-primary-teal/90', 'bg-secondary-teal/90', 'bg-dark-teal/90'];
+			const iconBgColors = ['bg-blue-50', 'bg-light-mint', 'bg-secondary-teal/10', 'bg-dark-teal/10'];
+			const iconTextColors = ['text-accent-blue', 'text-primary-teal', 'text-secondary-teal', 'text-dark-teal'];
+			const btnGradients = ['from-accent-blue to-primary-teal', 'from-primary-teal to-secondary-teal', 'from-secondary-teal to-primary-teal', 'from-dark-teal to-primary-teal'];
 			const icons = ['fa-umbrella-beach', 'fa-mountain-sun', 'fa-palm-tree', 'fa-water'];
 			const badges = ['Best Value', 'Most Popular', 'Exclusive', 'Family Friendly'];
-			
 			packages.forEach((pkg, index) => { 
 				const colorIndex = index % 4;
 			%>
@@ -94,7 +123,8 @@
 
 					<div class="p-7">
 						<div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
-							<i class="fas <%= pkg.icon || icons[colorIndex] %>"></i>
+							<i class="fas <%= 
+								pkg.icon || icons[colorIndex] %>"></i>
 						</div>
 
 						<h3 class="text-2xl font-bold text-gray-800 mb-2"><%= pkg.packageName || pkg.title %></h3>
@@ -120,7 +150,8 @@
 								<span><%= pkg.Stay %></span>
 							</li>
 							<% } %>
-							<% if (pkg.hotelName) { %>
+							<% if (pkg.hotelName) { 
+							%>
 							<li class="py-2 flex items-center gap-3 text-gray-700 text-sm border-b border-gray-100">
 								<div class="w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0 <%= iconBgColors[colorIndex] %> <%= iconTextColors[colorIndex] %>">
 									<i class="fas fa-building"></i>
@@ -136,7 +167,8 @@
 									</div>
 									<span><%= activity %></span>
 								</li>
-								<% }); %>
+								<% });
+							%>
 							<% } %>
 							<% if (pkg.features && pkg.features.length > 0) { %>
 								<% pkg.features.slice(0, 8).forEach(feature => { %>
@@ -146,7 +178,8 @@
 									</div>
 									<span><%= feature %></span>
 								</li>
-								<% }); %>
+								<% });
+							%>
 							<% } %>
 						</ul>
 
@@ -156,7 +189,8 @@
 						</button>
 					</div>
 				</div>
-			<% }); %>
+			<% });
+			%>
 		</div>
 	</main>
 
