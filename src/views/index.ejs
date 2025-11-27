@@ -18,20 +18,22 @@
     />
     <style>
       * {
+ 
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-      }
+ }
 
       html {
         scroll-behavior: smooth;
-      }
+ }
 
       body {
         font-family: "Poppins", sans-serif;
         background-color: #f8f9fa;
-        min-height: 100vh;
+ min-height: 100vh;
         overflow-x: hidden;
+        margin-top: -76px;
       }
 
       /* Teal Color Palette */
@@ -42,13 +44,14 @@
 
       /* Utility function for primary gradient */
       .teal-gradient {
-        background: linear-gradient(135deg, #008080, #00cec9); /* Teal to Turquoise */
+        background: linear-gradient(135deg, #008080, #00cec9);
+ /* Teal to Turquoise */
       }
       
       /* --- Hero Section --- */
       .hero-section {
         position: relative;
-        height: 100vh;
+ height: 100vh;
         min-height: 600px;
         margin-top: 76px;
         background: url('/assets/images/headerbg.jpg') center/cover no-repeat;
@@ -57,28 +60,27 @@
         justify-content: center;
         color: white;
         text-align: center;
-      }
+ }
 
       .hero-overlay {
         position: absolute;
         top: 0;
-        left: 0;
+ left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
         z-index: 1;
       }
 
       .hero-content {
         position: relative;
-        z-index: 2;
+ z-index: 2;
         max-width: 900px;
         padding: 2rem;
       }
 
       .hero-badge {
         display: inline-flex;
-        align-items: center;
+ align-items: center;
         gap: 0.5rem;
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
@@ -86,36 +88,36 @@
         border-radius: 25px;
         font-size: 0.9rem;
         margin-bottom: 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+ border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       .hero-title {
         font-size: 4rem;
-        font-weight: 700;
+ font-weight: 700;
         margin-bottom: 1.5rem;
         line-height: 1.2;
         text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-      }
+ }
 
       .hero-description {
         font-size: 1.25rem;
         line-height: 1.6;
-        margin-bottom: 3rem;
+ margin-bottom: 3rem;
         color: rgba(255, 255, 255, 0.95);
         text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-      }
+ }
 
       .hero-buttons {
         display: flex;
         gap: 1.5rem;
-        justify-content: center;
+ justify-content: center;
         flex-wrap: wrap;
       }
 
       .hero-btn-primary {
         /* Teal Gradient Button */
-        background: linear-gradient(135deg, #008080, #00cec9); 
-        color: white;
+        background: linear-gradient(135deg, #008080, #00cec9);
+ color: white;
         padding: 1rem 2.5rem;
         border-radius: 30px;
         font-weight: 600;
@@ -123,7 +125,7 @@
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
-        display: inline-flex;
+ display: inline-flex;
         align-items: center;
         gap: 0.5rem;
         text-decoration: none;
@@ -131,222 +133,224 @@
 
       .hero-btn-primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(0, 128, 128, 0.4); /* Teal shadow */
+ box-shadow: 0 10px 30px rgba(0, 128, 128, 0.4); /* Teal shadow */
       }
 
       .hero-btn-secondary {
         background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
+ backdrop-filter: blur(10px);
         color: white;
         padding: 1rem 2.5rem;
         border-radius: 30px;
         font-weight: 600;
         font-size: 1.05rem;
         border: 2px solid rgba(255, 255, 255, 0.3);
-        cursor: pointer;
+ cursor: pointer;
         transition: all 0.3s ease;
         text-decoration: none;
         display: inline-block;
-      }
+ }
 
       .hero-btn-secondary:hover {
         background: rgba(255, 255, 255, 0.25);
-        border-color: rgba(255, 255, 255, 0.5);
+ border-color: rgba(255, 255, 255, 0.5);
         transform: translateY(-3px);
       }
 
       .hero-scroll {
         position: absolute;
-        bottom: 2rem;
+ bottom: 2rem;
         left: 50%;
         transform: translateX(-50%);
         z-index: 2;
         animation: bounce 2s infinite;
-      }
+ }
 
       .hero-scroll i {
         font-size: 2rem;
         color: white;
-        opacity: 0.7;
+ opacity: 0.7;
       }
 
       @keyframes bounce {
         0%, 20%, 50%, 80%, 100% {
           transform: translateX(-50%) translateY(0);
-        }
+ }
         40% {
           transform: translateX(-50%) translateY(-10px);
-        }
+ }
         60% {
           transform: translateX(-50%) translateY(-5px);
-        }
+ }
       }
 
       /* --- Feature Bar --- */
       .feature-bar {
         /* Teal Gradient */
-        background: linear-gradient(135deg, #008080, #00cec9); 
-        padding: 2.5rem 2rem;
+        background: linear-gradient(135deg, #008080, #00cec9);
+ padding: 2.5rem 2rem;
       }
 
       .feature-container {
         max-width: 1400px;
-        margin: 0 auto;
+ margin: 0 auto;
         display: grid;
         /* Adjusted minmax for better responsiveness */
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 2rem;
         text-align: center;
       }
 
       .feature-item {
         color: white;
-      }
+ }
 
       .feature-icon {
         font-size: 2.5rem;
         margin-bottom: 0.75rem;
-      }
+ }
 
       .feature-text {
         font-size: 1.1rem;
         font-weight: 600;
-        margin: 0;
+ margin: 0;
       }
 
       /* --- Main Content --- */
       .main-content {
         max-width: 1400px;
-        margin: 0 auto;
+ margin: 0 auto;
         padding: 4rem 2rem;
       }
 
       /* --- Section Title --- */
       .section-header {
         text-align: center;
-        margin-bottom: 3rem;
+ margin-bottom: 3rem;
       }
 
       .section-icon {
-        color: #008080; /* Primary Teal */
+        color: #008080;
+ /* Primary Teal */
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
-      }
+ }
 
       .section-title {
-        color: #008080; /* Primary Teal */
+        color: #008080;
+ /* Primary Teal */
         font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 2px;
         margin-bottom: 0.75rem;
-        text-transform: uppercase;
+ text-transform: uppercase;
       }
 
       .section-subtitle {
         font-size: 1.5rem;
-        font-weight: 600;
+ font-weight: 600;
         color: #1a535c; /* Dark Teal for contrast */
         margin-bottom: 0.75rem;
-      }
+ }
 
       .section-description {
         color: #6c757d;
         font-size: 1.05rem;
-        max-width: 900px;
+ max-width: 900px;
         margin: 0 auto;
       }
 
       /* --- Amenities Grid --- */
       .amenities-grid {
         display: grid;
-        /* Adjusted minmax for better responsiveness */
+ /* Adjusted minmax for better responsiveness */
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
         gap: 2rem;
-        margin-top: 3rem;
+ margin-top: 3rem;
       }
 
       .amenity-card {
         background: white;
-        border-radius: 15px;
+ border-radius: 15px;
         padding: 2rem 1.5rem;
         text-align: center;
         box-shadow: 0 2px 15px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
-      }
+ }
 
       .amenity-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+ box-shadow: 0 8px 30px rgba(0,0,0,0.12);
       }
 
       .amenity-icon-circle {
         width: 80px;
-        height: 80px;
+ height: 80px;
         background: #e6f7f7; /* Light Teal/Mint background */
         border-radius: 20px;
         display: flex;
-        align-items: center;
+ align-items: center;
         justify-content: center;
         margin: 0 auto 1.25rem;
       }
 
       .amenity-icon {
         font-size: 2rem;
-        color: #008080; /* Primary Teal */
+ color: #008080; /* Primary Teal */
       }
 
       .amenity-title {
         font-size: 1.15rem;
-        font-weight: 600;
+ font-weight: 600;
         color: #1a535c; /* Dark Teal for contrast */
         margin-bottom: 0.5rem;
-      }
+ }
 
       .amenity-description {
         color: #6c757d;
         font-size: 0.95rem;
-        line-height: 1.5;
+ line-height: 1.5;
       }
 
       /* --- Rooms Section --- */
       .rooms-section {
         background: white;
-        padding: 4rem 2rem;
+ padding: 4rem 2rem;
         margin-top: 4rem;
       }
 
       .rooms-grid {
         display: grid;
-        /* Adjusted minmax for better responsiveness */
+ /* Adjusted minmax for better responsiveness */
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
         gap: 2.5rem;
-        max-width: 1400px;
+ max-width: 1400px;
         margin: 0 auto;
       }
 
       .room-card {
         background: white;
-        border-radius: 20px;
+ border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         transition: all 0.3s ease;
-      }
+ }
 
       .room-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+ box-shadow: 0 12px 40px rgba(0,0,0,0.15);
       }
 
       .room-image {
         width: 100%;
-        height: 250px;
+ height: 250px;
         object-fit: cover;
         position: relative;
       }
 
       .room-price {
         position: absolute;
-        top: 1rem;
+ top: 1rem;
         right: 1rem;
         background: white;
         padding: 0.5rem 1.25rem;
@@ -354,151 +358,154 @@
         font-weight: 600;
         color: #1a535c;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
+ }
 
       .room-price span {
-        color: #008080; /* Primary Teal */
+        color: #008080;
+ /* Primary Teal */
         font-size: 1.25rem;
-      }
+ }
 
       .room-details {
         padding: 1.75rem;
-      }
+ }
 
       .room-name {
         font-size: 1.3rem;
         font-weight: 600;
-        color: #1a535c;
+ color: #1a535c;
         margin-bottom: 1rem;
       }
 
       .room-features {
         display: flex;
-        flex-wrap: wrap;
+ flex-wrap: wrap;
         gap: 0.75rem;
         margin-bottom: 1.5rem;
       }
 
       .room-feature {
         display: inline-flex;
-        align-items: center;
+ align-items: center;
         gap: 0.25rem;
         padding: 0.4rem 0.85rem;
         background: #e6f7f7; /* Light Teal/Mint background */
-        color: #008080; /* Primary Teal */
+        color: #008080;
+ /* Primary Teal */
         border-radius: 20px;
         font-size: 0.85rem;
         font-weight: 500;
-      }
+ }
 
       .book-btn {
         width: 100%;
-        /* Teal Gradient Button */
+ /* Teal Gradient Button */
         background: linear-gradient(135deg, #008080, #00cec9);
         color: white;
         border: none;
-        padding: 0.9rem 2rem;
+ padding: 0.9rem 2rem;
         border-radius: 10px;
         font-weight: 600;
         font-size: 1rem;
         cursor: pointer;
         transition: all 0.3s ease;
-      }
+ }
 
       .book-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 128, 128, 0.3); /* Teal shadow */
+ box-shadow: 0 6px 20px rgba(0, 128, 128, 0.3); /* Teal shadow */
       }
 
       /* --- Contact Section --- */
       .contact-section {
         background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        padding: 4rem 2rem;
+ padding: 4rem 2rem;
         margin-top: 4rem;
       }
 
       .contact-container {
         max-width: 1200px;
-        margin: 0 auto;
+ margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 1.5fr; /* Desktop layout */
         gap: 4rem;
-        align-items: start;
+ align-items: start;
       }
 
       .contact-info h3 {
-        color: #00bfff; /* Blue-Teal Accent */
+        color: #00bfff;
+ /* Blue-Teal Accent */
         font-size: 0.95rem;
         font-weight: 600;
         letter-spacing: 2px;
         margin-bottom: 1.5rem;
-      }
+ }
 
       .contact-info h2 {
         font-size: 1.15rem;
         font-weight: 500;
-        color: #1a535c; /* Dark Teal */
+ color: #1a535c; /* Dark Teal */
         margin-bottom: 2rem;
         line-height: 1.6;
-      }
+ }
 
       .contact-detail {
         display: flex;
         align-items: center;
-        gap: 1rem;
+ gap: 1rem;
         margin-bottom: 1.5rem;
       }
 
       .contact-icon-circle {
         width: 50px;
-        height: 50px;
+ height: 50px;
         /* Teal-Blue Gradient */
         background: linear-gradient(135deg, #00bfff, #008080);
         border-radius: 10px;
-        display: flex;
+ display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         font-size: 1.25rem;
         flex-shrink: 0;
-      }
+ }
 
       .contact-text h4 {
         font-size: 0.95rem;
         font-weight: 600;
-        color: #1a535c; /* Dark Teal */
+ color: #1a535c; /* Dark Teal */
         margin-bottom: 0.25rem;
-      }
+ }
 
       .contact-text p {
         color: #6c757d;
         font-size: 0.9rem;
-        margin: 0;
+ margin: 0;
       }
 
       /* --- Contact Form --- */
       .contact-form-container {
         background: white;
-        padding: 2.5rem;
+ padding: 2.5rem;
         border-radius: 20px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       }
 
       .contact-form-container h3 {
         font-size: 1.5rem;
-        font-weight: 600;
+ font-weight: 600;
         color: #1a535c; /* Dark Teal */
         margin-bottom: 2rem;
-      }
+ }
 
       .form-group {
         margin-bottom: 1.5rem;
-      }
+ }
 
       .form-group label {
         display: block;
         font-size: 0.85rem;
-        font-weight: 600;
+ font-weight: 600;
         color: #6c757d;
         margin-bottom: 0.5rem;
         letter-spacing: 0.5px;
@@ -507,35 +514,35 @@
       .form-group input,
       .form-group textarea {
         width: 100%;
-        padding: 0.9rem 1rem;
+ padding: 0.9rem 1rem;
         border: 1px solid #e0e0e0;
         border-radius: 10px;
         font-size: 0.95rem;
         font-family: "Poppins", sans-serif;
         transition: all 0.3s ease;
-      }
+ }
 
       .form-group input:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: #00bfff; /* Blue-Teal focus */
+ border-color: #00bfff; /* Blue-Teal focus */
         box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.1);
-      }
+ }
 
       .form-group textarea {
         resize: vertical;
         min-height: 120px;
-      }
+ }
 
       .form-group input::placeholder,
       .form-group textarea::placeholder {
         color: #adb5bd;
-      }
+ }
 
       .submit-btn {
         /* Teal-Blue Gradient */
         background: linear-gradient(135deg, #00bfff, #008080);
-        color: white;
+ color: white;
         border: none;
         padding: 1rem 2.5rem;
         border-radius: 10px;
@@ -543,103 +550,368 @@
         font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        display: flex;
+ display: flex;
         align-items: center;
         gap: 0.5rem;
       }
 
       .submit-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 191, 255, 0.3);
+ box-shadow: 0 6px 20px rgba(0, 191, 255, 0.3);
       }
 
       /* --- Help Button --- */
       .help-button {
         position: fixed;
-        bottom: 2rem;
+ bottom: 2rem;
         right: 2rem;
         width: 50px;
         height: 50px;
-        background: #1a535c; /* Dark Teal */
+        background: #1a535c;
+ /* Dark Teal */
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+ color: white;
         font-size: 1.25rem;
         cursor: pointer;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         transition: all 0.3s ease;
         z-index: 999;
-      }
+ }
 
       .help-button:hover {
         transform: scale(1.1);
-        background: #0d292f; /* Even darker Teal */
+        background: #0d292f;
+ /* Even darker Teal */
       }
 
       /* --- Mobile Responsive (max-width: 768px) --- */
       @media (max-width: 768px) {
         .header-container {
           padding: 1rem;
-        }
+ }
 
         nav ul {
           display: none;
-        }
+ }
 
         .hero-section {
           height: 80vh;
-          min-height: 500px;
+ min-height: 500px;
         }
 
         .hero-title {
           font-size: 2.5rem;
-        }
+ }
 
         .hero-description {
           font-size: 1.05rem;
-        }
+ }
 
         .hero-buttons {
           flex-direction: column;
-          gap: 1rem;
+ gap: 1rem;
         }
 
         .hero-btn-primary,
         .hero-btn-secondary {
           width: 100%;
-          max-width: 300px;
+ max-width: 300px;
           margin-left: auto; /* Center items when stacked */
           margin-right: auto;
-        }
+ }
 
         .feature-container {
           grid-template-columns: 1fr;
-          gap: 1.5rem;
+ gap: 1.5rem;
         }
 
         .amenities-grid {
           grid-template-columns: 1fr;
-          gap: 1.5rem;
+ gap: 1.5rem;
         }
 
         .rooms-grid {
           grid-template-columns: 1fr;
-          gap: 2rem;
+ gap: 2rem;
         }
 
         .contact-container {
           grid-template-columns: 1fr;
-          gap: 2rem;
+ gap: 2rem;
         }
 
         .main-content {
           padding: 2rem 1rem;
-        }
+ }
 
         .section-subtitle {
           font-size: 1.25rem;
+ }
+      }
+
+      /* --- Mobile Responsive (max-width: 480px) --- */
+      @media (max-width: 480px) {
+        .header-container {
+          padding: 0.75rem;
+ }
+
+        .hero-section {
+          height: 70vh;
+ min-height: 400px;
+          margin-top: 60px;
+          padding: 1rem;
+        }
+
+        .hero-content {
+          padding: 1rem;
+ }
+
+        .hero-badge {
+          padding: 0.5rem 1rem;
+ font-size: 0.75rem;
+          margin-bottom: 1rem;
+        }
+
+        .hero-title {
+          font-size: 1.75rem;
+ margin-bottom: 1rem;
+          line-height: 1.3;
+        }
+
+        .hero-description {
+          font-size: 0.9rem;
+ margin-bottom: 2rem;
+          line-height: 1.5;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+ gap: 0.75rem;
+          width: 100%;
+        }
+
+        .hero-btn-primary,
+        .hero-btn-secondary {
+          width: 100%;
+ max-width: 100%;
+          padding: 0.85rem 1.5rem;
+          font-size: 0.95rem;
+          flex: 1;
+          justify-content: center;
+ }
+
+        .hero-scroll {
+          bottom: 1rem;
+ }
+
+        .hero-scroll i {
+          font-size: 1.5rem;
+ }
+
+        .feature-bar {
+          padding: 1.5rem 1rem;
+ }
+
+        .feature-container {
+          grid-template-columns: 1fr;
+ gap: 1.25rem;
+        }
+
+        .feature-icon {
+          font-size: 2rem;
+ margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+          font-size: 0.95rem;
+ }
+
+        .main-content {
+          padding: 2rem 1rem;
+ }
+
+        .section-header {
+          margin-bottom: 2rem;
+ }
+
+        .section-icon {
+          font-size: 1.25rem;
+ }
+
+        .section-title {
+          font-size: 0.8rem;
+ margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+          font-size: 1.1rem;
+ margin-bottom: 0.5rem;
+        }
+
+        .section-description {
+          font-size: 0.9rem;
+ }
+
+        .amenities-grid {
+          grid-template-columns: 1fr;
+ gap: 1.25rem;
+          margin-top: 2rem;
+        }
+
+        .amenity-card {
+          padding: 1.5rem 1rem;
+ }
+
+        .amenity-icon-circle {
+          width: 60px;
+ height: 60px;
+          margin-bottom: 1rem;
+        }
+
+        .amenity-icon {
+          font-size: 1.5rem;
+ }
+
+        .amenity-title {
+          font-size: 1rem;
+ }
+
+        .amenity-description {
+          font-size: 0.85rem;
+ }
+
+        .rooms-section {
+          padding: 2rem 1rem;
+ margin-top: 2rem;
+        }
+
+        .rooms-grid {
+          grid-template-columns: 1fr;
+ gap: 1.5rem;
+        }
+
+        .room-image {
+          height: 200px;
+ }
+
+        .room-price {
+          top: 0.75rem;
+ right: 0.75rem;
+          padding: 0.4rem 1rem;
+          font-size: 0.85rem;
+        }
+
+        .room-price span {
+          font-size: 1.1rem;
+ }
+
+        .room-details {
+          padding: 1.25rem;
+ }
+
+        .room-name {
+          font-size: 1.1rem;
+ margin-bottom: 0.75rem;
+        }
+
+        .room-features {
+          gap: 0.5rem;
+ margin-bottom: 1rem;
+        }
+
+        .room-feature {
+          padding: 0.35rem 0.7rem;
+ font-size: 0.75rem;
+        }
+
+        .book-btn {
+          padding: 0.75rem 1.5rem;
+ font-size: 0.9rem;
+        }
+
+        .contact-section {
+          padding: 2rem 1rem;
+ margin-top: 2rem;
+        }
+
+        .contact-container {
+          grid-template-columns: 1fr;
+ gap: 1.5rem;
+        }
+
+        .contact-info h3 {
+          font-size: 0.85rem;
+ margin-bottom: 1rem;
+        }
+
+        .contact-info h2 {
+          font-size: 1rem;
+ margin-bottom: 1.5rem;
+          line-height: 1.5;
+        }
+
+        .contact-detail {
+          margin-bottom: 1.25rem;
+ }
+
+        .contact-icon-circle {
+          width: 45px;
+ height: 45px;
+          font-size: 1.1rem;
+        }
+
+        .contact-text h4 {
+          font-size: 0.9rem;
+ }
+
+        .contact-text p {
+          font-size: 0.85rem;
+ }
+
+        .contact-form-container {
+          padding: 1.5rem;
+ }
+
+        .contact-form-container h3 {
+          font-size: 1.25rem;
+ margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+          margin-bottom: 1.25rem;
+ }
+
+        .form-group label {
+          font-size: 0.8rem;
+ margin-bottom: 0.4rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+          padding: 0.75rem 0.85rem;
+ font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+          min-height: 100px;
+ }
+
+        .submit-btn {
+          padding: 0.85rem 2rem;
+ font-size: 0.9rem;
+          width: 100%;
+          justify-content: center;
+        }
+
+        .help-button {
+          width: 45px;
+ height: 45px;
+          bottom: 1.5rem;
+          right: 1.5rem;
+          font-size: 1.1rem;
         }
       }
     </style>
@@ -647,15 +919,16 @@
 
   <body class="transparent-navbar">
     
+    <%- include('partials/navbar') %>
     <section class="hero-section">
-      <%- include('partials/navbar') %>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <div class="hero-badge">
           <i class="fas fa-award"></i>
           <span>5-Star Luxury Resort & Spa</span>
         </div>
-        <h1 class="hero-title">Welcome to 
+     
+    <h1 class="hero-title">Welcome to 
           Palm Ways</h1>
         <p class="hero-description">
           Experience unparalleled luxury in a tropical paradise where every moment becomes an unforgettable memory
@@ -663,7 +936,8 @@
         <div class="hero-buttons">
           <a href="#booking" class="hero-btn-primary">
             Book Your Stay
-            <i class="fas fa-arrow-right"></i>
+        
+     <i class="fas fa-arrow-right"></i>
           </a>
           <a href="/api/packages" class="hero-btn-secondary">
             Explore Packages
@@ -676,7 +950,8 @@
     </section>
 
     <div class="feature-bar">
-      <div class="feature-container">
+   
+    <div class="feature-container">
         <div class="feature-item">
           <div class="feature-icon">
             <i class="fas fa-award"></i>
@@ -685,7 +960,8 @@
         </div>
         <div class="feature-item">
           <div class="feature-icon">
-            <i class="fas fa-star"></i>
+            
+ <i class="fas fa-star"></i>
           </div>
           <p class="feature-text">5.0 Rating</p>
         </div>
@@ -695,7 +971,8 @@
           </div>
           <p class="feature-text">Prime Location</p>
         </div>
-        <div class="feature-item">
+    
+     <div class="feature-item">
           <div class="feature-icon">
             <i class="fas fa-clock"></i>
           </div>
@@ -707,7 +984,8 @@
     <main class="main-content">
       <section class="amenities-section">
         <div class="section-header">
-          <div class="section-icon">
+         
+  <div class="section-icon">
             <i class="fas fa-sparkles"></i>
           </div>
           <p class="section-title">WORLD-CLASS AMENITIES</p>
@@ -715,7 +993,8 @@
           <p class="section-description">
             Indulge in premium facilities designed for your comfort and pleasure
           </p>
-        </div>
+       
+  </div>
 
         <div class="amenities-grid">
           <div class="amenity-card">
@@ -724,7 +1003,8 @@
             </div>
             <h3 class="amenity-title">High-Speed WiFi</h3>
             <p class="amenity-description">Stay connected</p>
-          </div>
+         
+  </div>
 
           <div class="amenity-card">
             <div class="amenity-icon-circle">
@@ -734,7 +1014,8 @@
             <p class="amenity-description">Daily buffet</p>
           </div>
 
-          <div class="amenity-card">
+        
+   <div class="amenity-card">
             <div class="amenity-icon-circle">
               <i class="fas fa-swimming-pool amenity-icon"></i>
             </div>
@@ -743,6 +1024,7 @@
           </div>
 
           <div class="amenity-card">
+      
             <div class="amenity-icon-circle">
               <i class="fas fa-utensils amenity-icon"></i>
             </div>
@@ -752,6 +1034,7 @@
 
           <div class="amenity-card">
             <div class="amenity-icon-circle">
+  
               <i class="fas fa-dumbbell amenity-icon"></i>
             </div>
             <h3 class="amenity-title">Fitness Center</h3>
@@ -760,7 +1043,8 @@
 
           <div class="amenity-card">
             <div class="amenity-icon-circle">
-              <i class="fas fa-car amenity-icon"></i>
+           
+    <i class="fas fa-car amenity-icon"></i>
             </div>
             <h3 class="amenity-title">Valet Parking</h3>
             <p class="amenity-description">Complimentary</p>
@@ -771,6 +1055,7 @@
       <section class="rooms-section">
         <div class="section-header">
           <div class="section-icon">
+    
             <i class="fas fa-sparkles"></i>
           </div>
           <p class="section-title">LUXURIOUS ACCOMMODATIONS</p>
@@ -780,44 +1065,53 @@
           </p>
         </div>
 
-        <div class="rooms-grid">
+   
+      <div class="rooms-grid">
           <% if (packages && packages.length > 0) { %>
             <% packages.forEach(pkg => { %>
               <div class="room-card">
                 <div style="position: relative;">
-                  <img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName ||
+                  <img src="<%= pkg.image ||
+ pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName ||
                     pkg.title %>" class="room-image">
                   <% if (pkg.price) { %>
                     <div class="room-price"><span>$<%= pkg.price %></span>/night</div>
                   <% } %>
                 </div>
-                <div 
+          
+        <div 
                   class="room-details">
                   <h3 class="room-name"><%= pkg.packageName || pkg.title %></h3>
                   <div class="room-features">
                     <% if (pkg.Stay) { %>
-                      <span class="room-feature"><%= pkg.Stay %></span>
+         
+              <span class="room-feature"><%= pkg.Stay %></span>
                     <% } %>
                     <% if (pkg.type) { %>
                       <span class="room-feature"><%= pkg.type %></span>
-                    <% } %>
+             
+        <% } %>
                 
                     <% if (pkg.hotelName) { %>
                       <span class="room-feature"><%= pkg.hotelName %></span>
                     <% } %>
-                    <% if (pkg.location) { %>
+    
+                  <% if (pkg.location) { %>
                       <span class="room-feature"><%= pkg.location %></span>
                     <% } %>
                   </div>
-                  <button class="book-btn" onclick="window.location.href='/api/login'">Book Now</button>
+               
+    <button class="book-btn" onclick="window.location.href='/api/login'">Book Now</button>
                 </div>
               </div>
-            <% }); %>
+            <% });
+ %>
           <% } else { %>
             <div style="text-align: center; padding: 3rem; color: #6c757d;">
               <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem; color: #dee2e6;"></i>
               <h3 style="font-size: 1.5rem; font-weight: 600; color: #1a535c; margin-bottom: 0.5rem;">No Packages Available</h3>
-              <p style="font-size: 1rem;">Please check back later or contact us for more information.</p>
+              <p style="font-size: 1rem;">Please check back later or contact 
+ us for more information.</p>
             </div>
           <% } %>
         </div>
@@ -828,15 +1122,17 @@
           <div class="contact-info">
             <h3>📧 
               GET IN TOUCH</h3>
+  
             <h2>Have Questions?
-              Contact Us<br><br>Our team is here to help you plan the perfect stay.
-              Send us a message and we'll respond within 24 hours.</h2>
+ Contact Us<br><br>Our team is here to help you plan the perfect stay.
+ Send us a message and we'll respond within 24 hours.</h2>
             
             <div class="contact-detail">
               <div class="contact-icon-circle">
                 <i class="fas fa-phone"></i>
               </div>
               <div class="contact-text">
+    
                 <h4>Call Us</h4>
                 <p>+1 (234) 567-890</p>
                 <p style="font-size: 0.8rem; color: #999;">Available 24/7</p>
@@ -844,13 +1140,15 @@
             </div>
 
             <div class="contact-detail">
-              <div class="contact-icon-circle">
+         
+            <div class="contact-icon-circle">
                 <i class="fas fa-envelope"></i>
               </div>
               <div class="contact-text">
                 <h4>Email Us</h4>
                 <p>info@palmways.com</p>
-                <p style="font-size: 0.8rem; color: #999;">Response within 24 hours</p>
+              
+    <p style="font-size: 0.8rem; color: #999;">Response within 24 hours</p>
               </div>
             </div>
 
@@ -858,11 +1156,12 @@
               <div class="contact-icon-circle">
                 <i class="fas fa-map-marker-alt"></i>
               </div>
+     
               <div class="contact-text">
                 <h4>Visit Us</h4>
                 <p>123 Paradise Beach Road</p>
                 <p style="font-size: 0.8rem;
-                  color: #999;">Tropical Island, PI 12345</p>
+ color: #999;">Tropical Island, PI 12345</p>
               </div>
             </div>
           </div>
@@ -871,6 +1170,7 @@
             <h3>Send us a Message</h3>
             <form id="contactForm">
               <div class="form-group">
+      
                 <label for="name">Your Name *</label>
                 <input type="text" id="name" name="name" placeholder="John Doe" required>
               </div>
@@ -878,12 +1178,14 @@
               <div class="form-group">
                 <label for="email">Email Address *</label>
                 <input 
+ 
                   type="email" id="email" name="email" placeholder="john@example.com" required>
               </div>
 
               <div class="form-group">
                 <label for="message">Message *</label>
                 <textarea id="message" name="message" placeholder="Tell us how we can help you..." required></textarea>
+     
               </div>
 
               <button type="submit" class="submit-btn">
@@ -891,7 +1193,8 @@
                 Send Message
               </button>
             </form>
-            <div id="contactFormMessage" style="margin-top: 1rem;
+            <div id="contactFormMessage" 
+ style="margin-top: 1rem;
               display: none;"></div>
           </div>
         </div>
@@ -905,46 +1208,6 @@
     <%- include('partials/footer') %>
 
     <script>
-      // Navbar scroll effect - change from transparent to solid after hero section
-      document.addEventListener("DOMContentLoaded", () => {
-        const header = document.querySelector(".main-header");
-        const heroSection = document.querySelector(".hero-section");
-        
-        if (header && heroSection) {
-          // Ensure navbar starts transparent (remove scrolled class if present)
-          header.classList.remove("scrolled");
-          
-          function handleScroll() {
-            const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-            const scrollPosition = window.pageYOffset || window.scrollY;
-            
-            // Change navbar when scrolling past the hero section
-            if (scrollPosition >= heroBottom - 50) {
-              header.classList.add("scrolled");
-            } else {
-              header.classList.remove("scrolled");
-            }
-          }
-          
-          // Check on initial load (after a small delay to ensure DOM is ready)
-          setTimeout(() => {
-            handleScroll();
-          }, 100);
-          
-          // Check on scroll with throttling for better performance
-          let ticking = false;
-          window.addEventListener("scroll", () => {
-            if (!ticking) {
-              window.requestAnimationFrame(() => {
-                handleScroll();
-                ticking = false;
-              });
-              ticking = true;
-            }
-          });
-        }
-      });
-
       // Contact Form Handler
       document.addEventListener("DOMContentLoaded", () => {
         const contactForm = document.getElementById("contactForm");
@@ -955,7 +1218,8 @@
           contactForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById("name").value;
+            const name = 
+ document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const message = document.getElementById("message").value;
 
@@ -963,17 +1227,18 @@
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalHTML = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+       
             submitButton.disabled = true;
             
             try {
               const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: {
+               
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ name, email, message }),
               });
-              
               const result = await response.json();
 
               if (result.success) {
@@ -1008,6 +1273,6 @@
           });
         }
       });
-    </script>
+ </script>
   </body>
 </html>

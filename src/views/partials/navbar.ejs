@@ -1,479 +1,4 @@
-<style>
-  /* Teal Color Palette */
-  :root {
-    --primary-teal: #008080;
-    --secondary-teal: #00cec9;
-    --dark-teal: #1a535c;
-  }
-  
-  /* Shared Base Styles */
-  .main-header {
-    background: var(--bg-color, white);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
-
-  /* Transparent navbar for index and packages pages only */
-  .transparent-navbar .main-header {
-    /* FIX 1: Changed background to a darker transparent color (black with 30% opacity) */
-    background: rgba(0, 0, 0, 0.3) !important; 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: none !important;
-  }
-
-  .transparent-navbar .main-header.scrolled {
-    background: var(--bg-color, white) !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
-  }
-
-  /* Text colors for transparent navbar */
-  .transparent-navbar .main-header:not(.scrolled) .logo-text h1 {
-    color: white;
-  }
-
-  .transparent-navbar .main-header:not(.scrolled) .nav-menu li a {
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  .transparent-navbar .main-header:not(.scrolled) .nav-menu li a:hover,
-  .transparent-navbar .main-header:not(.scrolled) .nav-menu li a.active {
-    color: white;
-    border-bottom-color: white;
-  }
-
-  .transparent-navbar .main-header:not(.scrolled) .mobile-menu-btn,
-  .transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop {
-    color: white;
-  }
-
-  .transparent-navbar .main-header:not(.scrolled) .user-icon-btn {
-    color: white;
-  }
-
-  /* Dark mode transparent navbar */
-  .dark .transparent-navbar .main-header {
-    background: rgba(31, 41, 55, 0.5) !important; /* Darkened transparency for dark mode */
-  }
-
-  .dark .transparent-navbar .main-header.scrolled {
-    background: var(--bg-color, #1f2937) !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
-  }
-
-  .header-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-  }
-
-  .logo-icon {
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(135deg, var(--primary-teal), var(--secondary-teal));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-  }
-
-  .logo-text h1 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-color, #2c3e50);
-    line-height: 1.2;
-    margin: 0;
-    transition: color 0.3s;
-  }
-
-  .logo-text p {
-    font-size: 0.85rem;
-    color: var(--primary-teal);
-    margin: 0;
-    font-weight: 500;
-  }
-
-  .nav-menu {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    align-items: center;
-    margin: 0;
-  }
-
-  .nav-menu li a {
-    text-decoration: none;
-    color: var(--text-color-secondary, #5f6368);
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
-  }
-
-  .nav-menu li a:hover,
-  .nav-menu li a.active {
-    color: var(--primary-teal);
-    border-bottom-color: var(--primary-teal);
-  }
-
-  /* User/Auth Button Styles */
-  .auth-controls {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  
-  .sign-in-btn {
-    background: linear-gradient(135deg, var(--primary-teal), var(--secondary-teal));
-    color: white !important;
-    padding: 0.6rem 1.5rem !important;
-    border-radius: 8px;
-    font-weight: 600;
-    border: none !important;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .sign-in-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
-  }
-  
-  .user-icon-btn {
-    color: var(--primary-teal);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  .user-icon-btn:hover {
-    color: var(--dark-teal);
-  }
-
-  .mobile-menu-btn, .theme-toggle-desktop {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-color, #2c3e50);
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-  }
-  
-  .mobile-menu-btn:hover, .theme-toggle-desktop:hover {
-      color: var(--primary-teal);
-      background: rgba(0, 128, 128, 0.1);
-  }
-
-  /* Interactive Hamburger Animation */
-  .mobile-menu-btn {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .mobile-menu-btn span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: currentColor;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-  }
-
-  .mobile-menu-btn.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
-  }
-
-  .mobile-menu-btn.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .mobile-menu-btn.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
-  }
-
-  /* User Dropdown for Desktop/Tablet */
-  .user-dropdown {
-    position: relative;
-  }
-
-  .user-dropdown-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    background: var(--bg-color, white);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    min-width: 220px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 1000;
-    overflow: hidden;
-  }
-
-  .user-dropdown-menu.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .user-dropdown-menu .dropdown-header {
-    padding: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .user-dropdown-menu .dropdown-header img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid var(--primary-teal);
-  }
-
-  .user-dropdown-menu .dropdown-header .user-info {
-    flex: 1;
-  }
-
-  .user-dropdown-menu .dropdown-header .user-info .user-name {
-    font-weight: 600;
-    color: var(--text-color, #2c3e50);
-    font-size: 0.95rem;
-  }
-
-  .user-dropdown-menu .dropdown-header .user-info .user-email {
-    font-size: 0.75rem;
-    color: var(--text-color-secondary, #5f6368);
-  }
-
-  .user-dropdown-menu .dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    color: var(--text-color, #2c3e50);
-    text-decoration: none;
-    transition: all 0.2s ease;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  .user-dropdown-menu .dropdown-item:last-child {
-    border-bottom: none;
-  }
-
-  .user-dropdown-menu .dropdown-item:hover {
-    background: rgba(0, 128, 128, 0.1);
-    color: var(--primary-teal);
-  }
-
-  .user-dropdown-menu .dropdown-item i {
-    width: 20px;
-    text-align: center;
-    color: var(--primary-teal);
-  }
-
-  .user-dropdown-menu .dropdown-item.logout {
-    color: #dc2626;
-  }
-
-  .user-dropdown-menu .dropdown-item.logout:hover {
-    background: rgba(220, 38, 38, 0.1);
-  }
-
-  .user-dropdown-menu .dropdown-item.logout i {
-    color: #dc2626;
-  }
-
-  .dark .user-dropdown-menu {
-    background: #1f2937;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  }
-
-  .dark .user-dropdown-menu .dropdown-header {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .dark .user-dropdown-menu .dropdown-item {
-    color: var(--text-color);
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Dark Mode Styles */
-  .dark .main-header {
-    --bg-color: #1f2937;
-    /* Gray-800 */
-    --text-color: #f3f4f6; /* Gray-100 */
-    --text-color-secondary: #d1d5db;
-    /* Gray-300 */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  }
-  
-  .dark .logo-text h1 {
-    color: var(--text-color);
-  }
-
-  .dark .nav-menu li a {
-    color: var(--text-color-secondary);
-  }
-  
-  .dark .mobile-menu-btn, .dark .theme-toggle-desktop {
-    color: var(--text-color);
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 1024px) {
-      .nav-menu {
-          display: none;
-      }
-      .auth-controls {
-          gap: 1rem;
-      }
-      .sign-in-btn, .theme-toggle-desktop {
-          display: none;
-          /* Hide desktop elements on mobile */
-      }
-      
-      /* FIX 2: Hide desktop user icon on mobile */
-      #userIconDesktop {
-          display: none !important;
-      }
-      
-      .mobile-menu-btn {
-          display: block;
-      }
-      
-      /* Re-enable display for mobile-only menu button */
-      .mobile-group {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-      }
-  }
-
-  @media (max-width: 480px) {
-      .header-container {
-          padding: 0.75rem 1rem !important;
-      }
-
-      .logo-icon {
-          width: 36px !important;
-          height: 36px !important;
-          font-size: 1.125rem !important;
-      }
-
-      .logo-text h1 {
-          font-size: 1rem !important;
-      }
-
-      .logo-text p {
-          font-size: 0.7rem !important;
-      }
-
-      .mobile-menu-btn {
-          width: 32px !important;
-          height: 32px !important;
-          font-size: 0.875rem !important;
-      }
-
-      .mobile-menu-btn span {
-          width: 20px !important;
-          height: 2px !important;
-      }
-
-      .theme-toggle-mobile {
-          font-size: 1.125rem !important;
-      }
-
-      #sideMenu {
-          width: 85vw !important;
-          max-width: 300px !important;
-      }
-
-      #sideMenu .bg-gradient-to-br {
-          padding: 1rem !important;
-      }
-
-      #sideMenu .pt-16 {
-          padding-top: 3rem !important;
-      }
-
-      #sideMenu ul li a {
-          font-size: 0.875rem !important;
-          padding: 0.625rem 1rem !important;
-      }
-
-      #sideMenu .dropdown-item {
-          font-size: 0.875rem !important;
-          padding: 0.625rem 1rem !important;
-      }
-
-      #sideMenu .user-info .user-name {
-          font-size: 0.875rem !important;
-      }
-
-      #sideMenu .user-info .user-email {
-          font-size: 0.7rem !important;
-      }
-
-      #sideMenu img {
-          width: 2.5rem !important;
-          height: 2.5rem !important;
-      }
-
-      .user-dropdown-menu {
-          min-width: 180px !important;
-          right: -10px !important;
-      }
-
-      .user-dropdown-menu .dropdown-header {
-          padding: 0.75rem !important;
-      }
-
-      .user-dropdown-menu .dropdown-header img {
-          width: 32px !important;
-          height: 32px !important;
-      }
-
-      .user-dropdown-menu .dropdown-item {
-          font-size: 0.875rem !important;
-          padding: 0.625rem 0.75rem !important;
-      }
-  }
-  
-  @media (min-width: 1025px) {
-      .mobile-menu-btn {
-          display: none;
-      }
-  }
-
-</style>
+<link rel="stylesheet" href="/assets/css/navbar.css">
 
 <header class="main-header">
   <div class="header-container">
@@ -489,60 +14,71 @@
     
     <div class="flex items-center gap-6">
         
-        <nav class="hidden lg:block">
+        <nav 
+ class="hidden lg:block">
             <ul class="nav-menu">
                 <li><a href="/" id="nav-home">Home</a></li>
                 <li><a href="/api/packages" id="nav-packages">Packages</a></li>
                 <li><a href="#" id="nav-contact">Contact Us</a></li>
                 <li id="nav-booking-li" style="display: none;"><a href="/api/booking" id="nav-booking">Booking</a></li>
-                <li id="nav-my-bookings-li" style="display: none;"><a href="#" id="nav-my-bookings">My Bookings</a></li>
+          
+              <li id="nav-my-bookings-li" style="display: none;"><a href="#" id="nav-my-bookings">My Bookings</a></li>
                 <li id="nav-auth-li"><a href="/api/login" class="sign-in-btn" id="authLink">Sign In</a></li>
             </ul>
         </nav>
         
         <div class="auth-controls">
             <button 
-                class="theme-toggle-desktop" id="themeToggleDesktop" aria-label="Toggle Theme">
+                class="theme-toggle-desktop" 
+ id="themeToggleDesktop" aria-label="Toggle Theme">
                 <i class="fas fa-sun" id="themeIconDesktop"></i>
             </button>
             
             <div class="user-dropdown hidden" id="userDropdownDesktop">
                 <a href="#" id="userIconDesktop" class="user-icon-btn" aria-label="User Profile">
-                    <i class="fas fa-user-circle"></i>
+                   
+  <i class="fas fa-user-circle"></i>
                 </a>
                 <div class="user-dropdown-menu" id="userDropdownMenu">
                     <div class="dropdown-header">
                         <img src="https://i.pravatar.cc/40" alt="User Avatar" id="dropdownUserAvatar" class="w-10 h-10 rounded-full border-2 border-primary-teal object-cover" />
-                        <div class="user-info">
+       
+                      <div class="user-info">
                             <div class="user-name" id="dropdownUserName">User Name</div>
                             <div class="user-email" id="dropdownUserEmail">user@example.com</div>
-                        </div>
+                     
+        </div>
                     </div>
                     <a href="#" id="dropdownUserInfo" class="dropdown-item">
                         <i class="fas fa-user"></i>
                         <span>User Info</span>
-                    </a>
+   
+                      </a>
                     <a href="/api/change-password" class="dropdown-item">
                         <i class="fas fa-key"></i>
                         <span>Change Password</span>
-                    </a>
+          
+                      </a>
                     <a href="#" id="dropdownLogout" class="dropdown-item logout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
-                    </a>
+                
+        </a>
                 </div>
             </div>
 
             <div class="mobile-group lg:hidden">
                 <button class="theme-toggle-mobile" id="themeToggleMobile" aria-label="Toggle Theme">
              
-                    <i class="fas fa-sun" id="themeIconMobile"></i>
+                    <i 
+ class="fas fa-sun" id="themeIconMobile"></i>
                 </button>
                 <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </button>
+   
+              </button>
             </div>
         </div>
     </div>
@@ -556,386 +92,122 @@
 
 <div
   id="sideMenu"
-  class="fixed top-0 right-0 w-80 h-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-2xl flex flex-col"
+  class="fixed top-0 left-0 right-0 w-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-2xl flex flex-col"
 >
-  <!-- Header with User Info -->
-  <div class="bg-gradient-to-br from-primary-teal to-secondary-teal text-white p-6">
-    <button
-      id="closeBtn"
-      class="absolute top-4 right-4 text-2xl text-white focus:outline-none hover:opacity-80 transition-opacity"
-    >
-      <i class="fas fa-times"></i>
-    </button>
+  <div class="bg-gradient-to-br from-primary-teal to-secondary-teal text-white p-4 relative">
+    <div class="absolute top-4 
+ right-4 flex items-center gap-3">
+      <button
+        class="theme-toggle-mobile-menu text-xl text-white focus:outline-none hover:opacity-80 transition-opacity"
+        id="themeToggleMobileMenu"
+        aria-label="Toggle Theme"
+      >
+        <i class="fas fa-sun" id="themeIconMobileMenu"></i>
+      </button>
+      <button
+        id="closeBtn"
+        class="text-2xl text-white focus:outline-none hover:opacity-80 transition-opacity"
+      >
+      
+    <i class="fas fa-arrow-left"></i>
+      </button>
+    </div>
     
+    <div class="flex items-center gap-3 pt-2 pb-3">
+      <div class="logo-icon-mobile-menu">
+        <i class="fas fa-building"></i>
+      </div>
+      <div class="logo-text-mobile-menu">
+        <h1>Palm Ways</h1>
+        <p>Luxury Resort & Spa</p>
+      </div>
+    </div>
+    
+  
     <div
       id="user_detail"
-      class="flex items-center gap-4 pt-8 pb-4 hidden"
+      class="flex items-center gap-3 pt-2 pb-2 hidden"
     >
-        <img
-            src="https://i.pravatar.cc/40"
-            alt="User Avatar"
-            id="mobile_user_avatar"
-            class="w-16 h-16 rounded-full border-3 border-white object-cover shadow-lg"
-          />
-        <div>
-          <p id="who_username" class="text-xl font-semibold text-white mb-1"></p>
-          <p id="mobile_user_email" class="text-sm text-white/80"></p>
-        </div>
-    </div>
-
-    <!-- Guest View -->
-    <div id="guest_view" class="pt-8 pb-4">
-      <p class="text-lg font-semibold text-white">Welcome Guest</p>
-      <p class="text-sm text-white/80">Sign in to access your account</p>
+      <img
+          src="https://i.pravatar.cc/40"
+          alt="User Avatar"
+          id="mobile_user_avatar"
+          class="w-12 h-12 rounded-full border-2 border-white object-cover shadow-lg"
+        />
+      
+    <div>
+        <p id="who_username" class="text-base font-semibold text-white mb-0.5"></p>
+        <p id="mobile_user_email" class="text-xs text-white/80"></p>
+      </div>
     </div>
   </div>
 
-  <!-- Navigation Menu -->
-  <div class="flex-1 overflow-y-auto">
-    <ul class="mt-4 space-y-1 px-4">
+  <div class="flex-1 overflow-y-auto px-4">
+    <ul class="space-y-1">
       <li>
-        <a href="/" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <i class="fas fa-home text-primary-teal w-5"></i>
+        <a href="/" class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors">
+          <i class="fas fa-home w-5"></i>
           <span>Home</span>
+ 
         </a>
       </li>
       <li>
-        <a href="/api/packages" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <i class="fas fa-suitcase text-primary-teal w-5"></i>
+        <a href="/api/packages" class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors">
+          <i class="fas fa-suitcase w-5"></i>
           <span>Packages</span>
         </a>
       </li>
       <li>
         <a href="#" id="mobile-contact" 
-            class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <i class="fas fa-envelope text-primary-teal w-5"></i>
+        
+    class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors">
+          <i class="fas fa-envelope w-5"></i>
           <span>Contact Us</span>
         </a>
       </li>
       <li id="mobile-booking-li" style="display: none;">
-        <a href="/api/booking" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <i class="fas fa-calendar-check text-primary-teal w-5"></i>
-          <span>Booking</span>
+        <a href="/api/booking" class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors">
+          <i class="fas fa-calendar-check w-5"></i>
+        
+    <span>Booking</span>
         </a>
       </li>
       <li id="mobile-my-bookings-li" style="display: none;">
-        <a id="mobile-my-bookings" href="" class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <i class="fas fa-book text-primary-teal w-5"></i>
+        <a id="mobile-my-bookings" href="" class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors">
+          <i class="fas fa-book w-5"></i>
           <span>My Bookings</span>
         </a>
       </li>
     </ul>
 
-    <!-- User Actions (when logged in) -->
-    <div id="mobile-user-actions" class="mt-4 px-4 hidden">
-      <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+    <div id="mobile-user-actions" class="mt-2 px-4 hidden">
+      <div class="border-t border-white/20 pt-3">
         <a
           href="#" id="mobile-user-info"
-          class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors"
         >
-          <i class="fas fa-user text-primary-teal w-5"></i>
-          <span>User Info</span>
-        </a>
+          </a>
+      
         <a
           id="change-password"
           href="/api/change-password"
-          class="flex items-center gap-3 text-lg py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors"
         >
-          <i class="fas fa-key text-primary-teal w-5"></i>
+          <i class="fas fa-key w-5"></i>
           <span>Change Password</span>
         </a>
       </div>
     </div>
   </div>
 
-  <!-- Footer with Auth Button -->
-  <div class="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800">
+  <div class="border-t border-white/20 p-4">
     <a
       id="authLinkMobile"
       href="/api/login"
-      class="block text-center text-lg py-3 px-4 rounded-lg bg-primary-teal text-white hover:opacity-90 transition-opacity font-semibold"
+      class="block text-center text-base py-3 px-4 rounded-lg bg-white text-primary-teal hover:bg-white/90 transition-all font-semibold shadow-lg"
       >Login</a
     >
   </div>
 </div>
 
-<script>
-  const menuBtn = document.getElementById("menuBtn");
-  const sideMenu = document.getElementById("sideMenu");
-  const closeBtn = document.getElementById("closeBtn");
-  const overlay = document.getElementById("overlay");
-  let base_api = window.location.origin;
-  
-  const themeToggleDesktop = document.getElementById("themeToggleDesktop");
-  const themeToggleMobile = document.getElementById("themeToggleMobile");
-  const themeIconDesktop = document.getElementById("themeIconDesktop");
-  const themeIconMobile = document.getElementById("themeIconMobile");
-
-  // --- Theme Toggle Logic ---
-  const applyTheme = (isDark) => {
-      if (isDark) {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-          themeIconDesktop.classList.replace('fa-sun', 'fa-moon');
-          themeIconMobile.classList.replace('fa-sun', 'fa-moon');
-      } else {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-          themeIconDesktop.classList.replace('fa-moon', 'fa-sun');
-          themeIconMobile.classList.replace('fa-moon', 'fa-sun');
-      }
-  };
-
-  const toggleTheme = () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      applyTheme(!isDark);
-  };
-  
-  // Initialize theme from localStorage or default to light
-  const storedTheme = localStorage.getItem('theme');
-  if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      applyTheme(true);
-  } else {
-      applyTheme(false);
-  }
-  
-  themeToggleDesktop.addEventListener('click', toggleTheme);
-  themeToggleMobile.addEventListener('click', toggleTheme);
-  // --- Mobile Menu Logic ---
-  function openMenu() {
-    sideMenu.classList.remove("translate-x-full");
-    overlay.classList.remove("hidden");
-    menuBtn.classList.add("active");
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu() {
-    sideMenu.classList.add("translate-x-full");
-    overlay.classList.add("hidden");
-    menuBtn.classList.remove("active");
-    document.body.style.overflow = '';
-  }
-
-  menuBtn.addEventListener("click", () => {
-    if (sideMenu.classList.contains("translate-x-full")) {
-      openMenu();
-    } else {
-      closeMenu();
-    }
-  });
-  closeBtn.addEventListener("click", closeMenu);
-  overlay.addEventListener("click", closeMenu);
-
-  // --- User Dropdown Logic (Desktop/Tablet) ---
-  const userDropdownDesktop = document.getElementById("userDropdownDesktop");
-  const userDropdownMenu = document.getElementById("userDropdownMenu");
-  const userIconDesktop = document.getElementById("userIconDesktop");
-  const dropdownLogout = document.getElementById("dropdownLogout");
-  const dropdownUserInfo = document.getElementById("dropdownUserInfo");
-
-  // Toggle dropdown
-  if (userIconDesktop) {
-    userIconDesktop.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      userDropdownMenu.classList.toggle("show");
-    });
-  }
-
-  // Close dropdown when clicking outside
-  document.addEventListener("click", (e) => {
-    if (userDropdownDesktop && !userDropdownDesktop.contains(e.target)) {
-      userDropdownMenu.classList.remove("show");
-    }
-  });
-
-  // Handle logout from dropdown
-  if (dropdownLogout) {
-    dropdownLogout.addEventListener("click", async (e) => {
-      e.preventDefault();
-      await fetch(`${base_api}/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-      window.location.href = "/api/login";
-    });
-  }
-
-  // Handle user info click
-  if (dropdownUserInfo) {
-    dropdownUserInfo.addEventListener("click", (e) => {
-      e.preventDefault();
-      const bookingLinkTarget = document.getElementById("nav-my-bookings")?.href || "/api/user";
-      window.location.href = bookingLinkTarget;
-    });
-  }
-
-  // --- Contact Us scroll functionality ---
-  const navContact = document.getElementById("nav-contact");
-  const mobileContact = document.getElementById("mobile-contact");
-  
-  function handleContactClick(e) {
-    e.preventDefault();
-    const currentPath = window.location.pathname;
-    if (currentPath === '/' || currentPath === '/api/' || currentPath === '/api/index') {
-      const contactSection = document.getElementById("booking");
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        closeMenu();
-      }
-    } else {
-      window.location.href = "/#booking";
-    }
-  }
-  
-  if (navContact) {
-    navContact.addEventListener("click", handleContactClick);
-  }
-  
-  if (mobileContact) {
-    mobileContact.addEventListener("click", handleContactClick);
-  }
-
-  // --- Auth Status Check & Link Management ---
-  const authLink = document.getElementById("authLink");
-  const authLinkMobile = document.getElementById("authLinkMobile");
-  const who_username = document.getElementById("who_username");
-  const user_detail = document.getElementById("user_detail");
-  const change_password = document.getElementById("change-password");
-  const navMyBookings = document.getElementById("nav-my-bookings");
-  const navMyBookingsLi = document.getElementById("nav-my-bookings-li");
-  const navBookingLi = document.getElementById("nav-booking-li");
-  const mobileMyBookings = document.getElementById("mobile-my-bookings");
-  const mobileMyBookingsLi = document.getElementById("mobile-my-bookings-li");
-  const mobileBookingLi = document.getElementById("mobile-booking-li");
-  const navAuthLi = document.getElementById("nav-auth-li");
-  
-  async function checkAuthStatus() {
-    try {
-      const response = await fetch(`${base_api}/auth/login/status`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        // User is logged in
-        navAuthLi.style.display = 'none';
-        // Hide the "Sign In" button
-
-        userDropdownDesktop.classList.remove("hidden");
-        // Show desktop user dropdown
-        user_detail.classList.remove("hidden");
-        who_username.textContent = data.name;
-        document.getElementById("mobile_user_email").textContent = data.email || "";
-        document.getElementById("mobile-user-actions").classList.remove("hidden");
-        document.getElementById("guest_view").classList.add("hidden");
-        
-        // Update dropdown user info
-        document.getElementById("dropdownUserName").textContent = data.name;
-        document.getElementById("dropdownUserEmail").textContent = data.email || "";
-        
-        // Update mobile user avatar
-        const mobileAvatar = document.getElementById("mobile_user_avatar");
-        if (mobileAvatar) {
-          mobileAvatar.src = `https://i.pravatar.cc/40?u=${data.email || data.name}`;
-        }
-        const dropdownAvatar = document.getElementById("dropdownUserAvatar");
-        if (dropdownAvatar) {
-          dropdownAvatar.src = `https://i.pravatar.cc/40?u=${data.email || data.name}`;
-        }
-        // Show Booking link
-        navBookingLi.style.display = "block";
-        mobileBookingLi.style.display = "block";
-        // Set the link target for My Bookings/All Bookings
-        const bookingLinkTarget = (data.name === "Admin") ?
-            "/api/admin" : "/api/user";
-        const bookingLinkText = (data.name === "Admin") ? "All Bookings" : "My Bookings";
-
-        navMyBookings.textContent = bookingLinkText;
-        navMyBookings.href = bookingLinkTarget;
-        navMyBookingsLi.style.display = "block";
-        
-        mobileMyBookings.textContent = bookingLinkText;
-        mobileMyBookings.href = bookingLinkTarget;
-        mobileMyBookingsLi.style.display = "block";
-        // Update Mobile Auth Link for Logout
-        authLinkMobile.textContent = "Logout";
-        authLinkMobile.href = "#";
-        // Logout handler
-        const handleLogout = async (e) => {
-          e.preventDefault();
-          await fetch(`${base_api}/auth/logout`, {
-            method: "POST",
-            credentials: "include",
-          });
-          window.location.href = "/api/login";
-        };
-
-        authLinkMobile.addEventListener("click", handleLogout);
-        
-        // Mobile user info click
-        const mobileUserInfo = document.getElementById("mobile-user-info");
-        if (mobileUserInfo) {
-          mobileUserInfo.addEventListener("click", (e) => {
-            e.preventDefault();
-            window.location.href = bookingLinkTarget;
-            closeMenu();
-          });
-        }
-      } else {
-        // Not logged in
-        navAuthLi.style.display = 'block';
-        userDropdownDesktop.classList.add("hidden");
-        document.getElementById("guest_view").classList.remove("hidden");
-        document.getElementById("mobile-user-actions").classList.add("hidden");
-        // Ensure Sign In links are correct (default)
-        authLink.textContent = "Sign In";
-        authLink.href = "/api/login";
-        authLinkMobile.textContent = "Login";
-        authLinkMobile.href = "/api/login";
-        
-        // Hide logged-in specific links
-        navMyBookingsLi.style.display = "none";
-        mobileMyBookingsLi.style.display = "none";
-        navBookingLi.style.display = "none";
-        mobileBookingLi.style.display = "none";
-      }
-    } catch (error) {
-      console.error("Error checking auth status:", error);
-      // Fallback in case of API error
-      authLink.textContent = "Sign In";
-      authLink.href = "/api/login";
-      authLinkMobile.textContent = "Login";
-      authLinkMobile.href = "/api/login";
-    }
-  }
-  
-  checkAuthStatus();
-  // Highlight active page
-  const currentPath = window.location.pathname;
-  const navLinks = {
-    '/': 'nav-home',
-    '/api/': 'nav-home',
-    '/api/index': 'nav-home',
-    '/api/packages': 'nav-packages',
-    '/api/booking': 'nav-booking',
-    '/api/user': 'nav-my-bookings',
-    '/api/admin': 'nav-my-bookings'
-  };
-  if (navLinks[currentPath]) {
-    const activeLink = document.getElementById(navLinks[currentPath]);
-    if (activeLink) {
-      activeLink.classList.add('active');
-    }
-  }
-
-  // Scroll to contact section if coming from URL with hash
-  if (window.location.hash === '#booking') {
-    setTimeout(() => {
-      const contactSection = document.getElementById("booking");
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 300);
-  }
-</script>
+<script src="/assets/js/navbar.js"></script>

@@ -27,40 +27,13 @@
 			}
 		}
 	</script>
-	<style>
-		/* Custom Teal Gradient for Hero */
-		.hero-banner-bg {
-			background: linear-gradient(to br, #008080, #00cec9); /* Teal to Turquoise */
-		}
-		
-		/* Custom Teal Colors for Price/Text */
-		.text-primary-teal { color: #008080; }
-		.bg-light-mint { background-color: #e6f7f7; }
-
-		/* Responsive Grid Adjustments for Packages */
-		.packages-grid {
-			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		}
-
-		@media (max-width: 1024px) {
-			.packages-grid {
-				grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-			}
-		}
-		
-		@media (max-width: 640px) {
-			.packages-grid {
-				grid-template-columns: 1fr;
-			}
-		}
-
-	</style>
+	<link rel="stylesheet" href="/assets/css/packages.css">
 </head>
-<body class="font-poppins bg-gray-50 overflow-x-hidden pt-[76px] transparent-navbar">
+<body class="font-poppins bg-gray-50 overflow-x-hidden transparent-navbar">
 	<%- include('partials/navbar') %>
 
-	<section class="bg-gradient-to-br from-primary-teal to-secondary-teal py-32 px-8 text-white text-center relative overflow-hidden">
-		<div class="absolute inset-0 opacity-10 z-0" style="background: url('/assets/images/headerbg.jpg') repeat;"></div>
+	<section class="py-32 px-8 text-white text-center relative overflow-hidden">
+		<div class="absolute inset-0 z-0" style="background: url('/assets/images/headerbg.jpg') no-repeat center; background-size: cover;"></div>
 		<div class="relative z-10 max-w-4xl mx-auto">
 			<div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-lg px-5 py-2 rounded-full text-sm mb-6">
 				<i class="fas fa-sparkles"></i>
@@ -192,46 +165,6 @@
 
 	<%- include('partials/footer') %>
 
-	<script>
-		// Navbar scroll effect - change from transparent to solid after hero section
-		document.addEventListener("DOMContentLoaded", () => {
-			const header = document.querySelector(".main-header");
-			const heroSection = document.querySelector("section.bg-gradient-to-br");
-			
-			if (header && heroSection) {
-				// Ensure navbar starts transparent (remove scrolled class if present)
-				header.classList.remove("scrolled");
-				
-				function handleScroll() {
-					const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-					const scrollPosition = window.pageYOffset || window.scrollY;
-					
-					// Change navbar when scrolling past the hero section
-					if (scrollPosition >= heroBottom - 50) {
-						header.classList.add("scrolled");
-					} else {
-						header.classList.remove("scrolled");
-					}
-				}
-				
-				// Check on initial load (after a small delay to ensure DOM is ready)
-				setTimeout(() => {
-					handleScroll();
-				}, 100);
-				
-				// Check on scroll with throttling for better performance
-				let ticking = false;
-				window.addEventListener("scroll", () => {
-					if (!ticking) {
-						window.requestAnimationFrame(() => {
-							handleScroll();
-							ticking = false;
-						});
-						ticking = true;
-					}
-				});
-			}
-		});
-	</script>
+	<script src="/assets/js/packages.js"></script>
 </body>
 </html>

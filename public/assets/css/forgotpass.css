@@ -1,0 +1,56 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Teal gradient background */
+.teal-gradient-bg {
+  background: linear-gradient(to bottom, #008080, #00cec9);
+}
+
+/* Spacing fixes so header, main panels, and footer don't touch */
+#forget_page, #otp-container, #reset-password-container {
+  margin-top: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Extra top spacing to ensure navbar and first panel are separated on larger screens */
+@media (min-width: 768px) {
+  #forget_page, #otp-container, #reset-password-container {
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Input focus styles */
+.input-focus:focus {
+  border-color: #008080;
+  outline: none;
+}
+
+.input-focus:focus + label,
+.input-filled + label {
+  color: #008080;
+  transform: translateY(-1.5rem) scale(0.875);
+}
+
+/* Button hover effects */
+.btn-teal {
+  background: linear-gradient(135deg, #008080, #00cec9);
+  transition: all 0.3s ease;
+}
+
+.btn-teal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 128, 128, 0.3);
+}
+
+.btn-teal-secondary {
+  background: linear-gradient(135deg, #00cec9, #008080);
+  transition: all 0.3s ease;
+}
+
+.btn-teal-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 206, 201, 0.3);
+}
+

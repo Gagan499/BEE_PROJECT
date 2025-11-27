@@ -1,0 +1,21 @@
+/* Custom Teal Gradient for Buttons */
+.teal-gradient-bg {
+	background: linear-gradient(to right, #008080, #00cec9);
+}
+
+/* Text colors for customization */
+.text-primary-teal { color: #008080; }
+
+/* Responsive adjustments to grid columns */
+@media (min-width: 1024px) {
+	.lg\:grid-cols-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.md\:grid-cols-2 {
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+	}
+}
+

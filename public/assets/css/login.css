@@ -1,0 +1,447 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Mobile View (< 480px) - Match Image Design */
+@media (max-width: 480px) {
+  body {
+    background: #f5f5f5 !important;
+    background-image: none !important;
+  }
+
+  .mobile-wrapper {
+    min-height: 100vh;
+    background-image: url('/assets/images/LoginFormBG.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-y: auto;
+  }
+
+  .mobile-header {
+    padding: 1rem 1rem 0.75rem;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .mobile-back-btn {
+    position: absolute;
+    left: 1rem;
+    top: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: none;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-back-btn.show {
+    display: block;
+  }
+
+  .mobile-logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #008080;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-form-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: rgba(40, 42, 55, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 0 auto;
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-form-container.hidden {
+    display: none;
+  }
+
+  .mobile-form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .mobile-input-group {
+    margin-bottom: 1rem;
+  }
+
+  .mobile-input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 0.375rem;
+  }
+
+  .mobile-input {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .mobile-input:focus {
+    outline: none;
+    border-color: #008080;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+  }
+
+  .mobile-submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #008080;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.75rem;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-submit-btn:hover {
+    background: #006666;
+  }
+
+  .mobile-submit-btn:active {
+    transform: scale(0.98);
+  }
+
+  .mobile-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.25rem 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+  }
+
+  .mobile-divider::before,
+  .mobile-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .mobile-divider span {
+    padding: 0 1rem;
+  }
+
+  .mobile-social-login {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .mobile-social-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-size: 1.25rem;
+  }
+
+  .mobile-social-icon:hover {
+    transform: scale(1.1);
+  }
+
+  .mobile-social-icon.google {
+    background: linear-gradient(135deg, #ea4335 0%, #fbbc04 25%, #34a853 50%, #4285f4 100%);
+    color: white;
+  }
+
+  .mobile-social-icon.facebook {
+    background: #1877f2;
+    color: white;
+  }
+
+  .mobile-social-icon.twitter {
+    background: #1da1f2;
+    color: white;
+  }
+
+  .mobile-switch-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .mobile-switch-link a {
+    color: #008080;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .mobile-switch-link a:hover {
+    text-decoration: underline;
+  }
+
+  /* Hide desktop view on mobile */
+  .desktop-wrapper {
+    display: none;
+  }
+}
+
+/* Desktop View (>= 481px) - Sliding Panel Design */
+@media (min-width: 481px) {
+  .mobile-wrapper {
+    display: none;
+  }
+
+  .desktop-wrapper {
+    display: block;
+  }
+
+  body {
+    background-image: url('/assets/images/LoginFormBG.png');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Main container styling */
+  #container {
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+  }
+
+  /* Fix sliding container transitions */
+  #container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+  }
+
+  #container.right-panel-active .form-container.sign-in-container {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+  }
+
+  #container.right-panel-active .form-container.sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+  }
+
+  .overlay {
+    transform: translateX(0%);
+    transition: transform 0.7s ease-in-out;
+  }
+
+  #container.right-panel-active .overlay {
+    transform: translateX(50%);
+  }
+
+  /* Form containers - side by side layout */
+  .form-container {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+  }
+
+  .form-container.sign-in-container {
+    left: 0;
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .form-container.sign-up-container {
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  /* Overlay container - sliding panel */
+  .overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.7s ease-in-out;
+    z-index: 10;
+  }
+
+  .overlay {
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    background: linear-gradient(to br, #00cec9, #008080);
+    color: white;
+    transition: transform 0.7s ease-in-out;
+  }
+
+  .overlay-panel {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3rem;
+    text-align: center;
+    transition: transform 0.7s ease-in-out;
+  }
+
+  .overlay-panel.overlay-left {
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .overlay-panel.overlay-right {
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .overlay-panel h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .overlay-panel p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 300px;
+  }
+
+  .overlay-panel button {
+    padding: 0.75rem 2.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 50px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .overlay-panel button:hover {
+    background: white;
+    color: #1a535c;
+  }
+
+  /* Style buttons in both overlay panels */
+  .overlay-panel.overlay-left button,
+  .overlay-panel.overlay-right button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid white;
+    backdrop-filter: blur(5px);
+  }
+
+  .overlay-panel.overlay-left button:hover,
+  .overlay-panel.overlay-right button:hover {
+    background: white;
+    color: #008080;
+    transform: scale(1.05);
+  }
+
+  /* New Teal Colors */
+  .peer-focus\:border-primary-teal:focus {
+      border-color: #008080;
+  }
+  .peer-focus\:text-secondary-teal:focus {
+      color: #00cec9;
+  }
+  .bg-primary-teal {
+      background-color: #008080;
+  }
+  .hover\:bg-dark-teal:hover {
+      background-color: #1a535c;
+  }
+
+  /* Input field styling improvements */
+  .form-container input {
+    font-size: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .form-container label {
+    font-weight: 500;
+  }
+
+  /* Button styling */
+  .form-container button {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .form-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 128, 128, 0.3);
+  }
+
+  @media (min-width: 769px) {
+    #container {
+      max-width: 900px;
+      min-height: 600px;
+    }
+
+    .form-container {
+      padding: 3rem 2.5rem;
+    }
+
+    .form-container h2 {
+      font-size: 2.5rem;
+    }
+  }
+}
+
