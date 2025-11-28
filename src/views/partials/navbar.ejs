@@ -89,11 +89,10 @@
 
 <div
   id="sideMenu"
-  class="fixed top-0 left-0 right-0 w-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-2xl flex flex-col"
+  class="fixed top-0 left-0 right-0 w-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white transform translate-x-full transition-transform duration-300 ease-in-out z-[2000] shadow-2xl flex flex-col"
 >
   <div class="bg-gradient-to-br from-primary-teal to-secondary-teal text-white p-4 relative">
-    <div class="absolute top-4 
- right-4 flex items-center gap-3">
+    <div class="absolute top-4 right-4 flex items-center gap-3 z-10">
       <button
         class="theme-toggle-mobile-menu text-xl text-white focus:outline-none hover:opacity-80 transition-opacity"
         id="themeToggleMobileMenu"
@@ -180,10 +179,12 @@
     <div id="mobile-user-actions" class="mt-2 px-4 hidden">
       <div class="border-t border-white/20 pt-3">
         <a
-          href="#" id="mobile-user-info"
+          href="/api/profile" id="mobile-user-info"
           class="flex items-center gap-3 text-base py-3 px-4 rounded-lg text-white hover:bg-white/20 transition-colors"
         >
-          </a>
+          <i class="fas fa-user w-5"></i>
+          <span>User Info</span>
+        </a>
       
         <a
           id="change-password"

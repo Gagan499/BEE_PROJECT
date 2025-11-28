@@ -49,6 +49,7 @@ function openMenu() {
   overlay.classList.remove("hidden");
   menuBtn.classList.add("active");
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('menu-open');
 }
 
 function closeMenu() {
@@ -57,6 +58,7 @@ function closeMenu() {
   overlay.classList.add("hidden");
   menuBtn.classList.remove("active");
   document.body.style.overflow = '';
+  document.body.classList.remove('menu-open');
 }
 
 if (menuBtn) {
@@ -116,8 +118,7 @@ if (dropdownLogout) {
 if (dropdownUserInfo) {
   dropdownUserInfo.addEventListener("click", (e) => {
     e.preventDefault();
-    const bookingLinkTarget = document.getElementById("nav-my-bookings")?.href || "/api/user";
-    window.location.href = bookingLinkTarget;
+    window.location.href = "/api/profile";
   });
 }
 
@@ -232,13 +233,11 @@ async function checkAuthStatus() {
         authLinkMobile.addEventListener("click", handleLogout);
       }
       
-      // Mobile user info click
+      // Mobile user info click - close menu when navigating
       const mobileUserInfo = document.getElementById("mobile-user-info");
       if (mobileUserInfo) {
-        mobileUserInfo.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.location.href = bookingLinkTarget;
-          closeMenu();
+        mobileUserInfo.addEventListener("click", () => {
+          setTimeout(() => closeMenu(), 100);
         });
       }
     } else {

@@ -186,3 +186,147 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
+// Edit Package
+async function editPackage(packageId) {
+	try {
+		// Fetch package details
+		const response = await fetch(`/api/packages/${packageId}`);
+		const result = await response.json();
+		
+		if (!result.success) {
+			if (typeof showAlert === 'function') {
+				showAlert('Failed to fetch package details', 'error', 3000);
+			} else {
+				alert('Failed to fetch package details');
+			}
+			return;
+		}
+
+		const pkg = result.package;
+		
+		// Redirect to create page with package data (you can enhance this with a modal later)
+		// For now, we'll use a simple approach - redirect to create page with query params
+		// Or better: create an edit page
+		window.location.href = `/api/create-package?edit=${packageId}`;
+	} catch (error) {
+		console.error('Error editing package:', error);
+		if (typeof showAlert === 'function') {
+			showAlert('An error occurred while editing the package.', 'error', 3000);
+		} else {
+			alert('An error occurred while editing the package.');
+		}
+	}
+}
+
+// Delete Package
+async function deletePackage(packageId, packageName) {
+	if (!confirm(`Are you sure you want to delete "${packageName}"? This action cannot be undone.`)) {
+		return;
+	}
+
+	try {
+		const response = await fetch(`/api/packages/${packageId}`, {
+			method: 'DELETE',
+			credentials: 'include'
+		});
+
+		const result = await response.json();
+
+		if (result.success) {
+			if (typeof showAlert === 'function') {
+				showAlert('Package deleted successfully!', 'success', 3000);
+			} else {
+				alert('Package deleted successfully!');
+			}
+			
+			// Reload to update the list
+			setTimeout(() => {
+				location.reload();
+			}, 1000);
+		} else {
+			if (typeof showAlert === 'function') {
+				showAlert('Failed to delete package: ' + (result.message || 'Unknown error'), 'error', 3000);
+			} else {
+				alert('Failed to delete package: ' + (result.message || 'Unknown error'));
+			}
+		}
+	} catch (error) {
+		console.error('Error deleting package:', error);
+		if (typeof showAlert === 'function') {
+			showAlert('An error occurred while deleting the package.', 'error', 3000);
+		} else {
+			alert('An error occurred while deleting the package.');
+		}
+	}
+}
+
+// Edit Stay-Only
+async function editStayOnly(stayId) {
+	try {
+		// Fetch stay-only details
+		const response = await fetch(`/api/stay-only/${stayId}`);
+		const result = await response.json();
+		
+		if (!result.success) {
+			if (typeof showAlert === 'function') {
+				showAlert('Failed to fetch accommodation details', 'error', 3000);
+			} else {
+				alert('Failed to fetch accommodation details');
+			}
+			return;
+		}
+
+		// Redirect to create page with stay data
+		window.location.href = `/api/create-stay-only?edit=${stayId}`;
+	} catch (error) {
+		console.error('Error editing stay-only:', error);
+		if (typeof showAlert === 'function') {
+			showAlert('An error occurred while editing the accommodation.', 'error', 3000);
+		} else {
+			alert('An error occurred while editing the accommodation.');
+		}
+	}
+}
+
+// Delete Stay-Only
+async function deleteStayOnly(stayId, stayName) {
+	if (!confirm(`Are you sure you want to delete "${stayName}"? This action cannot be undone.`)) {
+		return;
+	}
+
+	try {
+		const response = await fetch(`/api/stay-only/${stayId}`, {
+			method: 'DELETE',
+			credentials: 'include'
+		});
+
+		const result = await response.json();
+
+		if (result.success) {
+			if (typeof showAlert === 'function') {
+				showAlert('Accommodation deleted successfully!', 'success', 3000);
+			} else {
+				alert('Accommodation deleted successfully!');
+			}
+			
+			// Reload to update the list
+			setTimeout(() => {
+				location.reload();
+			}, 1000);
+		} else {
+			if (typeof showAlert === 'function') {
+				showAlert('Failed to delete accommodation: ' + (result.message || 'Unknown error'), 'error', 3000);
+			} else {
+				alert('Failed to delete accommodation: ' + (result.message || 'Unknown error'));
+			}
+		}
+	} catch (error) {
+		console.error('Error deleting stay-only:', error);
+		if (typeof showAlert === 'function') {
+			showAlert('An error occurred while deleting the accommodation.', 'error', 3000);
+		} else {
+			alert('An error occurred while deleting the accommodation.');
+		}
+	}
+}
+

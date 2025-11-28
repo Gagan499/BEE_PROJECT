@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon_icon.png"
+      type="image/x-icon"
+    />
+    <title>My Profile - Palm Ways</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "primary-teal": "#008080",
+              "secondary-teal": "#00cec9",
+              "dark-teal": "#1a535c",
+              "light-mint": "#e6f7f7",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/user.css" />
+  </head>
+
+  <body class="font-poppins min-h-screen pt-[76px]">
+    <%- include('partials/navbar') %> <%- include('partials/alert') %>
+
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+      <!-- Profile Header -->
+      <div class="bg-gradient-to-br from-primary-teal to-secondary-teal rounded-2xl p-6 md:p-8 mb-8 text-white">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="w-24 h-24 bg-white/20 backdrop-blur-lg rounded-full flex items-center justify-center text-4xl font-bold border-4 border-white/30">
+            <%= user.name ? user.name.charAt(0).toUpperCase() : 'U' %>
+          </div>
+          <div class="flex-1">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2"><%= user.name || 'User' %></h1>
+            <p class="text-lg opacity-90 mb-1">
+              <i class="fas fa-envelope mr-2"></i><%= user.email %>
+            </p>
+            <p class="text-sm opacity-75">
+              <i class="fas fa-calendar-alt mr-2"></i>Member since <%= joinDate %>
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <a
+              href="/api/change-password"
+              class="bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white px-5 py-2 rounded-lg font-semibold transition-all inline-flex items-center gap-2"
+            >
+              <i class="fas fa-key"></i>
+              <span class="hidden md:inline">Change Password</span>
+            </a>
+            <a
+              href="/api/booking"
+              class="bg-white text-primary-teal hover:bg-white/90 px-5 py-2 rounded-lg font-semibold transition-all inline-flex items-center gap-2"
+            >
+              <i class="fas fa-plus"></i>
+              <span class="hidden md:inline">New Booking</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Details Card -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+          <i class="fas fa-user-circle text-primary-teal"></i>
+          Personal Information
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="text-sm font-semibold text-gray-500 mb-1 block">Full Name</label>
+            <p class="text-lg text-gray-800"><%= user.name || 'N/A' %></p>
+          </div>
+          <div>
+            <label class="text-sm font-semibold text-gray-500 mb-1 block">Email Address</label>
+            <p class="text-lg text-gray-800"><%= user.email || 'N/A' %></p>
+          </div>
+          <div>
+            <label class="text-sm font-semibold text-gray-500 mb-1 block">Member Since</label>
+            <p class="text-lg text-gray-800"><%= joinDate %></p>
+          </div>
+          <div>
+            <label class="text-sm font-semibold text-gray-500 mb-1 block">Total Bookings</label>
+            <p class="text-lg text-gray-800 font-bold text-primary-teal"><%= bookings ? bookings.length : 0 %></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings Section -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
+            <i class="fas fa-calendar-check text-primary-teal"></i>
+            My Bookings
+          </h2>
+          <a
+            href="/api/booking"
+            class="teal-gradient-bg text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg inline-flex items-center gap-2"
+          >
+            <i class="fas fa-plus"></i> New Booking
+          </a>
+        </div>
+
+        <% if (bookings && bookings.length > 0) { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% bookings.forEach((booking) => { 
+            const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
+            const statusText = booking.status ? booking.status.charAt(0).toUpperCase() + booking.status.slice(1) : 'Pending';
+            const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
+            const departureDate = new Date(booking.departureDate || booking.departure);
+            const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
+            const checkInDate = arrivalDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const checkOutDate = departureDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const totalAmount = booking.totalAmount || booking.price || 0;
+            
+            let statusBg = 'bg-primary-teal';
+            if (statusClass === 'approved' || statusClass === 'confirmed') statusBg = 'bg-green-500';
+            else if (statusClass === 'completed') statusBg = 'bg-dark-teal';
+            else if (statusClass === 'rejected') statusBg = 'bg-red-500';
+          %>
+          <div
+            class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+            data-booking-id="<%= booking._id %>"
+          >
+            <div
+              class="<%= statusBg %> text-white px-5 py-3 flex items-center gap-2 font-semibold text-sm"
+            >
+              <i class="fas fa-circle text-xs"></i>
+              <span><%= statusText %></span>
+            </div>
+
+            <div class="p-5">
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                <%= booking.hotelName || booking.packageName || booking.title || booking.roomType || 'Booking' %>
+              </h3>
+
+              <div class="space-y-3 mb-4">
+                <div class="flex items-center gap-2 text-gray-600 text-sm">
+                  <i class="fas fa-calendar-check w-5 text-primary-teal"></i>
+                  <span><strong>Check-in:</strong> <%= checkInDate %></span>
+                </div>
+
+                <div class="flex items-center gap-2 text-gray-600 text-sm">
+                  <i class="fas fa-calendar-times w-5 text-primary-teal"></i>
+                  <span><strong>Check-out:</strong> <%= checkOutDate %></span>
+                </div>
+
+                <div class="flex items-center gap-2 text-gray-600 text-sm">
+                  <i class="fas fa-moon w-5 text-primary-teal"></i>
+                  <span><strong>Nights:</strong> <%= nights %></span>
+                </div>
+
+                <div class="flex items-center gap-2 text-gray-600 text-sm">
+                  <i class="fas fa-users w-5 text-primary-teal"></i>
+                  <span
+                    ><strong>Guests:</strong> <%= booking.adults || 0 %> Adults<%
+                    if (booking.children && booking.children > 0) { %>, <%= booking.children %> Children<% } %></span
+                  >
+                </div>
+
+                <% if (booking.bookingType) { %>
+                <div class="flex items-center gap-2 text-gray-600 text-sm">
+                  <i class="fas fa-tag w-5 text-primary-teal"></i>
+                  <span><strong>Type:</strong> <%= booking.bookingType %></span>
+                </div>
+                <% } %>
+
+                <% if (booking.location && booking.location !== '-') { %>
+                <div class="flex items-center gap-2 text-gray-600 text-sm">
+                  <i class="fas fa-map-marker-alt w-5 text-primary-teal"></i>
+                  <span><strong>Location:</strong> <%= booking.location %></span>
+                </div>
+                <% } %>
+              </div>
+
+              <div class="border-t border-gray-200 pt-4 mt-4">
+                <div class="text-2xl font-bold text-gray-800 mb-4">
+                  $<%= typeof totalAmount === 'number' ? totalAmount.toFixed(2) : totalAmount %>
+                </div>
+
+                <button
+                  class="w-full teal-gradient-bg text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2"
+                  onclick="viewBookingDetails('<%= booking._id %>')"
+                >
+                  <i class="fas fa-eye"></i> View Details
+                </button>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+        <% } else { %>
+        <div class="text-center py-16 text-gray-500 bg-white rounded-xl shadow-md">
+          <i class="fas fa-calendar-times text-6xl text-gray-300 mb-4"></i>
+          <h3 class="text-2xl font-semibold text-gray-800 mb-2">
+            No Bookings Yet
+          </h3>
+          <p class="text-base mb-6">
+            You haven't made any reservations. Start planning your next adventure!
+          </p>
+          <a
+            href="/api/booking"
+            class="inline-block teal-gradient-bg text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            <i class="fas fa-plus"></i> New Booking
+          </a>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script>
+      function viewBookingDetails(bookingId) {
+        // You can implement a modal or redirect to a detailed view
+        // For now, just show an alert with booking ID
+        window.location.href = `/api/user#booking-${bookingId}`;
+      }
+    </script>
+  </body>
+</html>
+
