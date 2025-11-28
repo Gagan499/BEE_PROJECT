@@ -70,10 +70,15 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.transparent-navbar .main-header:not(.scrolled) .nav-menu li a:hover,
+.transparent-navbar .main-header:not(.scrolled) .nav-menu li a:hover {
+  color: var(--secondary-teal) !important;
+  border-bottom-color: var(--secondary-teal);
+}
+
 .transparent-navbar .main-header:not(.scrolled) .nav-menu li a.active {
-  color: white;
-  border-bottom-color: white;
+  color: var(--secondary-teal) !important;
+  border-bottom-color: var(--secondary-teal);
+  font-weight: 600;
 }
 
 .transparent-navbar .main-header:not(.scrolled) .mobile-menu-btn,
@@ -94,10 +99,15 @@
   color: var(--text-color-secondary, #5f6368);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a:hover,
-.transparent-navbar .main-header.scrolled .nav-menu li a.active {
-  color: var(--primary-teal);
+.transparent-navbar .main-header.scrolled .nav-menu li a:hover {
+  color: var(--primary-teal) !important;
   border-bottom-color: var(--primary-teal);
+}
+
+.transparent-navbar .main-header.scrolled .nav-menu li a.active {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+  font-weight: 600;
 }
 
 .transparent-navbar .main-header.scrolled .mobile-menu-btn,
@@ -184,12 +194,19 @@
   padding: 0.5rem 0;
   border-bottom: 2px solid transparent;
   transition: all 0.3s ease;
+  position: relative;
 }
 
-.nav-menu li a:hover,
-.nav-menu li a.active {
-  color: var(--primary-teal);
+.nav-menu li a:hover {
+  color: var(--primary-teal) !important;
   border-bottom-color: var(--primary-teal);
+}
+
+.nav-menu li a.active {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+  border-bottom-width: 2px;
+  font-weight: 600;
 }
 
 /* User/Auth Button Styles */
@@ -247,6 +264,60 @@
 .theme-toggle-desktop:hover {
   color: var(--primary-teal);
   background: transparent !important;
+}
+
+/* Theme Toggle Icon Colors */
+/* Sun icon (light mode active) - white color */
+.theme-toggle-desktop .fa-sun,
+.theme-toggle-mobile .fa-sun,
+.theme-toggle-mobile-menu .fa-sun {
+  color: white !important;
+}
+
+/* Moon icon (dark mode active) - black/dark color */
+.theme-toggle-desktop .fa-moon,
+.theme-toggle-mobile .fa-moon,
+.theme-toggle-mobile-menu .fa-moon {
+  color: #1a1a1a !important;
+}
+
+/* When navbar is scrolled with white background - adjust sun to be visible */
+.main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-sun,
+.main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-sun {
+  color: #f59e0b !important;
+  /* Amber/yellow for visibility on white background */
+}
+
+/* When navbar is scrolled with white background - moon stays dark */
+.main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-moon,
+.main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-moon {
+  color: #1a1a1a !important;
+}
+
+/* Transparent navbar (over hero) - sun white, moon dark */
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-sun,
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-sun {
+  color: white !important;
+}
+
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-moon,
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-moon {
+  color: #1a1a1a !important;
+}
+
+/* Dark mode navbar - moon should be light for visibility */
+.dark .main-header .theme-toggle-desktop .fa-moon,
+.dark .main-header .theme-toggle-mobile .fa-moon,
+.dark .main-header .theme-toggle-mobile-menu .fa-moon {
+  color: #e5e7eb !important;
+  /* Light gray for moon in dark mode navbar */
+}
+
+.dark .main-header .theme-toggle-desktop .fa-sun,
+.dark .main-header .theme-toggle-mobile .fa-sun,
+.dark .main-header .theme-toggle-mobile-menu .fa-sun {
+  color: #fbbf24 !important;
+  /* Yellow/gold for sun in dark mode */
 }
 
 /* Interactive Hamburger Animation */
@@ -492,6 +563,17 @@
   color: var(--text-color-secondary);
 }
 
+.dark .nav-menu li a:hover {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+}
+
+.dark .nav-menu li a.active {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+  font-weight: 600;
+}
+
 .dark .mobile-menu-btn,
 .dark .theme-toggle-desktop {
   color: var(--text-color);
@@ -608,7 +690,15 @@
   }
 
   #sideMenu ul li a:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(0, 128, 128, 0.3) !important;
+    color: var(--secondary-teal) !important;
+  }
+
+  #sideMenu ul li a.active {
+    background: rgba(0, 128, 128, 0.4) !important;
+    color: var(--secondary-teal) !important;
+    font-weight: 600;
+    border-left: 3px solid var(--secondary-teal);
   }
 
   #sideMenu ul li a i {

@@ -129,6 +129,11 @@ const mobileContact = document.getElementById("mobile-contact");
 function handleContactClick(e) {
   e.preventDefault();
   const currentPath = window.location.pathname;
+  // If already on contact page, do nothing
+  if (currentPath === '/api/contact') {
+    return;
+  }
+  // If on home page, scroll to contact section
   if (currentPath === '/' || currentPath === '/api/' || currentPath === '/api/index') {
     const contactSection = document.getElementById("booking");
     if (contactSection) {
@@ -136,7 +141,8 @@ function handleContactClick(e) {
       closeMenu();
     }
   } else {
-    window.location.href = "/#booking";
+    // Navigate to contact page
+    window.location.href = "/api/contact";
   }
 }
 
@@ -287,15 +293,32 @@ const navLinks = {
   '/api/': 'nav-home',
   '/api/index': 'nav-home',
   '/api/packages': 'nav-packages',
+  '/api/contact': 'nav-contact',
+  '/api/about': 'nav-contact', // About can share contact highlight or create separate
   '/api/booking': 'nav-booking',
   '/api/user': 'nav-my-bookings',
-  '/api/admin': 'nav-my-bookings'
+  '/api/admin': 'nav-my-bookings',
+  '/api/profile': 'nav-my-bookings'
 };
+
+// Remove active class from all nav links first (desktop and mobile)
+document.querySelectorAll('.nav-menu li a').forEach(link => {
+  link.classList.remove('active');
+});
+// Also remove from mobile menu links
+document.querySelectorAll('#sideMenu ul li a').forEach(link => {
+  link.classList.remove('active');
+});
 
 if (navLinks[currentPath]) {
   const activeLink = document.getElementById(navLinks[currentPath]);
   if (activeLink) {
     activeLink.classList.add('active');
+  }
+  // Also highlight in mobile menu if it exists
+  const mobileActiveLink = document.querySelector(`#sideMenu a[href="${currentPath === '/' ? '/' : currentPath}"]`);
+  if (mobileActiveLink) {
+    mobileActiveLink.classList.add('active');
   }
 }
 
