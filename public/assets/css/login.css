@@ -1,6 +1,10 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+.header-container {
+    backdrop-filter: blur(4px);
+}
+
 
 /* Mobile View (< 480px) - Match Image Design */
 @media (max-width: 480px) {

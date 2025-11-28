@@ -1,172 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Create Stay-Only Accommodation - Admin</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	<script src="https://cdn.tailwindcss.com"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-	<link rel="stylesheet" href="/assets/css/create-stay-only.css">
-	<script>
-		tailwind.config = {
-			theme: {
-				extend: {
-					fontFamily: {
-						'poppins': ['Poppins', 'sans-serif']
-					},
-					colors: {
-						'primary-teal': '#008080',
-						'secondary-teal': '#00cec9',
-						'dark-teal': '#1a535c',
-						'light-mint': '#e6f7f7',
-					}
-				}
-			}
-		}
-	</script>
-</head>
-<body class="font-poppins bg-gray-50 min-h-screen pt-[76px]">
-	<%- include('partials/navbar') %>
-	<%- include('partials/alert') %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Stay-Only Accommodation - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/create-stay-only.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "primary-teal": "#008080",
+              "secondary-teal": "#00cec9",
+              "dark-teal": "#1a535c",
+              "light-mint": "#e6f7f7",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="font-poppins min-h-screen pt-[76px]">
+    <%- include('partials/navbar') %> <%- include('partials/alert') %>
 
-	<div class="max-w-4xl mx-auto p-8">
-		<div class="mb-8">
-			<h1 class="text-4xl font-bold text-gray-800 mb-2">Create Stay-Only Accommodation</h1>
-			<p class="text-gray-500">Add a new hotel, resort, villa, or other accommodation</p>
-		</div>
+    <div class="max-w-4xl mx-auto p-8">
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-2">
+          Create Stay-Only Accommodation
+        </h1>
+        <p class="text-gray-500">
+          Add a new hotel, resort, villa, or other accommodation
+        </p>
+      </div>
 
-		<form id="stayOnlyForm" class="bg-white rounded-2xl shadow-lg p-8">
-			<!-- Name -->
-			<div class="mb-6">
-				<label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
-					Accommodation Name <span class="text-red-500">*</span>
-				</label>
-				<input type="text" id="name" name="name" required
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="e.g., Palm Ways Luxury Resort">
-			</div>
+      <form id="stayOnlyForm" class="bg-white rounded-2xl shadow-lg p-8">
+        <!-- Name -->
+        <div class="mb-6">
+          <label
+            for="name"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Accommodation Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="e.g., Palm Ways Luxury Resort"
+          />
+        </div>
 
-			<!-- Type -->
-			<div class="mb-6">
-				<label for="type" class="block text-sm font-semibold text-gray-700 mb-2">
-					Accommodation Type <span class="text-red-500">*</span>
-				</label>
-				<select id="type" name="type" required
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent">
-					<option value="">Select type</option>
-					<option value="hotel">Hotel</option>
-					<option value="resort">Resort</option>
-					<option value="villa">Villa</option>
-					<option value="apartment">Apartment</option>
-					<option value="cottage">Cottage</option>
-				</select>
-			</div>
+        <!-- Type -->
+        <div class="mb-6">
+          <label
+            for="type"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Accommodation Type <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="type"
+            name="type"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+          >
+            <option value="">Select type</option>
+            <option value="hotel">Hotel</option>
+            <option value="resort">Resort</option>
+            <option value="villa">Villa</option>
+            <option value="apartment">Apartment</option>
+            <option value="cottage">Cottage</option>
+          </select>
+        </div>
 
-			<!-- Description -->
-			<div class="mb-6">
-				<label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
-					Description <span class="text-red-500">*</span>
-				</label>
-				<textarea id="description" name="description" required rows="4"
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="Describe the accommodation..."></textarea>
-			</div>
+        <!-- Description -->
+        <div class="mb-6">
+          <label
+            for="description"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Description <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            rows="4"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="Describe the accommodation..."
+          ></textarea>
+        </div>
 
-			<!-- Location -->
-			<div class="mb-6">
-				<label for="location" class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
-				<input type="text" id="location" name="location"
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="e.g., Maldives, Bali, Goa">
-			</div>
+        <!-- Location -->
+        <div class="mb-6">
+          <label
+            for="location"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+            >Location</label
+          >
+          <input
+            type="text"
+            id="location"
+            name="location"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="e.g., Maldives, Bali, Goa"
+          />
+        </div>
 
-			<!-- Price (per night) -->
-			<div class="mb-6">
-				<label for="price" class="block text-sm font-semibold text-gray-700 mb-2">
-					Price per Night <span class="text-red-500">*</span>
-				</label>
-				<input type="number" id="price" name="price" step="0.01" min="0" required
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="e.g., 299.99">
-				<p class="text-xs text-gray-500 mt-1">Enter the price per night in USD</p>
-			</div>
+        <!-- Price (per night) -->
+        <div class="mb-6">
+          <label
+            for="price"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Price per Night <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            step="0.01"
+            min="0"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="e.g., 299.99"
+          />
+          <p class="text-xs text-gray-500 mt-1">
+            Enter the price per night in USD
+          </p>
+        </div>
 
-			<!-- Image URL -->
-			<div class="mb-6">
-				<label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Image URL</label>
-				<input type="url" id="image" name="image"
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="https://example.com/image.jpg">
-			</div>
+        <!-- Image URL -->
+        <div class="mb-6">
+          <label
+            for="image"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+            >Image URL</label
+          >
+          <input
+            type="url"
+            id="image"
+            name="image"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
 
-			<!-- Rating -->
-			<div class="mb-6">
-				<label for="rating" class="block text-sm font-semibold text-gray-700 mb-2">Rating (0-5)</label>
-				<input type="number" id="rating" name="rating" step="0.1" min="0" max="5"
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="e.g., 4.5">
-			</div>
+        <!-- Rating -->
+        <div class="mb-6">
+          <label
+            for="rating"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+            >Rating (0-5)</label
+          >
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            step="0.1"
+            min="0"
+            max="5"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="e.g., 4.5"
+          />
+        </div>
 
-			<!-- Capacity -->
-			<div class="grid grid-cols-2 gap-4 mb-6">
-				<div>
-					<label for="capacityAdults" class="block text-sm font-semibold text-gray-700 mb-2">Max Adults</label>
-					<input type="number" id="capacityAdults" name="capacityAdults" min="1"
-						class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-						placeholder="e.g., 4">
-				</div>
-				<div>
-					<label for="capacityChildren" class="block text-sm font-semibold text-gray-700 mb-2">Max Children</label>
-					<input type="number" id="capacityChildren" name="capacityChildren" min="0"
-						class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-						placeholder="e.g., 2">
-				</div>
-			</div>
+        <!-- Capacity -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label
+              for="capacityAdults"
+              class="block text-sm font-semibold text-gray-700 mb-2"
+              >Max Adults</label
+            >
+            <input
+              type="number"
+              id="capacityAdults"
+              name="capacityAdults"
+              min="1"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+              placeholder="e.g., 4"
+            />
+          </div>
+          <div>
+            <label
+              for="capacityChildren"
+              class="block text-sm font-semibold text-gray-700 mb-2"
+              >Max Children</label
+            >
+            <input
+              type="number"
+              id="capacityChildren"
+              name="capacityChildren"
+              min="0"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+              placeholder="e.g., 2"
+            />
+          </div>
+        </div>
 
-			<!-- Amenities -->
-			<div class="mb-6">
-				<label for="amenities" class="block text-sm font-semibold text-gray-700 mb-2">Amenities (One per line)</label>
-				<textarea id="amenities" name="amenities" rows="5"
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="Free WiFi&#10;Swimming Pool&#10;Air Conditioning&#10;Room Service"></textarea>
-				<p class="text-xs text-gray-500 mt-1">Enter each amenity on a new line</p>
-			</div>
+        <!-- Amenities -->
+        <div class="mb-6">
+          <label
+            for="amenities"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+            >Amenities (One per line)</label
+          >
+          <textarea
+            id="amenities"
+            name="amenities"
+            rows="5"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="Free WiFi&#10;Swimming Pool&#10;Air Conditioning&#10;Room Service"
+          ></textarea>
+          <p class="text-xs text-gray-500 mt-1">
+            Enter each amenity on a new line
+          </p>
+        </div>
 
-			<!-- Features (Optional) -->
-			<div class="mb-6">
-				<label for="features" class="block text-sm font-semibold text-gray-700 mb-2">Features (Optional, one per line)</label>
-				<textarea id="features" name="features" rows="4"
-					class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
-					placeholder="Ocean View&#10;Private Balcony&#10;Minibar&#10;Spa Access"></textarea>
-			</div>
+        <!-- Features (Optional) -->
+        <div class="mb-6">
+          <label
+            for="features"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+            >Features (Optional, one per line)</label
+          >
+          <textarea
+            id="features"
+            name="features"
+            rows="4"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-teal focus:border-transparent"
+            placeholder="Ocean View&#10;Private Balcony&#10;Minibar&#10;Spa Access"
+          ></textarea>
+        </div>
 
-			<!-- Is Active -->
-			<div class="mb-6">
-				<label class="flex items-center gap-2 cursor-pointer">
-					<input type="checkbox" id="isActive" name="isActive" checked
-						class="w-4 h-4 text-primary-teal border-gray-300 rounded focus:ring-primary-teal">
-					<span class="text-sm font-semibold text-gray-700">Active (Show on website)</span>
-				</label>
-			</div>
+        <!-- Is Active -->
+        <div class="mb-6">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              id="isActive"
+              name="isActive"
+              checked
+              class="w-4 h-4 text-primary-teal border-gray-300 rounded focus:ring-primary-teal"
+            />
+            <span class="text-sm font-semibold text-gray-700"
+              >Active (Show on website)</span
+            >
+          </label>
+        </div>
 
-			<!-- Form Actions -->
-			<div class="flex gap-4 mt-8">
-				<button type="submit" class="flex-1 teal-gradient text-white py-3 px-6 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-					<i class="fas fa-save mr-2"></i>Create Accommodation
-				</button>
-				<button type="button" onclick="window.location.href='/api/admin'" class="px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
-					Cancel
-				</button>
-			</div>
-		</form>
+        <!-- Form Actions -->
+        <div class="flex gap-4 mt-8">
+          <button
+            type="submit"
+            class="flex-1 teal-gradient text-white py-3 px-6 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+          >
+            <i class="fas fa-save mr-2"></i>Create Accommodation
+          </button>
+          <button
+            type="button"
+            onclick="window.location.href='/api/admin'"
+            class="px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
 
-		<div id="message" class="mt-4 hidden"></div>
-	</div>
+      <div id="message" class="mt-4 hidden"></div>
+    </div>
 
-	<script src="/assets/js/create-stay-only.js"></script>
-</body>
+    <script src="/assets/js/create-stay-only.js"></script>
+  </body>
 </html>
-

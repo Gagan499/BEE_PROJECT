@@ -10,53 +10,63 @@
     />
     <title>Change Password - Palm Ways</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'poppins': ['Poppins', 'sans-serif']
-                    },
-                    colors: {
-                        'primary-teal': '#008080',
-                        'secondary-teal': '#00cec9',
-                        'dark-teal': '#1a535c',
-                        'light-mint': '#e6f7f7',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <link rel="stylesheet" href="/assets/css/forgotpass.css">
-  </head>
-  <body class="font-poppins bg-gradient-to-br from-primary-teal via-secondary-teal to-primary-teal min-h-screen pt-[76px]">
-    <%- include('partials/alert') %>
-    <header class="w-full">
-      <%- include('partials/navbar') %>
-    </header>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
 
-    <div class="flex flex-col items-center justify-center min-h-[calc(100vh-76px)] py-8 px-4">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "primary-teal": "#008080",
+              "secondary-teal": "#00cec9",
+              "dark-teal": "#1a535c",
+              "light-mint": "#e6f7f7",
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="/assets/css/forgotpass.css" />
+  </head>
+  <body class="font-poppins min-h-screen pt-[76px]">
+    <%- include('partials/alert') %>
+    <header class="w-full"><%- include('partials/navbar') %></header>
+
+    <div
+      class="flex flex-col items-center justify-center min-h-[calc(100vh-76px)] py-8 px-4"
+    >
       <!-- Forgot Password Form -->
       <div
         id="forget_page"
         class="w-full max-w-md bg-white rounded-2xl shadow-2xl px-8 md:px-10 py-10 md:py-12 mx-4"
       >
         <div class="text-center mb-8">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full mb-4">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full mb-4"
+          >
             <i class="fas fa-key text-white text-2xl"></i>
           </div>
           <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
             Change Password
           </h2>
           <p class="text-gray-600 text-sm md:text-base">
-            Enter your email address below and we'll send you instructions to reset your password.
+            Enter your email address below and we'll send you instructions to
+            reset your password.
           </p>
         </div>
 
@@ -85,7 +95,7 @@
             <i class="fas fa-paper-plane mr-2"></i>Send OTP
           </button>
         </form>
-        
+
         <div class="text-center mt-6">
           <a
             href="/api/login"
@@ -102,7 +112,9 @@
         class="hidden w-full max-w-md bg-white rounded-2xl shadow-2xl px-8 md:px-10 py-10 md:py-12 mx-4"
       >
         <div class="text-center mb-8">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full mb-4">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full mb-4"
+          >
             <i class="fas fa-shield-alt text-white text-2xl"></i>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
@@ -112,7 +124,7 @@
             Please enter the 6-digit OTP sent to your email address.
           </p>
         </div>
-        
+
         <div class="mb-6">
           <input
             id="otp"
@@ -122,14 +134,14 @@
             class="input-focus w-full py-3 px-4 rounded-lg border-2 border-gray-200 text-gray-800 placeholder-gray-400 focus:border-primary-teal transition-colors text-center text-2xl tracking-widest font-semibold"
           />
         </div>
-        
+
         <button
           id="verifyOtp"
           class="btn-teal-secondary w-full py-3 text-lg font-semibold text-white rounded-lg shadow-lg mb-4"
         >
           <i class="fas fa-check-circle mr-2"></i>Verify OTP
         </button>
-        
+
         <div class="text-center">
           <a
             href="#"
@@ -147,7 +159,9 @@
         class="hidden w-full max-w-md bg-white rounded-2xl shadow-2xl px-8 md:px-10 py-10 md:py-12 mx-4"
       >
         <div class="text-center mb-8">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full mb-4">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full mb-4"
+          >
             <i class="fas fa-lock text-white text-2xl"></i>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
@@ -157,7 +171,7 @@
             Enter your new password below. Make sure it's strong and secure.
           </p>
         </div>
-        
+
         <form id="resetPasswordForm" class="flex flex-col space-y-6">
           <div class="relative">
             <input
@@ -175,7 +189,7 @@
               <i class="fas fa-lock mr-2"></i>New Password
             </label>
           </div>
-          
+
           <div class="relative">
             <input
               id="confirmPassword"
@@ -192,14 +206,14 @@
               <i class="fas fa-lock mr-2"></i>Confirm Password
             </label>
           </div>
-          
+
           <div class="bg-light-mint p-4 rounded-lg">
             <p class="text-xs text-dark-teal">
               <i class="fas fa-info-circle mr-2"></i>
               <strong>Password Requirements:</strong> At least 6 characters long
             </p>
           </div>
-          
+
           <button
             type="submit"
             class="btn-teal w-full mt-4 py-3 text-lg font-semibold text-white rounded-lg shadow-lg"
@@ -210,10 +224,8 @@
       </div>
     </div>
 
-    <div class="w-full mt-auto">
-      <%- include('partials/footer') %>
-    </div>
-    
+    <div class="w-full mt-auto"><%- include('partials/footer') %></div>
+
     <script src="/assets/js/forgotpass.js"></script>
   </body>
 </html>

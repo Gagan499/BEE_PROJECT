@@ -1,102 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="shortcut icon" href="/assets/images/favicon_icon.png" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon_icon.png"
+      type="image/x-icon"
+    />
     <title><%= errorCode || '404' %> Page</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/theme.css" />
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'mono': ['Roboto Mono', 'monospace']
-                    },
-                    colors: {
-                        'primary-teal': '#008080',
-                        'dark-teal': '#1a535c',
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ["Roboto Mono", "monospace"],
+            },
+            colors: {
+              "primary-teal": "#008080",
+              "dark-teal": "#1a535c",
+            },
+          },
+        },
+      };
     </script>
     <style>
-        body {
-            margin: 0;
-            font-family: "Roboto Mono", monospace;
-        }       
-        @keyframes marquee {
-            0% {
-                transform: translateX(0%);
-            }
-
-            100% {
-                transform: translateX(-100%);
-            }
+      body {
+        margin: 0;
+        font-family: "Roboto Mono", monospace;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(0%);
         }
 
-        .marquee {
-            animation-delay: 0s;
-            white-space: nowrap;
-            display: inline-block;
-            animation: marquee 150s linear infinite;
+        100% {
+          transform: translateX(-100%);
         }
-        
-        /* Responsive Text Size for Marquee */
+      }
+
+      .marquee {
+        animation-delay: 0s;
+        white-space: nowrap;
+        display: inline-block;
+        animation: marquee 150s linear infinite;
+      }
+
+      /* Responsive Text Size for Marquee */
+      .marquee-text {
+        font-size: 130px;
+      }
+
+      @media (max-width: 1024px) {
+        /* Tablet/Small Desktop */
         .marquee-text {
-            font-size: 130px;
+          font-size: 100px;
         }
-        
-        @media (max-width: 1024px) { /* Tablet/Small Desktop */
-            .marquee-text {
-                font-size: 100px;
-            }
-        }
+      }
 
-        @media (max-width: 640px) { /* Mobile */
-            .marquee-text {
-                font-size: 60px;
-            }
+      @media (max-width: 640px) {
+        /* Mobile */
+        .marquee-text {
+          font-size: 60px;
         }
+      }
     </style>
-</head>
+  </head>
 
-<body class="bg-primary-teal flex flex-col items-center justify-center min-h-screen overflow-hidden">
+  <body
+    class="flex flex-col items-center justify-center min-h-screen overflow-hidden"
+  >
     <div class="w-full overflow-hidden border-y-2 border-white">
-        <div class="marquee text-white marquee-text font-extrabold">
-            <%= (String(errorCode || '404') + ' ').repeat(100) %>
-        </div>
+      <div class="marquee text-white marquee-text font-extrabold">
+        <%= (String(errorCode || '404') + ' ').repeat(100) %>
+      </div>
     </div>
 
     <div class="w-full overflow-hidden border-y-2 border-white mt-2">
-        <div class="marquee text-white marquee-text font-extrabold">
-            <%= ("Oops! an Error Occurred! ").repeat(50) %>
-        </div>
+      <div class="marquee text-white marquee-text font-extrabold">
+        <%= ("Oops! an Error Occurred! ").repeat(50) %>
+      </div>
     </div>
 
     <div class="mt-8 flex flex-col items-center px-4">
-        <% if (typeof errorCode !== 'undefined' && errorCode) { %>
-            <div class="text-3xl md:text-2xl sm:text-xl font-bold text-white mb-2 text-center">Error <%= errorCode %></div>
-        <% } %>
-        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
-            <div class="text-white text-lg md:text-base sm:text-sm mb-2 max-w-2xl text-center px-4"><%= errorMessage %></div>
-        <% } else { %>
-            <p class="text-white text-lg md:text-base sm:text-sm text-center px-4">Oops!
-            That page seems to be missing.</p>
-        <% } %>
+      <% if (typeof errorCode !== 'undefined' && errorCode) { %>
+      <div
+        class="text-3xl md:text-2xl sm:text-xl font-bold text-white mb-2 text-center"
+      >
+        Error <%= errorCode %>
+      </div>
+      <% } %> <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+      <div
+        class="text-white text-lg md:text-base sm:text-sm mb-2 max-w-2xl text-center px-4"
+      >
+        <%= errorMessage %>
+      </div>
+      <% } else { %>
+      <p class="text-white text-lg md:text-base sm:text-sm text-center px-4">
+        Oops! That page seems to be missing.
+      </p>
+      <% } %>
     </div>
 
-    <a href="/"
-        class="mt-6 bg-dark-teal text-white px-6 py-3 md:px-4 md:py-2 sm:px-3 sm:py-2 rounded-full border border-white hover:bg-dark-teal/80 transition inline-block text-center cursor-pointer text-base md:text-sm sm:text-xs">
-        &larr;
-        BACK TO HOME
+    <a
+      href="/"
+      class="mt-6 bg-dark-teal text-white px-6 py-3 md:px-4 md:py-2 sm:px-3 sm:py-2 rounded-full border border-white hover:bg-dark-teal/80 transition inline-block text-center cursor-pointer text-base md:text-sm sm:text-xs"
+    >
+      &larr; BACK TO HOME
     </a>
-</body>
-
+  </body>
 </html>

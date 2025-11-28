@@ -1,206 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="shortcut icon" href="/assets/images/favicon_icon.png" type="image/x-icon">
-  <title>Login & Sign Up</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
-    rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <script>
-    tailwind.config = {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon_icon.png"
+      type="image/x-icon"
+    />
+    <title>Login & Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <script>
+      tailwind.config = {
         theme: {
-            extend: {
-                colors: {
-                    'primary-teal': '#008080',
-                    'secondary-teal': '#00cec9',
-                    'dark-teal': '#1a535c',
-                }
-            }
-        }
-    }
-  </script>
-  <link rel="stylesheet" href="/assets/css/login.css">
-</head>
+          extend: {
+            colors: {
+              "primary-teal": "#008080",
+              "secondary-teal": "#00cec9",
+              "dark-teal": "#1a535c",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/login.css" />
+  </head>
 
-<body class="bg-gradient-to-tr from-[#1E202B] to-[#2D2F3E] min-h-screen"
-  style="background-image: url('/assets/images/LoginFormBG.png'); background-size: cover; background-position: center;">
+  <body
+    class="min-h-screen"
+    style="background: url('/assets/images/LoginFormBG.png') no-repeat center;">
+    <%- include('partials/navbar') %>
 
-  <%- include('partials/navbar') %>
+    <!-- Mobile View (< 480px) -->
+    <div class="mobile-wrapper">
+      <!-- Mobile Header -->
+      <div class="mobile-header">
+        <button
+          class="mobile-back-btn"
+          id="mobileBackBtn"
+          onclick="showLoginForm()"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1 class="mobile-logo">PalmWay</h1>
+      </div>
 
-  <!-- Mobile View (< 480px) -->
-  <div class="mobile-wrapper">
-    <!-- Mobile Header -->
-    <div class="mobile-header">
-      <button class="mobile-back-btn" id="mobileBackBtn" onclick="showLoginForm()">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <h1 class="mobile-logo">PalmWay</h1>
+      <!-- Sign In Form (Mobile) -->
+      <div class="mobile-form-container" id="mobileLoginForm">
+        <h2 class="mobile-form-title">Login to your Account</h2>
+        <form id="loginform-mobile" method="POST">
+          <div class="mobile-input-group">
+            <label for="email-signin-mobile" class="mobile-input-label"
+              >Email</label
+            >
+            <input
+              id="email-signin-mobile"
+              name="email"
+              type="email"
+              required
+              class="mobile-input"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="mobile-input-group">
+            <label for="password-signin-mobile" class="mobile-input-label"
+              >Password</label
+            >
+            <input
+              id="password-signin-mobile"
+              name="password"
+              type="password"
+              required
+              class="mobile-input"
+              placeholder="Enter your password"
+            />
+          </div>
+          <button type="submit" class="mobile-submit-btn">Sign in</button>
+        </form>
+
+        <div class="mobile-divider">
+          <span>- Or sign in with -</span>
+        </div>
+
+        <div class="mobile-social-login">
+          <div class="mobile-social-icon google">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="mobile-social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+          </div>
+          <div class="mobile-social-icon twitter">
+            <i class="fab fa-twitter"></i>
+          </div>
+        </div>
+
+        <div class="mobile-switch-link">
+          Don't have an account?
+          <a href="#" onclick="showSignupForm(); return false;">Sign up</a>
+        </div>
+      </div>
+
+      <!-- Sign Up Form (Mobile) -->
+      <div class="mobile-form-container hidden" id="mobileSignupForm">
+        <h2 class="mobile-form-title">Create your Account</h2>
+        <form id="registerform-mobile" method="POST">
+          <div class="mobile-input-group">
+            <label for="email-signup-mobile" class="mobile-input-label"
+              >Email</label
+            >
+            <input
+              id="email-signup-mobile"
+              name="email"
+              type="email"
+              required
+              class="mobile-input"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="mobile-input-group">
+            <label for="password-signup-mobile" class="mobile-input-label"
+              >Password</label
+            >
+            <input
+              id="password-signup-mobile"
+              name="password"
+              type="password"
+              required
+              class="mobile-input"
+              placeholder="Enter your password"
+            />
+          </div>
+          <div class="mobile-input-group">
+            <label for="confirm-password-mobile" class="mobile-input-label"
+              >Confirm Password</label
+            >
+            <input
+              id="confirm-password-mobile"
+              name="confirmPassword"
+              type="password"
+              required
+              class="mobile-input"
+              placeholder="Confirm your password"
+            />
+          </div>
+          <button type="submit" class="mobile-submit-btn">Sign up</button>
+        </form>
+
+        <div class="mobile-divider">
+          <span>- Or sign up with -</span>
+        </div>
+
+        <div class="mobile-social-login">
+          <div class="mobile-social-icon google">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="mobile-social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+          </div>
+          <div class="mobile-social-icon twitter">
+            <i class="fab fa-twitter"></i>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Sign In Form (Mobile) -->
-    <div class="mobile-form-container" id="mobileLoginForm">
-      <h2 class="mobile-form-title">Login to your Account</h2>
-      <form id="loginform-mobile" method="POST">
-        <div class="mobile-input-group">
-          <label for="email-signin-mobile" class="mobile-input-label">Email</label>
-          <input id="email-signin-mobile" name="email" type="email" required class="mobile-input" placeholder="Enter your email">
-        </div>
-        <div class="mobile-input-group">
-          <label for="password-signin-mobile" class="mobile-input-label">Password</label>
-          <input id="password-signin-mobile" name="password" type="password" required class="mobile-input" placeholder="Enter your password">
-        </div>
-        <button type="submit" class="mobile-submit-btn">Sign in</button>
-      </form>
+    <!-- Desktop View (>= 481px) - Sliding Panel -->
+    <div class="desktop-wrapper">
+      <div class="flex items-center justify-center min-h-screen px-4 py-8">
+        <div
+          id="container"
+          class="relative w-full max-w-4xl bg-[#282A37]/70 rounded-2xl shadow-2xl backdrop-blur-md overflow-hidden min-h-[600px]"
+        >
+          <!-- Sign In Section (Left) -->
+          <div
+            class="form-container sign-in-container flex items-center justify-center"
+          >
+            <form
+              id="loginform"
+              method="POST"
+              class="flex flex-col items-start px-12 w-full max-w-sm"
+            >
+              <h2 class="text-4xl font-bold text-white mb-8">Sign In</h2>
+              <div class="relative w-full my-4">
+                <input
+                  id="email-signin"
+                  name="email"
+                  type="email"
+                  required
+                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
+                  placeholder="Email Address"
+                />
+                <label
+                  for="email-signin"
+                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
+                  >Email Address</label
+                >
+              </div>
+              <div class="relative w-full my-4">
+                <input
+                  id="password-signin"
+                  name="password"
+                  type="password"
+                  required
+                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
+                  placeholder="Password"
+                />
+                <label
+                  for="password-signin"
+                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
+                  >Password</label
+                >
+              </div>
+              <button
+                type="submit"
+                class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                Sign In
+              </button>
+            </form>
+          </div>
 
-      <div class="mobile-divider">
-        <span>- Or sign in with -</span>
-      </div>
+          <!-- Sign Up Section (Left, hidden initially) -->
+          <div
+            class="form-container sign-up-container flex items-center justify-center"
+          >
+            <form
+              id="registerform"
+              method="POST"
+              class="flex flex-col items-start px-12 w-full max-w-sm"
+            >
+              <h2 class="text-4xl font-bold text-white mb-8">Sign Up</h2>
+              <div class="relative w-full my-4">
+                <input
+                  id="name-signup"
+                  name="name"
+                  type="text"
+                  required
+                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
+                  placeholder="Name"
+                />
+                <label
+                  for="name-signup"
+                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
+                  >Name</label
+                >
+              </div>
+              <div class="relative w-full my-4">
+                <input
+                  id="email-signup"
+                  name="email"
+                  type="email"
+                  required
+                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
+                  placeholder="Email Address"
+                />
+                <label
+                  for="email-signup"
+                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
+                  >Email Address</label
+                >
+              </div>
+              <div class="relative w-full my-4">
+                <input
+                  id="password-signup"
+                  name="password"
+                  type="password"
+                  required
+                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
+                  placeholder="Password"
+                />
+                <label
+                  for="password-signup"
+                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
+                  >Password</label
+                >
+              </div>
+              <button
+                type="submit"
+                class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
 
-      <div class="mobile-social-login">
-        <div class="mobile-social-icon google">
-          <i class="fab fa-google"></i>
-        </div>
-        <div class="mobile-social-icon facebook">
-          <i class="fab fa-facebook-f"></i>
-        </div>
-        <div class="mobile-social-icon twitter">
-          <i class="fab fa-twitter"></i>
-        </div>
-      </div>
-
-      <div class="mobile-switch-link">
-        Don't have an account? <a href="#" onclick="showSignupForm(); return false;">Sign up</a>
-      </div>
-    </div>
-
-    <!-- Sign Up Form (Mobile) -->
-    <div class="mobile-form-container hidden" id="mobileSignupForm">
-      <h2 class="mobile-form-title">Create your Account</h2>
-      <form id="registerform-mobile" method="POST">
-        <div class="mobile-input-group">
-          <label for="email-signup-mobile" class="mobile-input-label">Email</label>
-          <input id="email-signup-mobile" name="email" type="email" required class="mobile-input" placeholder="Enter your email">
-        </div>
-        <div class="mobile-input-group">
-          <label for="password-signup-mobile" class="mobile-input-label">Password</label>
-          <input id="password-signup-mobile" name="password" type="password" required class="mobile-input" placeholder="Enter your password">
-        </div>
-        <div class="mobile-input-group">
-          <label for="confirm-password-mobile" class="mobile-input-label">Confirm Password</label>
-          <input id="confirm-password-mobile" name="confirmPassword" type="password" required class="mobile-input" placeholder="Confirm your password">
-        </div>
-        <button type="submit" class="mobile-submit-btn">Sign up</button>
-      </form>
-
-      <div class="mobile-divider">
-        <span>- Or sign up with -</span>
-      </div>
-
-      <div class="mobile-social-login">
-        <div class="mobile-social-icon google">
-          <i class="fab fa-google"></i>
-        </div>
-        <div class="mobile-social-icon facebook">
-          <i class="fab fa-facebook-f"></i>
-        </div>
-        <div class="mobile-social-icon twitter">
-          <i class="fab fa-twitter"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Desktop View (>= 481px) - Sliding Panel -->
-  <div class="desktop-wrapper">
-    <div class="flex items-center justify-center min-h-screen px-4 py-8">
-      <div id="container" class="relative w-full max-w-4xl bg-[#282A37]/70 rounded-2xl shadow-2xl backdrop-blur-md overflow-hidden min-h-[600px]">
-        
-        <!-- Sign In Section (Left) -->
-        <div class="form-container sign-in-container flex items-center justify-center">
-          <form id="loginform" method="POST" class="flex flex-col items-start px-12 w-full max-w-sm">
-            <h2 class="text-4xl font-bold text-white mb-8">Sign In</h2>
-            <div class="relative w-full my-4">
-              <input id="email-signin" name="email" type="email" required
-                class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                placeholder="Email Address">
-              <label 
-                for="email-signin"
-                class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Email Address</label>
-            </div>
-            <div class="relative w-full my-4">
-              <input id="password-signin" name="password" type="password" required
-                class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                placeholder="Password">
-              <label for="password-signin"
-                class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Password</label>
-            </div>
-            <button type="submit"
-              class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-              Sign In
-            </button>
-          </form>
-        </div>
-
-        <!-- Sign Up Section (Left, hidden initially) -->
-        <div class="form-container sign-up-container flex items-center justify-center">
-          <form id="registerform" method="POST" class="flex flex-col items-start px-12 w-full max-w-sm">
-            <h2 class="text-4xl font-bold text-white mb-8">Sign Up</h2>
-            <div class="relative w-full my-4">
-              <input id="name-signup" name="name" type="text" required
-                class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                placeholder="Name">
-              <label for="name-signup"
-                class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Name</label>
-            </div>
-            <div class="relative w-full my-4">
-              <input id="email-signup" name="email" type="email" required
-                class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                placeholder="Email Address">
-              <label for="email-signup"
-                class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Email Address</label>
-            </div>
-            <div class="relative w-full my-4">
-              <input id="password-signup" name="password" type="password" required
-                class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                placeholder="Password">
-              <label for="password-signup"
-                class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm">Password</label>
-            </div>
-            <button type="submit"
-              class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-              Sign Up
-            </button>
-          </form>
-        </div>
-
-        <!-- Overlay Container (Right) -->
-        <div class="overlay-container">
-          <div class="overlay">
-            <div class="overlay-panel overlay-left">
-              <h1>Hello, Friend!</h1>
-              <p>Enter your personal details and start your journey with us</p>
-              <button id="signIn" type="button">Sign In</button>
-            </div>
-            <div class="overlay-panel overlay-right">
-              <h1>Welcome Back!</h1>
-              <p>To keep connected with us please login with your personal info</p>
-              <button id="signUp" type="button">Sign Up</button>
+          <!-- Overlay Container (Right) -->
+          <div class="overlay-container">
+            <div class="overlay">
+              <div class="overlay-panel overlay-left">
+                <h1>Hello, Friend!</h1>
+                <p>
+                  Enter your personal details and start your journey with us
+                </p>
+                <button id="signIn" type="button">Sign In</button>
+              </div>
+              <div class="overlay-panel overlay-right">
+                <h1>Welcome Back!</h1>
+                <p>
+                  To keep connected with us please login with your personal info
+                </p>
+                <button id="signUp" type="button">Sign Up</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <%- include('partials/alert') %>
+    <%- include('partials/alert') %>
 
-  <script src="/assets/js/login.js"></script>
-</body>
+    <script src="/assets/js/login.js"></script>
+  </body>
 </html>
