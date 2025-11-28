@@ -19,7 +19,6 @@
 
 .main-header.scrolled {
   background: var(--bg-color, white);
-  background-image: url('/assets/images/headerbg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,7 +33,6 @@
 /* Transparent navbar for index and packages pages only */
 .transparent-navbar .main-header {
   background: transparent !important;
-  background-image: none !important;
   box-shadow: none !important;
 }
 
