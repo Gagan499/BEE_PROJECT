@@ -35,22 +35,11 @@
         color: var(--text-primary);
         min-height: 100vh;
         overflow-x: hidden;
-        margin-top: 0;
+        /* margin-top: -60px; */
       }
-      /* .hero-section{
-        margin-top: 0px;
-      } */
-
-      /* Teal Color Palette */
-      /* Primary Teal: #008080 (Teal), Secondary Teal: #00cec9 (Turquoise) */
-      /* Dark Teal for text: #1a535c */
-      /* Light Teal/Mint background: #e6f7f7 */
-      /* Accent Blue-Teal: #00bfff (Deep Sky Blue) */
-
-      /* Utility function for primary gradient */
+    
       .teal-gradient {
         background: linear-gradient(135deg, #008080, #00cec9);
- /* Teal to Turquoise */
       }
       
       /* --- Hero Section --- */
@@ -668,9 +657,9 @@
  }
 
         .hero-section {
-          height: 70vh;
+          height: 85vh;
  min-height: 400px;
-          margin-top: 60px;
+          margin-top: 0px;
           padding: 1rem;
         }
 
@@ -930,7 +919,8 @@
     
     <section class="hero-section">
       <%- include('partials/navbar') %>
-      <div class="hero-overlay"></div>
+      <div class="hero-overlay">
+      </div>
       <div class="hero-content">
         <div class="hero-badge">
           <i class="fas fa-award"></i>
