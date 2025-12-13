@@ -11,25 +11,26 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 	<script>
 		tailwind.config = {
+			darkMode: 'class',
 			theme: {
 				extend: {
 					fontFamily: {
 						'poppins': ['Poppins', 'sans-serif']
 					},
-                    colors: {
-                        'primary-teal': '#008080',
-                        'secondary-teal': '#00cec9',
-                        'dark-teal': '#1a535c',
-                        'light-mint': '#e6f7f7',
-                        'accent-blue': '#00bfff', // Using a cyan/blue accent for variety
-                    }
+					colors: {
+						'primary-teal': '#008080',
+						'secondary-teal': '#00cec9',
+						'dark-teal': '#1a535c',
+						'light-mint': '#e6f7f7',
+						'accent-blue': '#00bfff',
+					}
 				}
 			}
 		}
 	</script>
 	<link rel="stylesheet" href="/assets/css/packages.css">
 </head>
-<body class="font-poppins bg-gray-50 overflow-x-hidden transparent-navbar">
+<body class="font-poppins bg-gray-50 dark:bg-gray-900 dark:text-white overflow-x-hidden transparent-navbar transition-colors duration-300">
 	<%- include('partials/navbar') %>
 
 	<section class="py-32 px-8 text-white text-center relative overflow-hidden">
@@ -44,24 +45,23 @@
 		</div>
 	</section>
 
-	<section class="bg-white py-12 px-8 
-		shadow-sm">
+	<section class="bg-white dark:bg-gray-800 py-12 px-8 shadow-sm transition-colors duration-300">
 		<div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
 			<div>
 				<h3 class="text-4xl font-bold text-primary-teal mb-2">10,000+</h3>
-				<p class="text-gray-600 text-sm font-medium">Happy Guests</p>
+				<p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Happy Guests</p>
 			</div>
 			<div>
 				<h3 class="text-4xl font-bold text-primary-teal mb-2">50+</h3>
-				<p class="text-gray-600 text-sm font-medium">Destinations</p>
+				<p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Destinations</p>
 			</div>
 			<div>
 				<h3 class="text-4xl font-bold text-primary-teal mb-2">15+</h3>
-				<p class="text-gray-600 text-sm font-medium">Years Experience</p>
+				<p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Years Experience</p>
 			</div>
 			<div>
 				<h3 class="text-4xl font-bold text-primary-teal mb-2">4.9/5</h3>
-				<p class="text-gray-600 text-sm font-medium">Guest Rating</p>
+				<p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Guest Rating</p>
 			</div>
 		</div>
 	</section>
@@ -69,97 +69,117 @@
 	<main class="max-w-7xl mx-auto py-16 px-8">
 		<div class="packages-grid grid grid-cols-1 lg:grid-cols-2 gap-8">
 			<% 
-			// Mapping the original colors to a Teal-centric palette
+			// Define constants outside the loop
 			const borderColors = ['border-t-accent-blue', 'border-t-primary-teal', 'border-t-secondary-teal', 'border-t-dark-teal'];
 			const badgeColors = ['bg-accent-blue/90', 'bg-primary-teal/90', 'bg-secondary-teal/90', 'bg-dark-teal/90'];
-			const iconBgColors = ['bg-blue-50', 'bg-light-mint', 'bg-secondary-teal/10', 'bg-dark-teal/10'];
-			const iconTextColors = ['text-accent-blue', 'text-primary-teal', 'text-secondary-teal', 'text-dark-teal'];
 			const btnGradients = ['from-accent-blue to-primary-teal', 'from-primary-teal to-secondary-teal', 'from-secondary-teal to-primary-teal', 'from-dark-teal to-primary-teal'];
-			const icons = ['fa-umbrella-beach', 'fa-mountain-sun', 'fa-palm-tree', 'fa-water'];
 			const badges = ['Best Value', 'Most Popular', 'Exclusive', 'Family Friendly'];
-			packages.forEach((pkg, index) => { 
-				const colorIndex = index % 4;
 			%>
-				<div class="bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 <%= borderColors[colorIndex] %>">
-					<div class="relative h-64 overflow-hidden">
-						<img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
-						<div class="absolute top-4 right-4 px-4 py-2 rounded-full font-semibold text-sm text-white backdrop-blur-lg <%= badgeColors[colorIndex] %>">
-							<%= pkg.badge || badges[colorIndex] %>
+			
+			<% if (packages && packages.length > 0) { %>
+				<% packages.forEach(function(pkg, index) { 
+					const colorIndex = index % 4;
+					const activities = pkg.Activities || [];
+					const features = pkg.features || [];
+					
+					// Logic to determine what to display
+					let displayItems = [];
+					if (activities.length > 0) {
+						displayItems = activities.slice(0, 3);
+					} else if (features.length > 0) {
+						displayItems = features.slice(0, 3);
+					}
+					
+					const totalItems = activities.length > 0 ? activities.length : features.length;
+					const remainingCount = Math.max(0, totalItems - 3);
+					
+					// Prepare variables for template to avoid complex expressions
+					const pkgImage = pkg.image || pkg.img || '/assets/images/carousel/default.png';
+					const pkgTitle = pkg.packageName || pkg.title;
+					const pkgBadge = pkg.badge || badges[colorIndex];
+					const pkgPrice = pkg.price;
+					const pkgLocation = pkg.location;
+					const pkgDuration = (pkg.days || pkg.nights || pkg.duration) ? (pkg.days || pkg.nights || '') + 'N/' + (pkg.nights || pkg.days || '') + 'D' : '';
+					const pkgStay = pkg.Stay;
+					const pkgHotel = pkg.hotelName;
+					const borderColorClass = borderColors[colorIndex];
+					const badgeColorClass = badgeColors[colorIndex];
+					const btnGradientClass = btnGradients[colorIndex];
+				%>
+					<div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 <%= borderColorClass %>">
+						<div class="relative h-64 overflow-hidden">
+							<img src="<%= pkgImage %>" alt="<%= pkgTitle %>" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+							<div class="absolute top-4 right-4 px-4 py-2 rounded-full font-semibold text-sm text-white backdrop-blur-lg <%= badgeColorClass %>">
+								<%= pkgBadge %>
+							</div>
+							<% if (pkgPrice) { %>
+							<div class="absolute bottom-4 left-4 bg-white dark:bg-gray-800 px-4 py-2 rounded-2xl font-bold shadow-lg">
+								<span class="text-lg text-gray-800 dark:text-white">$<%= pkgPrice %></span>
+								<small class="text-xs text-gray-600 dark:text-gray-400 font-medium">/per person</small>
+							</div>
+							<% } %>
 						</div>
-						<% if (pkg.price) { %>
-						<div class="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-2xl font-bold shadow-lg">
-							<span class="text-lg text-gray-800">$<%= pkg.price %></span>
-							<small class="text-xs text-gray-600 font-medium">/per person</small>
-						</div>
-						<% } %>
-					</div>
 
-					<div class="p-5">
-						<h3 class="text-xl font-bold text-gray-800 mb-3"><%= pkg.packageName || pkg.title %></h3>
-						
-						<!-- Compressed Info Row -->
-						<div class="flex flex-wrap items-center gap-2 mb-4 text-xs text-gray-600">
-							<% if (pkg.location) { %>
-							<span class="flex items-center gap-1">
-								<i class="fas fa-map-marker-alt"></i>
-								<%= pkg.location %>
-							</span>
-							<% } %>
-							<% if (pkg.days || pkg.nights || pkg.duration) { %>
-							<span class="flex items-center gap-1">
-								<i class="fas fa-calendar-alt"></i>
-								<%= pkg.days || pkg.nights || '' %>N/<%= pkg.nights || pkg.days || '' %>D
-							</span>
-							<% } %>
-							<% if (pkg.Stay) { %>
-							<span class="flex items-center gap-1">
-								<i class="fas fa-hotel"></i>
-								<%= pkg.Stay %>
-							</span>
-							<% } %>
-							<% if (pkg.hotelName) { %>
-							<span class="flex items-center gap-1">
-								<i class="fas fa-building"></i>
-								<%= pkg.hotelName %>
-							</span>
-							<% } %>
-						</div>
-
-						<!-- Compressed Activities/Features - Show only first 3 -->
-						<% if ((pkg.Activities && pkg.Activities.length > 0) || (pkg.features && pkg.features.length > 0)) { %>
-						<div class="mb-4">
-							<div class="flex flex-wrap gap-1.5">
-								<% if (pkg.Activities && pkg.Activities.length > 0) { %>
-									<% pkg.Activities.slice(0, 3).forEach(activity => { %>
-									<span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-										<%= activity %>
-									</span>
-									<% }); %>
-									<% if (pkg.Activities.length > 3) { %>
-									<span class="px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md">
-										+<%= pkg.Activities.length - 3 %> more
-									</span>
-									<% } %>
+						<div class="p-5">
+							<h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3"><%= pkgTitle %></h3>
+							
+							<div class="flex flex-wrap items-center gap-2 mb-4 text-xs text-gray-600 dark:text-gray-400">
+								<% if (pkgLocation) { %>
+								<span class="flex items-center gap-1">
+									<i class="fas fa-map-marker-alt"></i>
+									<%= pkgLocation %>
+								</span>
 								<% } %>
-								<% if (pkg.features && pkg.features.length > 0 && (!pkg.Activities || pkg.Activities.length <= 3)) { %>
-									<% pkg.features.slice(0, 3 - (pkg.Activities ? Math.min(pkg.Activities.length, 3) : 0)).forEach(feature => { %>
-									<span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-										<%= feature %>
-									</span>
-									<% }); %>
+								<% if (pkgDuration) { %>
+								<span class="flex items-center gap-1">
+									<i class="fas fa-calendar-alt"></i>
+									<%= pkgDuration %>
+								</span>
+								<% } %>
+								<% if (pkgStay) { %>
+								<span class="flex items-center gap-1">
+									<i class="fas fa-hotel"></i>
+									<%= pkgStay %>
+								</span>
+								<% } %>
+								<% if (pkgHotel) { %>
+								<span class="flex items-center gap-1">
+									<i class="fas fa-building"></i>
+									<%= pkgHotel %>
+								</span>
 								<% } %>
 							</div>
-						</div>
-						<% } %>
 
-						<button class="w-full py-3 border-0 rounded-xl font-semibold text-sm cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradients[colorIndex] %> hover:-translate-y-0.5 hover:shadow-xl" onclick="window.location.href='/api/login'">
-							<span>Book This Package</span>
-							<i class="fas fa-arrow-right"></i>
-						</button>
+							<% if (displayItems.length > 0) { %>
+							<div class="mb-4">
+								<div class="flex flex-wrap gap-1.5">
+									<% displayItems.forEach(function(item) { %>
+										<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-md">
+											<%= item %>
+										</span>
+									<% }); %>
+									
+									<% if (remainingCount > 0) { %>
+										<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs rounded-md">
+											+<%= remainingCount %> more
+										</span>
+									<% } %>
+								</div>
+							</div>
+							<% } %>
+
+							<button class="w-full py-3 border-0 rounded-xl font-semibold text-sm cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradientClass %> hover:-translate-y-0.5 hover:shadow-xl" onclick="window.location.href='/api/login'">
+								<span>Book This Package</span>
+								<i class="fas fa-arrow-right"></i>
+							</button>
+						</div>
 					</div>
+				<% }); %>
+			<% } else { %>
+				<div class="col-span-full text-center py-12">
+					<p class="text-gray-500 text-lg">No packages available at the moment.</p>
 				</div>
-			<% });
-			%>
+			<% } %>
 		</div>
 	</main>
 

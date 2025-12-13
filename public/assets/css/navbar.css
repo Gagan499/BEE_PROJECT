@@ -31,34 +31,6 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Text colors for transparent navbar - match default (scrolled) style */
-.transparent-navbar .main-header .logo-text h1 {
-  color: var(--text-color, #2c3e50);
-}
-
-.transparent-navbar .main-header .nav-menu li a {
-  color: var(--text-color-secondary, #5f6368);
-}
-
-.transparent-navbar .main-header .nav-menu li a:hover {
-  color: var(--primary-teal) !important;
-  border-bottom-color: var(--primary-teal);
-}
-
-.transparent-navbar .main-header .nav-menu li a.active {
-  color: var(--primary-teal) !important;
-  border-bottom-color: var(--primary-teal);
-  font-weight: 600;
-}
-
-.transparent-navbar .main-header .mobile-menu-btn,
-.transparent-navbar .main-header .theme-toggle-desktop {
-  color: var(--text-color, #2c3e50);
-}
-
-.transparent-navbar .main-header .user-icon-btn {
-  color: var(--primary-teal);
-}
 
 .dark .logo-text h1 {
   color: var(--text-color);

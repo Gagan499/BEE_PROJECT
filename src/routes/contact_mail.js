@@ -33,7 +33,7 @@ export async function ContactEmailToAdmin(name, email, message, req, res) {
             <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
             <p style="margin: 10px 0;"><strong>Message:</strong></p>
             <div style="background-color: white; padding: 15px; border-radius: 5px; margin-top: 10px;">
-              <p style="margin: 0; white-space: pre-wrap;">${message}</p>
+              <p style="margin: 0; white-space: pre-wrap;">₹{message}</p>
             </div>
           </div>
           <p style="color: #666; font-size: 12px; margin-top: 20px;">

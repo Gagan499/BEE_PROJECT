@@ -7,7 +7,7 @@
   --dark-teal: #1a535c;
   --light-mint: #e6f7f7;
   --accent-blue: #00bfff;
-  
+
   /* Light Mode Colors */
   --bg-primary: #f8f9fa;
   --bg-secondary: #ffffff;
@@ -53,6 +53,7 @@ body {
   background: transparent;
   box-shadow: none;
 }
+
 .navbar-transparent .main-header:not(.scrolled) .logo-text h1,
 .navbar-transparent .main-header:not(.scrolled) .nav-menu li a,
 .navbar-transparent .main-header:not(.scrolled) .mobile-menu-btn,
@@ -62,9 +63,17 @@ body {
 }
 
 /* Hero overlay to ensure readability under transparent navbar */
-.hero-section { position: relative; }
-.hero-overlay { background: rgba(0,0,0,0.15); }
-.dark .hero-overlay { background: rgba(0,0,0,0.25); }
+.hero-section {
+  position: relative;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.dark .hero-overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
 
 /* Cards and Sections */
 .card,
@@ -179,11 +188,11 @@ select:focus {
   .container-responsive {
     padding: 1rem;
   }
-  
+
   .text-responsive-lg {
     font-size: 1.5rem;
   }
-  
+
   .text-responsive-xl {
     font-size: 2rem;
   }
@@ -193,11 +202,11 @@ select:focus {
   .container-responsive {
     padding: 0.75rem;
   }
-  
+
   .text-responsive-lg {
     font-size: 1.25rem;
   }
-  
+
   .text-responsive-xl {
     font-size: 1.5rem;
   }
@@ -345,6 +354,7 @@ img {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
