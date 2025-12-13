@@ -7,9 +7,9 @@
 
 /* Shared Base Styles */
 .main-header {
-  background: transparent;
+  background: var(--bg-color, white) !important;
   background-image: none !important;
-  box-shadow: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: fixed;
   top: 0;
   left: 0;
@@ -18,16 +18,11 @@
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.main-header.scrolled {
-  background: var(--bg-color, white) !important;
-  background-image: none !important;
-  background-size: auto !important;
-  background-position: initial !important;
-  background-repeat: repeat !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.dark .main-header.scrolled {
+/* Dark mode main header */
+.dark .main-header {
+  --bg-color: #1f2937;
+  --text-color: #f3f4f6;
+  --text-color-secondary: #d1d5db;
   background: var(--bg-color, #1f2937) !important;
   background-image: none !important;
   background-size: auto !important;
@@ -36,102 +31,57 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Transparent navbar for index and packages pages only */
-.transparent-navbar .main-header {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.transparent-navbar .main-header:not(.scrolled) {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.transparent-navbar .main-header.scrolled {
-  background: var(--bg-color, white) !important;
-  background-image: none !important;
-  background-size: auto !important;
-  background-position: initial !important;
-  background-repeat: repeat !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
-}
-
-.dark .transparent-navbar .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Text colors for transparent navbar - when not scrolled */
-.transparent-navbar .main-header:not(.scrolled) .logo-text h1 {
-  color: white;
-}
-
-.transparent-navbar .main-header:not(.scrolled) .nav-menu li a {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.transparent-navbar .main-header:not(.scrolled) .nav-menu li a:hover {
-  color: var(--secondary-teal) !important;
-  border-bottom-color: var(--secondary-teal);
-}
-
-.transparent-navbar .main-header:not(.scrolled) .nav-menu li a.active {
-  color: var(--secondary-teal) !important;
-  border-bottom-color: var(--secondary-teal);
-  font-weight: 600;
-}
-
-.transparent-navbar .main-header:not(.scrolled) .mobile-menu-btn,
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop {
-  color: white;
-}
-
-.transparent-navbar .main-header:not(.scrolled) .user-icon-btn {
-  color: white;
-}
-
-/* Text colors for transparent navbar - when scrolled (with background) */
-.transparent-navbar .main-header.scrolled .logo-text h1 {
+/* Text colors for transparent navbar - match default (scrolled) style */
+.transparent-navbar .main-header .logo-text h1 {
   color: var(--text-color, #2c3e50);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a {
+.transparent-navbar .main-header .nav-menu li a {
   color: var(--text-color-secondary, #5f6368);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a:hover {
+.transparent-navbar .main-header .nav-menu li a:hover {
   color: var(--primary-teal) !important;
   border-bottom-color: var(--primary-teal);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a.active {
+.transparent-navbar .main-header .nav-menu li a.active {
   color: var(--primary-teal) !important;
   border-bottom-color: var(--primary-teal);
   font-weight: 600;
 }
 
-.transparent-navbar .main-header.scrolled .mobile-menu-btn,
-.transparent-navbar .main-header.scrolled .theme-toggle-desktop {
+.transparent-navbar .main-header .mobile-menu-btn,
+.transparent-navbar .main-header .theme-toggle-desktop {
   color: var(--text-color, #2c3e50);
 }
 
-.transparent-navbar .main-header.scrolled .user-icon-btn {
+.transparent-navbar .main-header .user-icon-btn {
   color: var(--primary-teal);
 }
 
-/* Dark mode transparent navbar */
-.dark .transparent-navbar .main-header {
-  background: transparent !important;
+.dark .logo-text h1 {
+  color: var(--text-color);
 }
 
-.dark .transparent-navbar .main-header:not(.scrolled) {
-  background: transparent !important;
-  box-shadow: none !important;
+.dark .nav-menu li a {
+  color: var(--text-color-secondary);
 }
 
-.dark .transparent-navbar .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+.dark .nav-menu li a:hover {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+}
+
+.dark .nav-menu li a.active {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+  font-weight: 600;
+}
+
+.dark .mobile-menu-btn,
+.dark .theme-toggle-desktop {
+  color: var(--text-color);
 }
 
 .header-container {
@@ -281,27 +231,25 @@
   color: #1a1a1a !important;
 }
 
-/* When navbar is scrolled with white background - adjust sun to be visible */
-.main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-sun,
-.main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-sun {
+/* Adjust sun/moon colors for default solid navbar */
+.main-header:not(.dark) .theme-toggle-desktop .fa-sun,
+.main-header:not(.dark) .theme-toggle-mobile .fa-sun {
   color: #f59e0b !important;
-  /* Amber/yellow for visibility on white background */
 }
 
-/* When navbar is scrolled with white background - moon stays dark */
-.main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-moon,
-.main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-moon {
+.main-header:not(.dark) .theme-toggle-desktop .fa-moon,
+.main-header:not(.dark) .theme-toggle-mobile .fa-moon {
   color: #1a1a1a !important;
 }
 
-/* Transparent navbar (over hero) - sun white, moon dark */
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-sun,
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-sun {
-  color: white !important;
+/* Transparent navbar (now solid) - same colors */
+.transparent-navbar .main-header .theme-toggle-desktop .fa-sun,
+.transparent-navbar .main-header .theme-toggle-mobile .fa-sun {
+  color: #f59e0b !important;
 }
 
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-moon,
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-moon {
+.transparent-navbar .main-header .theme-toggle-desktop .fa-moon,
+.transparent-navbar .main-header .theme-toggle-mobile .fa-moon {
   color: #1a1a1a !important;
 }
 
@@ -310,14 +258,12 @@
 .dark .main-header .theme-toggle-mobile .fa-moon,
 .dark .main-header .theme-toggle-mobile-menu .fa-moon {
   color: #e5e7eb !important;
-  /* Light gray for moon in dark mode navbar */
 }
 
 .dark .main-header .theme-toggle-desktop .fa-sun,
 .dark .main-header .theme-toggle-mobile .fa-sun,
 .dark .main-header .theme-toggle-mobile-menu .fa-sun {
   color: #fbbf24 !important;
-  /* Yellow/gold for sun in dark mode */
 }
 
 /* Interactive Hamburger Animation */
@@ -529,56 +475,6 @@
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Dark Mode Styles */
-.dark .main-header {
-  --bg-color: #1f2937;
-  --text-color: #f3f4f6;
-  --text-color-secondary: #d1d5db;
-}
-
-.dark .main-header:not(.scrolled) {
-  box-shadow: none;
-}
-
-.dark .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
-  background-image: none !important;
-  background-size: auto !important;
-  background-position: initial !important;
-  background-repeat: repeat !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Ensure transparent navbar stays transparent in dark mode when not scrolled */
-.dark .transparent-navbar .main-header:not(.scrolled) {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.dark .logo-text h1 {
-  color: var(--text-color);
-}
-
-.dark .nav-menu li a {
-  color: var(--text-color-secondary);
-}
-
-.dark .nav-menu li a:hover {
-  color: var(--primary-teal) !important;
-  border-bottom-color: var(--primary-teal);
-}
-
-.dark .nav-menu li a.active {
-  color: var(--primary-teal) !important;
-  border-bottom-color: var(--primary-teal);
-  font-weight: 600;
-}
-
-.dark .mobile-menu-btn,
-.dark .theme-toggle-desktop {
-  color: var(--text-color);
-}
-
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
   .nav-menu {
@@ -717,6 +613,7 @@
 
   #sideMenu #mobile-user-actions a i {
     color: white !important;
+    padding: 0.625rem 1rem !important;
   }
 
   #sideMenu #mobile-user-actions .border-t {
