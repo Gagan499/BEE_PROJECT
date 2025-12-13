@@ -13,24 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="/assets/css/theme.css" />
   <link rel="stylesheet" href="/assets/css/admin.css" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            poppins: ["Poppins", "sans-serif"],
-          },
-          // Define a custom teal palette for easier access
-          colors: {
-            "primary-teal": "#008080",
-            "secondary-teal": "#00cec9",
-            "dark-teal": "#1a535c",
-            "light-mint": "#e6f7f7",
-          },
-        },
-      },
-    };
-  </script>
+  <!-- Tailwind config removed to prevent EJS parsing issues -->
 </head>
 
 <body class="font-poppins min-h-screen pt-[76px]">
@@ -57,8 +40,7 @@
               <i class="fas fa-bed"></i>
               <span>Add Stay-Only</span>
             </a>
-            <% const pendingCount=bookings.filter(b=> b.status ===
-              'pending').length; %>
+            <% const pendingCount = bookings.filter(b => b.status === 'pending').length; %>
               <div
                 class="teal-gradient text-white px-5 py-2 rounded-full text-sm font-semibold inline-flex items-center gap-2">
                 <i class="fas fa-clock"></i>
@@ -71,16 +53,41 @@
 
         <% if (bookings && bookings.length> 0) { %>
           <% bookings.forEach((booking)=> { %>
-            <% const statusClass=booking.status ? booking.status.toLowerCase() : 'pending' ; // Calculate dates const
-              arrivalDate=new Date(booking.arrivalDate || booking.arrival); const departureDate=new
-              Date(booking.departureDate || booking.departure); const nights=Math.ceil((departureDate - arrivalDate) /
-              (1000 * 60 * 60 * 24)); // Format dates const checkInDate=arrivalDate.toLocaleDateString('en-US', {
-              day: 'numeric' , month: 'numeric' , year: 'numeric' }); const
-              checkOutDate=departureDate.toLocaleDateString('en-US', { day: 'numeric' , month: 'numeric' ,
-              year: 'numeric' }); // Format submitted time const submittedDate=booking.createdAt ? new
-              Date(booking.createdAt) : new Date(); const submittedTime=submittedDate.toLocaleString('en-US', {
-              year: 'numeric' , month: '2-digit' , day: '2-digit' , hour: '2-digit' , minute: '2-digit' , hour12: true
-              }); // Use actual total from database const totalAmount=booking.totalAmount || booking.price || 0; %>
+            <% 
+            const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
+            
+            // Calculate dates
+            const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
+            const departureDate = new Date(booking.departureDate || booking.departure);
+            const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
+            
+            // Format dates
+            const checkInDate = arrivalDate.toLocaleDateString('en-US', { 
+              day: 'numeric', 
+              month: 'numeric', 
+              year: 'numeric' 
+            });
+            
+            const checkOutDate = departureDate.toLocaleDateString('en-US', { 
+              day: 'numeric', 
+              month: 'numeric', 
+              year: 'numeric' 
+            });
+            
+            // Format submitted time
+            const submittedDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
+            const submittedTime = submittedDate.toLocaleString('en-US', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true
+            });
+            
+            // Use actual total from database
+            const totalAmount = booking.totalAmount || booking.price || 0;
+            %>
               <div
                 class="bg-white rounded-xl shadow-md p-6 mb-6 transition-all duration-300 hover:shadow-lg <%= statusClass === 'pending' ? 'border-l-4 border-primary-teal' : '' %>"
                 data-booking-id="<%= booking._id %>">
