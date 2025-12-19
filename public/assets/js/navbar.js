@@ -208,7 +208,7 @@ async function checkAuthStatus() {
       if (navBookingLi) navBookingLi.style.display = "block";
       if (mobileBookingLi) mobileBookingLi.style.display = "block";
       // Set the link target for My Bookings/All Bookings
-      const bookingLinkTarget = (data.name === "Admin") ? "/api/admin" : "/api/user";
+      const bookingLinkTarget = (data.name === "Admin") ? "/api/admin" : "/api/booking";
       const bookingLinkText = (data.name === "Admin") ? "All Bookings" : "My Bookings";
 
       if (navMyBookings) {
