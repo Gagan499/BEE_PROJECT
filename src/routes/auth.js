@@ -12,8 +12,8 @@ import { validateEmail, testVerifaliaCredentials } from "./emailValidator.js";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET;
 
+const JWT_SECRET = process.env.JWT_SECRET;
 const authRouter = express.Router();
 
 if (!JWT_SECRET) {
