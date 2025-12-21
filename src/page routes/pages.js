@@ -5,6 +5,7 @@ import StayOnly from "../../models/stayOnly.js";
 import authenticator from "../Middlewares/authenticator.js";
 import adminAuth from "../Middlewares/adminAuth.js";
 import user from "../../models/user.js";
+import { verifyToken } from "../routes/jwtutils.js";
 
 const pageRoutes = express.Router();
 
@@ -20,8 +21,35 @@ pageRoutes.get("/login", (req, res) => {
   res.render("login.ejs");
 });
 
-pageRoutes.get("/change-password",(req,res)=>{
-  res.render("forgotpass.ejs");
+pageRoutes.get("/change-password", (req, res) => {
+  // Optionally get user info if logged in (but don't require authentication)
+  let userEmail = null;
+  try {
+    // Try to get user from token without redirecting
+    let token = req.cookies?.token;
+    if (!token) {
+      const authHeader = req.headers["authorization"] || req.headers["Authorization"];
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring("Bearer ".length);
+      }
+    }
+    
+    if (token) {
+      try {
+        const decoded = verifyToken(token);
+        userEmail = decoded.email;
+      } catch (err) {
+        // Token invalid - user not logged in
+        userEmail = null;
+      }
+    }
+  } catch (err) {
+    // Error getting user - continue without user email
+    userEmail = null;
+  }
+  
+  // Always pass userEmail (even if null) to avoid undefined errors in EJS
+  res.render("forgotpass.ejs", { userEmail: userEmail || null });
 })
 
 // User Profile Page - Shows user details and their bookings
