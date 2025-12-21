@@ -26,6 +26,26 @@ const bookingSchema = new mongoose.Schema(
     price: { type: Number, required: false },
     specialRequests: { type: String, required: false },
     notes: { type: String, required: false },
+    paymentMethod: { type: String, enum: ["credit_card", "debit_card", "paypal", "bank_transfer", "cash", "paytm", "scanning"], required: false },
+    paymentDetails: {
+      // Credit/Debit Card
+      cardNumber: { type: String, required: false },
+      cardHolderName: { type: String, required: false },
+      expiryDate: { type: String, required: false },
+      cvv: { type: String, required: false },
+      // Bank Transfer
+      accountNumber: { type: String, required: false },
+      bankName: { type: String, required: false },
+      ifscCode: { type: String, required: false },
+      accountHolderName: { type: String, required: false },
+      // PayPal
+      paypalEmail: { type: String, required: false },
+      // Paytm/Scanning
+      paytmNumber: { type: String, required: false },
+      upiId: { type: String, required: false },
+      transactionId: { type: String, required: false },
+      qrCodeScanned: { type: Boolean, required: false, default: false },
+    },
     status: { type: String, enum: ["pending", "approved", "rejected", "confirmed", "completed"], default: "pending" },
   },
   { timestamps: true }

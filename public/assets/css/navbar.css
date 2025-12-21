@@ -28,7 +28,7 @@
 }
 
 .dark .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
+  background: var(--bg-color, #1e293b) !important;
   background-image: none !important;
   background-size: auto !important;
   background-position: initial !important;
@@ -57,7 +57,7 @@
 }
 
 .dark .transparent-navbar .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
+  background: var(--bg-color, #1e293b) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -130,7 +130,7 @@
 }
 
 .dark .transparent-navbar .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
+  background: var(--bg-color, #1e293b) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -267,11 +267,12 @@
 }
 
 /* Theme Toggle Icon Colors */
-/* Sun icon (light mode active) - white color */
+/* Sun icon (light mode active) - yellow color */
 .theme-toggle-desktop .fa-sun,
 .theme-toggle-mobile .fa-sun,
 .theme-toggle-mobile-menu .fa-sun {
-  color: white !important;
+  color: #fbbf24 !important;
+  /* Yellow color for sun icon */
 }
 
 /* Moon icon (dark mode active) - black/dark color */
@@ -284,8 +285,8 @@
 /* When navbar is scrolled with white background - adjust sun to be visible */
 .main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-sun,
 .main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-sun {
-  color: #f59e0b !important;
-  /* Amber/yellow for visibility on white background */
+  color: #fbbf24 !important;
+  /* Yellow for visibility on white background */
 }
 
 /* When navbar is scrolled with white background - moon stays dark */
@@ -294,10 +295,11 @@
   color: #1a1a1a !important;
 }
 
-/* Transparent navbar (over hero) - sun white, moon dark */
+/* Transparent navbar (over hero) - sun yellow, moon dark */
 .transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-sun,
 .transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-sun {
-  color: white !important;
+  color: #fbbf24 !important;
+  /* Yellow color for sun icon */
 }
 
 .transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-moon,
@@ -309,8 +311,8 @@
 .dark .main-header .theme-toggle-desktop .fa-moon,
 .dark .main-header .theme-toggle-mobile .fa-moon,
 .dark .main-header .theme-toggle-mobile-menu .fa-moon {
-  color: #e5e7eb !important;
-  /* Light gray for moon in dark mode navbar */
+  color: whitesmoke !important;
+  /* Whitesmoke color for moon in dark mode navbar */
 }
 
 .dark .main-header .theme-toggle-desktop .fa-sun,
@@ -516,7 +518,7 @@
 }
 
 .dark .user-dropdown-menu {
-  background: #1f2937;
+  background: #1e293b;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -531,9 +533,9 @@
 
 /* Dark Mode Styles */
 .dark .main-header {
-  --bg-color: #1f2937;
-  --text-color: #f3f4f6;
-  --text-color-secondary: #d1d5db;
+  --bg-color: #1e293b;
+  --text-color: #f1f5f9;
+  --text-color-secondary: #cbd5e1;
 }
 
 .dark .main-header:not(.scrolled) {
@@ -541,12 +543,12 @@
 }
 
 .dark .main-header.scrolled {
-  background: var(--bg-color, #1f2937) !important;
+  background: var(--bg-color, #1e293b) !important;
   background-image: none !important;
   background-size: auto !important;
   background-position: initial !important;
   background-repeat: repeat !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 /* Ensure transparent navbar stays transparent in dark mode when not scrolled */

@@ -121,35 +121,51 @@ pageRoutes.get("/profile", authenticator, async (req, res) => {
 
 pageRoutes.get("/user", authenticator, async (req, res) => {
   try {
-    const docs = await Booking.find({}).sort({ createdAt: -1 }).lean();
-    const fmt = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "-");
+    // Get user email from token
+    const userEmail = req.user.email;
+    
+    // Fetch user's bookings (filtered by email)
+    const docs = await Booking.find({ email: userEmail }).sort({ createdAt: -1 }).lean();
+    
+    const fmt = (d) => {
+      if (!d) return "-";
+      try {
+        const date = new Date(d);
+        if (isNaN(date.getTime())) return "-";
+        return date.toISOString().slice(0, 10);
+      } catch (e) {
+        return "-";
+      }
+    };
+    
     const bookings = docs.map((b, i) => ({
-      _id: b._id.toString(),
+      _id: b._id ? b._id.toString() : `booking-${i}`,
       idx: i + 1,
-      title: b.hotelName || b.packageName,
-      name: b.name,
+      title: b.hotelName || b.packageName || "Booking",
+      name: b.name || "N/A",
       location: b.location || "-",
       arrival: fmt(b.arrivalDate),
       departure: fmt(b.departureDate),
       arrivalDate: fmt(b.arrivalDate),
       departureDate: fmt(b.departureDate),
       status: b.status || "pending",
-      phoneNumber: b.phoneNumber,
-      phone: b.phoneNumber || b.phone,
-      email: b.email,
-      bookingType: b.bookingType,
-      packageName: b.packageName,
-      hotelName: b.hotelName,
-      roomType: b.roomType,
-      adults: b.adults,
-      children: b.children,
-      totalAmount: b.totalAmount || b.price,
-      price: b.price,
-      specialRequests: b.specialRequests,
-      notes: b.notes,
-      createdAt: b.createdAt,
+      phoneNumber: b.phoneNumber || b.phone || "-",
+      phone: b.phoneNumber || b.phone || "-",
+      email: b.email || userEmail,
+      bookingType: b.bookingType || "package",
+      packageName: b.packageName || null,
+      hotelName: b.hotelName || null,
+      roomType: b.roomType || null,
+      adults: b.adults || 1,
+      children: b.children || 0,
+      totalAmount: b.totalAmount || b.price || 0,
+      price: b.price || b.totalAmount || 0,
+      specialRequests: b.specialRequests || null,
+      notes: b.notes || null,
+      createdAt: b.createdAt || new Date(),
     }));
-    res.render("user.ejs", { bookings });
+    
+    res.render("user.ejs", { bookings: bookings || [] });
   } catch (err) {
     console.error("Failed to load user bookings:", err);
     res.render("user.ejs", { bookings: [] });

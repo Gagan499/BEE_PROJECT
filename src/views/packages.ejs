@@ -82,7 +82,7 @@
 			%>
 				<div class="bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border-t-4 <%= borderColors[colorIndex] %>">
 					<div class="relative h-64 overflow-hidden">
-						<img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName || pkg.title %>" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+						<img src="<%= pkg.image || pkg.img || '/assets/images/headerbg.jpg' %>" alt="<%= pkg.packageName || pkg.title %>" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
 						<div class="absolute top-4 right-4 px-4 py-2 rounded-full font-semibold text-sm text-white backdrop-blur-lg <%= badgeColors[colorIndex] %>">
 							<%= pkg.badge || badges[colorIndex] %>
 						</div>
@@ -152,7 +152,7 @@
 						</div>
 						<% } %>
 
-						<button class="w-full py-3 border-0 rounded-xl font-semibold text-sm cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradients[colorIndex] %> hover:-translate-y-0.5 hover:shadow-xl" onclick="window.location.href='/api/login'">
+						<button class="w-full py-3 border-0 rounded-xl font-semibold text-sm cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 text-white bg-gradient-to-br <%= btnGradients[colorIndex] %> hover:-translate-y-0.5 hover:shadow-xl" onclick="handleBookPackage('<%= pkg._id %>', '<%= (pkg.packageName || pkg.title).replace(/'/g, "\\'") %>')">
 							<span>Book This Package</span>
 							<i class="fas fa-arrow-right"></i>
 						</button>

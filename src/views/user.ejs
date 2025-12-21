@@ -56,22 +56,26 @@
 
       <% if (bookings && bookings.length > 0) { %>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        <% bookings.forEach((booking) => { const statusClass = booking.status ?
-        booking.status.toLowerCase() : 'pending'; const statusText =
-        booking.status ? booking.status.charAt(0).toUpperCase() +
-        booking.status.slice(1) : 'Pending'; const arrivalDate = new
-        Date(booking.arrivalDate || booking.arrival); const departureDate = new
-        Date(booking.departureDate || booking.departure); const nights =
-        Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24)); const
-        checkInDate = arrivalDate.toLocaleDateString('en-US', { month: 'short',
-        day: 'numeric', year: 'numeric' }); const checkOutDate =
-        departureDate.toLocaleDateString('en-US', { month: 'short', day:
-        'numeric', year: 'numeric' }); const totalAmount = booking.totalAmount
-        || booking.price || 0; // Map status to a Teal-friendly palette let
-        statusBg = 'bg-primary-teal'; // Pending (Teal) if (statusClass ===
-        'confirmed') statusBg = 'bg-green-500'; else if (statusClass ===
-        'completed') statusBg = 'bg-dark-teal'; // Darker Teal for completed
-        else if (statusClass === 'rejected') statusBg = 'bg-red-500'; %>
+        <% bookings.forEach((booking) => { 
+          const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
+          const statusText = booking.status ? booking.status.charAt(0).toUpperCase() + booking.status.slice(1) : 'Pending';
+          const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
+          const departureDate = new Date(booking.departureDate || booking.departure);
+          const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
+          const checkInDate = arrivalDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          const checkOutDate = departureDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          const totalAmount = booking.totalAmount || booking.price || 0;
+          
+          // Map status to a Teal-friendly palette
+          let statusBg = 'bg-primary-teal'; // Pending (Teal)
+          if (statusClass === 'confirmed') {
+            statusBg = 'bg-green-500';
+          } else if (statusClass === 'completed') {
+            statusBg = 'bg-dark-teal'; // Darker Teal for completed
+          } else if (statusClass === 'rejected') {
+            statusBg = 'bg-red-500';
+          }
+        %>
         <div
           class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
           data-booking-id="<%= booking._id %>"

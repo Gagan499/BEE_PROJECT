@@ -32,40 +32,10 @@ async function fetchLoggedInUserEmail() {
   return null;
 }
 
-// Initialize: Fetch logged-in user email on page load
+// Initialize: Fetch logged-in user email on page load (for validation only, not pre-filling)
 fetchLoggedInUserEmail().then((email) => {
-  if (email) {
-    // Pre-fill email if user is logged in
-    const emailInput = document.getElementById("email");
-    if (emailInput) {
-      userEmail = email;
-      emailInput.value = userEmail;
-      // Trigger input-filled state
-      emailInput.classList.add('input-filled');
-      const label = emailInput.nextElementSibling;
-      if (label) {
-        label.style.transform = 'translateY(-1.5rem) scale(0.875)';
-        label.style.color = '#008080';
-      }
-    }
-  }
+  // Email is fetched for validation purposes only, not pre-filled
 });
-
-// Also check window.loggedInUserEmail as fallback
-if (typeof window.loggedInUserEmail === 'string' && window.loggedInUserEmail) {
-  const emailInput = document.getElementById("email");
-  if (emailInput && !emailInput.value) {
-    userEmail = window.loggedInUserEmail;
-    emailInput.value = userEmail;
-    // Trigger input-filled state
-    emailInput.classList.add('input-filled');
-    const label = emailInput.nextElementSibling;
-    if (label) {
-      label.style.transform = 'translateY(-1.5rem) scale(0.875)';
-      label.style.color = '#008080';
-    }
-  }
-}
 
 // Handle input label animation
 document.querySelectorAll('.input-focus').forEach(input => {

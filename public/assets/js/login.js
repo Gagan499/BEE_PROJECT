@@ -63,7 +63,20 @@ if (loginformMobile) {
 
       if (response.ok) {
         showAlert("Login successful! Redirecting...", "success", 2000);
-        setTimeout(() => window.location.href = "/", 1500);
+        // Check for return URL and package ID in query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const returnUrl = urlParams.get('returnUrl');
+        const packageId = urlParams.get('packageId');
+        
+        let redirectUrl = "/";
+        if (returnUrl) {
+          redirectUrl = returnUrl;
+          if (packageId) {
+            redirectUrl += `?packageId=${encodeURIComponent(packageId)}`;
+          }
+        }
+        
+        setTimeout(() => window.location.href = redirectUrl, 1500);
       } else if (response.status === 429) {
         const message = result.message || 'Login limit reached. Please try again later.';
         const minutes = Math.ceil((result.remainingSeconds || 0) / 60);
@@ -146,7 +159,20 @@ if (loginform) {
 
       if (response.ok) {
         showAlert("Login successful! Redirecting...", "success", 2000);
-        setTimeout(() => window.location.href = "/", 1500);
+        // Check for return URL and package ID in query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const returnUrl = urlParams.get('returnUrl');
+        const packageId = urlParams.get('packageId');
+        
+        let redirectUrl = "/";
+        if (returnUrl) {
+          redirectUrl = returnUrl;
+          if (packageId) {
+            redirectUrl += `?packageId=${encodeURIComponent(packageId)}`;
+          }
+        }
+        
+        setTimeout(() => window.location.href = redirectUrl, 1500);
       } else if (response.status === 429) {
         const message = result.message || 'Login limit reached. Please try again later.';
         const minutes = Math.ceil((result.remainingSeconds 
