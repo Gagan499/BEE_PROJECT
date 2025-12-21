@@ -9,6 +9,63 @@ const backToEmailBtn = document.getElementById("backToEmail");
 
 let userEmail = "";
 let resetToken = "";
+let loggedInUserEmailFromToken = null;
+
+// Fetch logged-in user's email from JWT token
+async function fetchLoggedInUserEmail() {
+  try {
+    const response = await fetch(`${form_api}/auth/me`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success && data.user && data.user.email) {
+        loggedInUserEmailFromToken = data.user.email.toLowerCase();
+        return loggedInUserEmailFromToken;
+      }
+    }
+  } catch (err) {
+    // User is not logged in or token is invalid
+    loggedInUserEmailFromToken = null;
+  }
+  return null;
+}
+
+// Initialize: Fetch logged-in user email on page load
+fetchLoggedInUserEmail().then((email) => {
+  if (email) {
+    // Pre-fill email if user is logged in
+    const emailInput = document.getElementById("email");
+    if (emailInput) {
+      userEmail = email;
+      emailInput.value = userEmail;
+      // Trigger input-filled state
+      emailInput.classList.add('input-filled');
+      const label = emailInput.nextElementSibling;
+      if (label) {
+        label.style.transform = 'translateY(-1.5rem) scale(0.875)';
+        label.style.color = '#008080';
+      }
+    }
+  }
+});
+
+// Also check window.loggedInUserEmail as fallback
+if (typeof window.loggedInUserEmail === 'string' && window.loggedInUserEmail) {
+  const emailInput = document.getElementById("email");
+  if (emailInput && !emailInput.value) {
+    userEmail = window.loggedInUserEmail;
+    emailInput.value = userEmail;
+    // Trigger input-filled state
+    emailInput.classList.add('input-filled');
+    const label = emailInput.nextElementSibling;
+    if (label) {
+      label.style.transform = 'translateY(-1.5rem) scale(0.875)';
+      label.style.color = '#008080';
+    }
+  }
+}
 
 // Handle input label animation
 document.querySelectorAll('.input-focus').forEach(input => {
@@ -47,7 +104,22 @@ document.querySelectorAll('.input-focus').forEach(input => {
 if (forgot_form) {
   forgot_form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    userEmail = document.getElementById("email").value;
+    const enteredEmail = document.getElementById("email").value.trim().toLowerCase();
+    
+    // Ensure we have the latest logged-in user email (in case fetch hasn't completed yet)
+    if (!loggedInUserEmailFromToken) {
+      await fetchLoggedInUserEmail();
+    }
+    
+    // Check if user is logged in and validate email matches
+    if (loggedInUserEmailFromToken) {
+      if (enteredEmail !== loggedInUserEmailFromToken) {
+        showAlert("You can only reset the password for your own account. Please enter your logged-in email address.", "error");
+        return;
+      }
+    }
+    
+    userEmail = enteredEmail;
     const submitBtn = forgot_form.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
@@ -83,7 +155,7 @@ if (verifyBtn) {
   verifyBtn.addEventListener("click", async () => {
     const otp = document.getElementById("otp").value.trim();
     if (!otp) return showAlert("Please enter the OTP", "warning");
-    if (otp.length !== 6) return showAlert("OTP must be 6 digits", "warning");
+    if (otp.length !== 4) return showAlert("OTP must be 4 digits", "warning");
 
     const originalText = verifyBtn.innerHTML;
     verifyBtn.disabled = true;
