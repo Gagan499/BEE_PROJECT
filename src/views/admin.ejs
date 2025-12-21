@@ -79,175 +79,149 @@
       </div>
 
       <% if (bookings && bookings.length > 0) { %>
-        <% bookings.forEach((booking) => { %>
-          <% 
-            const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
-            // Calculate dates
-            const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
-            const departureDate = new Date(booking.departureDate || booking.departure);
-            const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
-            // Format dates
-            const checkInDate = arrivalDate.toLocaleDateString('en-US', {
-              day: 'numeric',
-              month: 'numeric',
-              year: 'numeric'
-            });
-            const checkOutDate = departureDate.toLocaleDateString('en-US', {
-              day: 'numeric',
-              month: 'numeric',
-              year: 'numeric'
-            });
-            // Format submitted time
-            const submittedDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
-            const submittedTime = submittedDate.toLocaleString('en-US', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: true
-            });
-            // Use actual total from database
-            const totalAmount = booking.totalAmount || booking.price || 0;
-          %>
-      <div
-        class="bg-white rounded-xl shadow-md p-6 mb-6 transition-all duration-300 hover:shadow-lg <%= statusClass === 'pending' ? 'border-l-4 border-primary-teal' : '' %>"
-        data-booking-id="<%= booking._id %>"
-      >
-        <div
-          class="flex flex-col sm:flex-row justify-between items-start gap-4 pb-4 border-b border-gray-200"
-        >
-          <div class="flex-1 w-full">
-            <div class="flex items-center gap-3 mb-3">
-              <i class="fas fa-user-circle text-3xl text-primary-teal"></i>
-              <span class="text-xl font-bold text-gray-800"
-                ><%= booking.name || '' %></span
-              >
-            </div>
-            <div class="flex flex-col gap-2 text-sm text-gray-600">
-              <% if (booking.email) { %>
-              <div class="flex items-center gap-2">
-                <i class="fas fa-envelope w-4"></i>
-                <span><%= booking.email %></span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% bookings.forEach((booking) => { %>
+            <% 
+              const statusClass = booking.status ? booking.status.toLowerCase() : 'pending';
+              // Calculate dates
+              const arrivalDate = new Date(booking.arrivalDate || booking.arrival);
+              const departureDate = new Date(booking.departureDate || booking.departure);
+              const nights = Math.ceil((departureDate - arrivalDate) / (1000 * 60 * 60 * 24));
+              // Format dates
+              const checkInDate = arrivalDate.toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              });
+              const checkOutDate = departureDate.toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+              });
+              // Format submitted time
+              const submittedDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
+              const submittedTime = submittedDate.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+              });
+              // Use actual total from database
+              const totalAmount = booking.totalAmount || booking.price || 0;
+              const bookingTitle = booking.hotelName || booking.packageName || booking.title || booking.roomType || 'Booking Request';
+            %>
+            <div
+              class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all <%= statusClass === 'pending' ? 'border-2 border-primary-teal' : '' %>"
+              data-booking-id="<%= booking._id %>"
+            >
+              <div class="relative h-48 bg-gradient-to-br from-primary-teal to-secondary-teal overflow-hidden">
+                <% if (booking.image) { %>
+                  <img
+                    src="<%= booking.image %>"
+                    alt="<%= bookingTitle %>"
+                    class="w-full h-full object-cover"
+                    onerror="this.onerror=null; this.style.display='none';"
+                  />
+                <% } %>
+                <div class="absolute inset-0 flex items-center justify-center <%= booking.image ? 'pointer-events-none' : '' %>">
+                  <i class="fas fa-calendar-check text-white text-6xl opacity-30"></i>
+                </div>
+                <div class="absolute top-2 right-2 bg-primary-teal text-white px-3 py-1 rounded-lg font-bold text-sm z-10">
+                  REQ<%= String(booking.idx || booking._id.toString().slice(-3)).padStart(3, '0') %>
+                </div>
+                <% if (statusClass === 'pending') { %>
+                <div class="absolute top-2 left-2 bg-yellow-500 text-white px-3 py-1 rounded-lg text-xs font-semibold z-10">
+                  Pending
+                </div>
+                <% } else if (statusClass === 'approved') { %>
+                <div class="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 rounded-lg text-xs font-semibold z-10">
+                  Approved
+                </div>
+                <% } else if (statusClass === 'rejected') { %>
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-3 py-1 rounded-lg text-xs font-semibold z-10">
+                  Rejected
+                </div>
+                <% } %>
               </div>
-              <% } %> <% if (booking.phone || booking.phoneNumber) { %>
-              <div class="flex items-center gap-2">
-                <i class="fas fa-phone w-4"></i>
-                <span><%= booking.phone || booking.phoneNumber %></span>
+              <div class="p-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-1"><%= booking.name || 'Guest' %></h3>
+                <p class="text-sm text-primary-teal mb-2 font-semibold"><%= bookingTitle %></p>
+                
+                <div class="space-y-1 mb-3 text-xs text-gray-600">
+                  <div class="flex items-center gap-1">
+                    <i class="fas fa-calendar-alt w-3"></i>
+                    <span><%= checkInDate %> - <%= checkOutDate %></span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i class="fas fa-moon w-3"></i>
+                    <span><%= nights %> nights</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i class="fas fa-users w-3"></i>
+                    <span><%= booking.adults || 0 %> guests<% if (booking.children && booking.children > 0) { %> + <%= booking.children %> children<% } %></span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <i class="fas fa-dollar-sign w-3"></i>
+                    <span class="font-bold text-primary-teal">$<%= typeof totalAmount === 'number' ? totalAmount.toFixed(2) : totalAmount %></span>
+                  </div>
+                </div>
+
+                <div class="text-xs text-gray-500 mb-3 flex items-center gap-1">
+                  <i class="fas fa-clock w-3"></i>
+                  <span>Submitted <%= submittedTime.split(',')[0] %></span>
+                </div>
+
+                <% if (booking.specialRequests || booking.notes) { %>
+                <div class="bg-light-mint border border-primary-teal/50 rounded-lg p-2 mb-3">
+                  <p class="text-xs text-gray-700 line-clamp-2">
+                    <i class="fas fa-sticky-note text-primary-teal mr-1"></i>
+                    <%= (booking.specialRequests || booking.notes).substring(0, 50) %><% if ((booking.specialRequests || booking.notes).length > 50) { %>...<% } %>
+                  </p>
+                </div>
+                <% } %>
+
+                <div class="flex gap-2 mt-4">
+                  <% if (statusClass === 'pending') { %>
+                  <button
+                    onclick="updateBookingStatus('<%= booking._id %>', 'approved')"
+                    class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-3 rounded-lg transition-all text-xs flex items-center justify-center gap-1"
+                    title="Accept Booking"
+                  >
+                    <i class="fas fa-check"></i>
+                    Accept
+                  </button>
+                  <button
+                    onclick="updateBookingStatus('<%= booking._id %>', 'rejected')"
+                    class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-3 rounded-lg transition-all text-xs flex items-center justify-center gap-1"
+                    title="Reject Booking"
+                  >
+                    <i class="fas fa-times"></i>
+                    Reject
+                  </button>
+                  <% } %>
+                  <button
+                    onclick="editBooking('<%= booking._id %>')"
+                    class="flex-1 bg-primary-teal hover:bg-dark-teal text-white font-semibold py-2 px-3 rounded-lg transition-all text-xs flex items-center justify-center gap-1"
+                    title="Edit Booking"
+                  >
+                    <i class="fas fa-edit"></i>
+                    Edit
+                  </button>
+                  <button
+                    onclick="deleteBooking('<%= booking._id %>')"
+                    class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-3 rounded-lg transition-all text-xs flex items-center justify-center gap-1"
+                    title="Delete Booking"
+                  >
+                    <i class="fas fa-trash"></i>
+                    Delete
+                  </button>
+                </div>
               </div>
-              <% } %>
             </div>
-            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-clock"></i>
-              <span>Submitted <%= submittedTime %></span>
-            </div>
-          </div>
-          <div
-            class="teal-gradient text-white px-4 py-2 rounded-lg text-sm font-bold"
-          >
-            REQ<%= String(booking.idx ||
-            booking._id.toString().slice(-3)).padStart(3, '0') %>
-          </div>
+          <% }); %>
         </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
-          <div class="flex flex-col">
-            <span class="text-xs text-gray-500 mb-1">Room Type</span>
-            <span class="text-base font-semibold text-gray-800"
-              ><%= booking.hotelName || booking.packageName || booking.title ||
-              booking.roomType || '' %></span
-            >
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xs text-gray-500 mb-1">Total Amount</span>
-            <span class="text-base font-bold text-primary-teal"
-              >$<%= typeof totalAmount === 'number' ? totalAmount.toFixed(2) :
-              totalAmount %></span
-            >
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xs text-gray-500 mb-1">Check-in</span>
-            <span class="text-base font-semibold text-gray-800"
-              ><%= checkInDate %></span
-            >
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xs text-gray-500 mb-1">Check-out</span>
-            <span class="text-base font-semibold text-gray-800"
-              ><%= checkOutDate %></span
-            >
-          </div>
-        </div>
-
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4 border-t border-gray-200"
-        >
-          <div class="flex flex-col">
-            <span class="text-xs text-gray-500 mb-1">Nights</span>
-            <span class="text-base font-semibold text-gray-800"
-              ><%= nights %> nights</span
-            >
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xs text-gray-500 mb-1">Guests</span>
-            <span class="text-base font-semibold text-gray-800"
-              ><%= booking.adults || 0 %><% if (booking.children &&
-              booking.children > 0) { %> + <%= booking.children %> children<% }
-              %></span
-            >
-          </div>
-        </div>
-
-        <% if (booking.specialRequests || booking.notes) { %>
-        <div
-          class="bg-light-mint border border-primary-teal/50 rounded-lg p-4 my-4"
-        >
-          <div
-            class="text-sm font-semibold text-dark-teal mb-2 flex items-center gap-2"
-          >
-            <i class="fas fa-sticky-note"></i>
-            Special Requests
-          </div>
-          <div class="text-sm text-gray-700 leading-relaxed">
-            <%= booking.specialRequests || booking.notes %>
-          </div>
-        </div>
-        <% } %>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-          <% if (statusClass === 'pending') { %>
-          <button
-            class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn"
-            onclick="updateBookingStatus('<%= booking._id %>', 'approved')"
-          >
-            <i class="fas fa-check"></i>
-            Accept Booking
-          </button>
-          <button
-            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn"
-            onclick="updateBookingStatus('<%= booking._id %>', 'rejected')"
-          >
-            <i class="fas fa-times"></i>
-            Reject Booking
-          </button>
-          <% } %>
-          <button
-            class="bg-primary-teal hover:bg-dark-teal text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn"
-            onclick="editBooking('<%= booking._id %>')"
-          >
-            <i class="fas fa-edit"></i>
-            Edit Booking
-          </button>
-          <button
-            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed btn"
-            onclick="deleteBooking('<%= booking._id %>')"
-          >
-            <i class="fas fa-trash"></i>
-            Delete Booking
-          </button>
-        </div>
-      </div>
-        <% }); %>
       <% } else { %>
       <div class="bg-white rounded-xl shadow-md p-16 text-center">
         <i class="fas fa-calendar-check text-6xl text-gray-300 mb-4"></i>

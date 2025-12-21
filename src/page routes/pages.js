@@ -177,36 +177,66 @@ pageRoutes.get("/admin", authenticator, async (req, res) => {
     const docs = await Booking.find({}).sort({ createdAt: -1 }).lean();
     const toCss = (s) => (s === 'approved' ? 'approve' : s === 'rejected' ? 'reject' : 'pending');
     const fmt = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "-");
-    const bookings = docs.map((b, i) => ({
-      _id: b._id.toString(),
-      idx: i + 1,
-      name: b.name,
-      email: b.email,
-      phone: b.phoneNumber || b.phone,
-      location: b.location || "-",
-      hotelName: b.hotelName,
-      packageName: b.packageName,
-      title: b.hotelName || b.packageName,
-      roomType: b.roomType,
-      arrivalDate: fmt(b.arrivalDate),
-      departureDate: fmt(b.departureDate),
-      arrival: fmt(b.arrivalDate),
-      departure: fmt(b.departureDate),
-      adults: b.adults,
-      children: b.children,
-      specialRequests: b.specialRequests,
-      notes: b.notes,
-      totalAmount: b.totalAmount || b.price,
-      price: b.price,
-      bookingType: b.bookingType,
-      status: b.status || "pending",
-      cssStatus: toCss(b.status || 'pending'),
-      createdAt: b.createdAt,
-    }));
     
-    // Fetch packages and stay-only for admin management
+    // Fetch packages and stay-only for admin management and image lookup
     const packages = await Package.find({}).sort({ createdAt: -1 }).lean();
     const stayOnlyList = await StayOnly.find({}).sort({ createdAt: -1 }).lean();
+    
+    // Create lookup maps for faster image retrieval
+    const packageMap = new Map();
+    packages.forEach(pkg => {
+      packageMap.set(pkg.packageName, pkg);
+    });
+    
+    const stayOnlyMap = new Map();
+    stayOnlyList.forEach(stay => {
+      stayOnlyMap.set(stay.name, stay);
+    });
+    
+    const bookings = docs.map((b, i) => {
+      let image = null;
+      
+      // Fetch image based on booking type
+      if (b.bookingType === 'package' && b.packageName) {
+        const pkg = packageMap.get(b.packageName);
+        if (pkg) {
+          image = pkg.image || pkg.img || null;
+        }
+      } else if (b.bookingType === 'stayOnly' && b.hotelName) {
+        const stay = stayOnlyMap.get(b.hotelName);
+        if (stay) {
+          image = stay.image || stay.img || null;
+        }
+      }
+      
+      return {
+        _id: b._id.toString(),
+        idx: i + 1,
+        name: b.name,
+        email: b.email,
+        phone: b.phoneNumber || b.phone,
+        location: b.location || "-",
+        hotelName: b.hotelName,
+        packageName: b.packageName,
+        title: b.hotelName || b.packageName,
+        roomType: b.roomType,
+        arrivalDate: fmt(b.arrivalDate),
+        departureDate: fmt(b.departureDate),
+        arrival: fmt(b.arrivalDate),
+        departure: fmt(b.departureDate),
+        adults: b.adults,
+        children: b.children,
+        specialRequests: b.specialRequests,
+        notes: b.notes,
+        totalAmount: b.totalAmount || b.price,
+        price: b.price,
+        bookingType: b.bookingType,
+        status: b.status || "pending",
+        cssStatus: toCss(b.status || 'pending'),
+        createdAt: b.createdAt,
+        image: image,
+      };
+    });
     
     res.render("admin.ejs", { bookings, packages: packages || [], stayOnlyList: stayOnlyList || [] });
   } catch (err) {
