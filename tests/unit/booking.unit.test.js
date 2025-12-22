@@ -1,7 +1,7 @@
 /**
  * Unit Tests for Booking Model and Validation Logic
  */
-import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from '@jest/globals';
 import mongoose from 'mongoose';
 import Booking from '../../models/booking.js';
 import { connectDB, closeDB, clearDB, createMockBooking } from '../helpers/testHelpers.js';
@@ -287,6 +287,7 @@ describe('Booking Validation Logic - Unit Tests', () => {
     });
   });
 });
+
 
 
 

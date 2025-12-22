@@ -66,6 +66,11 @@
                   <%= pendingCount %> Pending
                 </span>
               </div>
+              <!-- WebSocket Status Indicator -->
+              <div id="websocket-status" class="px-4 py-2 rounded-full text-sm font-semibold inline-flex items-center gap-2 transition-all duration-300">
+                <span id="ws-status-icon" class="w-2 h-2 rounded-full bg-gray-400 animate-pulse"></span>
+                <span id="ws-status-text" class="text-gray-600">Connecting...</span>
+              </div>
           </div>
         </div>
 

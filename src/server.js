@@ -77,23 +77,28 @@ app.get("/", async (req, res) => {
 
 // Socket.IO connection handling
 io.on("connection", (socket) => {
-  console.log(chalk.green("WebSocket client connected:"), socket.id);
+  const totalConnections = io.sockets.sockets.size;
+  console.log(chalk.green(`WebSocket client connected: ${socket.id} (Total: ${totalConnections})`));
   
   // Handle disconnection
-  socket.on("disconnect", () => {
-    console.log(chalk.yellow("WebSocket client disconnected:"), socket.id);
+  socket.on("disconnect", (reason) => {
+    const remainingConnections = io.sockets.sockets.size;
+    console.log(chalk.yellow(`WebSocket client disconnected: ${socket.id} (Reason: ${reason}, Remaining: ${remainingConnections})`));
   });
 
   // Handle errors
   socket.on("error", (error) => {
-    console.error(chalk.red("WebSocket error:"), error);
+    console.error(chalk.red(`WebSocket error for ${socket.id}:`), error);
   });
 
-  // Optional: Send connection confirmation
+  // Send connection confirmation
   socket.emit("connected", { 
     message: "Connected to Palm Ways server",
-    socketId: socket.id 
+    socketId: socket.id,
+    timestamp: new Date().toISOString()
   });
+  
+  console.log(chalk.blue(`WebSocket: Sent connection confirmation to ${socket.id}`));
 });
 
 console.log(greet());

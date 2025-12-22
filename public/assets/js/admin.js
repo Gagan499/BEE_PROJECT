@@ -157,14 +157,100 @@ async function deleteBooking(bookingId) {
 
 // Socket.IO for real-time updates
 document.addEventListener('DOMContentLoaded', () => {
+	console.log('Initializing WebSocket connection...');
+	
+	// Get status indicator elements
+	const statusIndicator = document.getElementById('websocket-status');
+	const statusIcon = document.getElementById('ws-status-icon');
+	const statusText = document.getElementById('ws-status-text');
+	
+	// Function to update WebSocket status display
+	function updateWebSocketStatus(status, message) {
+		if (!statusIndicator || !statusIcon || !statusText) return;
+		
+		// Remove all status classes
+		statusIndicator.classList.remove('bg-green-100', 'bg-red-100', 'bg-yellow-100', 'bg-gray-100');
+		statusIcon.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500', 'bg-gray-400', 'animate-pulse');
+		statusText.classList.remove('text-green-700', 'text-red-700', 'text-yellow-700', 'text-gray-600');
+		
+		switch(status) {
+			case 'connected':
+				statusIndicator.classList.add('bg-green-100');
+				statusIcon.classList.add('bg-green-500');
+				statusIcon.classList.remove('animate-pulse');
+				statusText.classList.add('text-green-700');
+				statusText.textContent = message || 'Connected';
+				break;
+			case 'disconnected':
+				statusIndicator.classList.add('bg-red-100');
+				statusIcon.classList.add('bg-red-500');
+				statusIcon.classList.add('animate-pulse');
+				statusText.classList.add('text-red-700');
+				statusText.textContent = message || 'Disconnected';
+				break;
+			case 'connecting':
+				statusIndicator.classList.add('bg-yellow-100');
+				statusIcon.classList.add('bg-yellow-500');
+				statusIcon.classList.add('animate-pulse');
+				statusText.classList.add('text-yellow-700');
+				statusText.textContent = message || 'Connecting...';
+				break;
+			case 'error':
+				statusIndicator.classList.add('bg-red-100');
+				statusIcon.classList.add('bg-red-500');
+				statusIcon.classList.add('animate-pulse');
+				statusText.classList.add('text-red-700');
+				statusText.textContent = message || 'Connection Error';
+				break;
+			default:
+				statusIndicator.classList.add('bg-gray-100');
+				statusIcon.classList.add('bg-gray-400');
+				statusIcon.classList.add('animate-pulse');
+				statusText.classList.add('text-gray-600');
+				statusText.textContent = message || 'Unknown';
+		}
+	}
+	
+	// Initialize with connecting status
+	updateWebSocketStatus('connecting', 'Connecting...');
+	
 	const socket = io();
 	
 	socket.on('connect', () => {
-		console.log('Admin connected to socket:', socket.id);
+		console.log('✅ Admin connected to WebSocket:', socket.id);
+		console.log('WebSocket connection status: CONNECTED');
+		updateWebSocketStatus('connected', 'Live Updates Active');
+	});
+
+	socket.on('disconnect', (reason) => {
+		console.warn('⚠️ WebSocket disconnected:', reason);
+		console.log('WebSocket connection status: DISCONNECTED');
+		updateWebSocketStatus('disconnected', 'Disconnected');
+	});
+
+	socket.on('connect_error', (error) => {
+		console.error('❌ WebSocket connection error:', error);
+		console.log('WebSocket connection status: ERROR');
+		updateWebSocketStatus('error', 'Connection Failed');
+	});
+
+	socket.on('reconnect', (attemptNumber) => {
+		console.log('🔄 WebSocket reconnected after', attemptNumber, 'attempts');
+		updateWebSocketStatus('connected', 'Reconnected');
+	});
+
+	socket.on('reconnect_attempt', (attemptNumber) => {
+		console.log('🔄 Attempting to reconnect...', attemptNumber);
+		updateWebSocketStatus('connecting', 'Reconnecting...');
+	});
+
+	socket.on('connected', (data) => {
+		console.log('✅ Received connection confirmation from server:', data);
+		updateWebSocketStatus('connected', 'Live Updates Active');
 	});
 
 	socket.on('booking-status', (payload) => {
-		console.log('Booking status update received:', payload);
+		console.log('📨 Booking status update received:', payload);
 		const card = document.querySelector(`[data-booking-id="${payload.bookingId}"]`);
 		if (card) {
 			card.style.transition = 'all 0.3s ease';
@@ -176,11 +262,21 @@ document.addEventListener('DOMContentLoaded', () => {
 					location.reload();
 				}
 			}, 300);
+		} else {
+			console.warn('Booking card not found for ID:', payload.bookingId);
 		}
 	});
 
 	socket.on('new-booking', (payload) => {
-		console.log('New booking received:', payload);
+		console.log('📨 New booking received:', payload);
+		// Show a brief notification that a new booking was received
+		if (statusText) {
+			const originalText = statusText.textContent;
+			statusText.textContent = 'New Booking Received!';
+			setTimeout(() => {
+				statusText.textContent = originalText;
+			}, 2000);
+		}
 		// Reload to show new booking
 		location.reload();
 	});

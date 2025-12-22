@@ -169,6 +169,7 @@ bookingsRouter.post("/", async (req, res) => {
     // Emit new booking event via WebSocket
     try {
       const io = getIO();
+      const connectedClients = io.sockets.sockets.size;
       io.emit("new-booking", {
         bookingId: String(doc._id),
         name: customerName,
@@ -177,8 +178,9 @@ bookingsRouter.post("/", async (req, res) => {
         arrivalDate: arrivalDate,
         departureDate: departureDate,
       });
+      console.log(`WebSocket: Emitted new-booking event to ${connectedClients} connected client(s)`);
     } catch (socketErr) {
-      console.error("WebSocket emit failed, but booking was created:", socketErr);
+      console.error("WebSocket emit failed, but booking was created:", socketErr.message || socketErr);
       // Continue - booking is already saved
     }
     
@@ -272,8 +274,10 @@ bookingsRouter.patch("/:id/status", async (req, res) => {
         arrivalDate: result.arrivalDate,
         departureDate: result.departureDate,
       });
+      console.log(`WebSocket: Emitted booking-status event for booking ${result._id}`);
     } catch (e) {
-      // io not initialized; ignore silently
+      console.error("WebSocket emit failed for booking-status, but status was updated:", e.message);
+      // Continue - status is already updated
     }
     return res.json({ success: true, status: result.status });
   } catch (err) {

@@ -1,7 +1,7 @@
 /**
  * Unit Tests for Login/Authentication Logic
  */
-import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { generateToken, verifyToken } from '../../src/routes/jwtutils.js';
