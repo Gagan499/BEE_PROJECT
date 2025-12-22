@@ -1,329 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="/assets/images/favicon_icon.png"
-      type="image/x-icon"
-    />
-    <title>Login & Sign Up</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/assets/css/theme.css" />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              "primary-teal": "#008080",
-              "secondary-teal": "#00cec9",
-              "dark-teal": "#1a535c",
-            },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="/assets/images/favicon_icon.png" type="image/x-icon">
+  <title>Login & Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pontano+Sans:wght@400&display=swap"
+    rel="stylesheet">
+  <!-- Tailwind CSS for the header -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for the footer icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Fix sliding container transitions */
+    #container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #container.right-panel-active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    #container.right-panel-active .form-container.sign-in-container {
+      transform: translateX(100%);
+      opacity: 0;
+      z-index: 1;
+    }
+
+    #container.right-panel-active .form-container.sign-up-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+    }
+
+    .overlay {
+      transform: translateX(0%);
+      transition: transform 0.7s ease-in-out;
+    }
+
+    #container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      #container {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      #container>div {
+        width: 100% !important;
+      }
+
+      .overlay-container {
+        display: none;
+        /* hide sliding panel on mobile */
+      }
+
+      .form-container {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .sign-up-container {
+        display: none;
+      }
+
+      #container.right-panel-active .sign-in-container {
+        display: none;
+      }
+
+      #container.right-panel-active .sign-up-container {
+        display: flex;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            "primary-teal": "#008080",
+            "secondary-teal": "#00cec9",
+            "dark-teal": "#1a535c",
           },
         },
-      };
-    </script>
-    <link rel="stylesheet" href="/assets/css/login.css" />
-  </head>
+      },
+    };
+  </script>
+</head>
 
-  <body
-    class="min-h-screen"
-    style="background: url('/assets/images/LoginFormBG.png') no-repeat center;">
+<body class="bg-gradient-to-tr from-[#1E202B] to-[#2D2F3E] min-h-screen"
+  style="background-image: url('/assets/images/LoginFormBG.png'); background-size: cover; background-position: center;">
+
+  <header>
     <%- include('partials/navbar') %>
+  </header>
 
-    <!-- Mobile View (< 480px) -->
-    <div class="mobile-wrapper">
-      <!-- Mobile Header -->
-      <div class="mobile-header">
-        <button
-          class="mobile-back-btn"
-          id="mobileBackBtn"
-          onclick="showLoginForm()"
-        >
-          <i class="fas fa-arrow-left"></i>
-        </button>
-        <h1 class="mobile-logo">PalmWay</h1>
-      </div>
+  <div class="flex items-center justify-center min-h-[calc(100vh-80px)] px-4 pt-20 pb-10 mt-[7vh]">
+    <div id="container"
+      class="relative w-full max-w-4xl min-h-[550px] bg-[#282A37]/80 rounded-2xl shadow-2xl backdrop-blur-md overflow-hidden transition-all duration-700 ease-in-out">
 
-      <!-- Sign In Form (Mobile) -->
-      <div class="mobile-form-container" id="mobileLoginForm">
-        <h2 class="mobile-form-title">Login to your Account</h2>
-        <form id="loginform-mobile" method="POST">
-          <div class="mobile-input-group">
-            <label for="email-signin-mobile" class="mobile-input-label"
-              >Email</label
-            >
-            <input
-              id="email-signin-mobile"
-              name="email"
-              type="email"
-              required
-              class="mobile-input"
-              placeholder="Enter your email"
-            />
+      <!-- Sign In Form -->
+      <div
+        class="form-container sign-in-container absolute top-0 left-0 w-1/2 h-full flex items-center justify-center transition-all duration-700 ease-in-out z-20">
+        <form id="loginform" method="POST" class="flex flex-col items-start px-12 w-full max-w-sm">
+          <h2 class="text-4xl font-bold text-white mb-8">Sign In</h2>
+          <div class="relative w-full my-4">
+            <input id="email-signin" name="email" type="email" required
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-[#018489]"
+              placeholder="Email Address">
+            <label for="email-signin"
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-[#2596be] peer-focus:text-sm">Email
+              Address</label>
           </div>
-          <div class="mobile-input-group">
-            <label for="password-signin-mobile" class="mobile-input-label"
-              >Password</label
-            >
-            <input
-              id="password-signin-mobile"
-              name="password"
-              type="password"
-              required
-              class="mobile-input"
-              placeholder="Enter your password"
-            />
+          <div class="relative w-full my-4">
+            <input id="password-signin" name="password" type="password" required
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-[#018489]"
+              placeholder="Password">
+            <label for="password-signin"
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-[#2596be] peer-focus:text-sm">Password</label>
           </div>
-          <button type="submit" class="mobile-submit-btn">Sign in</button>
+          <button type="submit"
+            class="w-full mt-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-[#2596be] to-[#018489] rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            Sign In
+          </button>
+
+          <!-- Mobile Switch Link -->
+          <div class="md:hidden mt-6 text-center w-full text-gray-300">
+            <p>Don't have an account? <button type="button" id="mobileSignUpBtn"
+                class="text-[#2596be] font-semibold hover:underline">Sign Up</button></p>
+          </div>
         </form>
-
-        <div class="mobile-divider">
-          <span>- Or sign in with -</span>
-        </div>
-
-        <div class="mobile-social-login">
-          <div class="mobile-social-icon google">
-            <i class="fab fa-google"></i>
-          </div>
-          <div class="mobile-social-icon facebook">
-            <i class="fab fa-facebook-f"></i>
-          </div>
-          <div class="mobile-social-icon twitter">
-            <i class="fab fa-twitter"></i>
-          </div>
-        </div>
-
-        <div class="mobile-switch-link">
-          Don't have an account?
-          <a href="#" onclick="showSignupForm(); return false;">Sign up</a>
-        </div>
       </div>
 
-      <!-- Sign Up Form (Mobile) -->
-      <div class="mobile-form-container hidden" id="mobileSignupForm">
-        <h2 class="mobile-form-title">Create your Account</h2>
-        <form id="registerform-mobile" method="POST">
-          <div class="mobile-input-group">
-            <label for="email-signup-mobile" class="mobile-input-label"
-              >Email</label
-            >
-            <input
-              id="email-signup-mobile"
-              name="email"
-              type="email"
-              required
-              class="mobile-input"
-              placeholder="Enter your email"
-            />
+      <!-- Sign Up Form -->
+      <div
+        class="form-container sign-up-container absolute top-0 left-0 w-1/2 h-full flex items-center justify-center transition-all duration-700 ease-in-out opacity-0 z-10">
+        <form id="registerform" method="POST" class="flex flex-col items-start px-12 w-full max-w-sm">
+          <h2 class="text-4xl font-bold text-white mb-8">Sign Up</h2>
+          <div class="relative w-full my-4">
+            <input id="name-signup" name="name" type="text" required
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-[#018489]"
+              placeholder="Name">
+            <label for="name-signup"
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-[#2596be] peer-focus:text-sm">Name</label>
           </div>
-          <div class="mobile-input-group">
-            <label for="password-signup-mobile" class="mobile-input-label"
-              >Password</label
-            >
-            <input
-              id="password-signup-mobile"
-              name="password"
-              type="password"
-              required
-              class="mobile-input"
-              placeholder="Enter your password"
-            />
+          <div class="relative w-full my-4">
+            <input id="email-signup" name="email" type="email" required
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-[#018489]"
+              placeholder="Email Address">
+            <label for="email-signup"
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-[#2596be] peer-focus:text-sm">Email
+              Address</label>
           </div>
-          <div class="mobile-input-group">
-            <label for="confirm-password-mobile" class="mobile-input-label"
-              >Confirm Password</label
-            >
-            <input
-              id="confirm-password-mobile"
-              name="confirmPassword"
-              type="password"
-              required
-              class="mobile-input"
-              placeholder="Confirm your password"
-            />
+          <div class="relative w-full my-4">
+            <input id="password-signup" name="password" type="password" required
+              class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none focus:border-[#018489]"
+              placeholder="Password">
+            <label for="password-signup"
+              class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-[#2596be] peer-focus:text-sm">Password</label>
           </div>
-          <button type="submit" class="mobile-submit-btn">Sign up</button>
+          <button type="submit"
+            class="w-full mt-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-[#2596be] to-[#018489] rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+            Sign Up
+          </button>
+
+          <!-- Mobile Switch Link -->
+          <div class="md:hidden mt-6 text-center w-full text-gray-300">
+            <p>Already have an account? <button type="button" id="mobileSignInBtn"
+                class="text-[#2596be] font-semibold hover:underline">Sign In</button></p>
+          </div>
         </form>
-
-        <div class="mobile-divider">
-          <span>- Or sign up with -</span>
-        </div>
-
-        <div class="mobile-social-login">
-          <div class="mobile-social-icon google">
-            <i class="fab fa-google"></i>
-          </div>
-          <div class="mobile-social-icon facebook">
-            <i class="fab fa-facebook-f"></i>
-          </div>
-          <div class="mobile-social-icon twitter">
-            <i class="fab fa-twitter"></i>
-          </div>
-        </div>
       </div>
-    </div>
 
-    <!-- Desktop View (>= 481px) - Sliding Panel -->
-    <div class="desktop-wrapper">
-      <div class="flex items-center justify-center min-h-screen px-4 py-8">
+      <!-- Overlay Container -->
+      <div
+        class="overlay-container absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-transform duration-700 ease-in-out">
         <div
-          id="container"
-          class="relative w-full max-w-4xl bg-[#282A37]/70 rounded-2xl shadow-2xl backdrop-blur-md overflow-hidden min-h-[600px]"
-        >
-          <!-- Sign In Section (Left) -->
+          class="overlay relative -left-full h-full w-[200%] bg-gradient-to-br from-[#2596be] to-[#018489] text-white transition-transform duration-700 ease-in-out">
           <div
-            class="form-container sign-in-container flex items-center justify-center"
-          >
-            <form
-              id="loginform"
-              method="POST"
-              class="flex flex-col items-start px-12 w-full max-w-sm"
-            >
-              <h2 class="text-4xl font-bold text-white mb-8">Sign In</h2>
-              <div class="relative w-full my-4">
-                <input
-                  id="email-signin"
-                  name="email"
-                  type="email"
-                  required
-                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                  placeholder="Email Address"
-                />
-                <label
-                  for="email-signin"
-                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
-                  >Email Address</label
-                >
-              </div>
-              <div class="relative w-full my-4">
-                <input
-                  id="password-signin"
-                  name="password"
-                  type="password"
-                  required
-                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                  placeholder="Password"
-                />
-                <label
-                  for="password-signin"
-                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
-                  >Password</label
-                >
-              </div>
-              <button
-                type="submit"
-                class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                Sign In
-              </button>
-            </form>
+            class="overlay-panel overlay-left absolute top-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transition-transform duration-700 ease-in-out">
+            <h1 class="text-4xl font-bold">Hello, Friend!</h1>
+            <p class="text-base my-5 max-w-xs">Enter your personal details and start your journey with us</p>
+            <button id="signIn"
+              class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
+              Sign In
+            </button>
           </div>
-
-          <!-- Sign Up Section (Left, hidden initially) -->
           <div
-            class="form-container sign-up-container flex items-center justify-center"
-          >
-            <form
-              id="registerform"
-              method="POST"
-              class="flex flex-col items-start px-12 w-full max-w-sm"
-            >
-              <h2 class="text-4xl font-bold text-white mb-8">Sign Up</h2>
-              <div class="relative w-full my-4">
-                <input
-                  id="name-signup"
-                  name="name"
-                  type="text"
-                  required
-                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                  placeholder="Name"
-                />
-                <label
-                  for="name-signup"
-                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
-                  >Name</label
-                >
-              </div>
-              <div class="relative w-full my-4">
-                <input
-                  id="email-signup"
-                  name="email"
-                  type="email"
-                  required
-                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                  placeholder="Email Address"
-                />
-                <label
-                  for="email-signup"
-                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
-                  >Email Address</label
-                >
-              </div>
-              <div class="relative w-full my-4">
-                <input
-                  id="password-signup"
-                  name="password"
-                  type="password"
-                  required
-                  class="peer w-full py-2 bg-transparent border-b-2 border-gray-500/50 text-white placeholder-transparent focus:outline-none peer-focus:border-primary-teal"
-                  placeholder="Password"
-                />
-                <label
-                  for="password-signup"
-                  class="absolute left-0 -top-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-4 peer-focus:text-secondary-teal peer-focus:text-sm"
-                  >Password</label
-                >
-              </div>
-              <button
-                type="submit"
-                class="w-full mt-8 py-3 text-lg font-semibold text-white bg-primary-teal rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                Sign Up
-              </button>
-            </form>
-          </div>
-
-          <!-- Overlay Container (Right) -->
-          <div class="overlay-container">
-            <div class="overlay">
-              <div class="overlay-panel overlay-left">
-                <h1>Hello, Friend!</h1>
-                <p>
-                  Enter your personal details and start your journey with us
-                </p>
-                <button id="signIn" type="button">Sign In</button>
-              </div>
-              <div class="overlay-panel overlay-right">
-                <h1>Welcome Back!</h1>
-                <p>
-                  To keep connected with us please login with your personal info
-                </p>
-                <button id="signUp" type="button">Sign Up</button>
-              </div>
-            </div>
+            class="overlay-panel overlay-right absolute top-0 right-0 h-full w-1/2 flex flex-col items-center justify-center px-10 text-center transform translate-x-0 transition-transform duration-700 ease-in-out">
+            <h1 class="text-4xl font-bold">Welcome Back!</h1>
+            <p class="text-base my-5 max-w-xs">To keep connected with us please login with your personal info</p>
+            <button id="signUp"
+              class="px-10 py-2 text-sm font-semibold bg-transparent border-2 border-white rounded-full uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300">
+              Sign Up
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <%- include('partials/alert') %>
+  <%- include('partials/alert') %>
+    <%- include('partials/footer') %>
 
-    <script src="/assets/js/login.js"></script>
-  </body>
+      <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        // Mobile buttons
+        const mobileSignUpBtn = document.getElementById('mobileSignUpBtn');
+        const mobileSignInBtn = document.getElementById('mobileSignInBtn');
+
+        signUpButton.addEventListener('click', () => container.classList.add('right-panel-active'));
+        signInButton.addEventListener('click', () => container.classList.remove('right-panel-active'));
+
+        // Mobile listeners
+        if (mobileSignUpBtn) mobileSignUpBtn.addEventListener('click', () => container.classList.add('right-panel-active'));
+        if (mobileSignInBtn) mobileSignInBtn.addEventListener('click', () => container.classList.remove('right-panel-active'));
+      </script>
+
+      <script>
+        const loginform = document.getElementById('loginform');
+        const registerform = document.getElementById('registerform');
+        const api = window.location.origin;
+
+        // Login
+        loginform.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('email-signin').value;
+          const password = document.getElementById('password-signin').value;
+
+          try {
+            const response = await fetch(`${api}/auth/login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              showAlert("Login successful! Redirecting...", "success", 2000);
+              setTimeout(() => window.location.href = "/", 1500);
+            } else if (response.status === 429) {
+              const message = result.message || 'Login limit reached. Please try again later.';
+              const minutes = Math.ceil((result.remainingSeconds || 0) / 60);
+              showAlert(`${message} (Try again in ${minutes} minute(s))`, "warning", 6000);
+            } else {
+              showAlert(result.message || 'Login failed. Please check credentials.', "error");
+            }
+          } catch (err) {
+            console.error('Login error:', err);
+            showAlert('An error occurred. Please try again.', "error");
+          }
+        });
+
+        // Register
+        registerform.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const name = document.getElementById('name-signup').value;
+          const email = document.getElementById('email-signup').value;
+          const password = document.getElementById('password-signup').value;
+
+          try {
+            const response = await fetch(`${api}/auth/register`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, email, password })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              showAlert("Registration successful! Redirecting...", "success", 2000);
+              setTimeout(() => window.location.href = "/api/login", 1500);
+            } else {
+              showAlert(result.message || "Registration failed. Please try again.", "error");
+            }
+          } catch (err) {
+            console.error('Register error:', err);
+            showAlert("An error occurred during registration.", "error");
+          }
+        });
+      </script>
+</body>
+
 </html>

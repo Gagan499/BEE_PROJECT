@@ -7,9 +7,9 @@
 
 /* Shared Base Styles */
 .main-header {
-  background: transparent;
+  background: var(--bg-color, white) !important;
   background-image: none !important;
-  box-shadow: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: fixed;
   top: 0;
   left: 0;
@@ -18,6 +18,12 @@
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+/* Dark mode main header */
+.dark .main-header {
+  --bg-color: #1f2937;
+  --text-color: #f3f4f6;
+  --text-color-secondary: #d1d5db;
+  background: var(--bg-color, #1f2937) !important;
 .main-header.scrolled {
   background: var(--bg-color, white) !important;
   background-image: none !important;
@@ -90,26 +96,28 @@
   color: white;
 }
 
-/* Text colors for transparent navbar - when scrolled (with background) */
-.transparent-navbar .main-header.scrolled .logo-text h1 {
-  color: var(--text-color, #2c3e50);
+.dark .logo-text h1 {
+  color: var(--text-color);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a {
-  color: var(--text-color-secondary, #5f6368);
+.dark .nav-menu li a {
+  color: var(--text-color-secondary);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a:hover {
+.dark .nav-menu li a:hover {
   color: var(--primary-teal) !important;
   border-bottom-color: var(--primary-teal);
 }
 
-.transparent-navbar .main-header.scrolled .nav-menu li a.active {
+.dark .nav-menu li a.active {
   color: var(--primary-teal) !important;
   border-bottom-color: var(--primary-teal);
   font-weight: 600;
 }
 
+.dark .mobile-menu-btn,
+.dark .theme-toggle-desktop {
+  color: var(--text-color);
 .transparent-navbar .main-header.scrolled .mobile-menu-btn,
 .transparent-navbar .main-header.scrolled .theme-toggle-desktop {
   color: var(--text-color, #2c3e50);
@@ -282,6 +290,10 @@
   color: #1a1a1a !important;
 }
 
+/* Adjust sun/moon colors for default solid navbar */
+.main-header:not(.dark) .theme-toggle-desktop .fa-sun,
+.main-header:not(.dark) .theme-toggle-mobile .fa-sun {
+  color: #f59e0b !important;
 /* When navbar is scrolled with white background - adjust sun to be visible */
 .main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-sun,
 .main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-sun {
@@ -289,12 +301,15 @@
   /* Yellow for visibility on white background */
 }
 
-/* When navbar is scrolled with white background - moon stays dark */
-.main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-moon,
-.main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-moon {
+.main-header:not(.dark) .theme-toggle-desktop .fa-moon,
+.main-header:not(.dark) .theme-toggle-mobile .fa-moon {
   color: #1a1a1a !important;
 }
 
+/* Transparent navbar (now solid) - same colors */
+.transparent-navbar .main-header .theme-toggle-desktop .fa-sun,
+.transparent-navbar .main-header .theme-toggle-mobile .fa-sun {
+  color: #f59e0b !important;
 /* Transparent navbar (over hero) - sun yellow, moon dark */
 .transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-sun,
 .transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-sun {
@@ -302,8 +317,8 @@
   /* Yellow color for sun icon */
 }
 
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-moon,
-.transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-moon {
+.transparent-navbar .main-header .theme-toggle-desktop .fa-moon,
+.transparent-navbar .main-header .theme-toggle-mobile .fa-moon {
   color: #1a1a1a !important;
 }
 
@@ -311,6 +326,7 @@
 .dark .main-header .theme-toggle-desktop .fa-moon,
 .dark .main-header .theme-toggle-mobile .fa-moon,
 .dark .main-header .theme-toggle-mobile-menu .fa-moon {
+  color: #e5e7eb !important;
   color: whitesmoke !important;
   /* Whitesmoke color for moon in dark mode navbar */
 }
@@ -319,7 +335,6 @@
 .dark .main-header .theme-toggle-mobile .fa-sun,
 .dark .main-header .theme-toggle-mobile-menu .fa-sun {
   color: #fbbf24 !important;
-  /* Yellow/gold for sun in dark mode */
 }
 
 /* Interactive Hamburger Animation */
@@ -719,6 +734,7 @@
 
   #sideMenu #mobile-user-actions a i {
     color: white !important;
+    padding: 0.625rem 1rem !important;
   }
 
   #sideMenu #mobile-user-actions .border-t {

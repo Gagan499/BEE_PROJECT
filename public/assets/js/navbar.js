@@ -332,59 +332,7 @@ if (window.location.hash === '#booking') {
   }, 300);
 }
 
-// --- Navbar Scroll Effect ---
-const mainHeader = document.querySelector('.main-header');
-const isIndexPage = currentPath === '/' || currentPath === '/api/' || currentPath === '/api/index';
-const isPackagesPage = currentPath === '/api/packages';
+// --- Navbar Scroll Effect Removed (Default Scrolled Style Applied) ---
+// The navbar now uses the "scrolled" style by default via CSS.
 
-// Ensure navbar starts transparent for transparent-navbar pages
-if (document.body.classList.contains('transparent-navbar') && mainHeader) {
-  mainHeader.classList.remove('scrolled');
-  mainHeader.style.background = 'transparent';
-  mainHeader.style.boxShadow = 'none';
-}
-
-function handleNavbarScroll() {
-  if (!mainHeader) return;
-  if (isIndexPage || isPackagesPage) {
-    // For index and packages pages: check if scrolled past feature section
-    let featureSection = null;
-    if (isIndexPage) {
-      // For index page, find the feature-bar
-      featureSection = document.querySelector('.feature-bar');
-    } else if (isPackagesPage) {
-      // For packages page, find the hero section (the section with the image)
-      // This is the section with py-32 and text-white that contains the hero image
-      const heroSection = document.querySelector('section.py-32.text-white');
-      if (heroSection) {
-        featureSection = heroSection;
-      }
-    }
-    
-    if (featureSection) {
-      const featureBottom = featureSection.offsetTop + featureSection.offsetHeight;
-      const scrollY = window.scrollY || window.pageYOffset;
-      
-      if (scrollY > featureBottom) {
-        mainHeader.classList.add('scrolled');
-      } else {
-        mainHeader.classList.remove('scrolled');
-      }
-    }
-  } else {
-    // For all other pages: add background after 50px scroll
-    const scrollY = window.scrollY || window.pageYOffset;
-    
-    if (scrollY > 50) {
-      mainHeader.classList.add('scrolled');
-    } else {
-      mainHeader.classList.remove('scrolled');
-    }
-  }
-}
-
-// Initial check
-handleNavbarScroll();
-// Add scroll listener
-window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
