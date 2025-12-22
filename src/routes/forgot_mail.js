@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import { generate_random_number } from "./random_no.js";
 import client from "../redis_server.js";
 import { validateEmail } from "./emailValidator.js";
-import { verifyToken } from "./jwtutils.js";
 
 dotenv.config();
 
@@ -18,52 +17,12 @@ const transporter = nodemailer.createTransport({
 
 const OTP_EXPIRY = 10 * 60; // 10 minutes
 
-// Allowed email for password reset (can be set in environment variable)
-const ALLOWED_USER_EMAIL = process.env.USER_EMAIL || process.env.ALLOWED_FORGOT_PASSWORD_EMAIL;
-
 export async function sendForgotPasswordMail(req, res) {
   try {
     const { email } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
-    }
-
-    // Check if user is logged in
-    let loggedInUserEmail = null;
-    try {
-      let token = req.cookies?.token;
-      if (!token) {
-        const authHeader = req.headers["authorization"] || req.headers["Authorization"];
-        if (authHeader && authHeader.startsWith("Bearer ")) {
-          token = authHeader.substring("Bearer ".length);
-        }
-      }
-      
-      if (token) {
-        const decoded = verifyToken(token);
-        loggedInUserEmail = decoded.email;
-      }
-    } catch (err) {
-      // Token invalid or expired - user is not logged in
-      loggedInUserEmail = null;
-    }
-
-    // Validate access: Only logged-in users can reset their own password, or specific allowed email
-    if (loggedInUserEmail) {
-      // User is logged in - only allow if email matches their own email
-      if (email.toLowerCase() !== loggedInUserEmail.toLowerCase()) {
-        return res.status(403).json({ 
-          error: "You can only reset the password for your own account" 
-        });
-      }
-    } else {
-      // User is not logged in - only allow if email matches the allowed user email
-      if (!ALLOWED_USER_EMAIL || email.toLowerCase() !== ALLOWED_USER_EMAIL.toLowerCase()) {
-        return res.status(403).json({ 
-          error: "Password reset is only available for logged-in users or authorized email addresses" 
-        });
-      }
     }
 
     // Validate email using Verifalia
