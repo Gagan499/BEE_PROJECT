@@ -26,6 +26,16 @@
 	background: #e6f7f7;
 }
 
+.payment-method-card.selected {
+	border-color: #008080;
+	background: #e6f7f7;
+}
+
+.payment-method-radio:checked + .payment-method-card {
+	border-color: #008080;
+	background: #e6f7f7;
+}
+
 /* Styling for progress steps (Teal Theme) */
 .step.active .w-11 {
 	background: linear-gradient(to bottom right, #008080, #00cec9);

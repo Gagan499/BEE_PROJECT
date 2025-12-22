@@ -24,6 +24,17 @@
   --text-color: #f3f4f6;
   --text-color-secondary: #d1d5db;
   background: var(--bg-color, #1f2937) !important;
+.main-header.scrolled {
+  background: var(--bg-color, white) !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-position: initial !important;
+  background-repeat: repeat !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark .main-header.scrolled {
+  background: var(--bg-color, #1e293b) !important;
   background-image: none !important;
   background-size: auto !important;
   background-position: initial !important;
@@ -31,6 +42,59 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Transparent navbar for index and packages pages only */
+.transparent-navbar .main-header {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.transparent-navbar .main-header:not(.scrolled) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.transparent-navbar .main-header.scrolled {
+  background: var(--bg-color, white) !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-position: initial !important;
+  background-repeat: repeat !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .transparent-navbar .main-header.scrolled {
+  background: var(--bg-color, #1e293b) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Text colors for transparent navbar - when not scrolled */
+.transparent-navbar .main-header:not(.scrolled) .logo-text h1 {
+  color: white;
+}
+
+.transparent-navbar .main-header:not(.scrolled) .nav-menu li a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.transparent-navbar .main-header:not(.scrolled) .nav-menu li a:hover {
+  color: var(--secondary-teal) !important;
+  border-bottom-color: var(--secondary-teal);
+}
+
+.transparent-navbar .main-header:not(.scrolled) .nav-menu li a.active {
+  color: var(--secondary-teal) !important;
+  border-bottom-color: var(--secondary-teal);
+  font-weight: 600;
+}
+
+.transparent-navbar .main-header:not(.scrolled) .mobile-menu-btn,
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop {
+  color: white;
+}
+
+.transparent-navbar .main-header:not(.scrolled) .user-icon-btn {
+  color: white;
+}
 
 .dark .logo-text h1 {
   color: var(--text-color);
@@ -54,6 +118,28 @@
 .dark .mobile-menu-btn,
 .dark .theme-toggle-desktop {
   color: var(--text-color);
+.transparent-navbar .main-header.scrolled .mobile-menu-btn,
+.transparent-navbar .main-header.scrolled .theme-toggle-desktop {
+  color: var(--text-color, #2c3e50);
+}
+
+.transparent-navbar .main-header.scrolled .user-icon-btn {
+  color: var(--primary-teal);
+}
+
+/* Dark mode transparent navbar */
+.dark .transparent-navbar .main-header {
+  background: transparent !important;
+}
+
+.dark .transparent-navbar .main-header:not(.scrolled) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.dark .transparent-navbar .main-header.scrolled {
+  background: var(--bg-color, #1e293b) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
 }
 
 .header-container {
@@ -189,11 +275,12 @@
 }
 
 /* Theme Toggle Icon Colors */
-/* Sun icon (light mode active) - white color */
+/* Sun icon (light mode active) - yellow color */
 .theme-toggle-desktop .fa-sun,
 .theme-toggle-mobile .fa-sun,
 .theme-toggle-mobile-menu .fa-sun {
-  color: white !important;
+  color: #fbbf24 !important;
+  /* Yellow color for sun icon */
 }
 
 /* Moon icon (dark mode active) - black/dark color */
@@ -207,6 +294,11 @@
 .main-header:not(.dark) .theme-toggle-desktop .fa-sun,
 .main-header:not(.dark) .theme-toggle-mobile .fa-sun {
   color: #f59e0b !important;
+/* When navbar is scrolled with white background - adjust sun to be visible */
+.main-header.scrolled:not(.dark) .theme-toggle-desktop .fa-sun,
+.main-header.scrolled:not(.dark) .theme-toggle-mobile .fa-sun {
+  color: #fbbf24 !important;
+  /* Yellow for visibility on white background */
 }
 
 .main-header:not(.dark) .theme-toggle-desktop .fa-moon,
@@ -218,6 +310,11 @@
 .transparent-navbar .main-header .theme-toggle-desktop .fa-sun,
 .transparent-navbar .main-header .theme-toggle-mobile .fa-sun {
   color: #f59e0b !important;
+/* Transparent navbar (over hero) - sun yellow, moon dark */
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-desktop .fa-sun,
+.transparent-navbar .main-header:not(.scrolled) .theme-toggle-mobile .fa-sun {
+  color: #fbbf24 !important;
+  /* Yellow color for sun icon */
 }
 
 .transparent-navbar .main-header .theme-toggle-desktop .fa-moon,
@@ -230,6 +327,8 @@
 .dark .main-header .theme-toggle-mobile .fa-moon,
 .dark .main-header .theme-toggle-mobile-menu .fa-moon {
   color: #e5e7eb !important;
+  color: whitesmoke !important;
+  /* Whitesmoke color for moon in dark mode navbar */
 }
 
 .dark .main-header .theme-toggle-desktop .fa-sun,
@@ -434,7 +533,7 @@
 }
 
 .dark .user-dropdown-menu {
-  background: #1f2937;
+  background: #1e293b;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -445,6 +544,56 @@
 .dark .user-dropdown-menu .dropdown-item {
   color: var(--text-color);
   border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark Mode Styles */
+.dark .main-header {
+  --bg-color: #1e293b;
+  --text-color: #f1f5f9;
+  --text-color-secondary: #cbd5e1;
+}
+
+.dark .main-header:not(.scrolled) {
+  box-shadow: none;
+}
+
+.dark .main-header.scrolled {
+  background: var(--bg-color, #1e293b) !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-position: initial !important;
+  background-repeat: repeat !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Ensure transparent navbar stays transparent in dark mode when not scrolled */
+.dark .transparent-navbar .main-header:not(.scrolled) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.dark .logo-text h1 {
+  color: var(--text-color);
+}
+
+.dark .nav-menu li a {
+  color: var(--text-color-secondary);
+}
+
+.dark .nav-menu li a:hover {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+}
+
+.dark .nav-menu li a.active {
+  color: var(--primary-teal) !important;
+  border-bottom-color: var(--primary-teal);
+  font-weight: 600;
+}
+
+.dark .mobile-menu-btn,
+.dark .theme-toggle-desktop {
+  color: var(--text-color);
 }
 
 /* Responsive Adjustments */
