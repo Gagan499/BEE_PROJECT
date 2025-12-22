@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon_icon.png"
+      type="image/x-icon"
+    />
+    <title>About Us - Palm Ways</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "primary-teal": "#008080",
+              "secondary-teal": "#00cec9",
+              "dark-teal": "#1a535c",
+              "light-mint": "#e6f7f7",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="font-poppins min-h-screen pt-[76px]">
+    <%- include('partials/navbar') %> <%- include('partials/alert') %>
+
+    <!-- Hero Section -->
+    <section
+      class="bg-gradient-to-br from-primary-teal to-secondary-teal py-16 px-4 md:px-8 text-white text-center"
+    >
+      <div class="max-w-4xl mx-auto">
+        <div
+          class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm mb-4"
+        >
+          <i class="fas fa-info-circle"></i>
+          <span>Our Story</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">About Palm Ways</h1>
+        <p class="text-lg md:text-xl opacity-95">
+          Experience unparalleled luxury in a tropical paradise
+        </p>
+      </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="max-w-6xl mx-auto py-12 px-4 md:px-8">
+      <!-- Our Story -->
+      <div class="mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Story</h2>
+            <p class="text-gray-600 mb-4 leading-relaxed">
+              Palm Ways Luxury Resort & Spa was founded with a vision to create
+              an unforgettable tropical getaway experience. Nestled in a
+              pristine location, we combine world-class amenities with
+              exceptional service to provide our guests with memories that last
+              a lifetime.
+            </p>
+            <p class="text-gray-600 mb-4 leading-relaxed">
+              Since our inception, we have been committed to delivering
+              unparalleled luxury and comfort. Our team of dedicated
+              professionals works tirelessly to ensure every guest feels
+              welcomed, valued, and pampered throughout their stay.
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+              Whether you're seeking a romantic escape, a family adventure, or a
+              peaceful retreat, Palm Ways offers the perfect setting for your
+              dream vacation.
+            </p>
+          </div>
+          <div class="bg-light-mint rounded-2xl p-8">
+            <div class="grid grid-cols-2 gap-6">
+              <div class="text-center">
+                <div class="text-4xl font-bold text-primary-teal mb-2">15+</div>
+                <div class="text-gray-600">Years Experience</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-primary-teal mb-2">10K+</div>
+                <div class="text-gray-600">Happy Guests</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-primary-teal mb-2">50+</div>
+                <div class="text-gray-600">Destinations</div>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl font-bold text-primary-teal mb-2">4.9/5</div>
+                <div class="text-gray-600">Guest Rating</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Our Mission -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Our Mission
+        </h2>
+        <div class="max-w-3xl mx-auto">
+          <p class="text-gray-600 text-center leading-relaxed text-lg">
+            To provide exceptional hospitality experiences that exceed
+            expectations, creating lasting memories for our guests while
+            maintaining the highest standards of luxury, comfort, and service in
+            every interaction.
+          </p>
+        </div>
+      </div>
+
+      <!-- Our Values -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+          Our Values
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-xl shadow-md p-6 text-center">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+            >
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">
+              Excellence
+            </h3>
+            <p class="text-gray-600">
+              We strive for excellence in every aspect of our service, ensuring
+              the highest quality experience for our guests.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-md p-6 text-center">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+            >
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">
+              Hospitality
+            </h3>
+            <p class="text-gray-600">
+              Genuine care and warmth define our approach to hospitality,
+              making every guest feel like family.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-md p-6 text-center">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
+            >
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">
+              Sustainability
+            </h3>
+            <p class="text-gray-600">
+              We are committed to sustainable practices that protect our
+              environment for future generations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why Choose Us -->
+      <div class="bg-light-mint rounded-2xl p-8 md:p-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+          Why Choose Palm Ways?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-primary-teal rounded-lg flex items-center justify-center text-white flex-shrink-0"
+            >
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-1">
+                World-Class Amenities
+              </h3>
+              <p class="text-gray-600">
+                Enjoy premium facilities including infinity pools, fine dining
+                restaurants, spa services, and more.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-primary-teal rounded-lg flex items-center justify-center text-white flex-shrink-0"
+            >
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-1">
+                Prime Location
+              </h3>
+              <p class="text-gray-600">
+                Strategically located in the heart of paradise, offering easy
+                access to beaches, attractions, and activities.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-primary-teal rounded-lg flex items-center justify-center text-white flex-shrink-0"
+            >
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-1">
+                24/7 Concierge Service
+              </h3>
+              <p class="text-gray-600">
+                Our dedicated team is available around the clock to assist with
+                any request or need.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-primary-teal rounded-lg flex items-center justify-center text-white flex-shrink-0"
+            >
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-1">
+                Award-Winning Service
+              </h3>
+              <p class="text-gray-600">
+                Recognized for outstanding hospitality and guest satisfaction
+                with a 4.9/5 rating.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%- include('partials/footer') %>
+  </body>
+</html>
+
+

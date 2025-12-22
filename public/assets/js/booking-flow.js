@@ -64,16 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				
 				// Update summary
 				const stayName = card.querySelector('.stay-only-name');
-				const stayImageElement = card.querySelector('.stay-only-image');
 				
 				if (stayName) {
 					const summaryRoomNameEl = document.getElementById('summaryRoomName');
 					if (summaryRoomNameEl) summaryRoomNameEl.textContent = stayName.textContent;
 				}
-				// Update the image source in the summary section
-				if (summaryRoomImage && stayImageElement) {
-					summaryRoomImage.src = stayImageElement.src || '/assets/images/carousel/default.png';
-				}
+				// Keep the summary image fixed - don't change it when selecting stay-only accommodations
 				
 				calculateTotal();
 			}
@@ -92,16 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				
 				// Update summary
 				const roomName = card.querySelector('.room-name');
-				const roomImageElement = card.querySelector('.summary-room-image');
 				
 				if (roomName) {
 					const summaryRoomNameEl = document.getElementById('summaryRoomName');
 					if (summaryRoomNameEl) summaryRoomNameEl.textContent = roomName.textContent;
 				}
-				// Update the image source in the summary section
-				if (summaryRoomImage && roomImageElement) {
-					summaryRoomImage.src = roomImageElement.src || '/assets/images/carousel/default.png';
-				}
+				// Keep the summary image fixed - don't change it when selecting packages
 				
 				calculateTotal();
 			}
@@ -184,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (subtotal) subtotal.textContent = `N/A`;
 				if (tax) tax.textContent = `N/A`;
 				if (totalAmount) totalAmount.textContent = `N/A`;
+				// Update QR amount
+				updateQRAmount();
 				return;
 			}
 
@@ -200,6 +194,59 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (subtotal) subtotal.textContent = `N/A`;
 			if (tax) tax.textContent = `N/A`;
 			if (totalAmount) totalAmount.textContent = `N/A`;
+		}
+		
+		// Update QR amount
+		updateQRAmount();
+	}
+	
+	// Detect currency based on user's location
+	function detectCurrency() {
+		try {
+			// Get user's timezone
+			const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			
+			// Check if timezone is in India
+			if (timezone.includes('Calcutta') || timezone.includes('Kolkata') || 
+			    timezone.includes('Mumbai') || timezone.includes('Delhi') ||
+			    timezone.includes('Asia/Kolkata') || timezone.includes('IST')) {
+				return { symbol: '₹', code: 'INR', name: 'Indian Rupee' };
+			}
+			
+			// Get locale for additional check
+			const locale = navigator.language || navigator.userLanguage;
+			if (locale.includes('en-IN') || locale.includes('hi-IN')) {
+				return { symbol: '₹', code: 'INR', name: 'Indian Rupee' };
+			}
+			
+			// Default to USD
+			return { symbol: '$', code: 'USD', name: 'US Dollar' };
+		} catch (e) {
+			// Fallback to USD if detection fails
+			return { symbol: '$', code: 'USD', name: 'US Dollar' };
+		}
+	}
+	
+	// Get currency once on page load
+	const userCurrency = detectCurrency();
+	
+	// Function to update QR amount with currency
+	function updateQRAmount() {
+		const qrAmount = document.getElementById('qrAmount');
+		if (qrAmount) {
+			const total = calculateTotalAmount();
+			
+			// Format amount based on currency
+			if (userCurrency.code === 'INR') {
+				// Format INR with Indian number formatting
+				const formattedAmount = new Intl.NumberFormat('en-IN', {
+					maximumFractionDigits: 0
+				}).format(total);
+				qrAmount.textContent = `₹${formattedAmount}`;
+			} else {
+				// Format USD
+				qrAmount.textContent = `$${total.toFixed(0)}`;
+			}
 		}
 	}
 
@@ -222,9 +269,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		return 0;
 	}
 
-	// Select first room by default (only for package type)
+	// Check for package ID in URL query parameters
+	const urlParams = new URLSearchParams(window.location.search);
+	const packageIdFromUrl = urlParams.get('packageId');
+	
+	// Select package based on URL parameter or default to first
 	if (bookingType === 'package' && roomCards.length > 0) {
-		roomCards[0].click();
+		if (packageIdFromUrl) {
+			// Find and select the package matching the ID from URL
+			const targetCard = Array.from(roomCards).find(card => card.dataset.room === packageIdFromUrl);
+			if (targetCard) {
+				targetCard.click();
+			} else {
+				// If package not found, select first one
+				roomCards[0].click();
+			}
+		} else {
+			// No package ID in URL, select first room by default
+			roomCards[0].click();
+		}
 	} else if (bookingType === 'stayOnly' && stayOnlyCards.length > 0) {
 		// Select first stay-only accommodation by default
 		stayOnlyCards[0].click();
@@ -347,6 +410,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (step3) step3.style.display = 'block';
 			updateProgressSteps(2);
 			window.scrollTo({ top: 0, behavior: 'smooth' });
+			
+			// Select first payment method by default if none selected
+			const paymentMethodRadios = document.querySelectorAll('.payment-method-radio');
+			const hasSelected = Array.from(paymentMethodRadios).some(radio => radio.checked);
+			if (!hasSelected && paymentMethodRadios.length > 0) {
+				paymentMethodRadios[0].checked = true;
+				paymentMethodRadios[0].dispatchEvent(new Event('change'));
+			} else {
+				// Show form for already selected payment method
+				const selectedRadio = Array.from(paymentMethodRadios).find(radio => radio.checked);
+				if (selectedRadio) {
+					showPaymentForm(selectedRadio.value);
+				}
+			}
 		});
 	}
 	
@@ -379,6 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			const email = document.getElementById('email');
 			const phone = document.getElementById('phone');
 			const specialRequests = document.getElementById('specialRequests');
+			const paymentMethodRadio = document.querySelector('input[name="paymentMethod"]:checked');
 			
 			if (!fullName || !email || !phone || !checkInInput || !checkOutInput || !guestsSelect) {
 				alert('Please fill in all required fields');
@@ -393,11 +471,85 @@ document.addEventListener('DOMContentLoaded', () => {
 			const checkOut = checkOutInput.value;
 			const adults = parseInt(guestsSelect.value);
 			const children = childrenSelect ? parseInt(childrenSelect.value) || 0 : 0;
+			const paymentMethod = paymentMethodRadio ? paymentMethodRadio.value : null;
 
 			// Validate all fields
 			if (!fullNameValue || !emailValue || !phoneValue || !checkIn || !checkOut || !adults) {
 				alert('Please fill in all required fields');
 				return;
+			}
+
+			if (!paymentMethod) {
+				alert('Please select a payment method');
+				return;
+			}
+
+			// Validate payment details based on method
+			let paymentDetails = {};
+			if (paymentMethod === 'credit_card' || paymentMethod === 'debit_card') {
+				const cardNumber = document.getElementById('cardNumber')?.value.trim();
+				const cardHolderName = document.getElementById('cardHolderName')?.value.trim();
+				const expiryDate = document.getElementById('expiryDate')?.value.trim();
+				const cvv = document.getElementById('cvv')?.value.trim();
+				
+				if (!cardNumber || !cardHolderName || !expiryDate || !cvv) {
+					alert('Please fill in all card details');
+					return;
+				}
+				paymentDetails = {
+					cardNumber: cardNumber.replace(/\s/g, ''),
+					cardHolderName: cardHolderName,
+					expiryDate: expiryDate,
+					cvv: cvv
+				};
+			} else if (paymentMethod === 'bank_transfer') {
+				const accountNumber = document.getElementById('accountNumber')?.value.trim();
+				const accountHolderName = document.getElementById('accountHolderName')?.value.trim();
+				const bankName = document.getElementById('bankName')?.value.trim();
+				const ifscCode = document.getElementById('ifscCode')?.value.trim();
+				
+				if (!accountNumber || !accountHolderName || !bankName || !ifscCode) {
+					alert('Please fill in all bank transfer details');
+					return;
+				}
+				paymentDetails = {
+					accountNumber: accountNumber,
+					accountHolderName: accountHolderName,
+					bankName: bankName,
+					ifscCode: ifscCode
+				};
+			} else if (paymentMethod === 'paypal') {
+				const paypalEmail = document.getElementById('paypalEmail')?.value.trim();
+				
+				if (!paypalEmail) {
+					alert('Please enter your PayPal email');
+					return;
+				}
+				paymentDetails = {
+					paypalEmail: paypalEmail
+				};
+			} else if (paymentMethod === 'paytm') {
+				const paytmNumber = document.getElementById('paytmNumber')?.value.trim();
+				
+				if (!paytmNumber) {
+					alert('Please enter your Paytm number');
+					return;
+				}
+				paymentDetails = {
+					paytmNumber: paytmNumber,
+					upiId: document.getElementById('upiId')?.value.trim() || undefined
+				};
+			} else if (paymentMethod === 'scanning') {
+				const transactionId = document.getElementById('transactionId')?.value.trim();
+				
+				if (!transactionId) {
+					alert('Please enter the transaction ID after scanning the QR code');
+					return;
+				}
+				paymentDetails = {
+					transactionId: transactionId,
+					qrCodeScanned: true
+				};
 			}
 
 			if (bookingType === 'package' && !selectedPackageName) {
@@ -423,6 +575,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				adults: parseInt(adults),
 				children: parseInt(children),
 				specialRequests: specialRequestsValue || undefined,
+				paymentMethod: paymentMethod,
+				paymentDetails: paymentDetails,
 				totalAmount: calculateTotalAmount()
 			};
 
@@ -460,6 +614,114 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 	
+	// Payment Method Selection
+	const paymentMethodCards = document.querySelectorAll('.payment-method-card');
+	const paymentMethodRadios = document.querySelectorAll('.payment-method-radio');
+	
+	// Payment detail forms
+	const cardPaymentForm = document.getElementById('cardPaymentForm');
+	const bankTransferForm = document.getElementById('bankTransferForm');
+	const paypalForm = document.getElementById('paypalForm');
+	const paytmForm = document.getElementById('paytmForm');
+	const scanningForm = document.getElementById('scanningForm');
+	
+	// Function to hide all payment forms
+	function hideAllPaymentForms() {
+		if (cardPaymentForm) cardPaymentForm.classList.add('hidden');
+		if (bankTransferForm) bankTransferForm.classList.add('hidden');
+		if (paypalForm) paypalForm.classList.add('hidden');
+		if (paytmForm) paytmForm.classList.add('hidden');
+		if (scanningForm) scanningForm.classList.add('hidden');
+	}
+	
+	// Function to show payment form based on method
+	function showPaymentForm(method) {
+		hideAllPaymentForms();
+		
+		switch(method) {
+			case 'credit_card':
+			case 'debit_card':
+				if (cardPaymentForm) cardPaymentForm.classList.remove('hidden');
+				break;
+			case 'bank_transfer':
+				if (bankTransferForm) bankTransferForm.classList.remove('hidden');
+				break;
+			case 'paypal':
+				if (paypalForm) paypalForm.classList.remove('hidden');
+				break;
+			case 'paytm':
+				if (paytmForm) paytmForm.classList.remove('hidden');
+				break;
+			case 'scanning':
+				if (scanningForm) scanningForm.classList.remove('hidden');
+				// Update QR amount with currency detection
+				updateQRAmount();
+				break;
+			case 'cash':
+				// No form needed for cash
+				break;
+		}
+	}
+	
+	paymentMethodRadios.forEach(radio => {
+		radio.addEventListener('change', () => {
+			// Remove selected class from all cards
+			paymentMethodCards.forEach(card => {
+				card.classList.remove('border-primary-teal', 'bg-light-mint');
+				card.classList.add('border-gray-200');
+			});
+			
+			// Add selected class to the selected card
+			const selectedCard = radio.closest('label').querySelector('.payment-method-card');
+			if (selectedCard) {
+				selectedCard.classList.add('border-primary-teal', 'bg-light-mint');
+				selectedCard.classList.remove('border-gray-200');
+			}
+			
+			// Show appropriate payment form
+			showPaymentForm(radio.value);
+		});
+	});
+	
+	// Initialize payment method cards styling
+	paymentMethodCards.forEach(card => {
+		card.addEventListener('click', () => {
+			// Remove selected class from all cards
+			paymentMethodCards.forEach(c => {
+				c.classList.remove('border-primary-teal', 'bg-light-mint');
+				c.classList.add('border-gray-200');
+			});
+			// Add selected class to clicked card
+			card.classList.add('border-primary-teal', 'bg-light-mint');
+			card.classList.remove('border-gray-200');
+		});
+	});
+	
+	// Format card number input (add spaces every 4 digits)
+	const cardNumberInput = document.getElementById('cardNumber');
+	if (cardNumberInput) {
+		cardNumberInput.addEventListener('input', function(e) {
+			let value = e.target.value.replace(/\s/g, '');
+			let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+			if (formattedValue.length <= 19) {
+				e.target.value = formattedValue;
+			}
+		});
+	}
+	
+	// Format expiry date input (MM/YY)
+	const expiryDateInput = document.getElementById('expiryDate');
+	if (expiryDateInput) {
+		expiryDateInput.addEventListener('input', function(e) {
+			let value = e.target.value.replace(/\D/g, '');
+			if (value.length >= 2) {
+				value = value.substring(0, 2) + '/' + value.substring(2, 4);
+			}
+			e.target.value = value;
+		});
+	}
+	
+
 	// Initialize progress steps on load
 	updateProgressSteps(0);
 });
