@@ -22,8 +22,6 @@ bookingsRouter.post("/", async (req, res) => {
       departureDate,
       adults,
       children,
-      paymentMethod,
-      paymentDetails,
     } = req.body;
 
     // Basic required checks
@@ -125,23 +123,6 @@ bookingsRouter.post("/", async (req, res) => {
       });
     }
 
-    // Prepare payment details object
-    const paymentDetailsObj = paymentDetails ? {
-      cardNumber: paymentDetails.cardNumber || undefined,
-      cardHolderName: paymentDetails.cardHolderName || undefined,
-      expiryDate: paymentDetails.expiryDate || undefined,
-      cvv: paymentDetails.cvv || undefined,
-      accountNumber: paymentDetails.accountNumber || undefined,
-      bankName: paymentDetails.bankName || undefined,
-      ifscCode: paymentDetails.ifscCode || undefined,
-      accountHolderName: paymentDetails.accountHolderName || undefined,
-      paypalEmail: paymentDetails.paypalEmail || undefined,
-      paytmNumber: paymentDetails.paytmNumber || undefined,
-      upiId: paymentDetails.upiId || undefined,
-      transactionId: paymentDetails.transactionId || undefined,
-      qrCodeScanned: paymentDetails.qrCodeScanned || false,
-    } : undefined;
-
     const doc = new Booking({
       name: customerName,
       phoneNumber,
@@ -154,8 +135,6 @@ bookingsRouter.post("/", async (req, res) => {
       departureDate,
       adults: Number(adults),
       children: children != null ? Number(children) : 0,
-      paymentMethod: paymentMethod || undefined,
-      paymentDetails: paymentDetailsObj,
     });
 
     await doc.save();

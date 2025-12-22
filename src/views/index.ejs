@@ -1087,12 +1087,6 @@
               <div style="position: relative;">
                 <img src="<%= pkg.image ||
  pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName ||
-          <% if (packages && packages.length > 0) { %>
-            <% packages.forEach(pkg => { %>
-              <div class="room-card">
-                <div style="position: relative;">
-                  <img src="<%= pkg.image ||
- pkg.img || '/assets/images/headerbg.jpg' %>" alt="<%= pkg.packageName ||
                     pkg.title %>" class="room-image">
                 <% if (pkg.price) { %>
                   <div class="room-price"><span>₹<%= pkg.price %></span>/night</div>

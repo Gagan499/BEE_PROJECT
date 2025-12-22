@@ -72,12 +72,6 @@
 
         <form id="ForgotForm" method="POST" class="flex flex-col space-y-6">
           <div class="relative">
-            <label
-              for="email"
-              class="block mb-2 text-gray-700 font-medium"
-            >
-              <i class="fas fa-envelope mr-2"></i>Email Address
-            </label>
             <input
               id="email"
               name="email"
@@ -86,6 +80,12 @@
               class="input-focus w-full py-3 px-4 border-2 border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:border-primary-teal transition-colors"
               placeholder="Email Address"
             />
+            <label
+              for="email"
+              class="absolute left-4 top-3 text-gray-500 text-sm transition-all pointer-events-none"
+            >
+              <i class="fas fa-envelope mr-2"></i>Email Address
+            </label>
           </div>
 
           <button
@@ -121,7 +121,7 @@
             Enter OTP
           </h2>
           <p class="text-gray-600 text-sm md:text-base">
-            Please enter the 4-digit OTP sent to your email address.
+            Please enter the 6-digit OTP sent to your email address.
           </p>
         </div>
 
@@ -174,12 +174,6 @@
 
         <form id="resetPasswordForm" class="flex flex-col space-y-6">
           <div class="relative">
-            <label
-              for="newPassword"
-              class="block mb-2 text-gray-700 font-medium"
-            >
-              <i class="fas fa-lock mr-2"></i>New Password
-            </label>
             <input
               id="newPassword"
               name="newPassword"
@@ -188,15 +182,15 @@
               class="input-focus w-full py-3 px-4 border-2 border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:border-primary-teal transition-colors"
               placeholder="New Password"
             />
+            <label
+              for="newPassword"
+              class="absolute left-4 top-3 text-gray-500 text-sm transition-all pointer-events-none"
+            >
+              <i class="fas fa-lock mr-2"></i>New Password
+            </label>
           </div>
 
           <div class="relative">
-            <label
-              for="confirmPassword"
-              class="block mb-2 text-gray-700 font-medium"
-            >
-              <i class="fas fa-lock mr-2"></i>Confirm Password
-            </label>
             <input
               id="confirmPassword"
               name="confirmPassword"
@@ -205,12 +199,18 @@
               class="input-focus w-full py-3 px-4 border-2 border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:border-primary-teal transition-colors"
               placeholder="Confirm Password"
             />
+            <label
+              for="confirmPassword"
+              class="absolute left-4 top-3 text-gray-500 text-sm transition-all pointer-events-none"
+            >
+              <i class="fas fa-lock mr-2"></i>Confirm Password
+            </label>
           </div>
 
           <div class="bg-light-mint p-4 rounded-lg">
             <p class="text-xs text-dark-teal">
               <i class="fas fa-info-circle mr-2"></i>
-              <strong>Password Requirements:</strong> At least 4 characters long
+              <strong>Password Requirements:</strong> At least 6 characters long
             </p>
           </div>
 
