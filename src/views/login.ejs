@@ -96,18 +96,23 @@
       darkMode: 'class',
       theme: {
         extend: {
-          colors: {
-            "primary-teal": "#008080",
-            "secondary-teal": "#00cec9",
-            "dark-teal": "#1a535c",
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif']
           },
-        },
-      },
-    };
+          colors: {
+            'primary-teal': '#008080',
+            'secondary-teal': '#00cec9',
+            'dark-teal': '#1a535c',
+            'light-mint': '#e6f7f7',
+            'accent-blue': '#00bfff',
+          }
+        }
+      }
+    }
   </script>
 </head>
 
-<body class="bg-gradient-to-tr from-[#1E202B] to-[#2D2F3E] min-h-screen"
+<body class="bg-gradient-to-tr from-[#1E202B] to-[#2D2F3E] min-h-screen transition-colors duration-300"
   style="background-image: url('/assets/images/LoginFormBG.png'); background-size: cover; background-position: center;">
 
   <header>

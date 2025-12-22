@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reserve Your Paradise - Palm Ways</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="stylesheet" href="/assets/css/theme.css" />
-  <link rel="stylesheet" href="/assets/css/booking-flow.css" />
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            poppins: ["Poppins", "sans-serif"],
-          },
-          colors: {
-            "primary-teal": "#008080",
-            "secondary-teal": "#00cec9",
-            "dark-teal": "#1a535c",
-            "light-mint": "#e6f7f7",
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reserve Your Paradise - Palm Ways</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/theme.css" />
+    <link rel="stylesheet" href="/assets/css/booking-flow.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "primary-teal": "#008080",
+              "secondary-teal": "#00cec9",
+              "dark-teal": "#1a535c",
+              "light-mint": "#e6f7f7",
+            },
           },
         },
-      },
-    };
-  </script>
-</head>
-
-<body class="font-poppins min-h-screen pt-[76px]">
-  <%- include('partials/navbar') %>
+      };
+    </script>
+  </head>
+  <body class="font-poppins min-h-screen pt-[76px]">
+    <%- include('partials/navbar') %>
 
     <section
-      class="bg-gradient-to-br from-primary-teal to-secondary-teal py-8 md:py-12 px-4 md:px-8 text-white text-center">
+      class="bg-gradient-to-br from-primary-teal to-secondary-teal py-8 md:py-12 px-4 md:px-8 text-white text-center"
+    >
       <div
-        class="inline-flex items-center gap-2 bg-white/20 px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm mb-3 md:mb-4">
+        class="inline-flex items-center gap-2 bg-white/20 px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm mb-3 md:mb-4"
+      >
         <i class="fas fa-shield-alt"></i>
         <span>🔒 Secure Booking</span>
       </div>
@@ -48,28 +53,38 @@
       </p>
     </section>
 
-    <section class="max-w-6xl -mt-6 md:-mt-8 mx-auto px-4 md:px-8 relative z-10">
+    <section
+      class="max-w-6xl -mt-6 md:-mt-8 mx-auto px-4 md:px-8 relative z-10"
+    >
       <div
-        class="bg-white rounded-3xl md:rounded-[50px] py-4 md:py-6 px-4 md:px-8 shadow-lg flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 lg:gap-12">
+        class="bg-white rounded-3xl md:rounded-[50px] py-4 md:py-6 px-4 md:px-8 shadow-lg flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 lg:gap-12"
+      >
         <div class="step flex items-center gap-3 active">
           <div
-            class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg teal-gradient-bg text-white">
+            class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg teal-gradient-bg text-white"
+          >
             1
           </div>
           <div class="text-base font-medium text-primary-teal">Select Room</div>
         </div>
-        <div class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"></div>
+        <div
+          class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"
+        ></div>
         <div class="step flex items-center gap-3">
           <div
-            class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400">
+            class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400"
+          >
             2
           </div>
           <div class="text-base font-medium text-gray-500">Guest Details</div>
         </div>
-        <div class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"></div>
+        <div
+          class="w-24 h-0.5 md:h-0.5 md:w-24 bg-gray-200 hidden md:block"
+        ></div>
         <div class="step flex items-center gap-3">
           <div
-            class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400">
+            class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-lg bg-gray-100 text-gray-400"
+          >
             3
           </div>
           <div class="text-base font-medium text-gray-500">Confirm</div>
@@ -77,11 +92,14 @@
       </div>
     </section>
 
-    <main class="max-w-7xl mx-auto my-6 md:my-12 px-4 md:px-8 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4 md:gap-8">
+    <main
+      class="max-w-7xl mx-auto my-6 md:my-12 px-4 md:px-8 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4 md:gap-8"
+    >
       <div class="bg-white rounded-2xl p-4 md:p-8 shadow-lg" id="step1">
         <div class="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
           <div
-            class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base">
+            class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base"
+          >
             1
           </div>
           <h2 class="text-xl md:text-2xl font-bold text-gray-800">
@@ -91,14 +109,23 @@
 
         <!-- Booking Type Selection -->
         <div class="mb-6 md:mb-8">
-          <label class="text-sm font-semibold text-gray-600 mb-3 md:mb-4 block">Booking Type *</label>
+          <label class="text-sm font-semibold text-gray-600 mb-3 md:mb-4 block"
+            >Booking Type *</label
+          >
           <div class="flex flex-col sm:flex-row gap-3 md:gap-4">
             <label class="flex-1 cursor-pointer">
-              <input type="radio" name="bookingType" value="package" checked class="hidden booking-type-radio"
-                id="bookingTypePackage" />
+              <input
+                type="radio"
+                name="bookingType"
+                value="package"
+                checked
+                class="hidden booking-type-radio"
+                id="bookingTypePackage"
+              />
               <div
                 class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal booking-type-card"
-                data-type="package">
+                data-type="package"
+              >
                 <i class="fas fa-suitcase text-2xl text-primary-teal mb-2"></i>
                 <div class="font-semibold text-gray-800">Package</div>
                 <div class="text-xs text-gray-500 mt-1">
@@ -107,11 +134,17 @@
               </div>
             </label>
             <label class="flex-1 cursor-pointer">
-              <input type="radio" name="bookingType" value="stayOnly" class="hidden booking-type-radio"
-                id="bookingTypeStayOnly" />
+              <input
+                type="radio"
+                name="bookingType"
+                value="stayOnly"
+                class="hidden booking-type-radio"
+                id="bookingTypeStayOnly"
+              />
               <div
                 class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal booking-type-card"
-                data-type="stayOnly">
+                data-type="stayOnly"
+              >
                 <i class="fas fa-bed text-2xl text-primary-teal mb-2"></i>
                 <div class="font-semibold text-gray-800">Stay Only</div>
                 <div class="text-xs text-gray-500 mt-1">
@@ -124,174 +157,211 @@
 
         <!-- Package Selection (shown when package is selected) -->
         <div id="packageSelection" class="mb-6">
-          <label class="text-sm font-semibold text-gray-600 mb-4 block">Select Package *</label>
+          <label class="text-sm font-semibold text-gray-600 mb-4 block"
+            >Select Package *</label
+          >
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <% if (packages && packages.length> 0) { %> <% packages.forEach((pkg, index)=> { %>
+            <% if (packages && packages.length > 0) { %> <%
+            packages.forEach((pkg, index) => { %>
+            <div
+              class="room-card border-2 border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-teal hover:-translate-y-1 hover:shadow-lg relative"
+              data-room="<%= pkg._id %>"
+              data-price="<%= pkg.price || 0 %>"
+              data-package-name="<%= pkg.packageName ||
+							pkg.title %>"
+            >
+              <div class="relative h-44">
+                <img
+                  src="<%= pkg.image || pkg.img || '/assets/images/headerbg.jpg' %>"
+                  alt="<%= pkg.packageName ||
+								pkg.title %>"
+                  class="w-full h-full object-cover summary-room-image"
+                />
+                <% if (pkg.price) { %>
                 <div
-                  class="room-card border-2 border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-teal hover:-translate-y-1 hover:shadow-lg relative"
-                  data-room="<%= pkg._id %>" data-price="<%= pkg.price || 0 %>" data-package-name="<%= pkg.packageName ||
-							pkg.title %>">
-                  <div class="relative h-44">
-                    <img src="<%= pkg.image || pkg.img || '/assets/images/carousel/default.png' %>" alt="<%= pkg.packageName ||
-								pkg.title %>" class="w-full h-full object-cover summary-room-image" />
-                    <% if (pkg.price) { %>
-                      <div
-                        class="absolute top-4 right-4 bg-primary-teal text-white px-4 py-2 rounded-full font-bold text-base">
-                        $<%= pkg.price %>/night
-                      </div>
-                      <% } %>
-                        <div
-                          class="room-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden">
-                          ✓ Selected
-                        </div>
-                  </div>
-                  <div class="p-5">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3 room-name">
-                      <%= pkg.packageName || pkg.title %>
-                    </h3>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                      <% if (pkg.Stay) { %>
-                        <span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600">
-                          <%= pkg.Stay %>
-                        </span>
-                        <% } %>
-                          <% if (pkg.type) { %>
-                            <span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600">
-                              <%= pkg.type %>
-                            </span>
-                            <% } %>
-                              <% if (pkg.hotelName) { %>
-                                <span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600">
-                                  <%= pkg.hotelName %>
-                                </span>
-                                <% } %>
-                                  <% if (pkg.Activities && pkg.Activities.length> 0) {
-                                    %>
-                                    <span class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600">
-                                      <%= pkg.Activities[0] %>
-                                    </span>
-                                    <% } %>
-                    </div>
-                    <% if (pkg.description) { %>
-                      <p class="text-sm text-gray-400 mt-2">
-                        <%= pkg.description.substring(0, 50) %>...
-                      </p>
-                      <% } %>
-                  </div>
+                  class="absolute top-4 right-4 bg-primary-teal text-white px-4 py-2 rounded-full font-bold text-base"
+                >
+                  $<%= pkg.price %>/night
                 </div>
-                <% }); %>
-                  <% } else { %>
-                    <p class="text-center p-8 text-gray-500 col-span-2">
-                      No packages available at the moment. Please check back later.
-                    </p>
-                    <% } %>
+                <% } %>
+                <div
+                  class="room-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden"
+                >
+                  ✓ Selected
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg font-bold text-gray-800 mb-3 room-name">
+                  <%= pkg.packageName || pkg.title %>
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <% if (pkg.Stay) { %>
+                  <span
+                    class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"
+                    ><%= pkg.Stay %></span
+                  >
+                  <% } %> <% if (pkg.type) { %>
+                  <span
+                    class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"
+                    ><%= pkg.type %></span
+                  >
+                  <% } %> <% if (pkg.hotelName) { %>
+                  <span
+                    class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"
+                    ><%= pkg.hotelName %></span
+                  >
+                  <% } %> <% if (pkg.Activities && pkg.Activities.length > 0) {
+                  %>
+                  <span
+                    class="bg-gray-100 px-3 py-1 rounded-xl text-xs text-gray-600"
+                    ><%= pkg.Activities[0] %></span
+                  >
+                  <% } %>
+                </div>
+                <% if (pkg.description) { %>
+                <p class="text-sm text-gray-400 mt-2">
+                  <%= pkg.description.substring(0, 50) %>...
+                </p>
+                <% } %>
+              </div>
+            </div>
+            <% }); %> <% } else { %>
+            <p class="text-center p-8 text-gray-500 col-span-2">
+              No packages available at the moment. Please check back later.
+            </p>
+            <% } %>
           </div>
         </div>
 
         <!-- Stay Only Accommodation Selection (hidden by default) -->
         <div id="stayOnlySelection" class="mb-6 hidden">
-          <label class="text-sm font-semibold text-gray-600 mb-4 block">Select Accommodation *</label>
+          <label class="text-sm font-semibold text-gray-600 mb-4 block"
+            >Select Accommodation *</label
+          >
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <% if (stayOnlyList && stayOnlyList.length> 0) { %> <% stayOnlyList.forEach((stay, index)=> { %>
+            <% if (stayOnlyList && stayOnlyList.length > 0) { %> <%
+            stayOnlyList.forEach((stay, index) => { %>
+            <div
+              class="stay-only-card border-2 border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-teal hover:-translate-y-1 hover:shadow-lg relative"
+              data-stay-id="<%= stay._id %>"
+              data-price="<%= stay.price || 0 %>"
+              data-stay-name="<%= stay.name %>"
+              data-stay-type="<%= stay.type %>"
+            >
+              <div class="relative h-44">
+                <img
+                  src="<%= stay.image || stay.img || '/assets/images/headerbg.jpg' %>"
+                  alt="<%= stay.name %>"
+                  class="w-full h-full object-cover stay-only-image"
+                />
+                <% if (stay.price) { %>
                 <div
-                  class="stay-only-card border-2 border-gray-200 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-teal hover:-translate-y-1 hover:shadow-lg relative"
-                  data-stay-id="<%= stay._id %>" data-price="<%= stay.price || 0 %>" data-stay-name="<%= stay.name %>"
-                  data-stay-type="<%= stay.type %>">
-                  <div class="relative h-44">
-                    <img src="<%= stay.image || stay.img || '/assets/images/carousel/default.png' %>"
-                      alt="<%= stay.name %>" class="w-full h-full object-cover stay-only-image" />
-                    <% if (stay.price) { %>
-                      <div
-                        class="absolute top-4 right-4 bg-primary-teal text-white px-4 py-2 rounded-full font-bold text-base">
-                        $<%= stay.price %>/night
-                      </div>
-                      <% } %>
-                        <div
-                          class="stay-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden">
-                          ✓ Selected
-                        </div>
-                        <% if (stay.type) { %>
-                          <div
-                            class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-full text-xs font-semibold text-gray-700 capitalize">
-                            <%= stay.type %>
-                          </div>
-                          <% } %>
-                  </div>
-                  <div class="p-5">
-                    <h3 class="text-lg font-bold text-gray-800 mb-3 stay-only-name">
-                      <%= stay.name %>
-                    </h3>
-                    <% if (stay.location) { %>
-                      <div class="flex items-center gap-2 mb-2 text-sm text-gray-600">
-                        <i class="fas fa-map-marker-alt text-primary-teal"></i>
-                        <span>
-                          <%= stay.location %>
-                        </span>
-                      </div>
-                      <% } %>
-                        <% if (stay.rating) { %>
-                          <div class="flex items-center gap-1 mb-3">
-                            <% for (let i=0; i < 5; i++) { %>
-                              <i
-                                class="fas fa-star <%= i < Math.floor(stay.rating) ? 'text-yellow-400' : 'text-gray-300' %> text-xs"></i>
-                              <% } %>
-                                <span class="text-xs text-gray-600 ml-1">
-                                  <%= stay.rating %>
-                                </span>
-                          </div>
-                          <% } %>
-                            <% if (stay.description) { %>
-                              <p class="text-sm text-gray-400 mt-2">
-                                <%= stay.description.substring(0, 60) %>...
-                              </p>
-                              <% } %>
-                                <% if (stay.amenities && stay.amenities.length> 0) { %>
-                                  <div class="flex flex-wrap gap-2 mt-3">
-                                    <% stay.amenities.slice(0, 3).forEach(amenity=> { %>
-                                      <span class="bg-gray-100 px-2 py-1 rounded-lg text-xs text-gray-600">
-                                        <%= amenity %>
-                                      </span>
-                                      <% }); %>
-                                        <% if (stay.amenities.length> 3) { %>
-                                          <span class="bg-gray-100 px-2 py-1 rounded-lg text-xs text-gray-600">+<%=
-                                              stay.amenities.length - 3 %> more</span>
-                                          <% } %>
-                                  </div>
-                                  <% } %>
-                  </div>
+                  class="absolute top-4 right-4 bg-primary-teal text-white px-4 py-2 rounded-full font-bold text-base"
+                >
+                  $<%= stay.price %>/night
                 </div>
-                <% }); %>
-                  <% } else { %>
-                    <p class="text-center p-8 text-gray-500 col-span-2">
-                      No stay-only accommodations available at the moment. Please check
-                      back later.
-                    </p>
-                    <% } %>
+                <% } %>
+                <div
+                  class="stay-selected-badge absolute top-4 left-4 bg-green-500 text-white px-3.5 py-1.5 rounded-full font-semibold text-sm hidden"
+                >
+                  ✓ Selected
+                </div>
+                <% if (stay.type) { %>
+                <div
+                  class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-full text-xs font-semibold text-gray-700 capitalize"
+                >
+                  <%= stay.type %>
+                </div>
+                <% } %>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg font-bold text-gray-800 mb-3 stay-only-name">
+                  <%= stay.name %>
+                </h3>
+                <% if (stay.location) { %>
+                <div class="flex items-center gap-2 mb-2 text-sm text-gray-600">
+                  <i class="fas fa-map-marker-alt text-primary-teal"></i>
+                  <span><%= stay.location %></span>
+                </div>
+                <% } %> <% if (stay.rating) { %>
+                <div class="flex items-center gap-1 mb-3">
+                  <% for (let i = 0; i < 5; i++) { %>
+                  <i
+                    class="fas fa-star <%= i < Math.floor(stay.rating) ? 'text-yellow-400' : 'text-gray-300' %> text-xs"
+                  ></i>
+                  <% } %>
+                  <span class="text-xs text-gray-600 ml-1"
+                    ><%= stay.rating %></span
+                  >
+                </div>
+                <% } %> <% if (stay.description) { %>
+                <p class="text-sm text-gray-400 mt-2">
+                  <%= stay.description.substring(0, 60) %>...
+                </p>
+                <% } %> <% if (stay.amenities && stay.amenities.length > 0) { %>
+                <div class="flex flex-wrap gap-2 mt-3">
+                  <% stay.amenities.slice(0, 3).forEach(amenity => { %>
+                  <span
+                    class="bg-gray-100 px-2 py-1 rounded-lg text-xs text-gray-600"
+                    ><%= amenity %></span
+                  >
+                  <% }); %> <% if (stay.amenities.length > 3) { %>
+                  <span
+                    class="bg-gray-100 px-2 py-1 rounded-lg text-xs text-gray-600"
+                    >+<%= stay.amenities.length - 3 %> more</span
+                  >
+                  <% } %>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <% }); %> <% } else { %>
+            <p class="text-center p-8 text-gray-500 col-span-2">
+              No stay-only accommodations available at the moment. Please check
+              back later.
+            </p>
+            <% } %>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-4 md:mt-6">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-4 md:mt-6"
+        >
           <div class="flex flex-col gap-2">
-            <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-                class="fas fa-calendar-check text-primary-teal"></i> Check-in
-              *</label>
-            <input type="date" id="checkIn"
+            <label
+              class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+              ><i class="fas fa-calendar-check text-primary-teal"></i> Check-in
+              *</label
+            >
+            <input
+              type="date"
+              id="checkIn"
               class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
-              required />
+              required
+            />
           </div>
           <div class="flex flex-col gap-2">
-            <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-                class="fas fa-calendar-times text-primary-teal"></i> Check-out
-              *</label>
-            <input type="date" id="checkOut"
+            <label
+              class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+              ><i class="fas fa-calendar-times text-primary-teal"></i> Check-out
+              *</label
+            >
+            <input
+              type="date"
+              id="checkOut"
               class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
-              required />
+              required
+            />
           </div>
           <div class="flex flex-col gap-2">
-            <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-                class="fas fa-users text-primary-teal"></i> Adults *</label>
-            <select id="guests"
-              class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal">
+            <label
+              class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+              ><i class="fas fa-users text-primary-teal"></i> Adults *</label
+            >
+            <select
+              id="guests"
+              class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+            >
               <option value="1">1 Adult</option>
               <option value="2" selected>2 Adults</option>
               <option value="3">3 Adults</option>
@@ -299,10 +369,14 @@
             </select>
           </div>
           <div class="flex flex-col gap-2">
-            <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-                class="fas fa-child text-primary-teal"></i> Children</label>
-            <select id="children"
-              class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal">
+            <label
+              class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+              ><i class="fas fa-child text-primary-teal"></i> Children</label
+            >
+            <select
+              id="children"
+              class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+            >
               <option value="0" selected>0 Children</option>
               <option value="1">1 Child</option>
               <option value="2">2 Children</option>
@@ -313,15 +387,20 @@
 
         <button
           class="w-full bg-gradient-to-br from-primary-teal to-secondary-teal text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer mt-8 transition-all hover:-translate-y-0.5 hover:shadow-xl"
-          id="continueToStep2">
+          id="continueToStep2"
+        >
           Continue to Guest Details
         </button>
       </div>
 
-      <div class="bg-white rounded-2xl p-4 md:p-8 shadow-lg mt-4 md:mt-8 hidden" id="step2">
+      <div
+        class="bg-white rounded-2xl p-4 md:p-8 shadow-lg mt-4 md:mt-8 hidden"
+        id="step2"
+      >
         <div class="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
           <div
-            class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base">
+            class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base"
+          >
             2
           </div>
           <h2 class="text-xl md:text-2xl font-bold text-gray-800">
@@ -331,57 +410,86 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div class="flex flex-col gap-2">
-            <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-                class="fas fa-user text-primary-teal"></i> Full Name *</label>
-            <input type="text" id="fullName" placeholder="John Doe"
+            <label
+              class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+              ><i class="fas fa-user text-primary-teal"></i> Full Name *</label
+            >
+            <input
+              type="text"
+              id="fullName"
+              placeholder="John Doe"
               class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
-              required />
+              required
+            />
           </div>
           <div class="flex flex-col gap-2">
-            <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-                class="fas fa-envelope text-primary-teal"></i> Email Address
-              *</label>
-            <input type="email" id="email" placeholder="john@example.com"
+            <label
+              class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+              ><i class="fas fa-envelope text-primary-teal"></i> Email Address
+              *</label
+            >
+            <input
+              type="email"
+              id="email"
+              placeholder="john@example.com"
               class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
-              required />
+              required
+            />
           </div>
         </div>
 
         <div class="flex flex-col gap-2 mb-6">
-          <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-              class="fas fa-phone text-primary-teal"></i> Phone Number
-            *</label>
-          <input type="tel" id="phone" placeholder="+1 234 567 890"
+          <label
+            class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+            ><i class="fas fa-phone text-primary-teal"></i> Phone Number
+            *</label
+          >
+          <input
+            type="tel"
+            id="phone"
+            placeholder="+1 234 567 890"
             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
-            required />
+            required
+          />
         </div>
 
         <div class="flex flex-col gap-2">
-          <label class="text-sm font-semibold text-gray-600 flex items-center gap-2"><i
-              class="fas fa-comment text-primary-teal"></i> Special Requests
-            (Optional)</label>
-          <textarea id="specialRequests" placeholder="Any special requirements..."
-            class="min-h-[100px] px-3 py-3 border-2 border-gray-200 rounded-lg text-base font-poppins resize-y focus:outline-none focus:border-primary-teal"></textarea>
+          <label
+            class="text-sm font-semibold text-gray-600 flex items-center gap-2"
+            ><i class="fas fa-comment text-primary-teal"></i> Special Requests
+            (Optional)</label
+          >
+          <textarea
+            id="specialRequests"
+            placeholder="Any special requirements..."
+            class="min-h-[100px] px-3 py-3 border-2 border-gray-200 rounded-lg text-base font-poppins resize-y focus:outline-none focus:border-primary-teal"
+          ></textarea>
         </div>
 
         <div class="flex gap-4 mt-8">
           <button
             class="bg-gray-200 text-gray-600 px-6 py-4 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg"
-            id="backToStep1">
+            id="backToStep1"
+          >
             Back
           </button>
           <button
             class="flex-1 bg-gradient-to-br from-primary-teal to-secondary-teal text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl"
-            id="continueToStep3">
+            id="continueToStep3"
+          >
             Review Booking
           </button>
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl p-4 md:p-8 shadow-lg mt-4 md:mt-8 hidden" id="step3">
+      <div
+        class="bg-white rounded-2xl p-4 md:p-8 shadow-lg mt-4 md:mt-8 hidden"
+        id="step3"
+      >
         <div class="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
           <div
-            class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base">
+            class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary-teal to-secondary-teal rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base"
+          >
             3
           </div>
           <h2 class="text-xl md:text-2xl font-bold text-gray-800">
@@ -402,15 +510,294 @@
           </p>
         </div>
 
+        <!-- Payment Method Selection -->
+        <div class="mb-6">
+          <label class="text-sm font-semibold text-gray-600 mb-4 block flex items-center gap-2">
+            <i class="fas fa-credit-card text-primary-teal"></i> Payment Method *
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="credit_card"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fas fa-credit-card text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">Credit Card</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="debit_card"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fas fa-credit-card text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">Debit Card</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="paypal"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fab fa-paypal text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">PayPal</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="bank_transfer"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fas fa-university text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">Bank Transfer</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="cash"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fas fa-money-bill-wave text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">Cash</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="paytm"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fas fa-mobile-alt text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">Paytm</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="scanning"
+                class="hidden payment-method-radio"
+                required
+              />
+              <div class="border-2 border-gray-200 rounded-xl p-4 text-center transition-all hover:border-primary-teal payment-method-card">
+                <i class="fas fa-qrcode text-2xl text-primary-teal mb-2"></i>
+                <div class="font-semibold text-gray-800">QR Scan</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Payment Details Forms (shown based on payment method selection) -->
+        
+        <!-- Credit/Debit Card Details -->
+        <div id="cardPaymentForm" class="hidden mb-6 bg-gray-50 p-6 rounded-2xl">
+          <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fas fa-credit-card text-primary-teal"></i> Card Details
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Card Number *</label>
+              <input
+                type="text"
+                id="cardNumber"
+                placeholder="1234 5678 9012 3456"
+                maxlength="19"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Cardholder Name *</label>
+              <input
+                type="text"
+                id="cardHolderName"
+                placeholder="John Doe"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Expiry Date *</label>
+              <input
+                type="text"
+                id="expiryDate"
+                placeholder="MM/YY"
+                maxlength="5"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">CVV *</label>
+              <input
+                type="text"
+                id="cvv"
+                placeholder="123"
+                maxlength="4"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank Transfer Details -->
+        <div id="bankTransferForm" class="hidden mb-6 bg-gray-50 p-6 rounded-2xl">
+          <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fas fa-university text-primary-teal"></i> Bank Transfer Details
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Account Number *</label>
+              <input
+                type="text"
+                id="accountNumber"
+                placeholder="Enter account number"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Account Holder Name *</label>
+              <input
+                type="text"
+                id="accountHolderName"
+                placeholder="John Doe"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Bank Name *</label>
+              <input
+                type="text"
+                id="bankName"
+                placeholder="Enter bank name"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">IFSC/SWIFT Code *</label>
+              <input
+                type="text"
+                id="ifscCode"
+                placeholder="Enter IFSC/SWIFT code"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- PayPal Details -->
+        <div id="paypalForm" class="hidden mb-6 bg-gray-50 p-6 rounded-2xl">
+          <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fab fa-paypal text-primary-teal"></i> PayPal Details
+          </h4>
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-semibold text-gray-600">PayPal Email *</label>
+            <input
+              type="email"
+              id="paypalEmail"
+              placeholder="your.email@example.com"
+              class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+            />
+          </div>
+        </div>
+
+        <!-- Paytm Details -->
+        <div id="paytmForm" class="hidden mb-6 bg-gray-50 p-6 rounded-2xl">
+          <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fas fa-mobile-alt text-primary-teal"></i> Paytm Details
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">Paytm Number *</label>
+              <input
+                type="tel"
+                id="paytmNumber"
+                placeholder="+91 9876543210"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-semibold text-gray-600">UPI ID (Optional)</label>
+              <input
+                type="text"
+                id="upiId"
+                placeholder="yourname@paytm"
+                class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- QR Scanning Details -->
+        <div id="scanningForm" class="hidden mb-6 bg-gray-50 p-6 rounded-2xl">
+          <h4 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <i class="fas fa-qrcode text-primary-teal"></i> QR Code Payment
+          </h4>
+          <div class="text-center mb-4">
+            <div class="bg-white p-6 rounded-xl border-2 border-gray-200 inline-block max-w-sm">
+              <div class="mb-4 flex justify-center">
+                <img 
+                  src="/assets/images/qr-code.png" 
+                  alt="Payment QR Code" 
+                  class="w-64 h-64 object-contain border border-gray-300 rounded-lg p-2 bg-white"
+                  id="qrCodeImage"
+                  onerror="this.style.display='none'; document.getElementById('qrCodePlaceholder').style.display='flex';"
+                />
+                <div id="qrCodePlaceholder" class="w-64 h-64 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center bg-gray-50" style="display: none;">
+                  <i class="fas fa-qrcode text-6xl text-primary-teal mb-2"></i>
+                  <p class="text-xs text-gray-500">QR Code Image</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-600 mb-2 font-semibold">Scan this QR code to pay</p>
+              <p class="text-xs text-gray-500 mb-1">Amount: <span id="qrAmount" class="font-bold text-primary-teal text-base">₹0</span></p>
+              <p class="text-xs text-gray-400">Use any UPI app to scan and pay</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-semibold text-gray-600">Transaction ID / UPI Reference *</label>
+            <input
+              type="text"
+              id="transactionId"
+              placeholder="Enter transaction ID after scanning"
+              class="px-3 py-3 border-2 border-gray-200 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-teal"
+            />
+            <p class="text-xs text-gray-500 mt-1">
+              <i class="fas fa-info-circle"></i> Please scan the QR code and enter the transaction ID to confirm payment
+            </p>
+          </div>
+        </div>
+
         <div class="flex gap-4 mt-8">
           <button
             class="bg-gray-200 text-gray-600 px-6 py-4 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg"
-            id="backToStep2">
+            id="backToStep2"
+          >
             Back
           </button>
           <button
             class="flex-1 bg-gradient-to-br from-primary-teal to-secondary-teal text-white py-4 border-0 rounded-xl font-bold text-lg cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-xl"
-            id="confirmBooking">
+            id="confirmBooking"
+          >
             <i class="fas fa-check-circle"></i> Confirm Booking
           </button>
         </div>
@@ -421,12 +808,17 @@
 
         <div class="rounded-2xl overflow-hidden mb-6">
           <img
-            src="<%= packages && packages.length > 0 && packages[0].image ? packages[0].image : '/assets/images/carousel/default.png' %>"
-            alt="Package" class="w-full h-36 object-cover summary-room-image" />
+            src="<%= packages && packages.length > 0 && packages[0].image ? packages[0].image : '/assets/images/headerbg.jpg' %>"
+            alt="Package"
+            class="w-full h-36 object-cover summary-room-image"
+          />
           <div class="p-4 bg-gray-50">
-            <h4 class="text-lg font-bold text-gray-800 mb-2" id="summaryRoomName">
-              <%= packages && packages.length> 0 ? (packages[0].packageName ||
-                packages[0].title || 'Select a Package') : 'Select a Package' %>
+            <h4
+              class="text-lg font-bold text-gray-800 mb-2"
+              id="summaryRoomName"
+            >
+              <%= packages && packages.length > 0 ? (packages[0].packageName ||
+              packages[0].title || 'Select a Package') : 'Select a Package' %>
             </h4>
             <div class="text-secondary-teal text-sm mb-3">
               <i class="fas fa-star"></i>
@@ -438,12 +830,16 @@
           </div>
         </div>
 
-        <div class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600">
+        <div
+          class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600"
+        >
           <i class="fas fa-calendar-check w-5 text-primary-teal"></i>
           <span>Check-in:</span>
           <strong id="summaryCheckIn">Not selected</strong>
         </div>
-        <div class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600">
+        <div
+          class="flex items-center gap-2 py-3 border-b border-gray-200 text-sm text-gray-600"
+        >
           <i class="fas fa-calendar-times w-5 text-primary-teal"></i>
           <span>Check-out:</span>
           <strong id="summaryCheckOut">Not selected</strong>
@@ -457,19 +853,23 @@
         <div class="mt-6 pt-6 border-t-2 border-gray-200">
           <div class="flex justify-between mb-3 text-base">
             <span class="text-gray-600">Room Rate</span>
-            <span class="font-semibold text-gray-800" id="roomRate">₹1,201.5</span>
+            <span class="font-semibold text-gray-800" id="roomRate"
+              >$1,201.5</span
+            >
           </div>
           <div class="flex justify-between mb-3 text-base">
             <span class="text-gray-600">Subtotal</span>
-            <span class="font-semibold text-gray-800" id="subtotal">₹840</span>
+            <span class="font-semibold text-gray-800" id="subtotal">$840</span>
           </div>
           <div class="flex justify-between mb-3 text-base">
             <span class="text-gray-600">Tax & Service (15%)</span>
-            <span class="font-semibold text-gray-800" id="tax">₹126</span>
+            <span class="font-semibold text-gray-800" id="tax">$126</span>
           </div>
-          <div class="flex justify-between pt-4 mt-4 border-t-2 border-gray-200 text-lg font-bold">
+          <div
+            class="flex justify-between pt-4 mt-4 border-t-2 border-gray-200 text-lg font-bold"
+          >
             <span class="text-gray-800">Total Amount</span>
-            <span class="text-primary-teal text-xl" id="totalAmount">₹966</span>
+            <span class="text-primary-teal text-xl" id="totalAmount">$966</span>
           </div>
         </div>
 
@@ -487,7 +887,6 @@
 
     <%- include('partials/footer') %>
 
-      <script src="/assets/js/booking-flow.js"></script>
-</body>
-
+    <script src="/assets/js/booking-flow.js"></script>
+  </body>
 </html>

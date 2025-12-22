@@ -1,6 +1,7 @@
 /* Custom Teal Gradient for Hero */
 .hero-banner-bg {
-	background: linear-gradient(to bottom, #008080, #00cec9); /* Teal to Turquoise */
+	background: linear-gradient(to bottom, #008080, #00cec9);
+	/* Teal to Turquoise */
 }
 
 /* Custom Teal Gradient for Step Highlights/Buttons */
@@ -21,11 +22,18 @@
 	background: #e6f7f7;
 }
 
-.booking-type-radio:checked + .booking-type-card {
+.booking-type-radio:checked+.booking-type-card {
 	border-color: #008080;
 	background: #e6f7f7;
 }
-
+.payment-method-card.selected {
+	border-color: #008080;
+	background: #e6f7f7;
+}
+.payment-method-radio:checked + .payment-method-card {
+	border-color: #008080;
+	background: #e6f7f7;
+}
 /* Styling for progress steps (Teal Theme) */
 .step.active .w-11 {
 	background: linear-gradient(to bottom right, #008080, #00cec9);
@@ -33,7 +41,8 @@
 }
 
 .step.active .text-base {
-	color: #008080; /* Primary Teal */
+	color: #008080;
+	/* Primary Teal */
 }
 
 /* Text colors */
@@ -80,7 +89,7 @@
 	main {
 		grid-template-columns: 1fr !important;
 	}
-	
+
 	.sticky {
 		position: relative !important;
 		top: 0 !important;
@@ -132,11 +141,13 @@
 		grid-template-columns: 1fr !important;
 	}
 
-	.room-card, .stay-only-card {
+	.room-card,
+	.stay-only-card {
 		margin-bottom: 1rem;
 	}
 
-	.room-card .p-5, .stay-only-card .p-5 {
+	.room-card .p-5,
+	.stay-only-card .p-5 {
 		padding: 1rem !important;
 	}
 
@@ -277,7 +288,8 @@
 		font-size: 0.65rem !important;
 	}
 
-	.room-card, .stay-only-card {
+	.room-card,
+	.stay-only-card {
 		margin-bottom: 0.75rem;
 	}
 
@@ -417,4 +429,3 @@
 		grid-template-columns: repeat(2, 1fr) !important;
 	}
 }
-

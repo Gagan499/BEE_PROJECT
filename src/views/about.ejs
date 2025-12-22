@@ -23,23 +23,25 @@
     <link rel="stylesheet" href="/assets/css/theme.css" />
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
-              poppins: ["Poppins", "sans-serif"],
+              'poppins': ['Poppins', 'sans-serif']
             },
             colors: {
-              "primary-teal": "#008080",
-              "secondary-teal": "#00cec9",
-              "dark-teal": "#1a535c",
-              "light-mint": "#e6f7f7",
-            },
-          },
-        },
-      };
+              'primary-teal': '#008080',
+              'secondary-teal': '#00cec9',
+              'dark-teal': '#1a535c',
+              'light-mint': '#e6f7f7',
+              'accent-blue': '#00bfff',
+            }
+          }
+        }
+      }
     </script>
   </head>
-  <body class="font-poppins min-h-screen pt-[76px]">
+  <body class="font-poppins min-h-screen pt-[76px] transition-colors duration-300">
     <%- include('partials/navbar') %> <%- include('partials/alert') %>
 
     <!-- Hero Section -->

@@ -1,3 +1,33 @@
+// Check authentication status
+async function checkAuthStatus() {
+	try {
+		const response = await fetch(`${window.location.origin}/auth/login/status`, {
+			method: "GET",
+			credentials: "include",
+		});
+		if (response.ok) {
+			const data = await response.json();
+			return data.LoggedIn === true;
+		}
+	} catch (err) {
+		console.error("Error checking auth status:", err);
+	}
+	return false;
+}
+
+// Handle book package button click
+async function handleBookPackage(packageId, packageName) {
+	const isLoggedIn = await checkAuthStatus();
+	
+	if (isLoggedIn) {
+		// User is logged in - redirect to booking page with package ID
+		window.location.href = `/api/booking?packageId=${encodeURIComponent(packageId)}`;
+	} else {
+		// User is not logged in - redirect to login page with return URL
+		window.location.href = `/api/login?returnUrl=/api/booking&packageId=${encodeURIComponent(packageId)}`;
+	}
+}
+
 // Navbar scroll effect - change from transparent to solid after hero section
 document.addEventListener("DOMContentLoaded", () => {
 	const header = document.querySelector(".main-header");
@@ -37,4 +67,3 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 });
-

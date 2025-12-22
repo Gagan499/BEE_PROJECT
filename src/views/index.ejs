@@ -11,6 +11,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            'poppins': ['Poppins', 'sans-serif']
+          },
+          colors: {
+            'primary-teal': '#008080',
+            'secondary-teal': '#00cec9',
+            'dark-teal': '#1a535c',
+            'light-mint': '#e6f7f7',
+            'accent-blue': '#00bfff',
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="/assets/css/theme.css" />
   <style>
@@ -930,7 +949,7 @@
   </style>
 </head>
 
-<body class="transparent-navbar">
+<body class="transparent-navbar transition-colors duration-300">
 
   <section class="hero-section">
     <%- include('partials/navbar') %>
